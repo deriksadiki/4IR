@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { IRhubProvider } from '../providers/i-rhub/i-rhub';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { IRhubProvider } from '../providers/i-rhub/i-rhub';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    IRhubProvider
+    IRhubProvider , Geolocation
   ]
 })
 export class AppModule {}
