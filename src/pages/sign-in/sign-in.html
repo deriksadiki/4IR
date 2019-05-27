@@ -1,20 +1,44 @@
-<!--
-  Generated template for the SignInPage page.
+<ion-content>
+    <div class="theBody">
+        <div class="topHalf">
+          <img id="theLogo" src="../../assets/imgs/4IR logo.png" alt="" />
+        </div>
+        <div class="bottomHalf" padding>
+          <div class="theCard">
+              <ion-input placeholder="Email" type="text" class="user-input"></ion-input>
+              <ion-input placeholder="Password" type="password" class="user-input"></ion-input>
+              <button ion-button block class="btnActions">SIGN IN</button>
+              <button ion-button clear id="forgotPassword">Forgot Password</button>
+        
+          </div>
+        </div>
+        <!-- <div class="top">
+              <div class="appName">4IR HUB</div>
+              <div id="circle"></div>
+            </div>
+            <div class="userContent" padding>
+              <div class="logo">
+                <img src="../../assets/imgs/4IR logo.png" alt="" />
+              </div>
+              <div class="inputs" padding>
+                <p>CREATE ACCOUNT</p>
+                <ion-list>
+                  <ion-item>
+                    <ion-label floating>Username</ion-label>
+                    <ion-input type="text"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label floating>Password</ion-label>
+                    <ion-input type="password"></ion-input>
+                  </ion-item>
+                  <button id="forgotPassword" ion-button clear>Forgot Password</button>
+                  <button class="btnActions" ion-button>Sign Up</button>
+                </ion-list>
+              </div>
+            </div> -->
+      </div>
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>SignIn</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-  <ion-list>
+  <!-- <ion-list>
     <ion-item>
       <ion-label fixed>Username</ion-label>
       <ion-input type="text" value="" #email></ion-input>
@@ -30,5 +54,5 @@
   <button ion-button clear (click)="GoToSignUp()">SignUp</button>
   <br>
   <button ion-button (click)="GoToHome()">Explore</button><bR>
-  <button ion-button (click)="SignIn(email.value,password.value)">SignIn</button>
+  <button ion-button (click)="SignIn(email.value,password.value)">SignIn</button> -->
 </ion-content>
