@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { LoadingController } from "ionic-angular";
 import { AlertController } from "ionic-angular";
-declare var firebase;
+declare var firebase
 /*
   Generated class for the IRhubProvider provider.
 
@@ -13,7 +13,8 @@ export class IRhubProvider {
 
   //arrays
   orgArray = new Array();
-
+  stayLoggedIn
+  auth = firebase.auth();
 
   constructor(public ngzone: NgZone, public alertCtrl: AlertController,
     public loadingCtrl: LoadingController) {
@@ -22,6 +23,67 @@ export class IRhubProvider {
 
   SignIn(email, password) {
     return firebase.auth().signInWithEmailAndPassword(email, password);
+  }
+  checkstate() {
+    return new Promise((resolve, reject) => {
+      this.ngzone.run(() => {
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user != null) {
+            this.stayLoggedIn = 1
+          }
+          else {
+            this.stayLoggedIn = 0
+          }
+          resolve(this.stayLoggedIn)
+        })
+      })
+    })
+  }
+
+  forgotpassword(email) {
+    return new Promise((resolve, reject) => {
+      this.ngzone.run(() => {
+        if (email == null || email == undefined) {
+          const alert = this.alertCtrl.create({
+            subTitle: 'Please enter your Email.',
+            buttons: ['OK']
+          });
+          alert.present();
+        }
+        else if (email != null || email != undefined) {
+          firebase.auth().sendPasswordResetEmail(email).then(() => {
+            const alert = this.alertCtrl.create({
+              title: 'Password request Sent',
+              subTitle: "We've sent you and email with a reset link, go to your email to recover your account.",
+              buttons: ['OK']
+
+            });
+            alert.present();
+            resolve()
+          }, Error => {
+            const alert = this.alertCtrl.create({
+              subTitle: Error.message,
+              buttons: ['OK']
+            });
+            alert.present();
+            resolve()
+          });
+        }
+      })
+    }).catch((error) => {
+      const alert = this.alertCtrl.create({
+        subTitle: error.message,
+        buttons: [
+          {
+            text: 'ok',
+            handler: data => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
+      });
+      alert.present();
+    })
   }
   
   Signup(email, password, name) {
@@ -35,10 +97,10 @@ export class IRhubProvider {
         loading.present();
         return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
           var user = firebase.auth().currentUser
-          firebase.database().ref("profiles/" + user.uid).set({
+          firebase.database().ref("Users/" + "/" + "App_Users/" + user.uid).set({
             name: name,
             email: email,
-            downloadurl: "../../assets/imgs/Defaults/default.jpg",
+            downloadurl: "../../assets/imgs/Defaults/default.png",
             address: "",
           })
           var user = firebase.auth().currentUser;
@@ -53,7 +115,7 @@ export class IRhubProvider {
           loading.dismiss();
           const alert = this.alertCtrl.create({
             subTitle: error.message,
-            cssClass: 'myAlert',
+            // cssClass: 'myAlert',
             buttons: [
               {
                 text: 'ok',
@@ -96,7 +158,7 @@ export class IRhubProvider {
     return new Promise((resolve, reject) => {
       this.ngzone.run(() => {
         var user = firebase.auth().currentUser;
-        firebase.database().ref("Organizations").on("value", (data: any) => {
+        firebase.database().ref("4IR_Hubs").on("value", (data: any) => {
           if (data.val() != null) {
             this.orgArray.length = 0;
             let details = data.val();
@@ -121,5 +183,60 @@ export class IRhubProvider {
       })
     })
   }
+
+  getProfile() {
+    return new Promise((accpt, rej) => {
+      this.ngzone.run(() => {
+        this.auth.onAuthStateChanged(function (user) {
+          if (user) {
+            firebase.database().ref("Users/" + "/" + "App_Users/" + user.uid).on('value', (data: any) => {
+              let details = data.val();
+              console.log(details)
+              accpt(details.downloadurl)
+            })
+          } else {
+            console.log('no user');
+          }
+        });
+      })
+    })
+  }
+
+  
+  checkAuthState() {
+    return new Promise((accpt, rej) => {
+      this.ngzone.run(() => {
+        this.auth.onAuthStateChanged(function (user) {
+          if (user) {
+            accpt(true)
+          } else {
+            accpt(false)
+          }
+        });
+      })
+    })
+  }
+
+  // AddViewers( key, id) {
+  //   views = views + 1;
+  //   console.log(views);
+  //   console.log(key);
+  //   console.log(id);
+
+  //   return new Promise((accpt, rej) => {
+  //     this.ngzone.run(() => {
+  //       firebase
+  //         .database()
+  //         .ref("Organizations/")
+  //         .update({ Views: views });
+  //       accpt("View added");
+  //     });
+  //   });
+  // }
+
+
+
+
+
 
 }

@@ -1,3 +1,11 @@
 page-home {
-
+    .cards{
+        box-shadow: 0 5px 5px rgba(128, 128, 128, 0.866);
+        transition: 500ms;
+        padding: 0;
+        margin-bottom: 20px;
+        height: 110px;
+    
+    }
 }
+

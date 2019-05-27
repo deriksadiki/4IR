@@ -1,14 +1,18 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <img [src]="img" weight="50px" height="50px">
+  <button ion-button (click)="Userprofile()">user profile</button>
+  <div *ngFor="let a of orgArray" class="cards">
+    <ion-item (click)="goToViewPage(a.orgName)" no-padding no-lines>
+      <ion-thumbnail item-start large>
+        <img src="../../assets/download.png.png">
+      </ion-thumbnail>
+      {{a.orgName}}
+    </ion-item>
+  </div>
 </ion-content>
