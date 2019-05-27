@@ -1,7 +1,13 @@
 {
   "name": "4IR",
+<<<<<<< HEAD
   "integrations": {
     "cordova": {}
   },
   "type": "ionic-angular"
 }
+=======
+  "integrations": {},
+  "type": "ionic-angular"
+}
+>>>>>>> f694f4cd742603bdade1cd4bb2683febe107cc13
