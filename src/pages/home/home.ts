@@ -44,11 +44,32 @@ directionsDisplay  ;
 
       this.lat =data.coords.latitude ;
       this.lng = data.coords.longitude
+      console.log( this.lat );
+      
       
       
     })
 
 
+
+setTimeout(() => {
+  this.IRmethods.getCurrentLocation(this.lat , this.lng).then((radius:any)=>{
+   
+    console.log(this.lat);
+   console.log(this.lng);
+    console.log(radius);
+    
+    this.IRmethods.getAllOrganizations().then((data:any)=>{
+      console.log(data);
+      console.log(radius);
+      this.IRmethods.getNearByOrganizations(radius ,data).then((nearbyOrgs:any)=>{
+        console.log(nearbyOrgs);
+        
+      })
+    })
+  })
+  
+}, 3000);
   
 
   }
@@ -114,7 +135,7 @@ directionsDisplay  ;
     this.directionsDisplay.setMap(this.map);
     this.IRmethods.calculateAndDisplayRoute(userCurrentLocation , destination ,this.directionsDisplay , this.directionsService)
 
-    //this.calculateAndDisplayRoute(userCurrentLocation , destination ,this.directionsDisplay , this.directionsService)
+  
 
   }
 

@@ -273,24 +273,29 @@ getNearByOrganizations(radius,org){
       console.log(resp.coords.longitude);
       for (var x = 0; x < org.length; x++){
         var orglat = new String(org[x].lat).substr(0,6);
-        var orgLong =  new String(org[x].lng).substr(0,5);
-        // console.log('out');
-        // console.log(orglat);
-        // console.log(orgLong);
-        // console.log( radius.left);
-        // console.log(radius.right);
-        // console.log(radius.down);
-        // console.log(radius.up);
+        var orgLong =  new String(org[x].long).substr(0,5);
+        
+        console.log(orglat);
+        console.log(orgLong);
+        console.log( radius.left);
+        console.log(radius.right);
+        console.log(radius.down);
+        console.log(radius.up);
         
         
         if ((orgLong  <= long  && orgLong  >= radius.left || orgLong  >= long  && orgLong  <= radius.right) && (orglat >= lat && orglat <= radius.down || orglat <= lat && orglat >= radius.up)){
-
+          console.log("In nearby");
+          
        this.nearByOrg.push(org[x]);
         console.log(this.nearByOrg);
+        accpt(this.nearByOrg)
 
+        }else {
+          console.log("kb");
+          
         }
       }
-      accpt(this.nearByOrg)
+     
     })
     
     
