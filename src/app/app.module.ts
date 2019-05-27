@@ -7,8 +7,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { IRhubProvider } from '../providers/i-rhub/i-rhub';
+<<<<<<< HEAD
+import { Geolocation } from '@ionic-native/geolocation';
+=======
 import { SignInPage } from '../pages/sign-in/sign-in';
 import { SignUpPage } from '../pages/sign-up/sign-up';
+>>>>>>> f694f4cd742603bdade1cd4bb2683febe107cc13
 
 @NgModule({
   declarations: [
@@ -32,7 +36,7 @@ import { SignUpPage } from '../pages/sign-up/sign-up';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    IRhubProvider
+    IRhubProvider , Geolocation
   ]
 })
 export class AppModule {}
