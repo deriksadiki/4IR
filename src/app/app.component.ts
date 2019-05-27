@@ -6,11 +6,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { SignInPage } from '../pages/sign-in/sign-in';
 import { IRhubProvider } from '../providers/i-rhub/i-rhub';
+import { SignUpPage } from '../pages/sign-up/sign-up';
+
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = SignInPage;
+  rootPage:any = SignUpPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public IRhubProvider:IRhubProvider) {
     platform.ready().then(() => {
