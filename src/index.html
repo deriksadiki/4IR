@@ -11,7 +11,9 @@
   <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#4e8ef7">
-
+  
+ 
+  
   <!-- add to homescreen for ios -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -34,12 +36,12 @@
     // Your web app's Firebase configuration
     var firebaseConfig = {
       apiKey: "AIzaSyBv26jcYG0B3s5sPDSRE98PPBlJN11nayk",
-      authDomain: "irresources-database.firebaseapp.com",
-      databaseURL: "https://irresources-database.firebaseio.com",
-      projectId: "irresources-database",
-      storageBucket: "irresources-database.appspot.com",
-      messagingSenderId: "261922970957",
-      appId: "1:261922970957:web:fdc5832a162a8cfd"
+    authDomain: "irresources-database.firebaseapp.com",
+    databaseURL: "https://irresources-database.firebaseio.com",
+    projectId: "irresources-database",
+    storageBucket: "irresources-database.appspot.com",
+    messagingSenderId: "261922970957",
+    appId: "1:261922970957:web:fdc5832a162a8cfd"
     };
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
@@ -49,7 +51,8 @@
 </head>
 
 <body>
-
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAT55USDnQ-tZLHJlzryDJbxseD8sLSdZE&callback=initMap">
+  </script>
   <!-- Ionic's root component and where the app will load -->
   <ion-app></ion-app>
 
@@ -62,7 +65,7 @@
 
   <!-- The main bundle js is generated during the build process -->
   <script src="build/main.js"></script>
-
+  
 </body>
 
 </html>

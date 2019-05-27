@@ -7,6 +7,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { IRhubProvider } from '../providers/i-rhub/i-rhub';
+
+import { Geolocation } from '@ionic-native/geolocation';
+
 import { SignInPage } from '../pages/sign-in/sign-in';
 import { SignUpPage } from '../pages/sign-up/sign-up';
 import { EmailComposer } from '@ionic-native/email-composer'
