@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core'
 import { NavController, LoadingController, Loading } from 'ionic-angular';
 import { IRhubProvider } from '../../providers/i-rhub/i-rhub';
 import { Geolocation } from '@ionic-native/geolocation';
+import {ViewOrganizationInforPage} from "../view-organization-infor/view-organization-infor" ;
 declare var google ;
 @Component({
   selector: 'page-home',
@@ -11,7 +12,7 @@ export class HomePage {
   @ViewChild('map') mapRef: ElementRef;
   //arrays
   orgArray =  new Array();
-  ner
+  nerbayArray = new Array() ;
 
   //variables
   map ;
@@ -68,6 +69,10 @@ setTimeout(() => {
       console.log(radius);
       this.IRmethods.getNearByOrganizations(radius ,data).then((nearbyOrgs:any)=>{
         console.log(nearbyOrgs);
+        this.nerbayArray =nearbyOrgs ;
+
+        console.log( this.nerbayArray);
+        
         
       })
     })
@@ -273,5 +278,11 @@ setTimeout(() => {
     // this.searchTerm = "";
 
   }
-  
+  goToViewPage(name) {
+    for (var x = 0; x < this.orgArray.length; x++) {
+      if (name == this.orgArray[x].orgName) {
+        this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x] });
+      }
+    }
+  }
 }
