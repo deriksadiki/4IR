@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController ,LoadingController } from 'ionic-angular';
 import { SignUpPage } from '../sign-up/sign-up';
+import { PlaceObject } from '../../app/class';
 import { HomePage } from '../home/home';
-import { IRhubProvider } from '../../providers/i-rhub/i-rhub'
-
+import { IRhubProvider } from '../../providers/i-rhub/i-rhub';
+declare var firebase;
 /**
  * Generated class for the SignInPage page.
  *
@@ -11,13 +12,15 @@ import { IRhubProvider } from '../../providers/i-rhub/i-rhub'
  * Ionic pages and navigation.
  */
 
+
 @IonicPage()
 @Component({
   selector: 'page-sign-in',
   templateUrl: 'sign-in.html',
 })
 export class SignInPage {
-
+  email;
+  PlaceObject = {} as object;
   constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl: AlertController,public loadingCtrl:LoadingController,public irhubProvider:IRhubProvider) {
   }
 
@@ -64,6 +67,76 @@ export class SignInPage {
         cssClass: 'myAlert',
       });
       loading.dismiss()
+      alert.present();
+    })
+  }
+
+  forgotpassword(PlaceObject: object) {
+    return new Promise((resolve, reject) => {
+      if (this.email == null || this.email == undefined) {
+        const alert = this.alertCtrl.create({
+          title: 'Forgot your password?',
+          message: "We just need your registered email address to reset your password.",
+          
+          // cssClass: 'myAlert',
+          inputs: [
+            {
+              name: 'title',
+              placeholder: 'Your email address'
+            },
+          ],
+          cssClass: 'myAlert',
+          buttons: [
+            {
+              text: 'Cancel',
+              handler: data => {
+                console.log('Cancel clicked');
+              }
+            },
+            {
+              text: 'Send',
+              handler: data => {
+                console.log('Saved clicked');
+              }
+            }
+          ],
+        });
+        alert.present();
+      }
+      else if (this.email != null || this.email != undefined) {
+        firebase.auth().sendPasswordResetEmail(this.email).then(() => {
+          const alert = this.alertCtrl.create({
+            title: 'Password request Sent',
+            subTitle: "We've sent you and email with a reset link, go to your email to recover your account.",
+            buttons: ['OK'],
+            cssClass: 'myAlert'
+
+          });
+          alert.present();
+          resolve()
+        }, Error => {
+          const alert = this.alertCtrl.create({
+            subTitle: Error.message,
+            buttons: ['OK'],
+            cssClass: 'myAlert'
+          });
+          alert.present();
+          resolve()
+        });
+      }
+    }).catch((error) => {
+      const alert = this.alertCtrl.create({
+        subTitle: error.message,
+        buttons: [
+          {
+            text: 'ok',
+            handler: data => {
+              console.log('Cancel clicked');
+            }
+          }
+        ],
+        cssClass: 'myAlert'
+      });
       alert.present();
     })
   }

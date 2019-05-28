@@ -98,7 +98,7 @@ export class IRhubProvider {
     return new Promise((resolve, reject) => {
       this.ngzone.run(() => {
         var user = firebase.auth().currentUser;
-        firebase.database().ref("Organizations").on("value", (data: any) => {
+        firebase.database().ref("4IR_Hubs").on("value", (data: any) => {
           if (data.val() != null) {
             this.orgArray.length = 0;
             let details = data.val();

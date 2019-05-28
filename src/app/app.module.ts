@@ -16,7 +16,10 @@ import { Geolocation } from '@ionic-native/geolocation';
     MyApp,
     HomePage,
     SignInPage,
-    SignUpPage
+    SignUpPage,
+    //SplashScreenPage,
+    //UserProfilePage,
+    //
   ],
   imports: [
     BrowserModule,
@@ -27,13 +30,18 @@ import { Geolocation } from '@ionic-native/geolocation';
     MyApp,
     HomePage,
     SignInPage,
-    SignUpPage
+    SignUpPage,
+    //SplashScreenPage,
+    //UserProfilePage,
+    //ViewOrganizationInforPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    IRhubProvider , Geolocation
+    IRhubProvider,Geolocation
+    //EmailComposer,
+    //CallNumber
   ]
 })
 export class AppModule {}

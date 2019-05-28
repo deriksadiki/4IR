@@ -19,11 +19,12 @@ export class HomePage {
   lat;
   lng ;
   marker ;
+  showMultipleMarker ;
 
   //Google services
 
  directionsService ; 
-directionsDisplay  ;
+  directionsDisplay  ;
  service ;
   geocoder ;
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl:LoadingController) {
@@ -110,6 +111,14 @@ setTimeout(() => {
       //animation: google.maps.Animation.DROP,
      });
 
+     setTimeout(()=>{
+      this.markers() ;
+     } , 4000)
+   
+
+     console.log("test");
+     
+
   }
 
 
@@ -173,7 +182,25 @@ setTimeout(() => {
   }
 
 
-  
+  // get all marker for all organisation
 
+  markers (){
+    console.log(this.orgArray);
+    
+    for (let index = 0; index < this.orgArray.length; index++) {
+      var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
+      this.showMultipleMarker = new google.maps.Marker({
+        map: this.map,
+      //  icon: this.icon,
+
+
+        position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
+        label: name,
+        zoom: 8,
+
+      });
+      
+    }
+  }
   
 }
