@@ -11,6 +11,7 @@ page-home {
         height: 100%;
         display: block;
         animation: fadeIn 1s;
+        z-index: 0;
     }
     //   =========================
     #mapView {
@@ -38,6 +39,7 @@ page-home {
         top: 20px;
         background: red;
         opacity: 0;
+        z-index: 1;
     }
     #funnel {
         font-size: 28px;
@@ -46,6 +48,7 @@ page-home {
         top: 25px;
         text-shadow: 0 0 5px black;
         color: white;
+        z-index: 1;
     }
     .split {
         height: 190px;
@@ -118,6 +121,7 @@ page-home {
         object-fit: cover;
         font-size: 3em;
         color: black;
+        z-index: 1;
     }
     #imgOnMap {
         position: absolute;
