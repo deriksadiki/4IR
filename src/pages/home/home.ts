@@ -256,7 +256,6 @@ export class HomePage {
       }
     })
   }
-
   
 
 
