@@ -42,6 +42,20 @@
     </ion-fab>
 
     <div id="mapView">
+        <ion-icon id="funnel" name="funnel"></ion-icon>
+        <ion-item class="hidden">
+            <ion-label>Filtey by</ion-label>
+            <ion-select [(ngModel)]="category" (ionChange)="selectcategory()" color="custom" id="drop">
+                <ion-option value="Orphanage">Orphanage</ion-option>
+                <ion-option value="Disability">Disability</ion-option>
+                <ion-option value="old age">Old Age Homes</ion-option>
+                <ion-option value="theraphy">Theraphy</ion-option>
+                <ion-option value="Psychiatric">Psychiatric centres/Hospital</ion-option>
+                <ion-option value="social centre">Social Centre</ion-option>
+                <ion-option value="Rehab">Rehab</ion-option>
+            </ion-select>
+        </ion-item>
+        <img [src]="img" class="displayPic" id="imgOnMap" alt="" (click)="Userprofile()" />
 
         <div #map id="map"></div>
     </div>
