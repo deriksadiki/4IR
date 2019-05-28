@@ -17,6 +17,7 @@ import { CallNumber } from '@ionic-native/call-number';
 import { SplashScreenPage } from '../pages/splash-screen/splash-screen';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { ViewOrganizationInforPage } from '../pages/view-organization-infor/view-organization-infor';
+import { EditUserProfilePage } from '../pages/edit-user-profile/edit-user-profile';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ViewOrganizationInforPage } from '../pages/view-organization-infor/view
     SignUpPage,
     SplashScreenPage,
     UserProfilePage,
-    ViewOrganizationInforPage
+    ViewOrganizationInforPage,
+    EditUserProfilePage
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import { ViewOrganizationInforPage } from '../pages/view-organization-infor/view
     SignUpPage,
     SplashScreenPage,
     UserProfilePage,
-    ViewOrganizationInforPage
+    ViewOrganizationInforPage,
+    EditUserProfilePage
   ],
   providers: [
     StatusBar,
@@ -48,8 +51,7 @@ import { ViewOrganizationInforPage } from '../pages/view-organization-infor/view
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     IRhubProvider,
     EmailComposer,
-    CallNumber,
-    Geolocation
+    CallNumber
   ]
 })
 export class AppModule {}

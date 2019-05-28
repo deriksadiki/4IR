@@ -1,7 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { LoadingController } from "ionic-angular";
 import { AlertController } from "ionic-angular";
-import { Geolocation } from '@ionic-native/geolocation';
 import moment from 'moment';
 declare var firebase
 /*
@@ -17,15 +16,16 @@ export class IRhubProvider {
   orgArray = new Array();
   commentArr = new Array();
   stayLoggedIn;
+  ProfileArr= new Array();
   downloadurl;
   rating;
-  nearByOrg = new Array();
   ratedOrgs = new Array();
+  url;
   totRating;
   auth = firebase.auth();
 
   constructor(public ngzone: NgZone, public alertCtrl: AlertController,
-    public loadingCtrl: LoadingController, private geo: Geolocation) {
+    public loadingCtrl: LoadingController) {
     console.log('Hello IRhubProvider Provider');
   }
 
@@ -93,7 +93,7 @@ export class IRhubProvider {
       alert.present();
     })
   }
-
+  
   Signup(email, password, name) {
     return new Promise((resolve, reject) => {
       this.ngzone.run(() => {
@@ -210,7 +210,13 @@ export class IRhubProvider {
     })
   }
 
+  retrieveUserProfile() {
+    let userID = firebase.auth().currentUser;
+    return firebase.database().ref("Users/" + "/" + "App_Users/" + userID.uid)
+  }
 
+
+  
   checkAuthState() {
     return new Promise((accpt, rej) => {
       this.ngzone.run(() => {
@@ -225,12 +231,12 @@ export class IRhubProvider {
     })
   }
 
-  comments(comment: any, commentKey: any, rating) {
+  comments(comment: any, commentKey: any,rating) {
     let user = firebase.auth().currentUser;
     return new Promise((accpt, rejc) => {
       this.ngzone.run(() => {
         var day = moment().format('MMMM Do YYYY, h:mm:ss a');
-        firebase.database().ref("Reviews/" + commentKey).push({
+        firebase.database().ref("Reviews/" +commentKey).push({
           comment: comment,
           uid: user.uid,
           date: day,
@@ -268,7 +274,7 @@ export class IRhubProvider {
                   this.assignRating(CommentDetails[key].rate)
                 }
               }
-              this.viewProfileMain(chckId).then((profileData: any) => {
+              this.viewUserProfile(chckId).then((profileData: any) => {
                 obj.url = profileData.downloadurl;
                 obj.username = profileData.name;
                 this.commentArr.push(obj);
@@ -300,7 +306,7 @@ export class IRhubProvider {
     return this.rating;
   }
 
-  viewProfileMain(userid: string) {
+  viewUserProfile(userid: string) {
     let user = firebase.auth().currentUser;
     return new Promise((accpt, rejc) => {
       this.ngzone.run(() => {
@@ -329,7 +335,7 @@ export class IRhubProvider {
       this.ngzone.run(() => {
         let userID = firebase.auth().currentUser;
         var numRating = 0;
-        firebase.database.ref("comments/").on("value", (data: any) => {
+      firebase.database.ref("comments/").on("value", (data: any) => {
           if (data.val() != null || data.val() != undefined) {
             let keys = Object.keys(data.val());
             for (var x = 0; x < keys.length; x++) {
@@ -377,7 +383,7 @@ export class IRhubProvider {
                               orgGallery: gal1,
                               orgGallery1: gal2,
                               orgGallery2: gal3,
-                              view: data4.val().view,
+                              view:data4.val().view,
                               orgId: xx[p],
                               city: data4.val().city,
                               orgLogo: data4.val().Logo,
@@ -400,249 +406,109 @@ export class IRhubProvider {
           this.assignTotRating(numRating);
           accpt(this.ratedOrgs);
         })
+
       })
     })
   }
 
-
-
-  getUserLocation() {
-    return new Promise((resolve , reject)=>{
-
-      this.geo.getCurrentPosition().then((resp) => {
-        // resp.coords.latitude
-        // resp.coords.longitude
-       }).catch((error) => {
-         console.log('Error getting location', error);
-       });
-
-    })
-     
-  }
-
-
-  //show direction on the map 
-
-  calculateAndDisplayRoute(location, destination, directionsDisplay, directionsService) {
-    console.log(location);
-    console.log(destination);
-    directionsService.route({
-      origin: location,
-      destination: destination,
-      travelMode: 'DRIVING'
-    }, function (response, status) {
-      if (status === 'OK') {
-        directionsDisplay.setDirections(response);
-        console.log("routing OK");
-        directionsDisplay.setOptions({ suppressMarkers: true });
-      } else {
-        console.log(status);
-        console.log("not working");
-
-
-      }
-    });
-  }
-
-  //creating a  radius
-
-  createPositionRadius(latitude, longitude) {
-    var leftposition, rightposition, downposition, uposititon;
-    return new Promise((accpt, rej) => {
-      var downlat = new String(latitude);
-      var latIndex = downlat.indexOf(".");
-      var down = parseInt(downlat.substr(latIndex + 1, 2)) + 6;
-      var down = parseInt(downlat.substr(latIndex + 1, 2)) + 12;
-      if (down >= 100) {
-        if (downlat.substr(0, 1) == "-") {
-          var firstDigits = parseInt(downlat.substr(0, 3)) + 1;
-        }
-        else {
-          var firstDigits = parseInt(downlat.substr(0, 2)) - 1;
-        }
-        var remainder = down - 100;
-        if (remainder >= 10) {
-          downposition = firstDigits + "." + remainder;
-        }
-        else {
-          downposition = firstDigits + ".0" + remainder;
-        }
-
-      } else {
-        if (downlat.substr(0, 1) == "-") {
-          downposition = downlat.substr(0, 3) + "." + down;
-        }
-        else {
-          downposition = downlat.substr(0, 2) + "." + down;
-        }
-
-      }
-
-      //up  position
-      var uplat = new String(latitude);
-      var latIndex = uplat.indexOf(".");
-      var up = parseInt(uplat.substr(latIndex + 1, 2)) - 6;
-      var up = parseInt(uplat.substr(latIndex + 1, 2)) - 12;
-      if (up <= 0) {
-        if (uplat.substr(0, 1) == "-") {
-          var firstDigits = parseInt(uplat.substr(0, 3)) + 1;
-        }
-        else {
-          var firstDigits = parseInt(uplat.substr(0, 2)) - 1;
-        }
-        var remainder = down - 100;
-        if (remainder >= 10) {
-          uposititon = firstDigits + "." + remainder;
-        }
-        else {
-          uposititon = firstDigits + ".0" + remainder;
-        }
-      } else {
-        if (uplat.substr(0, 1) == "-") {
-          uposititon = uplat.substr(0, 3) + "." + up;
-        }
-        else {
-          uposititon = uplat.substr(0, 2) + "." + up;
-        }
-
-      }
-      //left position
-      var leftlat = new String(longitude);
-      var longIndex = leftlat.indexOf(".");
-      var left = parseInt(leftlat.substr(longIndex + 1, 2)) - 6;
-      var left = parseInt(leftlat.substr(longIndex + 1, 2)) - 12;
-      if (left >= 100) {
-        if (leftlat.substr(0, 1) == "-") {
-          var firstDigits = parseInt(leftlat.substr(0, 3)) - 1;
-        } else {
-          var firstDigits = parseInt(leftlat.substr(0, 2)) + 1;
-        }
-        var remainder = left - 100;
-        leftposition = firstDigits + ".0" + remainder;
-      } else {
-        if (leftlat.substr(0, 1) == "-") {
-          var firstDigits = parseInt(leftlat.substr(0, 3)) + 1;
-        }
-        else {
-          var firstDigits = parseInt(leftlat.substr(0, 2)) - 1;
-        }
-
-        if (left == 0) {
-          var remainder = 0;
-        }
-        else {
-          var remainder = left - 12;
-        }
-
-        leftposition = firstDigits + ".0" + remainder;
-
-      }
-      //right position
-      var rightlat = new String(longitude);
-      var longIndex = rightlat.indexOf(".");
-      var right = parseInt(rightlat.substr(longIndex + 1, 2)) + 6;
-      var right = parseInt(rightlat.substr(longIndex + 1, 2)) + 12;
-      if (right >= 100) {
-        if (rightlat.substr(0, 1) == "-") {
-          var firstDigits = parseInt(rightlat.substr(0, 3)) - 1;
-        } else {
-          var firstDigits = parseInt(rightlat.substr(0, 2)) + 1;
-        }
-        var remainder = right - 100;
-        rightposition = firstDigits + ".0" + remainder;
-      } else {
-        rightposition = rightlat.substr(0, 2) + "." + right;
-        if (left == 0) {
-          var remainder = 0;
-        }
-        else {
-          var remainder = left - 12;
-        }
-        rightposition = firstDigits + ".0" + remainder;
-      }
-      let radius = {
-        left: leftposition,
-        right: rightposition,
-        up: uposititon,
-        down: downposition
-      }
-
-      accpt(radius);
-
-      // down  position
-
-
-    })
-
-  }
-
-  //get current location
-
-  getCurrentLocation(lat, lng) {
-    return new Promise((accpt, rej) => {
-      console.log("provider outside getCurPos");
-      this.createPositionRadius(lat, lng).then((data: any) => {
-        accpt(data);
+  uploadProfilePic(pic, name) {
+    return new Promise((accpt, rejc) => {
+      this.ngzone.run(() => {
+        firebase.storage().ref(name).putString(pic, 'data_url').then(() => {
+          accpt(name);
+          console.log(name);
+        }, Error => {
+          rejc(Error.message)
+        })
       })
     })
-
   }
 
-  getCurrentLocations() {
-    //get current location
-    return new Promise((accpt, rej) => {
-      this.geo.getCurrentPosition().then((resp) => {
-        console.log(resp);
-        accpt(resp);
-      }).catch((error) => {
-        console.log('Error getting location', error.message);
-      });
+  storeToDB1(name) {
+    return new Promise((accpt, rejc) => {
+      this.ngzone.run(() => {
+        this.ProfileArr.length = 0;
+        var storageRef = firebase.storage().ref(name);
+        storageRef.getDownloadURL().then(url => {
+          console.log(url)
+          var userID = firebase.auth().currentUser;
+          var link = url;
+          firebase.database().ref("Users/" + "/" + "App_Users/" + userID.uid).update({
+            downloadurl: link,
+          });
+          accpt('success');
+        }, Error => {
+          rejc(Error.message);
+          console.log(Error.message);
+        });
+      })
     })
-
-
   }
 
-  getNearByOrganizations(radius, org) {
-    return new Promise((accpt, rej) => {
-      this.nearByOrg = []
-      this.getCurrentLocations().then((resp: any) => {
-        console.log(resp);
-        var lat = new String(resp.coords.latitude).substr(0, 6);
-        console.log(lat);
-        console.log(resp.coords.latitude)
-        var long = new String(resp.coords.longitude).substr(0, 5);
-        console.log(long);
-        console.log(resp.coords.longitude);
-        for (var x = 0; x < org.length; x++) {
-          var orglat = new String(org[x].lat).substr(0, 6);
-          var orgLong = new String(org[x].long).substr(0, 5);
-
-          console.log(orglat);
-          console.log(orgLong);
-          console.log(radius.left);
-          console.log(radius.right);
-          console.log(radius.down);
-          console.log(radius.up);
-
-
-          if ((orgLong <= long && orgLong >= radius.left || orgLong >= long && orgLong <= radius.right) && (orglat >= lat && orglat <= radius.down || orglat <= lat && orglat >= radius.up)) {
-            console.log("In nearby");
-
-            this.nearByOrg.push(org[x]);
-            console.log(this.nearByOrg);
-            accpt(this.nearByOrg)
-
-          } else {
-            console.log("kb");
-
+  getUserID() {
+    return new Promise((accpt, rejc) => {
+      this.ngzone.run(() => {
+        var userID = firebase.auth().currentUser
+        firebase.database().ref("Users/" + "/" + "App_Users/").on("value", (data: any) => {
+          var profileDetails = data.val();
+          if (profileDetails !== null) {
           }
-        }
-
+          console.log(profileDetails);
+          accpt(userID.uid);
+        }, Error => {
+          rejc(Error.message)
+        })
       })
-
-
     })
   }
+
+
+  update(name, email, downloadurl, address) {
+    this.ProfileArr.length = 0;
+    return new Promise((pass, fail) => {
+      this.ngzone.run(() => {
+        var userID  = firebase.auth().currentUser
+        firebase.database().ref("Users/" + "/" + "App_Users/" + userID.uid).update({
+          name: name,
+          email: email,
+          downloadurl: downloadurl,
+          address: address,
+       
+        });
+      })
+    })
+  }
+
+  GetUserProfile() {
+    return new Promise((accpt, rejc) => {
+      this.ngzone.run(() => {
+        let user = firebase.auth().currentUser
+        firebase.database().ref("Users/" + "/" + "App_Users/").on("value", (data: any) => {
+          let DisplayData = data.val();
+          let keys = Object.keys(DisplayData);
+          if (DisplayData !== null) {
+          }
+          for (var i = 0; i < keys.length; i++) {
+            this.storeImgur(DisplayData[keys[i]].downloadurl);
+            console.log(DisplayData[keys[i]].downloadurl)
+          }
+          accpt(DisplayData);
+        }, Error => {
+          rejc(Error.message)
+        })
+      })
+    })
+  }
+
+  storeImgur(url) {
+    this.url = url;
+    console.log(this.url)
+  }
+
+
+  
+
+
 
 
 
