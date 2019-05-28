@@ -55,7 +55,7 @@
   
   <div *ngFor="let a of orgArray">
     <!-- <div *ngIf="x.orgName == a"> -->
-    <ion-item
+    <ion-item   *ngIf="showAllorgList"
       (click)="goToViewPage(a.orgName)"
       no-padding
       class="listedCard"
@@ -148,4 +148,23 @@
       </div>
   </div> 
   </div> -->
+
+
+  <div *ngFor="let a of nearbyArray"  >
+      <ion-item    *ngIf="showNeabyList"
+      (click)="goToViewPage(a.orgName)"
+      no-padding
+      class="listedCard"
+      no-lines
+    >
+      <ion-thumbnail item-start large>
+        <img class="image" src="../../assets/download.png.png" />
+      </ion-thumbnail>
+      <h2>{{ a.orgName }}</h2>
+      <button ion-button icon-only color="custom" clear item-end>
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </ion-item>
+
+  </div>
 </ion-content>

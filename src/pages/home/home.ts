@@ -17,19 +17,20 @@ export class HomePage {
   @ViewChild('map') mapRef: ElementRef;
   orgArray = new Array();
   viewDetailsArray = new Array();
+  nearbyArray = new Array() ;
   img = "../../assets/imgs/Defaults/default.png";
   logInState;
   //variables
   loading;
-  ner
-  //variables
-  map;
+   map;
   lat;
   lng;
   marker;
   showMultipleMarker;
   searchDismissState = "search";
   textField;
+  showNeabyList  =false ;
+  showAllorgList = true ;
   //Google services
   directionsService;
   directionsDisplay;
@@ -82,6 +83,9 @@ setTimeout(() => {
       console.log(radius);
       this.IRmethods.getNearByOrganizations(radius ,data).then((nearbyOrgs:any)=>{
         console.log(nearbyOrgs);
+        this.nearbyArray = data ;
+        console.log(this.nearbyArray);
+        
         
       })
     })
@@ -306,6 +310,21 @@ setTimeout(() => {
       theMap.style.display = "none"
       theList.style.display = "block"
     }
+
+    this.showNeabyList =false ;
+    this.showAllorgList =false ;
   }
 
+
+  near(){
+    this.showNeabyList =true ;
+    this.showAllorgList =false ;
+  }
+
+
+  all(){
+    this.showNeabyList =false;
+    this.showAllorgList =true ;
+    
+  }
 }
