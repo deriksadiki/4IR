@@ -46,6 +46,8 @@ export class HomePage {
       // }, 2500);
     })
 
+
+
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
         this.logInState = true;
@@ -261,5 +263,7 @@ export class HomePage {
       theList.style.display = "block"
     }
   }
+
+
 
 }
