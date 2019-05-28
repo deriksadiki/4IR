@@ -11,6 +11,7 @@ export class HomePage {
   @ViewChild('map') mapRef: ElementRef;
   //arrays
   orgArray =  new Array();
+  ner
 
   //variables
   map ;
@@ -171,6 +172,8 @@ setTimeout(() => {
    
   }
 
+
+  
 
   
 }

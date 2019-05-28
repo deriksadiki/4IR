@@ -1,10 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
-<<<<<<< HEAD
-import { Geolocation } from '@ionic-native/geolocation';
-=======
 import { LoadingController } from "ionic-angular";
 import { AlertController } from "ionic-angular";
->>>>>>> f694f4cd742603bdade1cd4bb2683febe107cc13
+import { Geolocation } from '@ionic-native/geolocation';
 declare var firebase;
 /*
   Generated class for the IRhubProvider provider.
@@ -16,19 +13,12 @@ declare var firebase;
 export class IRhubProvider {
 
   //arrays
-<<<<<<< HEAD
-  orgArray =  new Array();
-  nearByOrg = new Array() ;
-
-
-  constructor(public ngzone: NgZone , public geo :Geolocation) {
-=======
   orgArray = new Array();
+  nearByOrg ;
 
 
   constructor(public ngzone: NgZone, public alertCtrl: AlertController,
-    public loadingCtrl: LoadingController) {
->>>>>>> f694f4cd742603bdade1cd4bb2683febe107cc13
+    public loadingCtrl: LoadingController ,  public geo :Geolocation) {
     console.log('Hello IRhubProvider Provider');
   }
 
