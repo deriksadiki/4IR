@@ -20,8 +20,9 @@ export class HomePage {
   lng ;
   marker ;
   showMultipleMarker ;
-  searchDismissState ;
+  searchDismissState = "search" ;
   textField ;
+  img = "../../assets/imgs/Defaults/default.png"
 
   //Google services
 
@@ -272,6 +273,23 @@ setTimeout(() => {
     console.log(this.textField);
     // this.searchTerm = "";
 
+  }
+  n = 1
+  toggleMap(){
+    var theMap = document.getElementById("map");
+    var theList = document.getElementById("list");
+    
+    if(this.n == 1){
+      this.n = 0;
+      theMap.style.display ="block"
+      theList.style.display ="none"
+    }
+    else{
+
+      this.n = 1;
+      theMap.style.display ="none"
+      theList.style.display ="block"
+    }
   }
   
 }
