@@ -10,6 +10,8 @@ import { IRhubProvider } from '../providers/i-rhub/i-rhub';
 import { SignInPage} from '../pages/sign-in/sign-in' ;
 import {SignUpPage} from '../pages/sign-up/sign-up' ;
 import { Geolocation } from '@ionic-native/geolocation';
+import { CallNumber } from '@ionic-native/call-number';
+import { EmailComposer } from '@ionic-native/email-composer';
 
 @NgModule({
   declarations: [
@@ -39,9 +41,9 @@ import { Geolocation } from '@ionic-native/geolocation';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    IRhubProvider,Geolocation
-    //EmailComposer,
-    //CallNumber
+    IRhubProvider,Geolocation ,
+    EmailComposer,
+    CallNumber
   ]
 })
 export class AppModule {}

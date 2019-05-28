@@ -1,45 +1,143 @@
 <ion-header class="ionHeader">
   <div class="theHead">
     <ion-title class="theTitle">
-      <b></b>
+      <b>4IR HUBionic</b>
     </ion-title>
 
     <div class="top">
       <button ion-button icon-only clear class="more" (click)="showButton(textField)">
         <ion-icon name="{{searchDismissState}}"></ion-icon>
       </button>
-      <ion-input maxLength="44" class="searchBar" type="text" placeholder="Search by city (e.g johannesburg)"
-        [(ngModel)]="searchTerm" (input)="filterItems(); getItems($event)"></ion-input>
+      <ion-input
+        maxLength="44"
+        class="searchBar"
+        type="text"
+        placeholder="Search by city (e.g johannesburg)"
+        [(ngModel)]="searchTerm"
+        (input)="filterItems(); getItems($event)"
+      ></ion-input>
       <div class="profile">
-        <img [src]="img" class="displayPic" alt="" (click)="Userprofile()">
+        <img [src]="img" class="displayPic" alt="" (click)="Userprofile()"/>
         <!-- <ion-icon ios="ios-contact" class="displayPic" md="md-contact-outline" (click)="profile()"></ion-icon> -->
       </div>
       <ion-card class="options">
         <div class="intro">
           <p class="statement">
-            <ion-icon name="pin"></ion-icon> {{location}}
+            <ion-icon name="pin"></ion-icon> {{ location }}
           </p>
-          <i class="finePrint"> PinHome uses your location to provide you with places near you.</i>
+          <i class="finePrint">
+            PinHome uses your location to provide you with places near you.</i          >
         </div>
         <div class="myFlexBox">
-          <button class="selects" ion-button color={{custom1}} (click)="all()">Show All</button>
-          <button class="selects" ion-button color={{custom2}} (click)="near()">Show Near Me</button>
+          <button class="selects" ion-button color="{{ custom1 }}" (click)="all()">
+            Show All
+          </button>
+          <button
+            class="selects" ion-button
+            color="{{ custom2 }}" (click)="near()">
+            Show Near Me
+          </button>
         </div>
       </ion-card>
     </div>
   </div>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+  <ion-fab bottom right>
+    <button ion-fab mini (click)="toggleMap()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 
-  <div #map id="map">
-     
-  </div>
+  <div #map id="map"></div>
 
   <!-- to show list of organization -->
-  <div>
-      <img [src]="img" weight="50px" height="50px">
-      <button ion-button (click)="Userprofile()">user profile</button>
+<div id="list" padding>
+  
+  <div *ngFor="let a of orgArray">
+    <!-- <div *ngIf="x.orgName == a"> -->
+    <ion-item
+      (click)="goToViewPage(a.orgName)"
+      no-padding
+      class="listedCard"
+      no-lines
+    >
+      <ion-thumbnail item-start large>
+        <img class="image" src="../../assets/download.png.png" />
+      </ion-thumbnail>
+      <h2>{{ a.orgName }}</h2>
+      <!-- <div *ngIf="x.rating == 0; then loggedIn0">
+      </div>
+      <div *ngIf="x.rating == 1; then loggedIn1">
+      </div>
+      <div *ngIf="x.rating == 2; then loggedIn2">
+      </div>
+      <div *ngIf="x.rating == 3; then loggedIn3">
+      </div>
+      <div *ngIf="x.rating == 4; then loggedIn4">
+      </div>
+      <div *ngIf="x.rating == 5; then loggedIn5">
+      </div>
+      <ng-template #loggedIn0>
+        <p class="starRating">
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+        </p>
+      </ng-template>
+      <ng-template #loggedIn1>
+        <p class="starRating">
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+        </p>
+      </ng-template>
+      <ng-template #loggedIn2>
+        <p class="starRating">
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+        </p>
+      </ng-template>
+      <ng-template #loggedIn3>
+        <p class="starRating">
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+        </p>
+      </ng-template>
+      <ng-template #loggedIn4>
+        <p class="starRating">
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+        </p>
+      </ng-template>
+      <ng-template #loggedIn5>
+        <p class="starRating">
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+          <ion-icon name="star"></ion-icon>
+        </p>
+      </ng-template> -->
+      <button ion-button icon-only color="custom" clear item-end>
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-item>
+  </div>
+</div>
+  <!-- <div>
       <div *ngFor="let a of orgArray" class="cards">
         <ion-item (click)="goToViewPage(a.orgName)" no-padding no-lines>
           <ion-thumbnail item-start large>
@@ -48,6 +146,7 @@
           {{a.orgName}}
         </ion-item>
       </div>
+<<<<<<< HEAD
   </div>
 
 
@@ -57,4 +156,7 @@
 </div  >
 
  
+=======
+  </div> -->
+>>>>>>> c2fe08d1dddd1ac2c4a688d08b0e76b1f439a75d
 </ion-content>
