@@ -18,7 +18,6 @@ export class HomePage {
   orgArray = new Array();
   viewDetailsArray = new Array();
   nearbyArray = new Array() ;
-  img = "../../assets/imgs/Defaults/default.png";
   logInState;
   //variables
   loading;
@@ -29,6 +28,8 @@ export class HomePage {
   showMultipleMarker;
   searchDismissState = "search";
   textField;
+
+  category ;
  
   showNeabyList:boolean = false ;
   showOrgList:boolean =true ;
@@ -37,13 +38,23 @@ export class HomePage {
   mapMarker  ;
   catMarker ;
   
+  img = "../../assets/imgs/Defaults/default.png";
+ 
+  custom1 = "custom1";
+  custom2 = "custom2";
+ 
   showAllorgList = true ;
   //Google services
   directionsService;
   directionsDisplay;
   service;
   geocoder;
-  category ;
+  state = ["star-outline", "star-outline", "star-outline", "star-outline", "star-outline"]
+  Star1 = "star-outline";
+  Star2 = "star-outline";
+  Star3 = "star-outline";
+  Star4 = "star-outline";
+  Star5 = "star-outline";
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
@@ -131,6 +142,15 @@ export class HomePage {
 
     this.initMap();
 
+
+    
+    this.IRmethods.getAllOrganizations().then((data: any) => {
+      this.orgArray = data;
+      console.log(this.orgArray);
+      // setTimeout(() => {
+      //   this.loading.dismiss()
+      // }, 2500);
+    })
   }
 
 
@@ -192,11 +212,41 @@ export class HomePage {
         position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
         label: name,
         zoom: 8,
-
       });
-
     }
   }
+
+
+  Userprofile() {
+    this.IRmethods.checkAuthState().then(data => {
+      if (data == false) {
+        let alert = this.alertCtrl.create({
+          subTitle: 'You have to sign in before you can view your profile, would you like to sign in now?',
+          // cssClass: 'myAlert',
+          buttons: [
+            {
+              text: 'Sign in',
+              handler:
+                data => {
+                  var opt = "profile";
+                  this.navCtrl.push(SignInPage, { option: opt })
+                }
+            },
+            {
+              text: 'Cancel',
+              handler:
+                data => {
+
+                }
+            }]
+        });
+        alert.present();
+      } else {
+        this.navCtrl.push(UserProfilePage)
+      }
+    })
+  }
+  
 
   showButton() {
     var theCard = document.getElementsByClassName("options") as HTMLCollectionOf<HTMLElement>;
