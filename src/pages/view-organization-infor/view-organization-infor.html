@@ -14,6 +14,7 @@
 
 
 <ion-content *ngFor="let displayDetails of orgArray">
+  
   <img src="../../assets/download.png.png"> {{displayDetails.orgName}}
   <br> {{displayDetails.category}}
   <br> {{displayDetails.region}}
@@ -41,4 +42,16 @@
       <hr>
     </div>
   </ion-card> 
+  {{showtime}}
+
+  {{showDistance}}
+  <button ion-button (click)="getDistance()">get distance </button>
+  <button ion-button (click)="getDirection()">get Direction </button>
+
+ 
+
+  <div #map id="map"  *ngIf="showMap">
+
+
+  </div>
 </ion-content>

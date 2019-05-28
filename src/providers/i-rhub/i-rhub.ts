@@ -743,12 +743,7 @@ getNearByOrganizations(radius,org){
         var orglat = new String(org[x].lat).substr(0,6);
         var orgLong =  new String(org[x].long).substr(0,5);
         
-        console.log(orglat);
-        console.log(orgLong);
-        console.log( radius.left);
-        console.log(radius.right);
-        console.log(radius.down);
-        console.log(radius.up);
+        
         
         
         if ((orgLong  <= long  && orgLong  >= radius.left || orgLong  >= long  && orgLong  <= radius.right) && (orglat >= lat && orglat <= radius.down || orglat <= lat && orglat >= radius.up)){

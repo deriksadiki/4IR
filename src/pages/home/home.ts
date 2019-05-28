@@ -17,6 +17,7 @@ export class HomePage {
   @ViewChild('map') mapRef: ElementRef;
   orgArray = new Array();
   viewDetailsArray = new Array();
+  nearbyArray = new Array() ;
   logInState;
   //variables
   loading;
@@ -30,13 +31,18 @@ export class HomePage {
   searchDismissState = "search";
   textField;
   img = "../../assets/imgs/Defaults/default.png";
+  showNeabyList:boolean = false ;
+  showOrgList:boolean =true ;
   toggleState = "map";
-
+  showMap :boolean = false ;
+  mapMarker  ;
+  catMarker ;
   //Google services
   directionsService;
   directionsDisplay;
   service;
   geocoder;
+  category ;
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
@@ -84,7 +90,7 @@ export class HomePage {
           console.log(radius);
           this.IRmethods.getNearByOrganizations(radius, data).then((nearbyOrgs: any) => {
             console.log(nearbyOrgs);
-
+            this.nearbyArray =nearbyOrgs;
           })
         })
       })
@@ -160,56 +166,13 @@ export class HomePage {
 
 
 
-  getDirection() {
-    if (this.directionsDisplay != null) {
-      this.directionsDisplay.setMap(null);
-
-      console.log("directionDisplay has something");
-
-    } else {
-      console.log("directionDisplay has nothing");
-
-    }
-    let userCurrentLocation = new google.maps.LatLng(this.lat, this.lng);
-    let destination = new google.maps.LatLng(-26.2583, 27.9014);
-    this.directionsDisplay.setMap(this.map);
-    this.IRmethods.calculateAndDisplayRoute(userCurrentLocation, destination, this.directionsDisplay, this.directionsService)
-
-
-
-  }
-
+ 
 
 
   // get Distance and Time 
 
 
-  getDistance() {
-    let userCurrentLocation = new google.maps.LatLng(this.lat, this.lng);
-    let destination = new google.maps.LatLng(-26.2583, 27.9014);
-    this.service.getDistanceMatrix(
-      {
-        origins: [userCurrentLocation],
-        destinations: [destination],
-        travelMode: 'DRIVING'
-      }, (response, status) => {
-        if (status == 'OK') {
-          var origins = response.originAddresses;
-          var destinations = response.destinationAddresses;
-
-          for (var i = 0; i < origins.length; i++) {
-            var results = response.rows[i].elements;
-            for (var j = 0; j < results.length; j++) {
-              var element = results[j];
-              console.log(element);
-
-            }
-          }
-        }
-      });
-
-  }
-
+  
 
   // get all marker for all organisation
 
@@ -357,8 +320,75 @@ export class HomePage {
       theList.style.display = "block";
       theHeader[0].style.display = "block";
     }
+     
+    this.showNeabyList =false ;
+    this.showOrgList=false ;
   }
 
 
+  all(){
+    this.showNeabyList =false ;
+    this.showOrgList=true ;
 
+  }
+
+  near(){
+    console.log("clicked");
+    
+    this.showNeabyList =true ;
+    this.showOrgList=false ;
+
+    console.log(this.showNeabyList);
+    
+   
+  }
+
+
+  viewNearbyOrg(i){
+    console.log(i);
+    
+  }
+
+  selectcategory(){
+   
+    console.log( this.category);
+    console.log(this.orgArray);
+
+    const loader = this.loadingCtrl.create({
+      content: "Please wait...",
+     
+    });
+    loader.present();
+    
+    setTimeout(()=>{
+
+      const options = {
+        center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
+        zoom: 8,
+        disableDefaultUI: true,
+      }
+      
+       this.mapMarker = new google.maps.Map(this.mapRef.nativeElement , options);
+  
+      for (let index = 0; index < this.orgArray.length; index++) {
+        if(this.category == this.orgArray[index].category){
+         
+          console.log(this.orgArray[index].lat);
+          console.log(this.orgArray[index].long);
+          this.catMarker = new google.maps.Marker({
+            map: this.mapMarker,
+           
+            position: { lat: this.orgArray[index].lat, lng: this.orgArray[index].long },
+            label: name,
+            zoom: 8,
+          });
+        }
+        
+      }
+
+    } , 5000)
+    
+  loader.dismiss()
+    
+  }
 }

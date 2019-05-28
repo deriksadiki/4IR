@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController} from 'ionic-angular';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core'
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { EmailComposer } from '@ionic-native/email-composer'
 import { CallNumber } from '@ionic-native/call-number';
 import { IRhubProvider } from '../../providers/i-rhub/i-rhub'
 import { SignInPage } from '../sign-in/sign-in';
+
+
+declare var google;
 /**
  * Generated class for the ViewOrganizationInforPage page.
  *
@@ -16,12 +19,14 @@ import { SignInPage } from '../sign-in/sign-in';
   selector: 'page-view-organization-infor',
   templateUrl: 'view-organization-infor.html',
 })
-export class ViewOrganizationInforPage implements OnInit{
+export class ViewOrganizationInforPage implements OnInit {
+  @ViewChild('map') mapRef: ElementRef;
   orgArray = new Array();
   commentArr = new Array();
   comments;
   imageKey;
-
+  map ;
+  marker; 
   state = ["star-outline", "star-outline", "star-outline", "star-outline", "star-outline"]
   Star1 = "star-outline";
   Star2 = "star-outline";
@@ -29,21 +34,82 @@ export class ViewOrganizationInforPage implements OnInit{
   Star4 = "star-outline";
   Star5 = "star-outline";
   rateState: boolean;
+  destlat;
+  destlong;
+  currentUserlat;
+  currentUserlng ;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private emailComposer: EmailComposer,private callNumber: CallNumber,public irhubProvider: IRhubProvider,public alertCtrl:AlertController) {
+  showtime;
+  showDistance ;
+  showMap ;
+  //Google services
+  directionsService;
+  directionsDisplay;
+  service;
+  geocoder;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController) {
     this.orgArray.push(this.navParams.get('orgObject'));
     console.log(this.navParams.get('orgObject'))
     this.imageKey = this.orgArray[0].id;
     console.log(this.imageKey);
     console.log(this.orgArray);
+
+
+    console.log(this.orgArray[0].lat);
+
+    this.destlat = this.orgArray[0].lat
+    this. destlong = this.orgArray[0].long
+
+
+   
+
   }
+
+
+
+  ionViewWillEnter() {
+    this.directionsService = new google.maps.DirectionsService;
+    this.directionsDisplay = new google.maps.DirectionsService;
+    this.directionsDisplay = new google.maps.DirectionsRenderer;
+    this.service = new google.maps.DistanceMatrixService();
+    this.geocoder = new google.maps.Geocoder;
+
+
+
+    this.irhubProvider.getUserLocation().then((data: any) => {
+      console.log(data);
+      console.log(data.coords.latitude);
+      console.log(data.coords.longitude);
+
+      this.currentUserlat = data.coords.latitude;
+      this.currentUserlng = data.coords.longitude
+     
+
+
+    })
+
+
+    
+  }
+
+
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ViewOrganizationInforPage');
+
+
   }
 
   ngOnInit() {
-   // this.retrieveComments();
+    setTimeout(()=>{
+      this.initMap();
+    }, 4000)
+   
+    console.log("testmap");
+    
+    // this.retrieveComments();
   }
 
   // retrieveComments() {
@@ -219,7 +285,7 @@ export class ViewOrganizationInforPage implements OnInit{
     }
   }
 
-  
+
   call(cell) {
     console.log(cell);
 
@@ -241,8 +307,94 @@ export class ViewOrganizationInforPage implements OnInit{
     // Send a text message using default options
     this.emailComposer.open(email);
   }
+//show map 
+
+
+initMap() {
+  console.log(this.currentUserlng);
+ 
+
+  const options = {
+    center: { lat: parseFloat(this.currentUserlat), lng: parseFloat(this.currentUserlng) },
+    zoom: 8,
+    disableDefaultUI: true,
+  }
+  this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+
+  // adding user marker to the map 
+  this.marker = new google.maps.Marker({
+    map: this.map,
+    zoom: 10,
+    position: this.map.getCenter()
+    //animation: google.maps.Animation.DROP,
+  });
+
+  // setTimeout(() => {
+  //   this.markers();
+  // }, 4000)
+
+
+  console.log("test");
+
+
+}
+
+  getDistance() {
+    console.log(this.destlat, this.destlong);
+    
+    let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
+    let destination = new google.maps.LatLng(this.destlat, this.destlong);
+    this.service.getDistanceMatrix(
+      {
+        origins: [userCurrentLocation],
+        destinations: [destination],
+        travelMode: 'DRIVING'
+      }, (response, status) => {
+        if (status == 'OK') {
+          var origins = response.originAddresses;
+          var destinations = response.destinationAddresses;
+
+          for (var i = 0; i < origins.length; i++) {
+            var results = response.rows[i].elements;
+            for (var j = 0; j < results.length; j++) {
+              var element = results[j];
+              console.log(element);
+
+              this.showtime =element.duration.text;
+              this.showDistance =element.distance.text ;
+
+              console.log(this.showtime);
+              console.log(this.showDistance);
+              
+              
+
+            }
+          }
+        }
+      });
+
+  }
+  getDirection() {
+    this.showMap = true ;
+    if (this.directionsDisplay != null) {
+      this.directionsDisplay.setMap(null);
+
+      console.log("directionDisplay has something");
+
+    } else {
+      console.log("directionDisplay has nothing");
+
+    }
+    //this.show
+
+  
+    let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
+    let destination = new google.maps.LatLng(this.destlat, this.destlong);
+    this.directionsDisplay.setMap(this.map);
+    this.irhubProvider.calculateAndDisplayRoute(userCurrentLocation, destination, this.directionsDisplay, this.directionsService)
 
 
 
+  }
 
 }
