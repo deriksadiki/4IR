@@ -158,13 +158,13 @@ page-home {
         font-size: 14px;
         color: grey;
     }
-    // .myFlexBox {
-    //     position: absolute;
-    //     bottom: 10px;
-    //     padding-left: 10px;
-    //     display: flex;
-    //     width: 100%;
-    // }
+    .myFlexBox {
+        position: absolute;
+        bottom: 10px;
+        padding-left: 10px;
+        display: flex;
+        width: 100%;
+    }
     .selects {
         border-radius: 5px;
         height: 20px;
@@ -179,7 +179,7 @@ page-home {
     }
     .theLabel {
         padding: 5px;
-        width: 50%;
+        width: 60%;
     }
     #list {
         display: block;
