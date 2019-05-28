@@ -1,0 +1,29 @@
+<!--
+  Generated template for the EditUserProfilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>EditUserProfile</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <img class="picture" [src]="downloadurl">
+  <input id="file" type="file" accept="image/*" (change)="UploadProfilePic($event)">
+
+  <ion-input type="text" [value]="name" [(ngModel)]="name" placeholder="name"></ion-input>
+
+  <ion-input type="text" [value]="name" [(ngModel)]="email" placeholder="Enter email"></ion-input>
+
+  <ion-input type="text" [value]="name" [(ngModel)]="address" placeholder=" address"></ion-input>
+
+
+  <button ion-button (click)="EditPrfile()">Edit Profile</button>
+
+</ion-content>

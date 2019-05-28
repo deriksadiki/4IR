@@ -1,21 +1,28 @@
-import { Component, ViewChild, ElementRef } from '@angular/core'
-import { NavController, LoadingController, Loading } from 'ionic-angular';
+
+import { NavController, LoadingController, Loading, AlertController } from 'ionic-angular';
 import { IRhubProvider } from '../../providers/i-rhub/i-rhub';
+import { SignInPage } from '../sign-in/sign-in';
+import { UserProfilePage } from '../user-profile/user-profile';
+import { ViewOrganizationInforPage } from '../view-organization-infor/view-organization-infor';
+import { Component, ViewChild, ElementRef } from '@angular/core'
 import { Geolocation } from '@ionic-native/geolocation';
-declare var google ;
+
+declare var google;
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  @ViewChild('map') mapRef: ElementRef;
-  //arrays
-  orgArray =  new Array();
-  ner
 
+  @ViewChild('map') mapRef: ElementRef;
+  orgArray = new Array();
+  viewDetailsArray = new Array();
+  logInState;
   //variables
-  map ;
   loading;
+  ner
+  //variables
+  map;
   lat;
   lng ;
   marker ;
@@ -26,68 +33,39 @@ export class HomePage {
   toggleState = "map";
 
   //Google services
+  directionsService;
+  directionsDisplay;
+  service;
+  geocoder;
+  constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
 
- directionsService ; 
-  directionsDisplay  ;
- service ;
-  geocoder ;
-  constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl:LoadingController) {
-
-   
-    
-    this.IRmethods.getAllOrganizations().then((data:any) =>{
+    this.IRmethods.getAllOrganizations().then((data: any) => {
       this.orgArray = data;
+
       console.log(this.orgArray);
       // setTimeout(() => {
       //   this.loading.dismiss()
       // }, 2500);
     })
 
-    this.IRmethods.getUserLocation().then((data:any)=>{
-      console.log(data);
-      console.log(data.coords.latitude);
-      console.log(data.coords.longitude);
+    this.IRmethods.checkAuthState().then(data => {
+      if (data == true) {
+        this.logInState = true;
+        this.IRmethods.getProfile().then((data: any) => {
+          console.log(this.logInState);
 
-      this.lat =data.coords.latitude ;
-      this.lng = data.coords.longitude
-      console.log( this.lat );
-      
-      
-      
+          this.img = data;
+        })
+      }
+      else if (data == false) {
+        this.img = "assets/imgs/default.png";
+      }
     })
-
-
-
-setTimeout(() => {
-  this.IRmethods.getCurrentLocation(this.lat , this.lng).then((radius:any)=>{
-   
-    console.log(this.lat);
-   console.log(this.lng);
-    console.log(radius);
-    
-    this.IRmethods.getAllOrganizations().then((data:any)=>{
-      console.log(data);
-      console.log(radius);
-      this.IRmethods.getNearByOrganizations(radius ,data).then((nearbyOrgs:any)=>{
-        console.log(nearbyOrgs);
-        
-      })
-    })
-  })
-  
-}, 3000);
-  
-
   }
 
 
- 
 
-
-
-
-
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsRenderer;
@@ -98,51 +76,45 @@ setTimeout(() => {
     //   content: "Please wait....",
     // });
     // this.loading.present();
-    
-    this.initMap() ;
-    
+
+    this.initMap();
+
   }
 
 
-  initMap(){
+  initMap() {
 
     const options = {
-      center: { lat:  parseFloat(this.lat), lng: parseFloat(this.lng) },
+      center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
       zoom: 8,
       disableDefaultUI: true,
-      }
-
+    }
     this.map = new google.maps.Map(this.mapRef.nativeElement, options);
 
     // adding user marker to the map 
-
     this.marker = new google.maps.Marker({
       map: this.map,
       zoom: 10,
       position: this.map.getCenter()
       //animation: google.maps.Animation.DROP,
-     });
+    });
 
-     setTimeout(()=>{
-      this.markers() ;
-     } , 4000)
-   
+    setTimeout(() => {
+      this.markers();
+    }, 4000)
 
-     console.log("test");
-     
+
+    console.log("test");
+
 
   }
 
 
-  
- 
 
 
-  getDirection(){
-    
-   
 
-    
+
+  getDirection() {
     if (this.directionsDisplay != null) {
       this.directionsDisplay.setMap(null);
 
@@ -150,14 +122,14 @@ setTimeout(() => {
 
     } else {
       console.log("directionDisplay has nothing");
-     
-    }
-    let userCurrentLocation =  new google.maps.LatLng(this.lat, this.lng);
-    let destination =  new google.maps.LatLng(-26.2583,  27.9014);
-    this.directionsDisplay.setMap(this.map);
-    this.IRmethods.calculateAndDisplayRoute(userCurrentLocation , destination ,this.directionsDisplay , this.directionsService)
 
-  
+    }
+    let userCurrentLocation = new google.maps.LatLng(this.lat, this.lng);
+    let destination = new google.maps.LatLng(-26.2583, 27.9014);
+    this.directionsDisplay.setMap(this.map);
+    this.IRmethods.calculateAndDisplayRoute(userCurrentLocation, destination, this.directionsDisplay, this.directionsService)
+
+
 
   }
 
@@ -167,9 +139,8 @@ setTimeout(() => {
 
 
   getDistance() {
-    let userCurrentLocation =  new google.maps.LatLng(this.lat, this.lng);
-    let destination =  new google.maps.LatLng(-26.2583,  27.9014);
-    
+    let userCurrentLocation = new google.maps.LatLng(this.lat, this.lng);
+    let destination = new google.maps.LatLng(-26.2583, 27.9014);
     this.service.getDistanceMatrix(
       {
         origins: [userCurrentLocation],
@@ -185,25 +156,25 @@ setTimeout(() => {
             for (var j = 0; j < results.length; j++) {
               var element = results[j];
               console.log(element);
-             
-              }
+
+            }
           }
         }
       });
-   
+
   }
 
 
   // get all marker for all organisation
 
-  markers (){
+  markers() {
     console.log(this.orgArray);
-    
+
     for (let index = 0; index < this.orgArray.length; index++) {
       var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
       this.showMultipleMarker = new google.maps.Marker({
         map: this.map,
-      //  icon: this.icon,
+        //  icon: this.icon,
 
 
         position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
@@ -211,7 +182,7 @@ setTimeout(() => {
         zoom: 8,
 
       });
-      
+
     }
   }
 
@@ -283,15 +254,15 @@ setTimeout(() => {
     var theHeader = document.getElementsByClassName("theHead") as HTMLCollectionOf <HTMLElement>;
     var theMap = document.getElementById("mapView");
     var theList = document.getElementById("list");
-    
-    if(this.n == 1){
+
+    if (this.n == 1) {
       this.n = 0;
       this.toggleState = "list"
       theMap.style.display ="block"
       theList.style.display ="none";
       theHeader[0].style.display ="none";
     }
-    else{
+    else {
 
       this.n = 1;
       this.toggleState = "map"
@@ -300,5 +271,5 @@ setTimeout(() => {
       theHeader[0].style.display ="block";
     }
   }
-  
+
 }

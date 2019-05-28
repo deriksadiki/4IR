@@ -11,6 +11,10 @@ import { SignInPage} from '../pages/sign-in/sign-in' ;
 import {SignUpPage} from '../pages/sign-up/sign-up' ;
 import { Geolocation } from '@ionic-native/geolocation';
 import { CallNumber } from '@ionic-native/call-number';
+import { SplashScreenPage } from '../pages/splash-screen/splash-screen';
+import { UserProfilePage } from '../pages/user-profile/user-profile';
+import { ViewOrganizationInforPage } from '../pages/view-organization-infor/view-organization-infor';
+import { EditUserProfilePage } from '../pages/edit-user-profile/edit-user-profile';
 import { EmailComposer } from '@ionic-native/email-composer';
 
 @NgModule({
@@ -19,9 +23,11 @@ import { EmailComposer } from '@ionic-native/email-composer';
     HomePage,
     SignInPage,
     SignUpPage,
-    //SplashScreenPage,
-    //UserProfilePage,
-    //
+    SplashScreenPage,
+    UserProfilePage,
+    ViewOrganizationInforPage,
+    EditUserProfilePage
+  
   ],
   imports: [
     BrowserModule,
@@ -33,9 +39,11 @@ import { EmailComposer } from '@ionic-native/email-composer';
     HomePage,
     SignInPage,
     SignUpPage,
-    //SplashScreenPage,
-    //UserProfilePage,
-    //ViewOrganizationInforPage
+    SplashScreenPage,
+    UserProfilePage,
+    ViewOrganizationInforPage,
+    EditUserProfilePage
+  
   ],
   providers: [
     StatusBar,
