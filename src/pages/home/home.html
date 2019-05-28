@@ -5,14 +5,37 @@
 </ion-header>
 
 <ion-content padding>
-  <img [src]="img" weight="50px" height="50px">
-  <button ion-button (click)="Userprofile()">user profile</button>
-  <div *ngFor="let a of orgArray" class="cards">
-    <ion-item (click)="goToViewPage(a.orgName)" no-padding no-lines>
-      <ion-thumbnail item-start large>
-        <img src="../../assets/download.png.png">
-      </ion-thumbnail>
-      {{a.orgName}}
-    </ion-item>
+
+  <!-- to show list of organization -->
+  <div>
+      <img [src]="img" weight="50px" height="50px">
+      <button ion-button (click)="Userprofile()">user profile</button>
+      <div *ngFor="let a of orgArray" class="cards">
+        <ion-item (click)="goToViewPage(a.orgName)" no-padding no-lines>
+          <ion-thumbnail item-start large>
+            <img src="../../assets/download.png.png">
+          </ion-thumbnail>
+          {{a.orgName}}
+        </ion-item>
+      </div>
   </div>
+
+
+  <!-- show map -->
+  <div>
+      <div #map id="map">
+
+
+        </div>
+      
+        <button ion-button  (click)="getDirection()">get Direction</button>
+        <button ion-button  (click)="getDistance()">get distance</button>
+      
+        <div *ngFor="">
+      
+        </div>
+  </div>
+
+
+ 
 </ion-content>

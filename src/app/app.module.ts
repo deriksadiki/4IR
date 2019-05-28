@@ -48,7 +48,8 @@ import { ViewOrganizationInforPage } from '../pages/view-organization-infor/view
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     IRhubProvider,
     EmailComposer,
-    CallNumber
+    CallNumber,
+    Geolocation
   ]
 })
 export class AppModule {}
