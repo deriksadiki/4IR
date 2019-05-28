@@ -1,48 +1,58 @@
 page-home {
-    .cards{
+    .cards {
         box-shadow: 0 5px 5px rgba(128, 128, 128, 0.866);
         transition: 500ms;
         padding: 0;
         margin-bottom: 20px;
         height: 110px;
-    
     }
-    #map{
+    #map {
         width: 100%;
-        height:400px;
-        display: none;
+        height: 100%;
+        display: block;
         animation: fadeIn 1s;
     }
-
-//   =========================  
-    .theHead{
+    //   =========================
+    #mapView {
+        width: 100%;
+        height: 100%;
+        display: none;
+    }
+    .theHead {
         transition: 500ms;
         height: 120px;
-        background: #166b85;
+        background: whitesmoke;
         position: relative;
         box-shadow: 0 0 5px #fff;
+        border-bottom-right-radius: 16px;
+        border-bottom-left-radius: 16px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.363);
     }
-    .theTitle{
+    .split {
+        height: 190px;
+        transition: 1s;
+    }
+    .theTitle {
         transition: 500ms;
         color: white;
         position: absolute;
         // border: 2px solid red;
         top: 25px;
         left: 50%;
-        transform: translateX(-50%)
+        transform: translateX(-50%);
         // left: 0%;
     }
-    b{
-        color: white
+    b {
+        color: rgb(26, 26, 26);
     }
-    .top{
-        position: relative;
-        background: #166b85;
-        // border: 2px solid red
-    }
-    .more{
+    // .top {
+    //     position: relative;
+    //     background: #166b85;
+    //     // border: 2px solid red
+    // }
+    .more {
         transition: 700ms;
-        color: white;
+        color: rgb(17, 17, 17);
         position: absolute;
         top: 20px;
         right: 10px;
@@ -55,7 +65,7 @@ page-home {
         border-radius: 50px;
         // text-align: right;
     }
-    .searchBar{
+    .searchBar {
         transition: 700ms;
         border-radius: 550px;
         background: white;
@@ -67,7 +77,7 @@ page-home {
         left: -10%;
         // transform: rotateY(180DEG)
     }
-    .profile{
+    .profile {
         transition: 700ms;
         color: white;
         position: absolute;
@@ -81,7 +91,7 @@ page-home {
         font-weight: bold;
         padding-left: 10px;
     }
-    .displayPic{
+    .displayPic {
         // margin-top: 8px;
         width: 35px;
         height: 35px;
@@ -89,67 +99,85 @@ page-home {
         object-fit: cover;
         font-size: 3em;
         color: black;
-   
     }
-    .options{
+    .options {
         height: 130px;
-        // width: 100vw;
+        width: 90%;
         // box-shadow: 0 10px 15px grey;
         border-radius: 5px;
         transition: 700ms;
         background: white;
         position: absolute;
         top: 60px;
-        z-index: 100
+        left: 50%;
+        transform: translateX(-52.5%);
+        z-index: 100;
         // display: flex;
     }
-    .intro{
+    .intro {
         padding-left: 10px;
         padding-top: 10px;
         padding-right: 10px;
     }
-    .statement{
-        font-size:  16px;
+    .statement {
+        font-size: 16px;
         font-weight: bolder;
         margin-top: 10px;
         color: orange;
         // text-shadow: 0 0 5px greenyellow
     }
-    .finePrint{
+    .finePrint {
         font-size: 14px;
         color: grey;
-       
     }
-    .myFlexBox{
+    .myFlexBox {
         position: absolute;
         bottom: 10px;
         padding-left: 10px;
         display: flex;
     }
-    .selects{
+    .selects {
         border-radius: 50px;
         width: 120px;
         height: 30px;
-        font-size: 12px; 
+        font-size: 12px;
     }
-    .ionHeader{
+    .ionHeader {
         height: 0px;
-    }
-    #list{
         display: block;
         animation: fadeIn 1s;
     }
-    
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
+    #list {
+        display: block;
+        animation: fadeIn 1s;
     }
-    20% {
-      opacity: 0;
+    .listedCard {
+        box-shadow: 0 5px 5px rgba(128, 128, 128, 0.5);
+        border-radius: 5px;
+        transition: 500ms;
+        padding: 0;
+        margin-bottom: 20px;
+        height: 110px;
     }
-    100% {
-      opacity: 1;
+    .item ion-thumbnail {
+        min-width: 110px;
+        min-height: 110px;
+        img {
+            max-width: 80px;
+            min-width: 110px;
+            height: 110px;
+            object-fit: cover;
+        }
     }
-  }
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        20% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
 }
-

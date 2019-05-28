@@ -22,7 +22,8 @@ export class HomePage {
   showMultipleMarker ;
   searchDismissState = "search" ;
   textField ;
-  img = "../../assets/imgs/Defaults/default.png"
+  img = "../../assets/imgs/Defaults/default.png";
+  toggleState = "map";
 
   //Google services
 
@@ -219,6 +220,7 @@ setTimeout(() => {
     let searcher = document.getElementsByClassName('searchBar') as HTMLCollectionOf<HTMLElement>;
     var theTitle = document.getElementsByClassName("theTitle") as HTMLCollectionOf<HTMLElement>
     var nav = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
+    var theSplit = document.getElementsByClassName("split") as HTMLCollectionOf<HTMLElement>;
     var searchBtn = document.getElementsByClassName("more") as HTMLCollectionOf<HTMLElement>;
     var prof = document.getElementsByClassName("profile") as HTMLCollectionOf<HTMLElement>;
     var restOf = document.getElementsByClassName("restOfBody") as HTMLCollectionOf<HTMLElement>;
@@ -236,6 +238,7 @@ setTimeout(() => {
       theCard[0].style.opacity = "1";
 
       nav[0].style.height = "120px";
+      theSplit[0].style.height = "190px";
 
       searchBtn[0].style.top = "20px";
 
@@ -260,6 +263,7 @@ setTimeout(() => {
       theCard[0].style.opacity = "0.5";
 
       nav[0].style.height = "50px";
+      theSplit[0].style.height = "40px";
 
       searchBtn[0].style.top = "0";
       prof[0].style.top = "8px";
@@ -276,19 +280,24 @@ setTimeout(() => {
   }
   n = 1
   toggleMap(){
-    var theMap = document.getElementById("map");
+    var theHeader = document.getElementsByClassName("theHead") as HTMLCollectionOf <HTMLElement>;
+    var theMap = document.getElementById("mapView");
     var theList = document.getElementById("list");
     
     if(this.n == 1){
       this.n = 0;
+      this.toggleState = "list"
       theMap.style.display ="block"
-      theList.style.display ="none"
+      theList.style.display ="none";
+      theHeader[0].style.display ="none";
     }
     else{
 
       this.n = 1;
+      this.toggleState = "map"
       theMap.style.display ="none"
-      theList.style.display ="block"
+      theList.style.display ="block";
+      theHeader[0].style.display ="block";
     }
   }
   

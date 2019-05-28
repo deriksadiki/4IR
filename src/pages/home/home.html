@@ -1,71 +1,66 @@
 <ion-header class="ionHeader">
-  <div class="theHead">
-    <ion-title class="theTitle">
-      <b>4IR HUB</b>
-    </ion-title>
+    <div class="theHead">
+        <ion-title class="theTitle">
+            <b>4IR HUB</b>
+        </ion-title>
 
-    <div class="top">
-      <button ion-button icon-only clear class="more" (click)="showButton(textField)">
-        <ion-icon name="{{searchDismissState}}"></ion-icon>
+        <div class="top">
+            <button ion-button icon-only clear class="more" (click)="showButton(textField)">
+        <ion-icon name="{{ searchDismissState }}"></ion-icon>
       </button>
-      <ion-input
-        maxLength="44"
-        class="searchBar"
-        type="text"
-        placeholder="Search by city (e.g johannesburg)"
-        [(ngModel)]="searchTerm"
-        (input)="filterItems(); getItems($event)"
-      ></ion-input>
-      <div class="profile">
-        <img [src]="img" class="displayPic" alt="" (click)="Userprofile()"/>
-        <!-- <ion-icon ios="ios-contact" class="displayPic" md="md-contact-outline" (click)="profile()"></ion-icon> -->
-      </div>
-      <ion-card class="options">
-        <div class="intro">
-          <p class="statement">
-            <ion-icon name="pin"></ion-icon> {{ location }}
-          </p>
-          <i class="finePrint">
-            PinHome uses your location to provide you with places near you.</i          >
-        </div>
-        <div class="myFlexBox">
-          <button class="selects" ion-button color="{{ custom1 }}" (click)="all()">
+            <ion-input maxLength="44" class="searchBar" type="text" placeholder="Search by city (e.g johannesburg)" [(ngModel)]="searchTerm" (input)="filterItems(); getItems($event)"></ion-input>
+            <div class="profile">
+                <img [src]="img" class="displayPic" alt="" (click)="Userprofile()" />
+                <!-- <ion-icon ios="ios-contact" class="displayPic" md="md-contact-outline" (click)="profile()"></ion-icon> -->
+            </div>
+            <ion-card class="options">
+                <div class="intro">
+                    <p class="statement">
+                        <ion-icon name="pin"></ion-icon> {{ location }}
+                    </p>
+                    <i class="finePrint">
+            PinHome uses your location to provide you with places near you.</i>
+                </div>
+                <div class="myFlexBox">
+                    <button class="selects" ion-button color="{{ custom1 }}" (click)="all()">
             Show All
           </button>
-          <button
-            class="selects" ion-button
-            color="{{ custom2 }}" (click)="near()">
+                    <button class="selects" ion-button color="{{ custom2 }}" (click)="near()">
             Show Near Me
           </button>
+                </div>
+            </ion-card>
         </div>
-      </ion-card>
     </div>
-  </div>
 </ion-header>
 
 <ion-content>
-  <ion-fab bottom right>
-    <button ion-fab mini (click)="toggleMap()"><ion-icon name="add"></ion-icon></button>
-  </ion-fab>
+    <ion-fab bottom right>
+        <button ion-fab mini (click)="toggleMap()">
+      <ion-icon name="{{toggleState}}"></ion-icon>
+    </button>
+    </ion-fab>
 
-  <div #map id="map"></div>
+    <div id="mapView">
 
-  <!-- to show list of organization -->
-<div id="list" padding>
-  
-  <div *ngFor="let a of orgArray">
-    <!-- <div *ngIf="x.orgName == a"> -->
-    <ion-item
-      (click)="goToViewPage(a.orgName)"
-      no-padding
-      class="listedCard"
-      no-lines
-    >
-      <ion-thumbnail item-start large>
-        <img class="image" src="../../assets/download.png.png" />
-      </ion-thumbnail>
-      <h2>{{ a.orgName }}</h2>
-      <!-- <div *ngIf="x.rating == 0; then loggedIn0">
+        <div #map id="map"></div>
+    </div>
+
+    <!-- to show list of organization -->
+    <div id="list" padding>
+        <div class="split"></div>
+
+        <div *ngFor="let a of orgArray">
+            <!-- <div *ngIf="x.orgName == a"> -->
+            <ion-item (click)="goToViewPage(a.orgName)" no-padding class="listedCard" no-lines>
+                <ion-thumbnail item-start large>
+                    <img class="image" src="../../assets/imgs/Defaults/default.png" />
+                </ion-thumbnail>
+                <h2>{{ a.orgName }}</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore accusamus eum dignissimos distinctio perferendis quisquam tenetur culpa ea laboriosam nesciunt dolorem, aliquam voluptatibus fugit, atque inventore quasi, aspernatur blanditiis
+                    placeat.
+                </p>
+                <!-- <div *ngIf="x.rating == 0; then loggedIn0">
       </div>
       <div *ngIf="x.rating == 1; then loggedIn1">
       </div>
@@ -131,13 +126,14 @@
           <ion-icon name="star"></ion-icon>
         </p>
       </ng-template> -->
-      <button ion-button icon-only color="custom" clear item-end>
-        <ion-icon name="arrow-forward"></ion-icon>
-      </button>
-    </ion-item>
-  </div>
-</div>
-  <!-- <div>
+                <button ion-button icon-only color="custom" clear item-end>
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+            </ion-item>
+        </div>
+
+    </div>
+    <!-- <div>
       <div *ngFor="let a of orgArray" class="cards">
         <ion-item (click)="goToViewPage(a.orgName)" no-padding no-lines>
           <ion-thumbnail item-start large>
