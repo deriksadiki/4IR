@@ -185,6 +185,7 @@ export class IRhubProvider {
                 long: details[keys[x]].long,
                 lat: details[keys[x]].lat,
                 img: details[keys[x]].downloadurl,
+                desc:details[keys[x]].desc,
                 category: details[keys[x]].category,
                 id: keys[x]
               }

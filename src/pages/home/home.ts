@@ -31,12 +31,19 @@ export class HomePage {
   textField;
   img = "../../assets/imgs/Defaults/default.png";
   toggleState = "map";
-
+  custom1 = "custom1";
+  custom2 = "custom2";
   //Google services
   directionsService;
   directionsDisplay;
   service;
   geocoder;
+  state = ["star-outline", "star-outline", "star-outline", "star-outline", "star-outline"]
+  Star1 = "star-outline";
+  Star2 = "star-outline";
+  Star3 = "star-outline";
+  Star4 = "star-outline";
+  Star5 = "star-outline";
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
@@ -49,13 +56,6 @@ export class HomePage {
     })
 
 
-    this.IRmethods.getAllOrganizations().then((data: any) => {
-      this.orgArray = data;
-      console.log(this.orgArray);
-      // setTimeout(() => {
-      //   this.loading.dismiss()
-      // }, 2500);
-    })
 
     this.IRmethods.getUserLocation().then((data: any) => {
       console.log(data);
@@ -122,6 +122,15 @@ export class HomePage {
 
     this.initMap();
 
+
+    
+    this.IRmethods.getAllOrganizations().then((data: any) => {
+      this.orgArray = data;
+      console.log(this.orgArray);
+      // setTimeout(() => {
+      //   this.loading.dismiss()
+      // }, 2500);
+    })
   }
 
 
@@ -227,7 +236,6 @@ export class HomePage {
     }
   }
   Userprofile() {
-
     this.IRmethods.checkAuthState().then(data => {
       if (data == false) {
         let alert = this.alertCtrl.create({
