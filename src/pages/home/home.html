@@ -1,21 +1,58 @@
-<ion-header>
-  <ion-navbar>
+<ion-header class="ionHeader">
+  <div class="theHead">
+    <ion-title class="theTitle">
+      <b></b>
+    </ion-title>
 
-  </ion-navbar>
+    <div class="top">
+      <button ion-button icon-only clear class="more" (click)="showButton(textField)">
+        <ion-icon name="{{searchDismissState}}"></ion-icon>
+      </button>
+      <ion-input maxLength="44" class="searchBar" type="text" placeholder="Search by city (e.g johannesburg)"
+        [(ngModel)]="searchTerm" (input)="filterItems(); getItems($event)"></ion-input>
+      <div class="profile">
+        <img [src]="img" class="displayPic" alt="" (click)="Userprofile()">
+        <!-- <ion-icon ios="ios-contact" class="displayPic" md="md-contact-outline" (click)="profile()"></ion-icon> -->
+      </div>
+      <ion-card class="options">
+        <div class="intro">
+          <p class="statement">
+            <ion-icon name="pin"></ion-icon> {{location}}
+          </p>
+          <i class="finePrint"> PinHome uses your location to provide you with places near you.</i>
+        </div>
+        <div class="myFlexBox">
+          <button class="selects" ion-button color={{custom1}} (click)="all()">Show All</button>
+          <button class="selects" ion-button color={{custom2}} (click)="near()">Show Near Me</button>
+        </div>
+      </ion-card>
+    </div>
+  </div>
 </ion-header>
 
 <ion-content padding>
 
-
   <div #map id="map">
-
-
+     
   </div>
 
-  <button ion-button  (click)="getDirection()">get Direction</button>
-  <button ion-button  (click)="getDistance()">get distance</button>
-
-  <div *ngFor="">
-
+  <!-- to show list of organization -->
+  <div>
+      <img [src]="img" weight="50px" height="50px">
+      <button ion-button (click)="Userprofile()">user profile</button>
+      <div *ngFor="let a of orgArray" class="cards">
+        <ion-item (click)="goToViewPage(a.orgName)" no-padding no-lines>
+          <ion-thumbnail item-start large>
+            <img src="../../assets/download.png.png">
+          </ion-thumbnail>
+          {{a.orgName}}
+        </ion-item>
+      </div>
   </div>
+
+
+  
+
+
+ 
 </ion-content>

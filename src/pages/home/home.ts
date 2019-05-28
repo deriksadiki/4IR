@@ -20,6 +20,8 @@ export class HomePage {
   lng ;
   marker ;
   showMultipleMarker ;
+  searchDismissState ;
+  textField ;
 
   //Google services
 
@@ -75,6 +77,14 @@ setTimeout(() => {
   
 
   }
+
+
+ 
+
+
+
+
+
   ionViewWillEnter(){
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsService;
@@ -201,6 +211,67 @@ setTimeout(() => {
       });
       
     }
+  }
+
+  showButton() {
+    var theCard = document.getElementsByClassName("options") as HTMLCollectionOf<HTMLElement>;
+    let searcher = document.getElementsByClassName('searchBar') as HTMLCollectionOf<HTMLElement>;
+    var theTitle = document.getElementsByClassName("theTitle") as HTMLCollectionOf<HTMLElement>
+    var nav = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
+    var searchBtn = document.getElementsByClassName("more") as HTMLCollectionOf<HTMLElement>;
+    var prof = document.getElementsByClassName("profile") as HTMLCollectionOf<HTMLElement>;
+    var restOf = document.getElementsByClassName("restOfBody") as HTMLCollectionOf<HTMLElement>;
+
+    if (this.searchDismissState == "close") {
+      this.searchDismissState = "search";
+      // console.log(this.state);
+      searcher[0].style.width = "0";
+      searcher[0].style.left = "-10%";
+      searcher[0].style.top = "18px";
+      theTitle[0].style.opacity = "1";
+
+      theCard[0].style.height = "130px";
+      theCard[0].style.top = "60px";
+      theCard[0].style.opacity = "1";
+
+      nav[0].style.height = "120px";
+
+      searchBtn[0].style.top = "20px";
+
+      prof[0].style.top = "25px";
+      // this.filtereditems = [];
+      // this, this.searchTerm = "";
+      // this.initializeItems();
+      // this.setArrayBack(this.tempArray)
+      restOf[0].style.paddingTop = "210px";
+
+    }
+    else if (this.searchDismissState == "search") {
+      this.searchDismissState = "close";
+      // console.log(this.state);
+      searcher[0].style.width = "72vw";
+      searcher[0].style.left = "15%";
+      searcher[0].style.top = "5px"
+      theTitle[0].style.opacity = "0";
+
+      theCard[0].style.height = "50px";
+      theCard[0].style.top = "-65px";
+      theCard[0].style.opacity = "0.5";
+
+      nav[0].style.height = "50px";
+
+      searchBtn[0].style.top = "0";
+      prof[0].style.top = "8px";
+
+      restOf[0].style.paddingTop = "60px";
+      // this.filtereditems = [];
+
+
+
+    }
+    console.log(this.textField);
+    // this.searchTerm = "";
+
   }
   
 }
