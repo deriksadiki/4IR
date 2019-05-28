@@ -17,7 +17,6 @@ export class HomePage {
   @ViewChild('map') mapRef: ElementRef;
   orgArray = new Array();
   viewDetailsArray = new Array();
-  img = "../../assets/imgs/Defaults/default.png";
   logInState;
   //variables
   loading;
@@ -30,6 +29,9 @@ export class HomePage {
   showMultipleMarker;
   searchDismissState = "search";
   textField;
+  img = "../../assets/imgs/Defaults/default.png";
+  toggleState = "map";
+
   //Google services
   directionsService;
   directionsDisplay;
@@ -47,6 +49,47 @@ export class HomePage {
     })
 
 
+    this.IRmethods.getAllOrganizations().then((data: any) => {
+      this.orgArray = data;
+      console.log(this.orgArray);
+      // setTimeout(() => {
+      //   this.loading.dismiss()
+      // }, 2500);
+    })
+
+    this.IRmethods.getUserLocation().then((data: any) => {
+      console.log(data);
+      console.log(data.coords.latitude);
+      console.log(data.coords.longitude);
+
+      this.lat = data.coords.latitude;
+      this.lng = data.coords.longitude
+      console.log(this.lat);
+
+
+
+    })
+
+
+
+    setTimeout(() => {
+      this.IRmethods.getCurrentLocation(this.lat, this.lng).then((radius: any) => {
+
+        console.log(this.lat);
+        console.log(this.lng);
+        console.log(radius);
+
+        this.IRmethods.getAllOrganizations().then((data: any) => {
+          console.log(data);
+          console.log(radius);
+          this.IRmethods.getNearByOrganizations(radius, data).then((nearbyOrgs: any) => {
+            console.log(nearbyOrgs);
+
+          })
+        })
+      })
+
+    }, 4000);
 
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
@@ -83,6 +126,9 @@ export class HomePage {
 
 
   initMap() {
+    console.log(this.lat);
+    console.log(this.lng);
+
 
     const options = {
       center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
@@ -169,20 +215,59 @@ export class HomePage {
 
   markers() {
     console.log(this.orgArray);
-
     for (let index = 0; index < this.orgArray.length; index++) {
       var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
       this.showMultipleMarker = new google.maps.Marker({
         map: this.map,
         //  icon: this.icon,
-
-
         position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
         label: name,
         zoom: 8,
-
       });
+    }
+  }
+  Userprofile() {
 
+    this.IRmethods.checkAuthState().then(data => {
+      if (data == false) {
+        let alert = this.alertCtrl.create({
+          subTitle: 'You have to sign in before you can view your profile, would you like to sign in now?',
+          // cssClass: 'myAlert',
+          buttons: [
+            {
+              text: 'Sign in',
+              handler:
+                data => {
+                  var opt = "profile";
+                  this.navCtrl.push(SignInPage, { option: opt })
+                }
+            },
+            {
+              text: 'Cancel',
+              handler:
+                data => {
+
+                }
+            }]
+        });
+        alert.present();
+      } else {
+        this.navCtrl.push(UserProfilePage)
+      }
+    })
+  }
+
+  
+
+
+
+
+  goToViewPage(name) {
+    ;
+    for (var x = 0; x < this.orgArray.length; x++) {
+      if (name == this.orgArray[x].orgName) {
+        this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x] });
+      }
     }
   }
 
@@ -191,6 +276,7 @@ export class HomePage {
     let searcher = document.getElementsByClassName('searchBar') as HTMLCollectionOf<HTMLElement>;
     var theTitle = document.getElementsByClassName("theTitle") as HTMLCollectionOf<HTMLElement>
     var nav = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
+    var theSplit = document.getElementsByClassName("split") as HTMLCollectionOf<HTMLElement>;
     var searchBtn = document.getElementsByClassName("more") as HTMLCollectionOf<HTMLElement>;
     var prof = document.getElementsByClassName("profile") as HTMLCollectionOf<HTMLElement>;
     var restOf = document.getElementsByClassName("restOfBody") as HTMLCollectionOf<HTMLElement>;
@@ -208,6 +294,7 @@ export class HomePage {
       theCard[0].style.opacity = "1";
 
       nav[0].style.height = "120px";
+      theSplit[0].style.height = "190px";
 
       searchBtn[0].style.top = "20px";
 
@@ -217,6 +304,7 @@ export class HomePage {
       // this.initializeItems();
       // this.setArrayBack(this.tempArray)
       restOf[0].style.paddingTop = "210px";
+      
 
     }
     else if (this.searchDismissState == "search") {
@@ -232,6 +320,7 @@ export class HomePage {
       theCard[0].style.opacity = "0.5";
 
       nav[0].style.height = "50px";
+      theSplit[0].style.height = "40px";
 
       searchBtn[0].style.top = "0";
       prof[0].style.top = "8px";
@@ -248,19 +337,26 @@ export class HomePage {
   }
   n = 1
   toggleMap() {
-    var theMap = document.getElementById("map");
+    console.log("clicked");
+
+    var theHeader = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
+    var theMap = document.getElementById("mapView");
     var theList = document.getElementById("list");
 
     if (this.n == 1) {
       this.n = 0;
+      this.toggleState = "list"
       theMap.style.display = "block"
-      theList.style.display = "none"
+      theList.style.display = "none";
+      theHeader[0].style.display = "none";
     }
     else {
 
       this.n = 1;
+      this.toggleState = "map"
       theMap.style.display = "none"
-      theList.style.display = "block"
+      theList.style.display = "block";
+      theHeader[0].style.display = "block";
     }
   }
 
