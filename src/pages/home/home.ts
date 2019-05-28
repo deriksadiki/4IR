@@ -48,18 +48,11 @@ export class HomePage {
       console.log(this.orgArray);
       setTimeout(() => {
         var names = this.IRmethods.getOrgNames()
+        console.log(names);
+        
         this.storeOrgNames(names)
         this.loading.dismiss()
       }, 2500);
-    })
-
-
-    this.IRmethods.getAllOrganizations().then((data: any) => {
-      this.orgArray = data;
-      console.log(this.orgArray);
-      // setTimeout(() => {
-      //   this.loading.dismiss()
-      // }, 2500);
     })
 
     this.IRmethods.getUserLocation().then((data: any) => {
@@ -384,12 +377,16 @@ export class HomePage {
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
       this.items = this.items.filter((item) => {
+        console.log(val);
+        
         return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
     else if (val == "" ||val == null) {
       this.items = [];
     }
+    console.log(this.items);
+    
   }
 
 }

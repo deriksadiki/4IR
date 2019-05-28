@@ -8,7 +8,11 @@
             <button ion-button icon-only clear class="more" (click)="showButton(textField)">
         <ion-icon name="{{ searchDismissState }}"></ion-icon>
       </button>
-            <ion-input maxLength="44" class="searchBar" type="text" placeholder="Search by city (e.g johannesburg)" [(ngModel)]="searchTerm" (input)="filterItems(); getItems($event)"></ion-input>
+            <!-- <ion-input maxLength="44" class="searchBar" type="text" placeholder="Search by city (e.g johannesburg)" [(ngModel)]="searchTerm" (ionInput)="getItems($event)"></ion-input> -->
+           
+            <ion-searchbar class="searchBar" placeholder="Search by city or name" (ionInput)="getItems($event)"></ion-searchbar>
+     
+           
             <div class="profile">
                 <img [src]="img" class="displayPic" alt="" (click)="Userprofile()" />
                 <!-- <ion-icon ios="ios-contact" class="displayPic" md="md-contact-outline" (click)="profile()"></ion-icon> -->
@@ -52,28 +56,6 @@
     </div>
 </ion-header>
 
-<<<<<<< HEAD
-<ion-content padding>
-  
-    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-    <ion-list>
-      <ion-item *ngFor="let item of items" (click)="goToViewPage(item)">
-        {{ item}}
-      </ion-item>
-    </ion-list>
-
-  <img [src]="img" weight="50px" height="50px">
-  <button ion-button (click)="Userprofile()">user profile</button>
-  <div *ngFor="let a of orgArray" class="cards">
-    <ion-item (click)="goToViewPage(a.orgName)" no-padding no-lines>
-      <ion-thumbnail item-start large>
-        <img src="../../assets/download.png.png">
-      </ion-thumbnail>
-      {{a.orgName}}
-    </ion-item>
-  </div>
-</ion-content>
-=======
 <ion-content>
     <ion-fab bottom right>
         <button ion-fab mini (click)="toggleMap()">
@@ -105,6 +87,12 @@
 
     <!-- to show list of organization -->
     <div id="list" padding>
+        <ion-list>
+            <ion-item *ngFor="let item of items" (click)="goToViewPage(item)">
+              {{ item}}
+            </ion-item>
+          </ion-list>
+      
         <div class="split"></div>
 
         <div *ngFor="let a of orgArray">
@@ -202,4 +190,3 @@
   </div> 
   </div> -->
 </ion-content>
->>>>>>> 9d0070147b56936928a3ab35fe1a627e467075c3
