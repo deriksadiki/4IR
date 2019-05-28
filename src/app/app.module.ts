@@ -7,17 +7,15 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { IRhubProvider } from '../providers/i-rhub/i-rhub';
-
+import { SignInPage} from '../pages/sign-in/sign-in' ;
+import {SignUpPage} from '../pages/sign-up/sign-up' ;
 import { Geolocation } from '@ionic-native/geolocation';
-
-import { SignInPage } from '../pages/sign-in/sign-in';
-import { SignUpPage } from '../pages/sign-up/sign-up';
-import { EmailComposer } from '@ionic-native/email-composer'
 import { CallNumber } from '@ionic-native/call-number';
 import { SplashScreenPage } from '../pages/splash-screen/splash-screen';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { ViewOrganizationInforPage } from '../pages/view-organization-infor/view-organization-infor';
 import { EditUserProfilePage } from '../pages/edit-user-profile/edit-user-profile';
+import { EmailComposer } from '@ionic-native/email-composer';
 
 @NgModule({
   declarations: [
@@ -29,6 +27,7 @@ import { EditUserProfilePage } from '../pages/edit-user-profile/edit-user-profil
     UserProfilePage,
     ViewOrganizationInforPage,
     EditUserProfilePage
+  
   ],
   imports: [
     BrowserModule,
@@ -44,12 +43,13 @@ import { EditUserProfilePage } from '../pages/edit-user-profile/edit-user-profil
     UserProfilePage,
     ViewOrganizationInforPage,
     EditUserProfilePage
+  
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    IRhubProvider,
+    IRhubProvider,Geolocation ,
     EmailComposer,
     CallNumber
   ]
