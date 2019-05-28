@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SignInPage } from '../sign-in/sign-in';
 import { IRhubProvider } from '../../providers/i-rhub/i-rhub';
+import { EditUserProfilePage } from '../edit-user-profile/edit-user-profile';
 
 declare var firebase
 /**
@@ -44,6 +45,9 @@ export class UserProfilePage {
     }, (error) => {
       console.log(error.message);
     })
+  }
+  GoToEditProfile(){
+    this.navCtrl.push(EditUserProfilePage)
   }
 
 }

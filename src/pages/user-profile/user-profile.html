@@ -4,21 +4,42 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>UserProfile</ion-title>
-  </ion-navbar>
-
-</ion-header>
 
 
-<ion-content padding>
-<div *ngFor="let userdetails of detailArray">
-<div>{{userdetails.name}}</div>
-<div>{{userdetails.email}}</div>
-<img src="{{userdetails.downloadurl}}">
-<div>{{userdetails.address}}</div>
-</div>
-<button ion-button (click)="logOut()">logOut</button>
+
+<ion-content *ngFor="let userdetails of detailArray">
+    <div class="theHead">
+
+        <div class="moveimage">
+            <img  width="150px;" height="150px;" class="image" src="{{userdetails.downloadurl}}">
+        </div>
+      </div>
+  <!-- <div class="popover">
+    <button ion-button clear class="popoverOptions" (click)="editProfile()" color="custom">Edit Profile</button>
+    <button ion-button clear class="popoverOptions" (click)="logOut()" color="custom">Sign Out</button>
+  </div> -->
+  <ion-fab top left>
+    <button ion-fab clear mini color="transparent" class="back" icon-only (click)="GoTOHomePage()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </button>
+  </ion-fab>
+  <ion-fab top right>
+    <button ion-fab clear mini color="transparent" class="settings" icon-only (click)="showPopover()">
+      <ion-icon name="settings"></ion-icon>
+    </button>
+  </ion-fab>
+
+
+ 
+    <div class="move">
+        <div>{{userdetails.name}}</div>
+        <div>{{userdetails.email}}</div>
+    
+        <div>{{userdetails.address}}</div>
+    </div>
+ 
+ 
+  
+  <button ion-button (click)="logOut()">logOut</button>
+  <button ion-button (click)="  GoToEditProfile()">Edit Profile</button>
 </ion-content>

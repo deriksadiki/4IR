@@ -61,6 +61,7 @@ page-sign-in {
   #forgotPassword {
     font-size: 11px;
     float: right;
+    animation: fadeIn 1.8s;
   }
   .btnActions {
     height: 30px;
@@ -133,7 +134,23 @@ page-sign-in {
     padding-right: 10px;
     border-bottom: 2px solid #dcc050;
   }
+  .theCard{
+    padding-top: 20px;
+    width: 100%;
+  }
 
+  #anim1 {
+    animation: fadeIn 1s;
+  }
+  #anim2 {
+    animation: fadeIn 1.3s;
+  }
+  #anim3 {
+    animation: fadeIn 1.5s;
+  }
+  #anim4 {
+    animation: fadeIn 1.8s;
+  }
   @keyframes start {
     0% {
       height: 40%;
@@ -142,8 +159,15 @@ page-sign-in {
       height: 55%;
     }
   }
-  .theCard{
-    padding-top: 20px;
-    width: 100%;
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 }
