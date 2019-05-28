@@ -311,20 +311,22 @@ setTimeout(() => {
       theList.style.display = "block"
     }
 
-    this.showNeabyList =false ;
-    this.showAllorgList =false ;
+    // this.showNeabyList =false ;
+    // this.showAllorgList =false ;
   }
 
 
-  near(){
-    this.showNeabyList =true ;
-    this.showAllorgList =false ;
-  }
-
-
-  all(){
-    this.showNeabyList =false;
-    this.showAllorgList =true ;
+  // near(){
+  //   console.log("clicked");
     
-  }
+  //   // this.showNeabyList =true ;
+  //   // this.showAllorgList =false ;
+  // }
+
+
+  // all(){
+  //   this.showNeabyList =false;
+  //   this.showAllorgList =true ;
+    
+  // }
 }
