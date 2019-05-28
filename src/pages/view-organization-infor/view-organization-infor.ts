@@ -30,7 +30,10 @@ export class ViewOrganizationInforPage implements OnInit{
   Star5 = "star-outline";
   rateState: boolean;
 
+  tabs;
   constructor(public navCtrl: NavController, public navParams: NavParams,private emailComposer: EmailComposer,private callNumber: CallNumber,public irhubProvider: IRhubProvider,public alertCtrl:AlertController) {
+    
+    this.tabs = "gallery";
     this.orgArray.push(this.navParams.get('orgObject'));
     console.log(this.navParams.get('orgObject'))
     this.imageKey = this.orgArray[0].id;

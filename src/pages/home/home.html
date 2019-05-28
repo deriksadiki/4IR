@@ -19,16 +19,34 @@
                         <ion-icon name="pin"></ion-icon> {{ location }}
                     </p>
                     <i class="finePrint">
-            PinHome uses your location to provide you with places near you.</i>
+            4IR Hub uses your location to provide you with places near you.</i>
                 </div>
-                <div class="myFlexBox">
-                    <button class="selects" ion-button color="{{ custom1 }}" (click)="all()">
-            Show All
+                <!-- <div class="myFlexBox">
+          <div class="theLabel">
+            Show Hubs
+          </div>
+          <button class="selects" ion-button color="{{ custom1 }}" (click)="all()">
+            All
           </button>
-                    <button class="selects" ion-button color="{{ custom2 }}" (click)="near()">
-            Show Near Me
+          <button class="selects" ion-button color="{{ custom2 }}" (click)="near()">
+            Near Me
           </button>
-                </div>
+        </div> -->
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>Show Hubs</ion-col>
+                        <ion-col align-self-end>
+                            <button class="selects" id="all" ion-button color="{{ custom1 }}" (click)="all()">
+                All
+              </button>
+                        </ion-col>
+                        <ion-col>
+                            <button class="selects" ion-button color="{{ custom2 }}" (click)="near()">
+                Near Me
+              </button>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
             </ion-card>
         </div>
     </div>
