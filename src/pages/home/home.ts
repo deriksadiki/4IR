@@ -46,6 +46,49 @@ export class HomePage {
       // }, 2500);
     })
 
+
+    this.IRmethods.getAllOrganizations().then((data:any) =>{
+      this.orgArray = data;
+      console.log(this.orgArray);
+      // setTimeout(() => {
+      //   this.loading.dismiss()
+      // }, 2500);
+    })
+
+    this.IRmethods.getUserLocation().then((data:any)=>{
+      console.log(data);
+      console.log(data.coords.latitude);
+      console.log(data.coords.longitude);
+
+      this.lat =data.coords.latitude ;
+      this.lng = data.coords.longitude
+      console.log( this.lat );
+      
+      
+      
+    })
+
+
+
+setTimeout(() => {
+  this.IRmethods.getCurrentLocation(this.lat , this.lng).then((radius:any)=>{
+   
+    console.log(this.lat);
+   console.log(this.lng);
+    console.log(radius);
+    
+    this.IRmethods.getAllOrganizations().then((data:any)=>{
+      console.log(data);
+      console.log(radius);
+      this.IRmethods.getNearByOrganizations(radius ,data).then((nearbyOrgs:any)=>{
+        console.log(nearbyOrgs);
+        
+      })
+    })
+  })
+  
+}, 4000);
+  
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
         this.logInState = true;
@@ -81,7 +124,10 @@ export class HomePage {
 
 
   initMap() {
-
+    console.log(this.lat);
+    console.log(this.lng);
+    
+    
     const options = {
       center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
       zoom: 8,
