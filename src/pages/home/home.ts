@@ -13,20 +13,24 @@ export class HomePage {
 
   //arrays
   orgArray =  new Array();
+  orgNames =  new Array();
   viewDetailsArray = new Array();
   img = "../../assets/imgs/Defaults/default.png";
   logInState;
+
   //variables
   loading;
+  items;
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl:LoadingController,public alertCtrl:AlertController) {
     this.IRmethods.getAllOrganizations().then((data:any) =>{
       this.orgArray = data;
       console.log(this.orgArray);
       setTimeout(() => {
+        var names = this.IRmethods.getOrgNames()
+        this.storeOrgNames(names)
         this.loading.dismiss()
       }, 2500);
     })
-
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
         this.logInState = true;
@@ -47,9 +51,37 @@ export class HomePage {
     //   content: "Please wait....",
     // });
     // this.loading.present();
+  }
 
+  storeOrgNames(names){
+    this.orgNames = names;
+    console.log(this.orgNames);
     
   }
+
+  initializeItems() {
+    this.items = this.orgNames
+  }
+
+ getItems(ev) {
+    // Reset items back to all of the items
+    this.initializeItems();
+
+    // set val to the value of the ev target
+    var val = ev.target.value;
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.items = this.items.filter((item) => {
+        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
+    else if (val == "" ||val == null) {
+      this.items = [];
+    }
+  }
+
+
 
   Userprofile() {
     this.IRmethods.checkAuthState().then(data => {

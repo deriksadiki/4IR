@@ -12,7 +12,7 @@ import { SignUpPage } from '../pages/sign-up/sign-up';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = SignUpPage;
+  rootPage:any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public IRhubProvider:IRhubProvider) {
     platform.ready().then(() => {
