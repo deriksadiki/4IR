@@ -1,6 +1,6 @@
 page-edit-user-profile {
     .theCard{
-        padding-top: 250px;
+        padding-top: 150px;
         width: 100%;
       }
     .btnActions {
@@ -15,6 +15,7 @@ page-edit-user-profile {
         background: whitesmoke;
         border-radius: 50px;
         height: 40px;
+        width: 80%;
         margin-bottom: 20px;
         padding-left: 10px;
         padding-right: 10px;
@@ -27,8 +28,8 @@ page-edit-user-profile {
         border-bottom-right-radius: 50%;
         border-bottom-left-radius: 50%;
         text-align: center;
-        background: whitesmoke;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.233);
+        // background: whitesmoke;
+        // box-shadow: 0 0 10px rgba(0, 0, 0, 0.233);
         #DP {
           width: 180px;
           height: 180px;
@@ -37,5 +38,56 @@ page-edit-user-profile {
           box-shadow: 0 10px 10px rgba(0, 0, 0, 0.103);
         }
       }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.205);
+      }
+      ion-input{
+          margin-left:10%;
+      }
+      .theFab{
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.304);
+        background-color: black;
+    }
+    .round{
+        width: 180px;
+        height: 180px;
+        border-radius: 100px;
+        border: white solid 2px;
+        margin: 0 auto;
+        box-shadow: 0 2px 15px grey;
+        position: relative;
+        top: 50px;
+    }
+    .picture{
+        width: 180px;
+        height: 180px;
+        border-radius: 100px;
+        margin: 0 auto;
+        object-fit: cover;
+    }
+    .fileChooser{
+        position: relative;
+        top: 80px;
+        font-size: 1.5em;
+        position: relative;
+    }
+    .Add{
+        color: #157491;
+        text-shadow: 0 0 5px white;
+        font-size: 3.2em;
+        position: relative;
+        bottom: 30px;
+        left: 60%;
+        text-shadow: 0 0 0 black;
+    }
+    #file{
+        display: none;
+    }
+
    
 } 

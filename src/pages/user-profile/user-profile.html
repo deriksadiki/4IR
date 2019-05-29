@@ -1,15 +1,16 @@
 <ion-content *ngFor="let userdetails of detailArray">
 
   <div class="popover">
-    <button ion-button full>Edit Profile</button><button ion-button full>Sign Out</button>
+    <button ion-button full (click)="GoToEditProfile()">Edit Profile</button>
+    <button ion-button full  (click)="logOut()">Sign Out</button>
   </div>
   <div class="topHalf">
     <div class="topPart">
-      <img id="DP" src="../../assets/imgs/Defaults/default.png" alt="">
+      <img id="DP" src="{{userdetails.downloadurl}}" alt="">
     </div>
     <div class="name">
-      <h3>John Doe</h3>
-      <p>email@example.com</p>
+      <h3>{{userdetails.name}}</h3>
+      <p>{{userdetails.email}}</p>
       <p>0813917127</p>
       <!-- <p>4877 Ugago Street <br>
         protea glen ext 3 <br>

@@ -37,7 +37,7 @@ export class EditUserProfilePage implements OnInit{
       console.log(details)
       this.name = details.name;
       this.email = details.email;
-      this.address = details.address;;
+      // this.address = details.address;;
       this.downloadurl = details.downloadurl;
       // this.tempImg = details.downloadurl;
   
