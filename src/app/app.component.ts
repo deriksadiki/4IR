@@ -8,6 +8,7 @@ import { SignInPage } from '../pages/sign-in/sign-in';
 import { IRhubProvider } from '../providers/i-rhub/i-rhub';
 import { SignUpPage } from '../pages/sign-up/sign-up';
 import { ViewOrganizationInforPage } from '../pages/view-organization-infor/view-organization-infor';
+import { UserProfilePage } from '../pages/user-profile/user-profile';
 
 @Component({
   templateUrl: 'app.html'
