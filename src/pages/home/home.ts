@@ -350,7 +350,7 @@ export class HomePage {
   toggleState = "map";
   showNearbyList: boolean = false;
   showAllOrganisation: boolean = true;
-  
+
   //Google services
   directionsService;
   directionsDisplay;
@@ -373,7 +373,7 @@ export class HomePage {
       }, 2500);
     })
 
-    
+
     this.IRmethods.getUserLocation().then((data: any) => {
       console.log(data);
       console.log(data.coords.latitude);
@@ -424,19 +424,19 @@ export class HomePage {
 
     }, 8000);
 
-    this.IRmethods.checkAuthState().then(data => {
-      if (data == true) {
-        this.logInState = true;
-        this.IRmethods.getProfile().then((data: any) => {
-          console.log(this.logInState);
+    // this.IRmethods.checkAuthState().then(data => {
+    //   if (data == true) {
+    //     this.logInState = true;
+    //     this.IRmethods.getProfile().then((data: any) => {
+    //       console.log(this.logInState);
 
-          this.img = data;
-        })
-      }
-      else if (data == false) {
-        this.img = "assets/imgs/default.png";
-      }
-    })
+    //       this.img = data;
+    //     })
+    //   }
+    //   else if (data == false) {
+    //     this.img = "assets/imgs/default.png";
+    //   }
+    // })
 
   }
 
@@ -459,44 +459,44 @@ export class HomePage {
 
   initMap() {
 
-   return new Promise((resolve , reject)=>{
+    return new Promise((resolve, reject) => {
 
-    this.IRmethods.getUserLocation().then((data: any) => {
-      console.log(data);
-      console.log(data.coords.latitude);
-      console.log(data.coords.longitude);
+      this.IRmethods.getUserLocation().then((data: any) => {
+        console.log(data);
+        console.log(data.coords.latitude);
+        console.log(data.coords.longitude);
 
-      this.lat = data.coords.latitude;
-      this.lng = data.coords.longitude
-      console.log(this.lat);
- })
+        this.lat = data.coords.latitude;
+        this.lng = data.coords.longitude
+        console.log(this.lat);
+      })
 
-  const options = {
-    center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
-    zoom: 8,
-    disableDefaultUI: true,
-    styles: this.mapStyle
+      const options = {
+        center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
+        zoom: 8,
+        disableDefaultUI: true,
+        styles: this.mapStyle
+      }
+      this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+
+      // adding user marker to the map 
+      this.marker = new google.maps.Marker({
+        map: this.map,
+        zoom: 10,
+        position: this.map.getCenter()
+        //animation: google.maps.Animation.DROP,
+      });
+
+      setTimeout(() => {
+        this.markers().then(() => {
+          console.log("show Marker");
+
+        });
+      }, 8000)
+      resolve();
+    })
+
   }
-  this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-
-  // adding user marker to the map 
-  this.marker = new google.maps.Marker({
-    map: this.map,
-    zoom: 10,
-    position: this.map.getCenter()
-    //animation: google.maps.Animation.DROP,
-  });
-
-  setTimeout(() => {
-    this.markers().then(()=>{
-      console.log("show Marker");
-      
-    });
-  }, 8000)
-resolve () ;
-})
-    
-}
 
 
 
@@ -685,28 +685,57 @@ resolve () ;
   }
   n = 1
   toggleMap() {
-    var theHeader = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
-    var theMap = document.getElementById("mapView");
-    var theList = document.getElementById("list");
+    console.log("clicked");
 
-    if (this.n == 1) {
-      this.n = 0;
-      this.toggleState = "list"
-      theMap.style.display = "block"
-      theList.style.display = "none";
-      theHeader[0].style.display = "none";
-    }
-    else {
+    this.IRmethods.checkAuthState().then(data => {
+      if (data == false) {
+        let alert = this.alertCtrl.create({
+          subTitle: 'You have to sign in before you can view your profile, would you like to sign in now?',
+          // cssClass: 'myAlert',
+          buttons: [
+            {
+              text: 'Sign in',
+              handler:
+                data => {
+                  var opt = "profile";
+                  this.navCtrl.push(SignInPage, { option: opt })
+                }
+            },
+            {
+              text: 'Cancel',
+              handler:
+                data => {
 
-      this.n = 1;
-      this.toggleState = "map"
-      theMap.style.display = "none"
-      theList.style.display = "block";
-      theHeader[0].style.display = "block";
-    }
+                }
+            }]
+        });
+        alert.present();
+      } else {
+        var theHeader = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
+        var theMap = document.getElementById("mapView");
+        var theList = document.getElementById("list");
 
-    console.log(this.n);
-    
+        if (this.n == 1) {
+          this.n = 0;
+          this.toggleState = "list"
+          theMap.style.display = "block"
+          theList.style.display = "none";
+          theHeader[0].style.display = "none";
+        }
+        else {
+
+          this.n = 1;
+          this.toggleState = "map"
+          theMap.style.display = "none"
+          theList.style.display = "block";
+          theHeader[0].style.display = "block";
+        }
+      }
+    })
+
+
+
+
   }
 
   storeOrgNames(names) {
@@ -745,8 +774,8 @@ resolve () ;
   near() {
     console.log("clicked");
     console.log(this.nearby);
-    this.showNearbyList =true ;
-   this. showAllOrganisation =false ;
+    this.showNearbyList = true;
+    this.showAllOrganisation = false;
 
   }
 
@@ -789,7 +818,7 @@ resolve () ;
         // else if (this.orgArray[x].orgCat == "social centre")
         //   indx = 6;
         // else if (this.orgArray[x].orgCat == "Rehab")
-          indx = 7;
+        indx = 7;
         this.map.addMarker({
           title: this.cat[x].orgName,
           // icon: {
