@@ -1,349 +1,115 @@
 page-start {
-    .addFAB {
-        z-index: 10000000000000000000000000000;
-        right: 10px;
-        transform: rotate(0deg);
+  .theBody {
+    height: 100%;
+    width: 100%;
+    background: url("../../assets/imgs/Defaults/parl.jpg");
+    background-size: cover;
+    text-align: center;
+    color: black;
+    // filter: grayscale(80%);
+    p {
+      position: absolute;
+      z-index: 10;
+      top: 45%;
+      width: 100%;
+      padding: 10px;
+      color: black;
+      background: linear-gradient(rgba(255, 255, 255, 0.1), white, rgba(255, 255, 255, 0.1));
+      border-radius: 15px;
+      margin: auto;
     }
-    ion-slides {
-        // animation: 700ms slideInRight;
-    }
-    .ionHeader {
-        height: 0px;
-    }
-    ion-content {
-        position: relative;
-        // background: rgb(248, 248, 0);
-    }
-    .theFab {
-        transition: 700ms;
-        right: 10px;
-    }
-    .searchResults {
-        position: absolute;
-        background: white;
-        opacity: 0;
-        // border: 2px solid red;
-        // min-height: 100%;
-        z-index: 10000000000;
-        width: 100%;
-        display: none;
-        transition: 700ms;
-        box-shadow: 0 20px 30px grey;
-    }
-    .top {
-        position: relative;
-        background: #166b85;
-        // border: 2px solid red
-    }
-    .slideCard {
-        // border: 2px solid red;
-        height: 150px;
-        // position: absolute;
-        // top: 0;
-        width: 100%;
-        margin: 0 auto;
-    }
-    .trans {
-        opacity: 0;
-    }
-    .area {
-        height: 15px;
-        // border: 2px solid red;
-    }
-    .starRating {
-        color: gold;
-    }
-    .listedCard {
-        box-shadow: 0 5px 5px rgba(128, 128, 128, 0.5);
-        border-radius: 5px;
-        transition: 500ms;
-        padding: 0;
-        margin-bottom: 20px;
-        height: 110px;
-    }
-    .theItem {
-        background: white;
-    }
-    // .spacer{
-    //     height: 15px;
-    //     border: 2px;
-    //     background: #166b85;
-    //     box-shadow: 0 -5px 2px #166b85;
-    // }
-    .orgName {
-        padding-top: 5px;
-        padding-right: 5px;
-        padding-left: 5px;
-        font-size: 12px;
-    }
-    .start {
-        height: 20px;
-        width: 110vw;
-        // background: red;
-    }
-    .popover {
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-    .searchBar {
-        transition: 700ms;
-        border-radius: 550px;
-        background: white;
-        padding-left: 10px;
-        position: absolute;
-        top: 18px;
-        width: 0;
-        margin-right: 20px;
-        left: -10%;
-        // transform: rotateY(180DEG)
-    }
-    .theItem {
-        // background: rgba(0, 0, 0, 0);
-        // margin-right: 30px;
-        // z-index: 0;
-        padding: 0;
-        height: 50px;
-        box-shadow: 0 0 5px grey;
-        margin-top: 10px;
-        display: flex;
-    }
-    .hidden {
-        position: absolute;
-        right: -100%;
-        top: -5%;
-        transition: 300ms;
-    }
-    ion-icon {
-        transition: 500ms;
-    }
-    .more {
-        transition: 700ms;
-        color: white;
-        position: absolute;
-        top: 20px;
-        right: 10px;
-        z-index: 1;
-        // font-size: 12px;
-        // padding-right: 7px;
-        // border: 1px solid white;
-        height: 40px;
-        width: 40px;
-        border-radius: 50px;
-        // text-align: right;
-    }
-    // .searcher{
-    //     transform: translateY(10px)
-    // }
-    .theSlides {
-        // height: 250px;
-        background: #166b85;
-        // border: 2px solid red;
-        height: 150px;
-    }
-    .labeler {
-        background: #166b85;
-        // border: 2px solid red;
-        height: 15px;
-        padding-bottom: 0;
-        box-shadow: 0 5px 2px #166b85;
-        h5 {
-            color: white;
-        }
-    }
-    .title {
-        height: 26px;
-    }
-    .slideContent {
-        background: white;
-        height: 120px;
-        width: 0px;
-        border-radius: 5px;
-        padding: 0;
-    }
-    .nearBy {
-        height: 120px;
-        background: white;
-        box-shadow: 0 0 2px white;
-    }
-    #homeImage {
-        height: 130px;
-        width: 100%;
-        object-fit: cover;
-    }
-    .profile {
-        transition: 700ms;
-        color: white;
-        position: absolute;
-        top: 25px;
-        left: 10px;
-        z-index: 1;
-        // height: 40px;
-        // width: 40px;
-        border-radius: 40px;
-        font-size: 25px;
-        font-weight: bold;
-        padding-left: 10px;
-    }
-    .selector {
-        // border: 2px solid red;
-        width: 5px;
-        // display: none;
-        // position: absolute;
-    }
-    .labeler2 {
-        color: white;
-        position: absolute;
-        z-index: 100;
-        height: 100%;
-        font-size: 15px;
-    }
-    .theDiv {
-        background: white;
-    }
-    .flexer {
-        display: flex;
-    }
-    .nearOrFar {
-        // background: red;
-        height: 100px;
-    }
-    .displayPic {
-        // margin-top: 8px;
-        width: 35px;
-        height: 35px;
-        border-radius: 50px;
-        object-fit: cover;
-        font-size: 3em;
-        color: black;
-    }
-    .restOfBody {
-        transition: 700ms;
-        padding-left: 15px;
-        padding-right: 15px;
-        padding-top: 210px;
-        transition: 500ms;
-        // margin-top: 80px;
-        background: rgb(250, 250, 250);
-        animation: 1s slideInUp;
-    }
-    #no-data {
-        display: none;
-        background: whitesmoke;
-    }
-    .theHead {
-        transition: 500ms;
-        height: 120px;
-        background: #166b85;
-        position: relative;
-        box-shadow: 0 0 5px #fff;
-    }
-    .options {
-        height: 130px;
-        // width: 100vw;
-        // box-shadow: 0 10px 15px grey;
-        border-radius: 5px;
-        transition: 700ms;
-        background: white;
-        position: absolute;
-        top: 60px;
-        z-index: 100;
-        // display: flex;
-    }
-    .selects {
-        border-radius: 50px;
-        width: 120px;
-        height: 30px;
-    }
-    .intro {
-        padding-left: 10px;
-        padding-top: 10px;
-        padding-right: 10px;
-    }
-    .picture {
-        width: 60px;
-    }
-    .myFlexBox {
-        position: absolute;
-        bottom: 10px;
-        padding-left: 10px;
-        display: flex;
-    }
+  }
+  .buttons {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    // border: 2px solid green;
+    text-align: center;
+    color: rgb(19, 19, 19);
+    text-shadow: 0 0 10px black;
+    z-index: 1;
+
     button {
-        text-transform: capitalize;
+      margin: 0;
+      //   height: 50px;
     }
-    .adder {
-        width: 30px;
-        height: 30px;
-        border-radius: 40px;
+  }
+  .xplr {
+    margin: 10px auto;
+    // border: 2px solid green;
+    padding-left: 20px;
+    padding-right: 20px;
+    button {
+      border-radius: 50px;
+      animation: fadeIn 1s;
+      width: 60%;
+      margin: 50px auto;
+      background: linear-gradient(grey, rgba(128, 128, 128, 0.171))
+      
     }
-    .statement {
-        font-size: 16px;
-        font-weight: bolder;
-        margin-top: 10px;
-        color: orange;
-        // text-shadow: 0 0 5px greenyellow
+  }
+  .logs {
+    display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    button {
+    //   height: 50px;
+      animation: fadeIn 1.5s;
     }
-    .item ion-thumbnail {
-        min-width: 110px;
-        min-height: 110px;
-        img {
-            max-width: 80px;
-            min-width: 110px;
-            height: 110px;
-            object-fit: cover;
-        }
+    // border: 2px solid green;
+  }
+  .logs > button:nth-child(1) {
+    // background: rgb(10, 117, 60);
+    border-top: 1px solid  rgba(85, 85, 85, 0.397);
+    // border-right: .5px solid black;
+  }
+  .logs > button:nth-child(2) {
+    // background: rgb(10, 117, 60);
+    border-top: 1px solid  rgba(85, 85, 85, 0.397);
+    border-left: .5px solid  rgba(85, 85, 85, 0.603);
+  }
+  #logo {
+    height: 30%;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000000;
+    animation: start 700ms;
+  }
+
+  .filter {
+    background: radial-gradient(rgba(255, 255, 255, 0.561), white);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 0;
+  }
+
+  @keyframes start {
+    0% {
+      height: 25%;
     }
-    .theTitle {
-        transition: 500ms;
-        color: white;
-        position: absolute;
-        // border: 2px solid red;
-        top: 25px;
-        left: 50%;
-        transform: translateX(-50%);
-        // left: 0%;
+    70% {
+      height: 25%;
     }
-    b {
-        color: white;
+    100% {
+      height: 30%;
     }
-    .finePrint {
-        font-size: 14px;
-        color: grey;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
     }
-    .theFooter {
-        background: #242f3e;
-        //   position: relative;
-        bottom: 0;
-        height: 0px;
+    20% {
+      opacity: 0;
     }
-    .listerBtn {
-        position: absolute;
-        top: -38px;
-        transition: 1200ms;
-        width: 100%;
-        background: white;
-        height: 50px;
-        z-index: -1;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        border-top: 1px solid rgba(0, 0, 0, 0.5);
+    100% {
+      opacity: 1;
     }
-    .locationSearch {
-        background: white;
-        border-bottom: 1px solid black;
-        position: absolute;
-        z-index: 100000000000000000000000;
-        top: 60px;
-        width: 94.5%;
-        margin-left: 10px;
-        border-radius: 5px;
-    }
-    @media screen and (max-width: 330px) {
-        .adder {
-            margin-top: 10px;
-            width: 20px;
-            height: 20px;
-            border-radius: 40px;
-        }
-    }
+  }
+
 }
