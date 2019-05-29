@@ -57,7 +57,7 @@
   </div>
 </ion-header>
 
-<ion-content>
+<ion-content (ionScroll)="scroll($event)">
   <ion-fab bottom right>
     <button ion-fab mini (click)="toggleMap()">
       <ion-icon name="{{toggleState}}"></ion-icon>
@@ -103,7 +103,9 @@
           <img class="image" src="../../assets/imgs/Defaults/default.png" />
         </ion-thumbnail>
         <h2>{{ a.orgName }}</h2>
-        <p>{{a.desc}}
+        <p>
+          <ion-icon name="ios-wifi"></ion-icon>
+          <img src="../../assets/icon/notes.svg" id="cash" alt="">
         </p>
         <div *ngIf="a.rating == 0; then loggedIn0">
         </div>

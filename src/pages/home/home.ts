@@ -354,7 +354,7 @@ export class HomePage {
         console.log(names);
         
         this.storeOrgNames(names)
-        this.loading.dismiss()
+        // this.loading.dismiss()
       }, 2500);
     })
 
@@ -811,5 +811,60 @@ export class HomePage {
     this.custom1 = "primary"
     this.custom2 = "inactive"
   }
+ 
+  scroll(event) {
+    console.log(event.scrollTop);
+    
+    var theCard = document.getElementsByClassName("options") as HTMLCollectionOf<HTMLElement>;
+    var nav = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
+    var searchBtn = document.getElementsByClassName("more") as HTMLCollectionOf<HTMLElement>;
+    var prof = document.getElementsByClassName("profile") as HTMLCollectionOf<HTMLElement>;
+    var barTitle = document.getElementsByClassName("theTitle") as HTMLCollectionOf<HTMLElement>;
+    var searchTxt = document.getElementsByClassName("searchBar") as HTMLCollectionOf<HTMLElement>;
+    var splitter = document.getElementsByClassName("split") as HTMLCollectionOf<HTMLElement>;
+    console.log(event.directionY);
+    if (event.directionY == "down") {
 
+      if (event.scrollTop >= 100) {
+        // console.log("hide card");
+
+        theCard[0].style.height = "50px";
+        theCard[0].style.top = "-65px";
+        theCard[0].style.opacity = "0";
+        splitter[0].style.height = "50px";
+        nav[0].style.height = "80px";
+
+
+        searchBtn[0].style.top = "0";
+
+        prof[0].style.top = "8px";
+
+        barTitle[0].style.top = "12px";
+
+        searchTxt[0].style.top = "5px";
+
+        // footBtn[0].style.top= "0";
+      }
+    }
+    else {
+      // console.log("show Card");
+      theCard[0].style.height = "130px";
+      theCard[0].style.top = "60px";
+      theCard[0].style.opacity = "1";
+
+      nav[0].style.height = "120px";
+
+      searchBtn[0].style.top = "20px";
+
+      prof[0].style.top = "25px";
+
+      barTitle[0].style.top = "25px";
+
+      searchTxt[0].style.top = "18px";
+
+      splitter[0].style.height = "190px";
+
+    }
+
+  }
 }
