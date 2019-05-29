@@ -1,17 +1,92 @@
 <ion-content *ngFor="let userdetails of detailArray">
 
-  <div class="topPart">
-    <img id="DP" src="../../assets/imgs/Defaults/default.png" alt="">
+  <div class="popover">
+    <button ion-button full>Edit Profile</button><button ion-button full>Sign Out</button>
   </div>
-  <div class="name">
-    <h3>John Doe</h3>
-    <p>email@example.com</p>
-    <p>0813917127</p>
+  <div class="topHalf">
+    <div class="topPart">
+      <img id="DP" src="../../assets/imgs/Defaults/default.png" alt="">
+    </div>
+    <div class="name">
+      <h3>John Doe</h3>
+      <p>email@example.com</p>
+      <p>0813917127</p>
+      <!-- <p>4877 Ugago Street <br>
+        protea glen ext 3 <br>
+        Johannesburg <br>
+        1819
+      </p> -->
+    </div>
   </div>
   <div class="slides">
     <div class="places">
-      Places
+      Reviewed Places
     </div>
+    <ion-slides class="ionSlide" slidesPerView="2.1">
+      <ion-slide>
+        <div class="placeContainer">
+          <div class="date">
+            <p>03/30/2019</p>
+          </div>
+          <div class="stars">
+            <p>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+            </p>
+          </div>
+          <img src="../../assets/imgs/Defaults/default.png" alt="">
+        </div>
+        <div class="companyName">
+          <p>
+            university of south africa</p>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="placeContainer">
+          <div class="date">
+            <p>03/30/2019</p>
+          </div>
+          <div class="stars">
+            <p>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+            </p>
+          </div>
+          <img src="../../assets/imgs/Defaults/default.png" alt="">
+        </div>
+        <div class="companyName">
+          <p>
+            university of south africa</p>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="placeContainer">
+          <div class="date">
+            <p>03/30/2019</p>
+          </div>
+          <div class="stars">
+            <p>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+            </p>
+          </div>
+          <img src="../../assets/imgs/Defaults/default.png" alt="">
+        </div>
+        <div class="companyName">
+          <p>
+            university of south africa</p>
+        </div>
+      </ion-slide>
+    </ion-slides>
   </div>
   <!-- <div class="theHead">
 
