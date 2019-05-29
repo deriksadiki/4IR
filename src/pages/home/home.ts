@@ -699,7 +699,31 @@ resolve () ;
   n = 1
   toggleMap() {
     console.log("clicked");
+    this.IRmethods.checkAuthState().then(data => {
+      if (data == false) {
+        let alert = this.alertCtrl.create({
+          subTitle: 'You have to sign in before you can view your profile, would you like to sign in now?',
+          // cssClass: 'myAlert',
+          buttons: [
+            {
+              text: 'Sign in',
+              handler:
+                data => {
+                  var opt = "profile";
+                  this.navCtrl.push(SignInPage, { option: opt })
+                }
+            },
+            {
+              text: 'Cancel',
+              handler:
+                data => {
 
+                }
+            }]
+        });
+        alert.present();
+      } else {
+        
     var theHeader = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
     var theMap = document.getElementById("mapView");
     var theList = document.getElementById("list");
@@ -719,6 +743,11 @@ resolve () ;
       theList.style.display = "block";
       theHeader[0].style.display = "block";
     }
+      }
+    })
+
+    
+
   }
 
   storeOrgNames(names){
