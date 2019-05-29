@@ -340,6 +340,9 @@ export class HomePage {
   directionsDisplay;
   service;
   geocoder;
+
+  custom1 = "primary";
+  custom2 = "inactive";
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
@@ -789,12 +792,17 @@ resolve () ;
     
     this.showNearbyList =true ;
     this. showAllOrganisation =false ;
+    
+    this.custom1 = "inactive"
+    this.custom2 = "primary"
   }
 
 
   all(){
     this.showNearbyList =false;
     this. showAllOrganisation =true;
+    this.custom1 = "primary"
+    this.custom2 = "inactive"
   }
 
 }
