@@ -1,5 +1,6 @@
 page-start {
   .theBody {
+      animation: 700ms fadeIn;
     height: 100%;
     width: 100%;
     background: url("../../assets/imgs/Defaults/parl.jpg");
@@ -44,10 +45,13 @@ page-start {
       animation: fadeIn 1s;
       width: 60%;
       margin: 50px auto;
-      background: linear-gradient(grey, rgba(128, 128, 128, 0.171))
+      background: linear-gradient(grey, rgba(128, 128, 128, 0.171));
+      animation: 1s bounceInUp;
       
     }
   }
+
+  
   .logs {
     display: flex;
     padding-left: 10px;

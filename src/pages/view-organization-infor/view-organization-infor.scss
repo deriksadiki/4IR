@@ -1,5 +1,4 @@
     page-view-organization-infor {
-
         .TheStar{
              color:goldenrod
         }
@@ -31,6 +30,50 @@
             text-shadow: 0 0 10px black;
             color: white;
             font-size: 110%;
+            text-transform: capitalize;
+        }
+        #orgView{
+            display: block;
+            animation: 1s fadeIn;
+        }
+        #map{
+            height: 100%;
+            width: 100%;
+        }
+        #googleMaps{
+            right: 55px;
+            top: 00px;
+        }
+        #theMap{
+            width: 100%;
+            height: 100%;
+            display: none;
+            animation: 1s fadeIn;
+            button{
+                position: absolute;
+            }
+            #navigate{
+                bottom: 0px;
+                z-index: 100;
+                width: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                height: 50px;
+            }
+            #getDistance{
+                position: absolute;
+                z-index: 100;
+                bottom: 50px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: white;
+                padding: 5px;
+                box-shadow: 0 0 10px black;
+                border-radius: 5px;
+            }
+            .moreinfo{
+
+            }
         }
         #coverImage {
             width: 100%;
@@ -58,9 +101,15 @@
                 margin: 0 auto;
             }
         }
+        ion-item{
+            h2{
+                text-transform: capitalize;
+            }
+        }
         .mid {
             display: flex;
             flex-wrap: nowrap;
+            margin-bottom: 10px;
             // border: 2px solid red;
             .logo {
                 width: 60px;
@@ -75,7 +124,8 @@
                     margin-top: 0;
                 }
                 ion-icon {
-                    font-size: 30px
+                    font-size: 30px;
+                    color: #dcc050;
                 }
             }
             .btn:active {
@@ -105,11 +155,19 @@
             }
         }
         ion-card p {
+            text-align: left;
             ion-icon {
                 color: black;
             }
         }
         ion-card {
             box-shadow: 0 0 10px;
+            margin-bottom: 10px;
         }
+        ion-note{
+            border: 2px solid red;
+
+        }
+
+        
     }
