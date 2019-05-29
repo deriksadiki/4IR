@@ -355,59 +355,12 @@ export class HomePage {
       }, 2500);
     })
 
-    setTimeout(() => {
-      this.IRmethods.getUserLocation().then((data: any) => {
-        console.log(data);
-        console.log(data.coords.latitude);
-        console.log(data.coords.longitude);
-  
-        this.lat = data.coords.latitude;
-        this.lng = data.coords.longitude
-        console.log(this.lat);
-  
-  
-  
-      }).catch(()=>{
-        console.log("show-map-error");
-        const options = {
-          center: { lat: -25.7479, lng: 28.2293},
-          zoom: 8,
-          disableDefaultUI: true,
-        }
-        this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-  
-        
-  
-      })
-      
-    }, 5000);
+    
    
 
 
 
-    setTimeout(() => {
-      this.IRmethods.getCurrentLocation(this.lat, this.lng).then((radius: any) => {
-
-        console.log(this.lat);
-        console.log(this.lng);
-        console.log(radius);
-
-        this.IRmethods.getAllOrganizations().then((data: any) => {
-          console.log(data);
-          console.log(radius);
-          this.IRmethods.getNearByOrganizations(radius, data).then((nearbyOrgs: any) => {
-            console.log(nearbyOrgs);
-            this.nearby =nearbyOrgs ;
-
-            console.log(this.nearby);
-            
-
-
-          })
-        })
-      })
-
-    }, 8000);
+    
 
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
@@ -427,6 +380,54 @@ export class HomePage {
 
 
   ionViewWillEnter() {
+
+    setTimeout(() => {
+      this.IRmethods.getUserLocation().then((data: any) => {
+        console.log(data);
+        console.log(data.coords.latitude);
+        console.log(data.coords.longitude);
+  
+        this.lat = data.coords.latitude;
+        this.lng = data.coords.longitude
+        console.log(this.lat);
+  
+      }).catch(()=>{
+        console.log("show-map-error");
+        const options = {
+          center: { lat: -25.7479, lng: 28.2293},
+          zoom: 8,
+          disableDefaultUI: true,
+        }
+        this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+  
+      })
+      
+    }, 5000);
+
+
+
+    setTimeout(() => {
+      this.IRmethods.getCurrentLocation(this.lat, this.lng).then((radius: any) => {
+
+        console.log(this.lat);
+        console.log(this.lng);
+        console.log(radius);
+
+        this.IRmethods.getAllOrganizations().then((data: any) => {
+          console.log(data);
+          console.log(radius);
+          this.IRmethods.getNearByOrganizations(radius, data).then((nearbyOrgs: any) => {
+            console.log(nearbyOrgs);
+            this.nearby =nearbyOrgs ;
+
+            console.log(this.nearby);
+           })
+        })
+      })
+
+    }, 8000);
+
+
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsRenderer;
