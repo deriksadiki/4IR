@@ -19,7 +19,7 @@ declare var firebase
 })
 export class UserProfilePage {
   detailArray = new Array();
-  constructor(public navCtrl: NavController, public navParams: NavParams,public irhubProvider:IRhubProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public irhubProvider: IRhubProvider) {
   }
 
   ionViewDidLoad() {
@@ -39,26 +39,32 @@ export class UserProfilePage {
 
   }
 
-  logOut(){
+  logOut() {
     this.irhubProvider.logout().then(() => {
-      this.navCtrl.push(SignInPage, {out:'logout'});
+      this.navCtrl.push(SignInPage, { out: 'logout' });
     }, (error) => {
       console.log(error.message);
     })
   }
-  GoToEditProfile(){
+  GoToEditProfile() {
     this.navCtrl.push(EditUserProfilePage)
   }
-  m = 0
-  togglePopover(){
+  m = 0;
+
+  togglePopover() {
     var popo = document.getElementById("popover")
-    if(this.m == 0){
+    if (this.m == 0) {
       this.m = 1;
       popo.style.right = "0";
     }
-    else{
+    else {
       this.m = 0;
       popo.style.right = "-160px";
     }
+  }
+  removePopover() {
+    this.m = 0;
+    var popo = document.getElementById("popover")
+    popo.style.right = "-160px";
   }
 }

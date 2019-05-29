@@ -10,10 +10,10 @@
         <ion-icon name="more"></ion-icon>
       </button>
 
-    <div class="topPart">
-      <img id="DP" src="../../assets/imgs/Defaults/default.png" alt="">
+    <div class="topPart" (click)="removePopover()">
+      <img id="DP" src="../../assets/imgs/Defaults/default.png" alt="" imageViewer  (click)="removePopover()">
     </div>
-    <div class="name">
+    <div class="name" (click)="removePopover()">
       <h3>John Doe</h3>
       <p>email@example.com</p>
       <p>0813917127</p>
@@ -24,7 +24,7 @@
       </p> -->
     </div>
   </div>
-  <div class="slides">
+  <div class="slides" (click)="removePopover()">
     <div class="places">
       Reviewed Places
     </div>

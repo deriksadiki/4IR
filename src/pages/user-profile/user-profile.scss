@@ -7,6 +7,7 @@ page-user-profile {
     z-index: 1000;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.301);
     border-bottom-left-radius: 10px;
+    transition: 300ms;
     button {
       color: black;
     }
