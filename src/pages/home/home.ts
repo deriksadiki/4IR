@@ -419,7 +419,7 @@ export class HomePage {
         })
       }
       else if (data == false) {
-        this.img = "assets/imgs/default.png";
+        this.img = "assets/imgs/Defaults/default.png";
       }
     })
   }
