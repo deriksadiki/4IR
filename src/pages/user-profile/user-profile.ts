@@ -4,6 +4,8 @@ import { SignInPage } from '../sign-in/sign-in';
 import { IRhubProvider } from '../../providers/i-rhub/i-rhub';
 import { EditUserProfilePage } from '../edit-user-profile/edit-user-profile';
 import { ViewOrganizationInforPage } from '../view-organization-infor/view-organization-infor';
+// import { stat } from 'fs';
+import { StartPage } from '../start/start';
 
 declare var firebase
 /**
@@ -55,7 +57,7 @@ export class UserProfilePage {
 
   logOut() {
     this.irhubProvider.logout().then(() => {
-      this.navCtrl.push(SignInPage, { out: 'logout' });
+      this.navCtrl.push(StartPage, { out: 'logout' });
     }, (error) => {
       console.log(error.message);
     })

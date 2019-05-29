@@ -100,7 +100,7 @@ export class HomePage {
     }
   ]
     
-  
+
   //variables
   loading;
   nearby = new Array() ;
@@ -351,7 +351,7 @@ export class HomePage {
         console.log(names);
         
         this.storeOrgNames(names)
-        this.loading.dismiss()
+        // this.loading.dismiss()
       }, 2500);
     })
 
@@ -419,7 +419,7 @@ export class HomePage {
         })
       }
       else if (data == false) {
-        this.img = "assets/imgs/default.png";
+        this.img = "assets/imgs/Defaults/default.png";
       }
     })
   }
