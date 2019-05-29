@@ -1,7 +1,20 @@
 page-user-profile {
-    .popover{
-        
+  .popover {
+    position: absolute;
+    right: -160px;
+    background: white;
+    width: 150px;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.301);
+    border-bottom-left-radius: 10px;
+    button {
+      color: black;
     }
+  }
+  #opts {
+    position: absolute;
+    right: 10px;
+  }
   .topHalf {
     height: 60%;
     border-bottom: 1px solid rgba(0, 0, 0, 0.171);
@@ -30,11 +43,11 @@ page-user-profile {
     text-align: center;
     h3 {
       text-transform: capitalize;
-    //   margin-bottom: 0px;
+      //   margin-bottom: 0px;
     }
     p {
       text-transform: lowercase;
-    //   margin-top: -10px;
+      //   margin-top: -10px;
     }
   }
   .slides {
@@ -83,7 +96,7 @@ page-user-profile {
         position: absolute;
         font-size: 12px;
         left: 5px;
-        bottom:5px;
+        bottom: 5px;
         padding: 3px;
         background: rgba(0, 0, 0, 0.315);
         color: white;

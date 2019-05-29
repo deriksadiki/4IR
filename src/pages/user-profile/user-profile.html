@@ -1,9 +1,15 @@
 <ion-content *ngFor="let userdetails of detailArray">
 
   <div class="popover">
-    <button ion-button full>Edit Profile</button><button ion-button full>Sign Out</button>
+    <button ion-button full clear>Edit Profile</button>
+    <button ion-button full clear>Sign Out</button>
   </div>
   <div class="topHalf">
+  
+      <button ion-button id="opts" clear color="secondary">
+        <ion-icon name="more"></ion-icon>
+      </button>
+
     <div class="topPart">
       <img id="DP" src="../../assets/imgs/Defaults/default.png" alt="">
     </div>
