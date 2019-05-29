@@ -22,6 +22,7 @@ export class IRhubProvider {
   downloadurl;
   rating;
   ratedOrgs = new Array();
+  orgNames =  new Array();
   url;
   totRating;
   auth = firebase.auth();
@@ -174,6 +175,7 @@ export class IRhubProvider {
         firebase.database().ref("4IR_Hubs").on("value", (data: any) => {
           if (data.val() != null) {
             this.orgArray.length = 0;
+            this.orgNames.length = 0;
             let details = data.val();
             let keys = Object.keys(details);
             for (var x = 0; x < keys.length; x++) {
@@ -189,6 +191,7 @@ export class IRhubProvider {
                 category: details[keys[x]].category,
                 id: keys[x]
               }
+              this.storeOrgNames(details[keys[x]].name);
               this.orgArray.push(orgObject)
             }
             resolve(this.orgArray)
@@ -196,6 +199,16 @@ export class IRhubProvider {
         });
       })
     })
+  }
+
+  storeOrgNames(name){
+    this.orgNames.push(name);
+    console.log(this.orgNames);
+    
+  }
+
+  getOrgNames(){
+    return this.orgNames
   }
 
   getProfile() {

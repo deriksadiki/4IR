@@ -14,7 +14,16 @@
 
 
 <ion-content *ngFor="let displayDetails of orgArray">
+        <button ion-button (click)="navigate()">navigate</button> 
+        <button ion-button (click)="getDistance()">get Distance </button>
+        <div #map id="map"  *ngIf="showMap">
 
+                
+        </div>
+        
+        <div *ngIf="showContent">
+               
+            
     <div class="topHalf">
         <div class="top">
             <div class="hubName">
@@ -38,7 +47,7 @@
                 <ion-icon name="call"></ion-icon>
                 <p>Call</p>
             </div>
-            <div class="btn">
+            <div class="btn" (click)="getDirection()">
                 <ion-icon name="navigate"></ion-icon>
                 <p>Get Directions</p>
             </div>
@@ -165,6 +174,8 @@
         </ion-list>
     </div>
 
+        </div>
+
 
     <!-- <img src="../../assets/download.png.png"> {{displayDetails.orgName}}
     <br> {{displayDetails.category}}
@@ -193,5 +204,8 @@
             <hr>
         </div>
     </ion-card> -->
+
+
+   
 
 </ion-content>

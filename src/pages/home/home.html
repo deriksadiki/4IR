@@ -1,38 +1,43 @@
 <ion-header class="ionHeader">
-    <div class="theHead">
-        <ion-title class="theTitle">
-            <b>4IR HUB</b>
-        </ion-title>
+  <div class="theHead">
+    <ion-title class="theTitle">
+      <b>4IR HUB</b>
+    </ion-title>
 
-        <div class="top">
-            <button ion-button icon-only clear class="more" (click)="showButton(textField)">
+    <div class="top">
+      <button ion-button icon-only clear class="more" (click)="showButton(textField)">
         <ion-icon name="{{ searchDismissState }}"></ion-icon>
       </button>
-            <ion-input maxLength="44" class="searchBar" type="text" placeholder="Search by city (e.g johannesburg)" [(ngModel)]="searchTerm" (input)="filterItems(); getItems($event)"></ion-input>
-            <div class="profile">
-                <img [src]="img" class="displayPic" alt="" (click)="Userprofile()" />
-                <!-- <ion-icon ios="ios-contact" class="displayPic" md="md-contact-outline" (click)="profile()"></ion-icon> -->
-            </div>
-            <ion-card class="options">
-                <div class="intro">
-                    <p class="statement">
-                        <ion-icon name="pin"></ion-icon> {{ location }}
-                    </p>
-                    <i class="finePrint">
+      <!-- <ion-input maxLength="44" class="searchBar" type="text" placeholder="Search by city (e.g johannesburg)" [(ngModel)]="searchTerm" (ionInput)="getItems($event)"></ion-input> -->
+
+      <ion-searchbar class="searchBar" placeholder="Search by city or name" (ionInput)="getItems($event)">
+      </ion-searchbar>
+
+
+      <div class="profile">
+        <img [src]="img" class="displayPic" alt="" (click)="Userprofile()" />
+        <!-- <ion-icon ios="ios-contact" class="displayPic" md="md-contact-outline" (click)="profile()"></ion-icon> -->
+      </div>
+      <ion-card class="options">
+        <div class="intro">
+          <p class="statement">
+            <ion-icon name="pin"></ion-icon> {{ location }}
+          </p>
+          <i class="finePrint">
             4IR Hub uses your location to provide you with places near you.</i>
-                </div>
-                <div class="myFlexBox">
-                    <div class="theLabel">
-                        Show Hubs
-                    </div>
-                    <button class="selects" ion-button color="{{ custom1 }}" (click)="all()">
+        </div>
+        <div class="myFlexBox">
+          <div class="theLabel">
+            Show Hubs
+          </div>
+          <button class="selects" ion-button color="{{ custom1 }}" (click)="all()">
             All
           </button>
-                    <button class="selects" ion-button color="{{ custom2 }}" (click)="near()">
+          <button class="selects" ion-button color="{{ custom2 }}" (click)="near()">
             Near Me
           </button>
-                </div>
-                <!-- <ion-grid>
+        </div>
+        <!-- <ion-grid>
           <ion-row>
             <ion-col>Show Hubs</ion-col>
             <ion-col align-self-end>
@@ -47,55 +52,63 @@
             </ion-col>
           </ion-row>
         </ion-grid> -->
-            </ion-card>
-        </div>
+      </ion-card>
     </div>
+  </div>
 </ion-header>
 
 <ion-content>
-    <ion-fab bottom right>
-        <button ion-fab mini (click)="toggleMap()">
+  <ion-fab bottom right>
+    <button ion-fab mini (click)="toggleMap()">
       <ion-icon name="{{toggleState}}"></ion-icon>
     </button>
-    </ion-fab>
+  </ion-fab>
 
-    <div id="mapView">
-        <ion-icon id="funnel" name="funnel"></ion-icon>
-        <ion-item class="hidden">
-            <ion-label>Filtey by</ion-label>
-            <ion-select [(ngModel)]="category" (ionChange)="selectcategory()" color="custom" id="drop">
-                <ion-option value="Orphanage">Cat1</ion-option>
-                <ion-option value="Disability">Cat2</ion-option>
-                <ion-option value="old age">Cat3</ion-option>
-                <ion-option value="theraphy">Cat4</ion-option>
-                <ion-option value="Psychiatric">Cat5</ion-option>
-                <ion-option value="social centre">Cat6</ion-option>
-                <ion-option value="Rehab">Cat7</ion-option>
-            </ion-select>
-        </ion-item>
-        <img [src]="img" class="displayPic" id="imgOnMap" alt="" (click)="Userprofile()" />
-        <div class="slideShow">
-
-        </div>
-        <div #map id="map"></div>
+  <div id="mapView">
+    <ion-icon id="funnel" name="funnel"></ion-icon>
+    <ion-item class="hidden">
+      <ion-label>Filtey by</ion-label>
+      <ion-select [(ngModel)]="category" (ionChange)="selectcategory()" color="custom" id="drop">
+        <ion-option value="Orphanage">Cat1</ion-option>
+        <ion-option value="Disability">Cat2</ion-option>
+        <ion-option value="old age">Cat3</ion-option>
+        <ion-option value="theraphy">Cat4</ion-option>
+        <ion-option value="Psychiatric">Cat5</ion-option>
+        <ion-option value="social centre">Cat6</ion-option>
+        <ion-option value="Rehab">Cat7</ion-option>
+      </ion-select>
+    </ion-item>
+    <img [src]="img" class="displayPic" id="imgOnMap" alt="" (click)="Userprofile()" />
+    <div class="slideShow">
 
     </div>
+    <div #map id="map"></div>
 
-    <!-- to show list of organization -->
-    <div id="list" padding>
-        <div class="split"></div>
+  </div>
 
-        <div *ngFor="let a of orgArray">
-            <!-- <div *ngIf="x.orgName == a"> -->
-            <ion-item (click)="goToViewPage(a.orgName)" no-padding class="listedCard" no-lines>
-                <ion-thumbnail item-start large>
-                    <img class="image" src="../../assets/imgs/Defaults/default.png" />
-                </ion-thumbnail>
-                <h2>{{ a.orgName }}</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore accusamus eum dignissimos distinctio perferendis quisquam tenetur culpa ea laboriosam nesciunt dolorem, aliquam voluptatibus fugit, atque inventore quasi, aspernatur blanditiis
-                    placeat.
-                </p>
-                <!-- <div *ngIf="x.rating == 0; then loggedIn0">
+  <!-- to show list of organization -->
+  <div id="list" padding>
+    <ion-list>
+      <ion-item *ngFor="let item of items" (click)="goToViewPage(item)">
+        {{ item}}
+      </ion-item>
+    </ion-list>
+
+    <div class="split"></div>
+
+    <div *ngFor="let a of orgArray">
+      <!-- <div *ngIf="x.orgName == a"> -->
+      <ion-item (click)="goToViewPage(a.orgName)" no-padding class="listedCard" no-lines  *ngIf="showAllOrganisation">
+        <ion-thumbnail item-start large>
+          <img class="image" src="../../assets/imgs/Defaults/default.png" />
+        </ion-thumbnail>
+        <h2>{{ a.orgName }}</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore accusamus eum dignissimos distinctio
+          perferendis quisquam tenetur culpa ea laboriosam nesciunt dolorem, aliquam voluptatibus fugit, atque inventore
+          quasi, aspernatur blanditiis
+          placeat.
+        </p>
+        <!-- <div *ngIf="x.rating == 0; then loggedIn0">
       </div>
       <div *ngIf="x.rating == 1; then loggedIn1">
       </div>
@@ -161,22 +174,36 @@
           <ion-icon name="star"></ion-icon>
         </p>
       </ng-template> -->
-                <button ion-button icon-only color="custom" clear item-end>
+        <button ion-button icon-only color="custom" clear item-end>
           <ion-icon name="arrow-forward"></ion-icon>
         </button>
-            </ion-item>
-        </div>
-
+      </ion-item>
     </div>
-    <!-- <div>
-      <div *ngFor="let a of orgArray" class="cards">
-        <ion-item (click)="goToViewPage(a.orgName)" no-padding no-lines>
-          <ion-thumbnail item-start large>
-            <img src="../../assets/download.png.png">
-          </ion-thumbnail>
-          {{a.orgName}}
-        </ion-item>
-      </div>
-  </div> 
-  </div> -->
+
+  </div>
+  
+
+
+
+  <div *ngFor="let a of nearby">
+    
+    <ion-item (click)="goToViewPage(a.orgName)" no-padding class="listedCard" no-lines  *ngIf="showNearbyList">
+      <ion-thumbnail item-start large>
+        <img class="image" src="../../assets/imgs/Defaults/default.png" />
+      </ion-thumbnail>
+      <h2>{{ a.orgName }}</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore accusamus eum dignissimos distinctio
+        perferendis quisquam tenetur culpa ea laboriosam nesciunt dolorem, aliquam voluptatibus fugit, atque inventore
+        quasi, aspernatur blanditiis
+        placeat.
+      </p>
+
+
+      <button ion-button icon-only color="custom" clear item-end>
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-item>
+  </div>
+
+  
 </ion-content>

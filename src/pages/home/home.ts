@@ -18,10 +18,13 @@ export class HomePage {
   orgArray = new Array();
   viewDetailsArray = new Array();
   logInState;
+
   //variables
   loading;
-  ner
+  nearby = new Array() ;
   //variables
+  items = new Array()
+  orgNames = new Array()
   map;
   lat;
   lng;
@@ -31,6 +34,8 @@ export class HomePage {
   textField;
   img = "../../assets/imgs/Defaults/default.png";
   toggleState = "map";
+  showNearbyList:boolean =false ;
+  showAllOrganisation:boolean =true ;
 
   //Google services
   directionsService;
@@ -43,18 +48,13 @@ export class HomePage {
       this.orgArray = data;
 
       console.log(this.orgArray);
-      // setTimeout(() => {
-      //   this.loading.dismiss()
-      // }, 2500);
-    })
-
-
-    this.IRmethods.getAllOrganizations().then((data: any) => {
-      this.orgArray = data;
-      console.log(this.orgArray);
-      // setTimeout(() => {
-      //   this.loading.dismiss()
-      // }, 2500);
+      setTimeout(() => {
+        var names = this.IRmethods.getOrgNames()
+        console.log(names);
+        
+        this.storeOrgNames(names)
+        this.loading.dismiss()
+      }, 2500);
     })
 
     this.IRmethods.getUserLocation().then((data: any) => {
@@ -67,6 +67,17 @@ export class HomePage {
       console.log(this.lat);
 
 
+
+    }).catch(()=>{
+      console.log("show-map-error");
+      const options = {
+        center: { lat: -25.7479, lng: 28.2293},
+        zoom: 8,
+        disableDefaultUI: true,
+      }
+      this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+
+      
 
     })
 
@@ -84,12 +95,17 @@ export class HomePage {
           console.log(radius);
           this.IRmethods.getNearByOrganizations(radius, data).then((nearbyOrgs: any) => {
             console.log(nearbyOrgs);
+            this.nearby =nearbyOrgs ;
+
+            console.log(this.nearby);
+            
+
 
           })
         })
       })
 
-    }, 4000);
+    }, 8000);
 
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
@@ -114,46 +130,42 @@ export class HomePage {
     this.directionsDisplay = new google.maps.DirectionsRenderer;
     this.service = new google.maps.DistanceMatrixService();
     this.geocoder = new google.maps.Geocoder;
-    // this.loading = this.loadingCtrl.create({
-    //   spinner: "bubbles",
-    //   content: "Please wait....",
-    // });
-    // this.loading.present();
-
-    this.initMap();
+  
+   this.initMap().then(()=>{
+     console.log("showMap");
+     
+   }) ;
 
   }
 
 
   initMap() {
-    console.log(this.lat);
-    console.log(this.lng);
-
-
-    const options = {
-      center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
-      zoom: 8,
-      disableDefaultUI: true,
-    }
-    this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-
-    // adding user marker to the map 
-    this.marker = new google.maps.Marker({
-      map: this.map,
-      zoom: 10,
-      position: this.map.getCenter()
-      //animation: google.maps.Animation.DROP,
-    });
-
-    setTimeout(() => {
-      this.markers();
-    }, 4000)
-
-
-    console.log("test");
-
-
+   return new Promise((resolve , reject)=>{
+  const options = {
+    center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
+    zoom: 8,
+    disableDefaultUI: true,
   }
+  this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+
+  // adding user marker to the map 
+  this.marker = new google.maps.Marker({
+    map: this.map,
+    zoom: 10,
+    position: this.map.getCenter()
+    //animation: google.maps.Animation.DROP,
+  });
+
+  setTimeout(() => {
+    this.markers().then(()=>{
+      console.log("show Marker");
+      
+    });
+  }, 4000)
+resolve () ;
+})
+    
+}
 
 
 
@@ -214,17 +226,24 @@ export class HomePage {
   // get all marker for all organisation
 
   markers() {
-    console.log(this.orgArray);
-    for (let index = 0; index < this.orgArray.length; index++) {
-      var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
-      this.showMultipleMarker = new google.maps.Marker({
-        map: this.map,
-        //  icon: this.icon,
-        position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
-        label: name,
-        zoom: 8,
-      });
-    }
+
+    return new Promise((resolve , reject)=>{
+      console.log(this.orgArray);
+      for (let index = 0; index < this.orgArray.length; index++) {
+        var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
+        this.showMultipleMarker = new google.maps.Marker({
+          map: this.map,
+          //  icon: this.icon,
+          position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
+          label: name,
+          zoom: 8,
+        });
+
+        resolve() ;
+      }
+
+    })
+   
   }
   Userprofile() {
 
@@ -358,5 +377,51 @@ export class HomePage {
     }
   }
 
+  storeOrgNames(names){
+    this.orgNames = names;
+    console.log(this.orgNames);
+    
+  }
+
+  initializeItems() {
+    this.items = this.orgNames
+  }
+
+ getItems(ev) {
+    // Reset items back to all of the items
+    this.initializeItems();
+
+    // set val to the value of the ev target
+    var val = ev.target.value;
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.items = this.items.filter((item) => {
+        console.log(val);
+        
+        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
+    else if (val == "" ||val == null) {
+      this.items = [];
+    }
+    console.log(this.items);
+    
+  }
+
+
+  near(){
+    console.log("clicked");
+    console.log(this.nearby);
+    
+    this.showNearbyList =true ;
+    this. showAllOrganisation =false ;
+  }
+
+
+  all(){
+    this.showNearbyList =false;
+    this. showAllOrganisation =true;
+  }
 
 }

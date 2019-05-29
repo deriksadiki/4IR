@@ -14,7 +14,7 @@ import { UserProfilePage } from '../pages/user-profile/user-profile';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = HomePage;
+  rootPage:any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public IRhubProvider:IRhubProvider) {
     platform.ready().then(() => {

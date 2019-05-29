@@ -41,7 +41,8 @@ export class ViewOrganizationInforPage implements OnInit {
 
   showtime;
   showDistance ;
-  showMap ;
+  showMap:boolean =false; 
+  showContent:boolean =true ;
   //Google services
   directionsService;
   directionsDisplay;
@@ -50,7 +51,7 @@ export class ViewOrganizationInforPage implements OnInit {
 
   tabs;
   constructor(public navCtrl: NavController, public navParams: NavParams,private emailComposer: EmailComposer,private callNumber: CallNumber,public irhubProvider: IRhubProvider,public alertCtrl:AlertController) {
-    
+    this.initMap()
     this.tabs = "gallery";
     this.orgArray.push(this.navParams.get('orgObject'));
     console.log(this.navParams.get('orgObject'))
@@ -65,7 +66,7 @@ export class ViewOrganizationInforPage implements OnInit {
     this. destlong = this.orgArray[0].long
 
 
-   
+   this.initMap()
 
   }
 
@@ -106,12 +107,12 @@ export class ViewOrganizationInforPage implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(()=>{
-      this.initMap();
-    }, 4000)
+    // setTimeout(()=>{
+    //   this.initMap();
+    // }, 4000)
    
     console.log("testmap");
-    
+   
     // this.retrieveComments();
   }
 
@@ -314,44 +315,44 @@ export class ViewOrganizationInforPage implements OnInit {
 
 
 initMap() {
-  console.log(this.currentUserlng);
  
+  
 
-  const options = {
-    center: { lat: parseFloat(this.currentUserlat), lng: parseFloat(this.currentUserlng) },
-    zoom: 8,
-    disableDefaultUI: true,
-  }
-  this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+  return new Promise ((resolve , reject)=>{
 
-  // adding user marker to the map 
-  this.marker = new google.maps.Marker({
-    map: this.map,
-    zoom: 10,
-    position: this.map.getCenter()
-    //animation: google.maps.Animation.DROP,
-  });
+    setTimeout(() => {
+      const options = {
+        center: { lat: parseFloat(this.currentUserlat), lng: parseFloat(this.currentUserlng) },
+        zoom: 8,
+        disableDefaultUI: true,
+      }
+      this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+      this.marker = new google.maps.Marker({
+        map: this.map,
+        zoom: 10,
+        position: this.map.getCenter()
+     });
+    },4000);
+    console.log("show-map");
+   
 
-  // setTimeout(() => {
-  //   this.markers();
-  // }, 4000)
-
-
-  console.log("test");
-
+    resolve()
+  })
+  
+ 
 
 }
 
   getDistance() {
     console.log(this.destlat, this.destlong);
-    
+    //WALKING ,BICYCLING , 
     let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
     let destination = new google.maps.LatLng(this.destlat, this.destlong);
     this.service.getDistanceMatrix(
       {
         origins: [userCurrentLocation],
         destinations: [destination],
-        travelMode: 'DRIVING'
+        travelMode: 'WALKING'
       }, (response, status) => {
         if (status == 'OK') {
           var origins = response.originAddresses;
@@ -378,26 +379,37 @@ initMap() {
 
   }
   getDirection() {
-    this.showMap = true ;
+    
+this.initMap() ;
+this.showMap =true 
+this.showContent =false ;
+
+    
+}
+
+
+  navigate (){
     if (this.directionsDisplay != null) {
       this.directionsDisplay.setMap(null);
 
-      console.log("directionDisplay has something");
+     console.log("directionDisplay has something");
 
     } else {
-      console.log("directionDisplay has nothing");
-
-    }
-    //this.show
-
-  
-    let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
-    let destination = new google.maps.LatLng(this.destlat, this.destlong);
-    this.directionsDisplay.setMap(this.map);
-    this.irhubProvider.calculateAndDisplayRoute(userCurrentLocation, destination, this.directionsDisplay, this.directionsService)
-
-
-
-  }
+    console.log("directionDisplay has nothing");
 
 }
+
+setTimeout(() => {
+ 
+
+  let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
+  let destination = new google.maps.LatLng(this.destlat, this.destlong);
+  this.directionsDisplay.setMap(this.map);
+  console.log(this.directionsDisplay);
+  
+ this.irhubProvider.calculateAndDisplayRoute(userCurrentLocation, destination, this.directionsDisplay, this.directionsService) ;
+}, 1000);
+
+  }
+}
+
