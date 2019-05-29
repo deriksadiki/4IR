@@ -18,324 +18,92 @@ export class HomePage {
   orgArray = new Array();
   viewDetailsArray = new Array();
   logInState;
-  category;
 
-  mapStyle = [
+  styles: [
+    {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+    {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+    {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
     {
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#f5f5f5"
-        }
-      ]
+      featureType: 'administrative.locality',
+      elementType: 'labels.text.fill',
+      stylers: [{color: '#d59563'}]
     },
     {
-      "elementType": "labels.icon",
-      "stylers": [
-        {
-          "visibility": "off"
-        }
-      ]
+      featureType: 'poi',
+      elementType: 'labels.text.fill',
+      stylers: [{color: '#d59563'}]
     },
     {
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#616161"
-        }
-      ]
+      featureType: 'poi.park',
+      elementType: 'geometry',
+      stylers: [{color: '#263c3f'}]
     },
     {
-      "elementType": "labels.text.stroke",
-      "stylers": [
-        {
-          "color": "#f5f5f5"
-        }
-      ]
+      featureType: 'poi.park',
+      elementType: 'labels.text.fill',
+      stylers: [{color: '#6b9a76'}]
     },
     {
-      "featureType": "administrative.land_parcel",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#bdbdbd"
-        }
-      ]
+      featureType: 'road',
+      elementType: 'geometry',
+      stylers: [{color: '#38414e'}]
     },
     {
-      "featureType": "landscape.natural",
-      "elementType": "geometry.fill",
-      "stylers": [
-        {
-          "visibility": "on"
-        }
-      ]
+      featureType: 'road',
+      elementType: 'geometry.stroke',
+      stylers: [{color: '#212a37'}]
     },
     {
-      "featureType": "landscape.natural",
-      "elementType": "labels.text",
-      "stylers": [
-        {
-          "color": "#04592a"
-        }
-      ]
+      featureType: 'road',
+      elementType: 'labels.text.fill',
+      stylers: [{color: '#9ca5b3'}]
     },
     {
-      "featureType": "landscape.natural",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#04592a"
-        }
-      ]
+      featureType: 'road.highway',
+      elementType: 'geometry',
+      stylers: [{color: '#746855'}]
     },
     {
-      "featureType": "landscape.natural",
-      "elementType": "labels.text.stroke",
-      "stylers": [
-        {
-          "color": "#04592a"
-        }
-      ]
+      featureType: 'road.highway',
+      elementType: 'geometry.stroke',
+      stylers: [{color: '#1f2835'}]
     },
     {
-      "featureType": "landscape.natural.landcover",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#04592a"
-        }
-      ]
+      featureType: 'road.highway',
+      elementType: 'labels.text.fill',
+      stylers: [{color: '#f3d19c'}]
     },
     {
-      "featureType": "landscape.natural.landcover",
-      "elementType": "geometry.fill",
-      "stylers": [
-        {
-          "color": "#04592a"
-        }
-      ]
+      featureType: 'transit',
+      elementType: 'geometry',
+      stylers: [{color: '#2f3948'}]
     },
     {
-      "featureType": "landscape.natural.landcover",
-      "elementType": "geometry.stroke",
-      "stylers": [
-        {
-          "color": "#04592a"
-        }
-      ]
+      featureType: 'transit.station',
+      elementType: 'labels.text.fill',
+      stylers: [{color: '#d59563'}]
     },
     {
-      "featureType": "landscape.natural.landcover",
-      "elementType": "labels.text",
-      "stylers": [
-        {
-          "color": "#04592a"
-        }
-      ]
+      featureType: 'water',
+      elementType: 'geometry',
+      stylers: [{color: '#17263c'}]
     },
     {
-      "featureType": "landscape.natural.landcover",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#04592a"
-        }
-      ]
+      featureType: 'water',
+      elementType: 'labels.text.fill',
+      stylers: [{color: '#515c6d'}]
     },
     {
-      "featureType": "landscape.natural.landcover",
-      "elementType": "labels.text.stroke",
-      "stylers": [
-        {
-          "color": "#04592a"
-        }
-      ]
-    },
-    {
-      "featureType": "landscape.natural.terrain",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#04592a"
-        }
-      ]
-    },
-    {
-      "featureType": "landscape.natural.terrain",
-      "elementType": "geometry.fill",
-      "stylers": [
-        {
-          "color": "#04592a"
-        }
-      ]
-    },
-    {
-      "featureType": "poi",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#eeeeee"
-        }
-      ]
-    },
-    {
-      "featureType": "poi",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#757575"
-        }
-      ]
-    },
-    {
-      "featureType": "poi.attraction",
-      "elementType": "geometry.fill",
-      "stylers": [
-        {
-          "color": "#04592a"
-        }
-      ]
-    },
-    {
-      "featureType": "poi.park",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#e5e5e5"
-        }
-      ]
-    },
-    {
-      "featureType": "poi.park",
-      "elementType": "geometry.fill",
-      "stylers": [
-        {
-          "color": "#04592a"
-        }
-      ]
-    },
-    {
-      "featureType": "poi.park",
-      "elementType": "geometry.stroke",
-      "stylers": [
-        {
-          "color": "#04592a"
-        }
-      ]
-    },
-    {
-      "featureType": "poi.park",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#9e9e9e"
-        }
-      ]
-    },
-    {
-      "featureType": "poi.sports_complex",
-      "elementType": "geometry.fill",
-      "stylers": [
-        {
-          "color": "#04592a"
-        }
-      ]
-    },
-    {
-      "featureType": "poi.sports_complex",
-      "elementType": "geometry.stroke",
-      "stylers": [
-        {
-          "color": "#04592a"
-        }
-      ]
-    },
-    {
-      "featureType": "road",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#ffffff"
-        }
-      ]
-    },
-    {
-      "featureType": "road.arterial",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#757575"
-        }
-      ]
-    },
-    {
-      "featureType": "road.highway",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#d1e2d1"
-        }
-      ]
-    },
-    {
-      "featureType": "road.highway",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#616161"
-        }
-      ]
-    },
-    {
-      "featureType": "road.local",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#9e9e9e"
-        }
-      ]
-    },
-    {
-      "featureType": "transit.line",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#e5e5e5"
-        }
-      ]
-    },
-    {
-      "featureType": "transit.station",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#eeeeee"
-        }
-      ]
-    },
-    {
-      "featureType": "water",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#99e4fd"
-        }
-      ]
-    },
-    {
-      "featureType": "water",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#ffd700"
-        }
-      ]
+      featureType: 'water',
+      elementType: 'labels.text.stroke',
+      stylers: [{color: '#17263c'}]
     }
   ]
+    
+  
   //variables
   loading;
-  nearby = new Array();
+  nearby = new Array() ;
   //variables
   items = new Array()
   orgNames = new Array()
@@ -348,16 +116,230 @@ export class HomePage {
   textField;
   img = "../../assets/imgs/Defaults/default.png";
   toggleState = "map";
-  showNearbyList: boolean = false;
-  showAllOrganisation: boolean = true;
+  showNearbyList:boolean =false ;
+  showAllOrganisation:boolean =true ;
 
+
+ mapStyles =[
+  {
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#ebe3cd"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#523735"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#f5f1e6"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#c9b2a6"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.land_parcel",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#dcd2be"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#ae9e90"
+      }
+    ]
+  },
+  {
+    "featureType": "landscape.natural",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#dfd2ae"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#dfd2ae"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#93817c"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#a5b076"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#447530"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#f5f1e6"
+      }
+    ]
+  },
+  {
+    "featureType": "road.arterial",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#fdfcf8"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#f8c967"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#e9bc62"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway.controlled_access",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#e98d58"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway.controlled_access",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#db8555"
+      }
+    ]
+  },
+  {
+    "featureType": "road.local",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#806b63"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.line",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#dfd2ae"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.line",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#8f7d77"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.line",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#ebe3cd"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.station",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#dfd2ae"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#b9d3c2"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#92998d"
+      }
+    ]
+  }
+]
   //Google services
   directionsService;
   directionsDisplay;
   service;
   geocoder;
-  rateState;
-  cat = [];
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
@@ -367,36 +349,39 @@ export class HomePage {
       setTimeout(() => {
         var names = this.IRmethods.getOrgNames()
         console.log(names);
-
+        
         this.storeOrgNames(names)
-        // this.loading.dismiss()
+        this.loading.dismiss()
       }, 2500);
     })
 
-
-    this.IRmethods.getUserLocation().then((data: any) => {
-      console.log(data);
-      console.log(data.coords.latitude);
-      console.log(data.coords.longitude);
-
-      this.lat = data.coords.latitude;
-      this.lng = data.coords.longitude
-      console.log(this.lat);
-
-
-
-    }).catch(() => {
-      console.log("show-map-error");
-      const options = {
-        center: { lat: -25.7479, lng: 28.2293 },
-        zoom: 8,
-        disableDefaultUI: true,
-      }
-      this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-
-
-
-    })
+    setTimeout(() => {
+      this.IRmethods.getUserLocation().then((data: any) => {
+        console.log(data);
+        console.log(data.coords.latitude);
+        console.log(data.coords.longitude);
+  
+        this.lat = data.coords.latitude;
+        this.lng = data.coords.longitude
+        console.log(this.lat);
+  
+  
+  
+      }).catch(()=>{
+        console.log("show-map-error");
+        const options = {
+          center: { lat: -25.7479, lng: 28.2293},
+          zoom: 8,
+          disableDefaultUI: true,
+        }
+        this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+  
+        
+  
+      })
+      
+    }, 5000);
+   
 
 
 
@@ -412,10 +397,10 @@ export class HomePage {
           console.log(radius);
           this.IRmethods.getNearByOrganizations(radius, data).then((nearbyOrgs: any) => {
             console.log(nearbyOrgs);
-            this.nearby = nearbyOrgs;
+            this.nearby =nearbyOrgs ;
 
             console.log(this.nearby);
-
+            
 
 
           })
@@ -424,20 +409,19 @@ export class HomePage {
 
     }, 8000);
 
-    // this.IRmethods.checkAuthState().then(data => {
-    //   if (data == true) {
-    //     this.logInState = true;
-    //     this.IRmethods.getProfile().then((data: any) => {
-    //       console.log(this.logInState);
+    this.IRmethods.checkAuthState().then(data => {
+      if (data == true) {
+        this.logInState = true;
+        this.IRmethods.getProfile().then((data: any) => {
+          console.log(this.logInState);
 
-    //       this.img = data;
-    //     })
-    //   }
-    //   else if (data == false) {
-    //     this.img = "assets/imgs/default.png";
-    //   }
-    // })
-
+          this.img = data;
+        })
+      }
+      else if (data == false) {
+        this.img = "assets/imgs/default.png";
+      }
+    })
   }
 
 
@@ -448,55 +432,68 @@ export class HomePage {
     this.directionsDisplay = new google.maps.DirectionsRenderer;
     this.service = new google.maps.DistanceMatrixService();
     this.geocoder = new google.maps.Geocoder;
-
-    this.initMap().then(() => {
-      console.log("showMap");
-
-    });
+  
+   this.initMap().then(()=>{
+     console.log("showMap");
+     
+   }) ;
 
   }
 
 
   initMap() {
 
-    return new Promise((resolve, reject) => {
+   return new Promise((resolve , reject)=>{
 
-      this.IRmethods.getUserLocation().then((data: any) => {
-        console.log(data);
-        console.log(data.coords.latitude);
-        console.log(data.coords.longitude);
+    this.IRmethods.getUserLocation().then((data: any) => {
+      console.log(data);
+      console.log(data.coords.latitude);
+      console.log(data.coords.longitude);
 
-        this.lat = data.coords.latitude;
-        this.lng = data.coords.longitude
-        console.log(this.lat);
-      })
+      this.lat = data.coords.latitude;
+      this.lng = data.coords.longitude
+      console.log(this.lat);
+ })
 
-      const options = {
-        center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
-        zoom: 8,
-        disableDefaultUI: true,
-        styles: this.mapStyle
-      }
-      this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-
-      // adding user marker to the map 
-      this.marker = new google.maps.Marker({
-        map: this.map,
-        zoom: 10,
-        position: this.map.getCenter()
-        //animation: google.maps.Animation.DROP,
-      });
-
-      setTimeout(() => {
-        this.markers().then(() => {
-          console.log("show Marker");
-
-        });
-      }, 8000)
-      resolve();
-    })
-
+  const options = {
+    center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
+    zoom: 8,
+    disableDefaultUI: true,
+    styles: this.mapStyles
+    
   }
+  this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+
+  // adding user marker to the map 
+  this.marker = new google.maps.Marker({
+    map: this.map,
+    zoom: 10,
+   
+    position: this.map.getCenter()
+    //animation: google.maps.Animation.DROP,
+  });
+
+  
+  
+  setTimeout(() => {
+    this.markers().then(()=>{
+      console.log("show Marker");
+      
+    });
+  }, 8000)
+
+ var infowindow = new google.maps.InfoWindow();
+  this.marker.addListener('click', function() {
+    console.log("clicked Marker");
+    console.log();
+    
+    
+    
+   });
+resolve () ;
+})
+    
+}
 
 
 
@@ -557,10 +554,11 @@ export class HomePage {
   // get all marker for all organisation
 
   markers() {
-
-    return new Promise((resolve, reject) => {
+    let tracker ;
+    return new Promise((resolve , reject)=>{
       console.log(this.orgArray);
       for (let index = 0; index < this.orgArray.length; index++) {
+        let tracker = index ;
         var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
         this.showMultipleMarker = new google.maps.Marker({
           map: this.map,
@@ -570,11 +568,25 @@ export class HomePage {
           zoom: 8,
         });
 
-        resolve();
+        console.log(this.orgArray[index]);
+        this.showMultipleMarker.addListener('click', ()=> {
+
+          console.log(this.orgArray[index]);
+          console.log(index);
+          
+          
+          this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
+         
+          
+          });
+
+        resolve() ;
       }
 
-    })
 
+        
+    })
+   
   }
   Userprofile() {
 
@@ -610,14 +622,16 @@ export class HomePage {
 
 
 
-  // goToViewPage(name) {
-  //   ;
-  //   for (var x = 0; x < this.orgArray.length; x++) {
-  //     if (name == this.orgArray[x].orgName) {
-  //       this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x] });
-  //     }
-  //   }
-  // }
+  goToViewPage(name) {
+    ;
+
+    
+    for (var x = 0; x < this.orgArray.length; x++) {
+      if (name == this.orgArray[x].orgName) {
+        this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x] });
+      }
+    }
+  }
 
   showButton() {
     var theCard = document.getElementsByClassName("options") as HTMLCollectionOf<HTMLElement>;
@@ -652,7 +666,7 @@ export class HomePage {
       // this.initializeItems();
       // this.setArrayBack(this.tempArray)
       restOf[0].style.paddingTop = "210px";
-
+      
 
     }
     else if (this.searchDismissState == "search") {
@@ -687,68 +701,38 @@ export class HomePage {
   toggleMap() {
     console.log("clicked");
 
-    this.IRmethods.checkAuthState().then(data => {
-      if (data == false) {
-        let alert = this.alertCtrl.create({
-          subTitle: 'You have to sign in before you can view your profile, would you like to sign in now?',
-          // cssClass: 'myAlert',
-          buttons: [
-            {
-              text: 'Sign in',
-              handler:
-                data => {
-                  var opt = "profile";
-                  this.navCtrl.push(SignInPage, { option: opt })
-                }
-            },
-            {
-              text: 'Cancel',
-              handler:
-                data => {
+    var theHeader = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
+    var theMap = document.getElementById("mapView");
+    var theList = document.getElementById("list");
 
-                }
-            }]
-        });
-        alert.present();
-      } else {
-        var theHeader = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
-        var theMap = document.getElementById("mapView");
-        var theList = document.getElementById("list");
+    if (this.n == 1) {
+      this.n = 0;
+      this.toggleState = "list"
+      theMap.style.display = "block"
+      theList.style.display = "none";
+      theHeader[0].style.display = "none";
+    }
+    else {
 
-        if (this.n == 1) {
-          this.n = 0;
-          this.toggleState = "list"
-          theMap.style.display = "block"
-          theList.style.display = "none";
-          theHeader[0].style.display = "none";
-        }
-        else {
-
-          this.n = 1;
-          this.toggleState = "map"
-          theMap.style.display = "none"
-          theList.style.display = "block";
-          theHeader[0].style.display = "block";
-        }
-      }
-    })
-
-
-
-
+      this.n = 1;
+      this.toggleState = "map"
+      theMap.style.display = "none"
+      theList.style.display = "block";
+      theHeader[0].style.display = "block";
+    }
   }
 
-  storeOrgNames(names) {
+  storeOrgNames(names){
     this.orgNames = names;
     console.log(this.orgNames);
-
+    
   }
 
   initializeItems() {
     this.items = this.orgNames
   }
 
-  getItems(ev) {
+ getItems(ev) {
     // Reset items back to all of the items
     this.initializeItems();
 
@@ -759,81 +743,30 @@ export class HomePage {
     if (val && val.trim() != '') {
       this.items = this.items.filter((item) => {
         console.log(val);
-
+        
         return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
-    else if (val == "" || val == null) {
+    else if (val == "" ||val == null) {
       this.items = [];
     }
     console.log(this.items);
-
+    
   }
 
 
-  near() {
+  near(){
     console.log("clicked");
     console.log(this.nearby);
-    this.showNearbyList = true;
-    this.showAllOrganisation = false;
-
-  }
-
-  goToViewPage(name) {
-    for (var x = 0; x < this.orgArray.length; x++) {
-      if (name == this.orgArray[x].orgName) {
-        this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x] });
-      }
-
-    }
-    this.showNearbyList = true;
-    this.showAllOrganisation = false;
+    
+    this.showNearbyList =true ;
+    this. showAllOrganisation =false ;
   }
 
 
-  all() {
-    this.showNearbyList = false;
-    this.showAllOrganisation = true;
+  all(){
+    this.showNearbyList =false;
+    this. showAllOrganisation =true;
   }
-
-  selectcategory() {
-    this.IRmethods.DisplayCategory(this.category).then((data: any) => {
-      this.cat = data;
-      this.map.clear();
-      this.orgArray = this.cat;
-      console.log(this.orgArray)
-      console.log(this.cat)
-      var indx = 0;
-      for (var x = 0; x < this.cat.length; x++) {
-        if (this.cat[x].orgCat == "n64")
-          indx = 1;
-        else if (this.orgArray[x].orgCat == "ps")
-          indx = 2;
-        else if (this.orgArray[x].orgCat == "nes")
-          indx = 3;
-        // else if (this.orgArray[x].orgCat == "theraphy")
-        //   indx = 4;
-        // else if (this.orgArray[x].orgCat == "Psychiatric")
-        //   indx = 5;
-        // else if (this.orgArray[x].orgCat == "social centre")
-        //   indx = 6;
-        // else if (this.orgArray[x].orgCat == "Rehab")
-        indx = 7;
-        this.map.addMarker({
-          title: this.cat[x].orgName,
-          // icon: {
-          //   url: this.images[indx],
-          //   size: { width: 30, height: 30 }
-          // },
-          animation: 'DROP',
-          position: {
-            lat: this.cat[x].orgLat,
-            lng: this.cat[x].orgLong
-          }
-        })
-      }
-    })
-  }
-
 
 }
