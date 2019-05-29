@@ -21,7 +21,7 @@ export class HomePage {
 
   //variables
   loading;
-  ner
+  nearby = new Array() ;
   //variables
   items = new Array()
   orgNames = new Array()
@@ -34,6 +34,8 @@ export class HomePage {
   textField;
   img = "../../assets/imgs/Defaults/default.png";
   toggleState = "map";
+  showNearbyList:boolean =false ;
+  showAllOrganisation:boolean =true ;
 
   //Google services
   directionsService;
@@ -82,12 +84,17 @@ export class HomePage {
           console.log(radius);
           this.IRmethods.getNearByOrganizations(radius, data).then((nearbyOrgs: any) => {
             console.log(nearbyOrgs);
+            this.nearby =nearbyOrgs ;
+
+            console.log(this.nearby);
+            
+
 
           })
         })
       })
 
-    }, 4000);
+    }, 8000);
 
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
@@ -112,45 +119,43 @@ export class HomePage {
     this.directionsDisplay = new google.maps.DirectionsRenderer;
     this.service = new google.maps.DistanceMatrixService();
     this.geocoder = new google.maps.Geocoder;
-    // this.loading = this.loadingCtrl.create({
-    //   spinner: "bubbles",
-    //   content: "Please wait....",
-    // });
-    // this.loading.present();
   
-
-    this.initMap();
+   this.initMap() ;
 
   }
 
 
   initMap() {
-    console.log(this.lat);
-    console.log(this.lng);
+   
+
+return new Promise((resolve , reject)=>{
+
+  const options = {
+    center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
+    zoom: 8,
+    disableDefaultUI: true,
+  }
+  this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+
+  // adding user marker to the map 
+  this.marker = new google.maps.Marker({
+    map: this.map,
+    zoom: 10,
+    position: this.map.getCenter()
+    //animation: google.maps.Animation.DROP,
+  });
+
+  setTimeout(() => {
+    this.markers();
+  }, 4000)
 
 
-    const options = {
-      center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
-      zoom: 8,
-      disableDefaultUI: true,
-    }
-    this.map = new google.maps.Map(this.mapRef.nativeElement, options);
 
-    // adding user marker to the map 
-    this.marker = new google.maps.Marker({
-      map: this.map,
-      zoom: 10,
-      position: this.map.getCenter()
-      //animation: google.maps.Animation.DROP,
-    });
-
-    setTimeout(() => {
-      this.markers();
-    }, 4000)
+ resolve () ;
 
 
-    console.log("test");
-
+})
+    
 
   }
 
@@ -213,17 +218,24 @@ export class HomePage {
   // get all marker for all organisation
 
   markers() {
-    console.log(this.orgArray);
-    for (let index = 0; index < this.orgArray.length; index++) {
-      var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
-      this.showMultipleMarker = new google.maps.Marker({
-        map: this.map,
-        //  icon: this.icon,
-        position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
-        label: name,
-        zoom: 8,
-      });
-    }
+
+    return new Promise((resolve , reject)=>{
+      console.log(this.orgArray);
+      for (let index = 0; index < this.orgArray.length; index++) {
+        var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
+        this.showMultipleMarker = new google.maps.Marker({
+          map: this.map,
+          //  icon: this.icon,
+          position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
+          label: name,
+          zoom: 8,
+        });
+
+        resolve() ;
+      }
+
+    })
+   
   }
   Userprofile() {
 
@@ -387,6 +399,21 @@ export class HomePage {
     }
     console.log(this.items);
     
+  }
+
+
+  near(){
+    console.log("clicked");
+    console.log(this.nearby);
+    
+    this.showNearbyList =true ;
+    this. showAllOrganisation =false ;
+  }
+
+
+  all(){
+    this.showNearbyList =false;
+    this. showAllOrganisation =true;
   }
 
 }
