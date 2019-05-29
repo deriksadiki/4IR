@@ -17,11 +17,15 @@ export class HomePage {
   @ViewChild('map') mapRef: ElementRef;
   orgArray = new Array();
   viewDetailsArray = new Array();
-  nearbyArray = new Array() ;
   logInState;
+
   //variables
   loading;
-   map;
+  nearby = new Array() ;
+  //variables
+  items = new Array()
+  orgNames = new Array()
+  map;
   lat;
   lng;
   marker;
@@ -30,78 +34,68 @@ export class HomePage {
   textField;
   img = "../../assets/imgs/Defaults/default.png";
   toggleState = "map";
-  custom1 = "custom1";
-  custom2 = "custom2";
-  showNeabyList  =false ;
-  showAllorgList = true ;
+  showNearbyList:boolean =false ;
+  showAllOrganisation:boolean =true ;
+
   //Google services
   directionsService;
   directionsDisplay;
   service;
   geocoder;
-  state = ["star-outline", "star-outline", "star-outline", "star-outline", "star-outline"]
-  Star1 = "star-outline";
-  Star2 = "star-outline";
-  Star3 = "star-outline";
-  Star4 = "star-outline";
-  Star5 = "star-outline";
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
       this.orgArray = data;
 
       console.log(this.orgArray);
-      // setTimeout(() => {
-      //   this.loading.dismiss()
-      // }, 2500);
+      setTimeout(() => {
+        var names = this.IRmethods.getOrgNames()
+        console.log(names);
+        
+        this.storeOrgNames(names)
+        // this.loading.dismiss()
+      }, 2500);
     })
 
-
-    this.IRmethods.getAllOrganizations().then((data:any) =>{
-      this.orgArray = data;
-      console.log(this.orgArray);
-      // setTimeout(() => {
-      //   this.loading.dismiss()
-      // }, 2500);
-    })
-
-    this.IRmethods.getUserLocation().then((data:any)=>{
+    this.IRmethods.getUserLocation().then((data: any) => {
       console.log(data);
       console.log(data.coords.latitude);
       console.log(data.coords.longitude);
 
-      this.lat =data.coords.latitude ;
+      this.lat = data.coords.latitude;
       this.lng = data.coords.longitude
-      console.log( this.lat );
-      
-      
-      
+      console.log(this.lat);
+
+
+
     })
 
 
 
-setTimeout(() => {
-  this.IRmethods.getCurrentLocation(this.lat , this.lng).then((radius:any)=>{
-   
-    console.log(this.lat);
-   console.log(this.lng);
-    console.log(radius);
-    
-    this.IRmethods.getAllOrganizations().then((data:any)=>{
-      console.log(data);
-      console.log(radius);
-      this.IRmethods.getNearByOrganizations(radius ,data).then((nearbyOrgs:any)=>{
-        console.log(nearbyOrgs);
-        this.nearbyArray = data ;
-        console.log(this.nearbyArray);
-        
-        
+    setTimeout(() => {
+      this.IRmethods.getCurrentLocation(this.lat, this.lng).then((radius: any) => {
+
+        console.log(this.lat);
+        console.log(this.lng);
+        console.log(radius);
+
+        this.IRmethods.getAllOrganizations().then((data: any) => {
+          console.log(data);
+          console.log(radius);
+          this.IRmethods.getNearByOrganizations(radius, data).then((nearbyOrgs: any) => {
+            console.log(nearbyOrgs);
+            this.nearby =nearbyOrgs ;
+
+            console.log(this.nearby);
+            
+
+
+          })
+        })
       })
-    })
-  })
-  
-}, 4000);
-  
+
+    }, 8000);
+
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
         this.logInState = true;
@@ -125,53 +119,43 @@ setTimeout(() => {
     this.directionsDisplay = new google.maps.DirectionsRenderer;
     this.service = new google.maps.DistanceMatrixService();
     this.geocoder = new google.maps.Geocoder;
-    // this.loading = this.loadingCtrl.create({
-    //   spinner: "bubbles",
-    //   content: "Please wait....",
-    // });
-    // this.loading.present();
+  
+   this.initMap() ;
 
-    this.initMap();
-
-
-    
-    this.IRmethods.getAllOrganizations().then((data: any) => {
-      this.orgArray = data;
-      console.log(this.orgArray);
-      // setTimeout(() => {
-      //   this.loading.dismiss()
-      // }, 2500);
-    })
   }
 
 
   initMap() {
-    console.log(this.lat);
-    console.log(this.lng);
+   
+
+return new Promise((resolve , reject)=>{
+
+  const options = {
+    center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
+    zoom: 8,
+    disableDefaultUI: true,
+  }
+  this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+
+  // adding user marker to the map 
+  this.marker = new google.maps.Marker({
+    map: this.map,
+    zoom: 10,
+    position: this.map.getCenter()
+    //animation: google.maps.Animation.DROP,
+  });
+
+  setTimeout(() => {
+    this.markers();
+  }, 4000)
+
+
+
+ resolve () ;
+
+
+})
     
-    
-    const options = {
-      center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
-      zoom: 8,
-      disableDefaultUI: true,
-    }
-    this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-
-    // adding user marker to the map 
-    this.marker = new google.maps.Marker({
-      map: this.map,
-      zoom: 10,
-      position: this.map.getCenter()
-      //animation: google.maps.Animation.DROP,
-    });
-
-    setTimeout(() => {
-      this.markers();
-    }, 4000)
-
-
-    console.log("test");
-
 
   }
 
@@ -234,24 +218,27 @@ setTimeout(() => {
   // get all marker for all organisation
 
   markers() {
-    console.log(this.orgArray);
 
-    for (let index = 0; index < this.orgArray.length; index++) {
-      var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
-      this.showMultipleMarker = new google.maps.Marker({
-        map: this.map,
-        //  icon: this.icon,
+    return new Promise((resolve , reject)=>{
+      console.log(this.orgArray);
+      for (let index = 0; index < this.orgArray.length; index++) {
+        var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
+        this.showMultipleMarker = new google.maps.Marker({
+          map: this.map,
+          //  icon: this.icon,
+          position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
+          label: name,
+          zoom: 8,
+        });
 
+        resolve() ;
+      }
 
-        position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
-        label: name,
-        zoom: 8,
-      });
-    }
+    })
+   
   }
-
-
   Userprofile() {
+
     this.IRmethods.checkAuthState().then(data => {
       if (data == false) {
         let alert = this.alertCtrl.create({
@@ -280,13 +267,25 @@ setTimeout(() => {
       }
     })
   }
-  
+
+
+
+
+  // goToViewPage(name) {
+  //   ;
+  //   for (var x = 0; x < this.orgArray.length; x++) {
+  //     if (name == this.orgArray[x].orgName) {
+  //       this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x] });
+  //     }
+  //   }
+  // }
 
   showButton() {
     var theCard = document.getElementsByClassName("options") as HTMLCollectionOf<HTMLElement>;
     let searcher = document.getElementsByClassName('searchBar') as HTMLCollectionOf<HTMLElement>;
     var theTitle = document.getElementsByClassName("theTitle") as HTMLCollectionOf<HTMLElement>
     var nav = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
+    var theSplit = document.getElementsByClassName("split") as HTMLCollectionOf<HTMLElement>;
     var searchBtn = document.getElementsByClassName("more") as HTMLCollectionOf<HTMLElement>;
     var prof = document.getElementsByClassName("profile") as HTMLCollectionOf<HTMLElement>;
     var restOf = document.getElementsByClassName("restOfBody") as HTMLCollectionOf<HTMLElement>;
@@ -304,6 +303,7 @@ setTimeout(() => {
       theCard[0].style.opacity = "1";
 
       nav[0].style.height = "120px";
+      theSplit[0].style.height = "190px";
 
       searchBtn[0].style.top = "20px";
 
@@ -313,6 +313,7 @@ setTimeout(() => {
       // this.initializeItems();
       // this.setArrayBack(this.tempArray)
       restOf[0].style.paddingTop = "210px";
+      
 
     }
     else if (this.searchDismissState == "search") {
@@ -328,6 +329,7 @@ setTimeout(() => {
       theCard[0].style.opacity = "0.5";
 
       nav[0].style.height = "50px";
+      theSplit[0].style.height = "40px";
 
       searchBtn[0].style.top = "0";
       prof[0].style.top = "8px";
@@ -344,45 +346,83 @@ setTimeout(() => {
   }
   n = 1
   toggleMap() {
-    var theMap = document.getElementById("map");
+    console.log("clicked");
+
+    var theHeader = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
+    var theMap = document.getElementById("mapView");
     var theList = document.getElementById("list");
 
     if (this.n == 1) {
       this.n = 0;
+      this.toggleState = "list"
       theMap.style.display = "block"
-      theList.style.display = "none"
+      theList.style.display = "none";
+      theHeader[0].style.display = "none";
     }
     else {
 
       this.n = 1;
+      this.toggleState = "map"
       theMap.style.display = "none"
-      theList.style.display = "block"
+      theList.style.display = "block";
+      theHeader[0].style.display = "block";
     }
+  }
 
-    // this.showNeabyList =false ;
-    // this.showAllorgList =false ;
+  storeOrgNames(names){
+    this.orgNames = names;
+    console.log(this.orgNames);
+    
+  }
+
+  initializeItems() {
+    this.items = this.orgNames
+  }
+
+ getItems(ev) {
+    // Reset items back to all of the items
+    this.initializeItems();
+
+    // set val to the value of the ev target
+    var val = ev.target.value;
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.items = this.items.filter((item) => {
+        console.log(val);
+        
+        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
+    else if (val == "" ||val == null) {
+      this.items = [];
+    }
+    console.log(this.items);
+    
   }
 
 
-  // near(){
-  //   console.log("clicked");
+  near(){
+    console.log("clicked");
+    console.log(this.nearby);
     
-  //   // this.showNeabyList =true ;
-  //   // this.showAllorgList =false ;
-  // }
+  }
 
-
-  // all(){
-  //   this.showNeabyList =false;
-  //   this.showAllorgList =true ;
-    
-  // }
-
-  goToViewPage(name) {;
+  goToViewPage(name) {
     for (var x = 0; x < this.orgArray.length; x++) {
       if (name == this.orgArray[x].orgName) {
         this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x] });
       }
-    }
+    
   }
+    this.showNearbyList =true ;
+    this. showAllOrganisation =false ;
+  }
+
+
+  all(){
+    this.showNearbyList =false;
+    this. showAllOrganisation =true;
+  }
+
 }

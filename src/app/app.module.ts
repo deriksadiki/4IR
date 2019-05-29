@@ -16,6 +16,7 @@ import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { ViewOrganizationInforPage } from '../pages/view-organization-infor/view-organization-infor';
 import { EditUserProfilePage } from '../pages/edit-user-profile/edit-user-profile';
 import { EmailComposer } from '@ionic-native/email-composer';
+import { IonicImageViewerModule } from 'ionic-img-viewer'
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { EmailComposer } from '@ionic-native/email-composer';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicImageViewerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

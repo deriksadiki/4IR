@@ -163,17 +163,23 @@ page-home {
         bottom: 10px;
         padding-left: 10px;
         display: flex;
+        width: 100%;
     }
     .selects {
-        border-radius: 50px;
-        width: 120px;
-        height: 30px;
-        font-size: 12px;
+        border-radius: 5px;
+        height: 20px;
+        font-size: 70%;
+        padding-left: 10px;
+        padding-right: 10px;
     }
     .ionHeader {
         height: 0px;
         display: block;
         animation: fadeIn 1s;
+    }
+    .theLabel {
+        padding: 5px;
+        width: 60%;
     }
     #list {
         display: block;
@@ -197,6 +203,9 @@ page-home {
             object-fit: cover;
         }
     }
+    // #all {
+    //     margin: ;
+    // }
     @keyframes fadeIn {
         0% {
             opacity: 0;
@@ -207,5 +216,8 @@ page-home {
         100% {
             opacity: 1;
         }
+    }
+    ion-col {
+        border: 2px solid red
     }
 }
