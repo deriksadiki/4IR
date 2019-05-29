@@ -14,9 +14,16 @@
 
 
 <ion-content *ngFor="let displayDetails of orgArray">
-    <div #map id="map" *ngIf="showMap"></div>
-    <button ion-button (click)="navigate()">navigate</button>
-    <button ion-button (click)="getDistance()">get Distance </button>
+        <button ion-button (click)="navigate()">navigate</button> 
+        <button ion-button (click)="getDistance()">get Distance </button>
+        <div #map id="map"  *ngIf="showMap">
+
+                
+        </div>
+        
+        <div *ngIf="showContent">
+               
+            
     <div class="topHalf">
         <div class="top">
             <div class="hubName">
@@ -229,4 +236,39 @@
             </ion-card>
         </ion-list>
     </div>
+
+        </div>
+
+
+    <!-- <img src="../../assets/download.png.png"> {{displayDetails.orgName}}
+    <br> {{displayDetails.category}}
+    <br> {{displayDetails.region}}
+    <br>
+    <br>
+    <ion-icon name="call" (click)="call(displayDetails.cell)">Call</ion-icon><br>
+    <ion-icon name="mail" (click)="email(displayDetails.email)">Email</ion-icon>
+
+    <ion-icon name={{Star1}} (click)="comment('1')"></ion-icon>
+    <ion-card>
+        <div class="theDiv" *ngFor="let a of commentArr">
+            <ion-item>
+                <ion-avatar item-start>
+                    <img class="profilePic" [src]="a.url">
+                </ion-avatar>
+                <b>
+          <h2>{{a.username}}</h2>
+        </b>
+                <p style="color: #166b85">{{a.date}}</p>
+
+            </ion-item>
+            <ion-card-content>
+                <p class="message">{{a.comment}}</p>
+            </ion-card-content>
+            <hr>
+        </div>
+    </ion-card> -->
+
+
+   
+
 </ion-content>
