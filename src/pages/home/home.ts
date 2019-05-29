@@ -18,7 +18,7 @@ export class HomePage {
   orgArray = new Array();
   viewDetailsArray = new Array();
   logInState;
-
+  category;
 
   mapStyle = [
     {
@@ -76,7 +76,7 @@ export class HomePage {
       "elementType": "labels.text",
       "stylers": [
         {
-          "color": "#93b039"
+          "color": "#04592a"
         }
       ]
     },
@@ -85,7 +85,7 @@ export class HomePage {
       "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#93b039"
+          "color": "#04592a"
         }
       ]
     },
@@ -94,7 +94,7 @@ export class HomePage {
       "elementType": "labels.text.stroke",
       "stylers": [
         {
-          "color": "#93b039"
+          "color": "#04592a"
         }
       ]
     },
@@ -103,7 +103,7 @@ export class HomePage {
       "elementType": "geometry",
       "stylers": [
         {
-          "color": "#93b039"
+          "color": "#04592a"
         }
       ]
     },
@@ -112,7 +112,7 @@ export class HomePage {
       "elementType": "geometry.fill",
       "stylers": [
         {
-          "color": "#93b039"
+          "color": "#04592a"
         }
       ]
     },
@@ -121,7 +121,7 @@ export class HomePage {
       "elementType": "geometry.stroke",
       "stylers": [
         {
-          "color": "#93b039"
+          "color": "#04592a"
         }
       ]
     },
@@ -130,7 +130,7 @@ export class HomePage {
       "elementType": "labels.text",
       "stylers": [
         {
-          "color": "#93b039"
+          "color": "#04592a"
         }
       ]
     },
@@ -139,7 +139,7 @@ export class HomePage {
       "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#93b039"
+          "color": "#04592a"
         }
       ]
     },
@@ -148,7 +148,7 @@ export class HomePage {
       "elementType": "labels.text.stroke",
       "stylers": [
         {
-          "color": "#93b039"
+          "color": "#04592a"
         }
       ]
     },
@@ -157,7 +157,7 @@ export class HomePage {
       "elementType": "geometry",
       "stylers": [
         {
-          "color": "#93b039"
+          "color": "#04592a"
         }
       ]
     },
@@ -166,7 +166,7 @@ export class HomePage {
       "elementType": "geometry.fill",
       "stylers": [
         {
-          "color": "#93b039"
+          "color": "#04592a"
         }
       ]
     },
@@ -193,7 +193,7 @@ export class HomePage {
       "elementType": "geometry.fill",
       "stylers": [
         {
-          "color": "#93b039"
+          "color": "#04592a"
         }
       ]
     },
@@ -211,7 +211,7 @@ export class HomePage {
       "elementType": "geometry.fill",
       "stylers": [
         {
-          "color": "#93b039"
+          "color": "#04592a"
         }
       ]
     },
@@ -220,7 +220,7 @@ export class HomePage {
       "elementType": "geometry.stroke",
       "stylers": [
         {
-          "color": "#93b039"
+          "color": "#04592a"
         }
       ]
     },
@@ -238,7 +238,7 @@ export class HomePage {
       "elementType": "geometry.fill",
       "stylers": [
         {
-          "color": "#93b039"
+          "color": "#04592a"
         }
       ]
     },
@@ -247,7 +247,7 @@ export class HomePage {
       "elementType": "geometry.stroke",
       "stylers": [
         {
-          "color": "#93b039"
+          "color": "#04592a"
         }
       ]
     },
@@ -328,7 +328,7 @@ export class HomePage {
       "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#9e9e9e"
+          "color": "#ffd700"
         }
       ]
     }
@@ -356,7 +356,8 @@ export class HomePage {
   directionsDisplay;
   service;
   geocoder;
-  rateState
+  rateState;
+  cat = [];
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
@@ -743,6 +744,8 @@ resolve () ;
   near() {
     console.log("clicked");
     console.log(this.nearby);
+    this.showNearbyList =true ;
+   this. showAllOrganisation =false ;
 
   }
 
@@ -761,6 +764,45 @@ resolve () ;
   all() {
     this.showNearbyList = false;
     this.showAllOrganisation = true;
+  }
+
+  selectcategory() {
+    this.IRmethods.DisplayCategory(this.category).then((data: any) => {
+      this.cat = data;
+      this.map.clear();
+      this.orgArray = this.cat;
+      console.log(this.orgArray)
+      console.log(this.cat)
+      var indx = 0;
+      for (var x = 0; x < this.cat.length; x++) {
+        if (this.cat[x].orgCat == "n64")
+          indx = 1;
+        else if (this.orgArray[x].orgCat == "ps")
+          indx = 2;
+        else if (this.orgArray[x].orgCat == "nes")
+          indx = 3;
+        // else if (this.orgArray[x].orgCat == "theraphy")
+        //   indx = 4;
+        // else if (this.orgArray[x].orgCat == "Psychiatric")
+        //   indx = 5;
+        // else if (this.orgArray[x].orgCat == "social centre")
+        //   indx = 6;
+        // else if (this.orgArray[x].orgCat == "Rehab")
+          indx = 7;
+        this.map.addMarker({
+          title: this.cat[x].orgName,
+          // icon: {
+          //   url: this.images[indx],
+          //   size: { width: 30, height: 30 }
+          // },
+          animation: 'DROP',
+          position: {
+            lat: this.cat[x].orgLat,
+            lng: this.cat[x].orgLong
+          }
+        })
+      }
+    })
   }
 
 

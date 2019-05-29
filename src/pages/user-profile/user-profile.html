@@ -1,14 +1,19 @@
 <ion-content *ngFor="let userdetails of detailArray">
 
-  <div class="popover">
-    <button ion-button full (click)="GoToEditProfile()">Edit Profile</button>
-    <button ion-button full  (click)="logOut()">Sign Out</button>
+  <div id="popover">
+    <button ion-button full clear (click)="GoToEditProfile()">Edit Profile</button>
+    <button ion-button full clear (click)="logOut()">Sign Out</button>
   </div>
   <div class="topHalf">
-    <div class="topPart">
-      <img id="DP" src="{{userdetails.downloadurl}}" alt="">
+  
+      <button ion-button id="opts" clear color="secondary" (click)="togglePopover()">
+        <ion-icon name="more"></ion-icon>
+      </button>
+
+    <div class="topPart" (click)="removePopover()">
+      <img id="DP" src="{{userdetails.downloadurl}}" alt="" imageViewer  (click)="removePopover()">
     </div>
-    <div class="name">
+    <div class="name" (click)="removePopover()">
       <h3>{{userdetails.name}}</h3>
       <p>{{userdetails.email}}</p>
       <p>0813917127</p>
@@ -19,10 +24,11 @@
       </p> -->
     </div>
   </div>
-  <div class="slides">
+  <div class="slides" (click)="removePopover()">
     <div class="places">
       Reviewed Places
     </div>
+    <div></div>
     <ion-slides class="ionSlide" slidesPerView="2.1">
       <ion-slide>
         <div class="placeContainer">

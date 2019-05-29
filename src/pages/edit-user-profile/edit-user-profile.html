@@ -15,14 +15,10 @@
 
 <ion-content >
 
-    <ion-fab top right>
-        <button class="theFab" ion-fab mini color="transparent" icon-only (click)="uploadPicture()">
-          <ion-icon style="color: #166b85" name="checkmark" class="check"></ion-icon>
-        </button>
-      </ion-fab>
+  
     
       <div class="round" align="center">
-        <img class="picture" [src]="downloadurl" imageViewer>
+        <img class="picture" for="file" [src]="downloadurl" imageViewer>
         <h1>{{name}}</h1>
       </div>
       <div class="fileChooser">

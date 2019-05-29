@@ -27,6 +27,7 @@ export class IRhubProvider {
   totRating;
   auth = firebase.auth();
   nearByOrg ;
+  categoryArr;
   constructor(public ngzone: NgZone, public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,public geo :Geolocation) {
 
@@ -354,19 +355,19 @@ export class IRhubProvider {
       this.ngzone.run(() => {
         let userID = firebase.auth().currentUser;
         var numRating = 0;
-      firebase.database.ref("comments/").on("value", (data: any) => {
+      firebase.database.ref("Reviews/").on("value", (data: any) => {
           if (data.val() != null || data.val() != undefined) {
             let keys = Object.keys(data.val());
             for (var x = 0; x < keys.length; x++) {
-              firebase.database.ref("comments/" + keys[x]).on("value", (data2: any) => {
+              firebase.database.ref("Reviews/" + keys[x]).on("value", (data2: any) => {
                 var values = data2.val();
                 let inderKeys = Object.keys(values);
                 for (var i = 0; i < inderKeys.length; i++) {
                   if (values[inderKeys[i]].uid == userID.uid) {
-                    firebase.database.ref('Websiteprofiles/').on("value", (data3: any) => {
+                    firebase.database.ref('4IR_Hubs/').on("value", (data3: any) => {
                       var xx = Object.keys(data3.val())
                       for (var p = 0; p < xx.length; p++) {
-                        firebase.database.ref('Websiteprofiles/' + xx[p] + '/' + keys[x]).on("value", (data4: any) => {
+                        firebase.database.ref('4IR_Hubs/' + xx[p] + '/' + keys[x]).on("value", (data4: any) => {
                           if (data4.val() != undefined || data4.val() != null) {
                             console.log(data4.val());
                             if (data3.val() != null || data3.val() != undefined) {
@@ -388,24 +389,24 @@ export class IRhubProvider {
                             }
                             let organizationObject = {
                               orgCat: data4.val().category,
-                              orgName: data4.val().OrganisationName,
-                              orgContact: "0" + data4.val().Telephone,
-                              orgPicture: data4.val().Url,
-                              orgLat: data4.val().latitude,
-                              orgLong: data4.val().longitude,
+                              orgName: data4.val().name,
+                              orgContact: "0" + data4.val().contact,
+                              orgPicture: data4.val().downloadurl,
+                              orgLat: data4.val().lat,
+                              orgLong: data4.val().long,
                               // orgEmail:data4.val().Email,
                               orgAbout: data4.val().desc,
                               rating: values[inderKeys[i]].rate,
                               key: keys[x],
                               comment: values[inderKeys[i]].comment,
-                              // orgPrice: orgs.Price,
-                              orgGallery: gal1,
-                              orgGallery1: gal2,
-                              orgGallery2: gal3,
-                              view:data4.val().view,
+                              // // orgPrice: orgs.Price,
+                              // orgGallery: gal1,
+                              // orgGallery1: gal2,
+                              // orgGallery2: gal3,
+                              // view:data4.val().view,
                               orgId: xx[p],
-                              city: data4.val().city,
-                              orgLogo: data4.val().Logo,
+                              city: data4.val().region,
+                              // orgLogo: data4.val().Logo,
                             }
                             console.log(organizationObject);
 
@@ -779,7 +780,65 @@ getNearByOrganizations(radius,org){
   })
 }
 
-
+DisplayCategory(Category) {
+  return new Promise((accpt, rej) => {
+    this.categoryArr.length = 0;
+   firebase.database().ref('4IR_Hubs').on('value', (data) => {
+      if (data.val() != undefined || data.val() != null) {
+        this.ngzone.run(() => {
+          this.categoryArr.length = 0;
+          let SelectCategory = data.val();
+          let keys = Object.keys(SelectCategory);
+          for (var i = 0; i < keys.length; i++) {
+            let k = keys[i];
+            firebase.database().ref('Reviews/' + k).on('value', (data2) => {
+              let totalRating = 0;
+              let avg = 0;
+              if (data2.val() != null || data2.val() != undefined) {
+                let ratings = data2.val();
+                let ratingsKeys = Object.keys(ratings);
+                for (var x = 0; x < ratingsKeys.length; x++) {
+                  totalRating = totalRating + ratings[ratingsKeys[x]].rate
+                  avg++;
+                }
+                if (totalRating != 0)
+                  totalRating = totalRating / avg;
+                totalRating = Math.round(totalRating)
+              }
+              firebase.database().ref('4IR_Hubs/' + k).on('value', (data2) => {
+                var branch = data2.val();
+                var bKeys = Object.keys(branch)
+                for (var p = 0; p < bKeys.length; p++) {
+                  var x = bKeys[p]
+                  if (branch[x].category == Category) {
+                  
+                    let obj = {
+                      orgCat: branch[x].category,
+                      orgName: branch[x].name,
+                      orgContact: branch[x].Telephone,
+                      orgPicture: branch[x].downloadurl,
+                      orgLat: branch[x].lat,
+                      orgLong: branch[x].long,
+                      orgEmail: branch[x].Email,
+                      orgAbout: branch[x].desc,
+                      key: x,
+                      rating: totalRating,
+                      city: branch[x].region,
+                      views:branch[x].views
+                    }
+                    this.categoryArr.push(obj);
+                  }
+                }
+              })
+            })
+          }
+          console.log(this.categoryArr)
+          accpt(this.categoryArr);
+        })
+      }
+    })
+  })
+}
 
 
 }

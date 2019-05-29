@@ -64,7 +64,7 @@ export class SignInPage {
         // title: "No Password",
         subTitle: error.message,
         buttons: ['OK'],
-        cssClass: 'myAlert',
+        // cssClass: 'myAlert',
       });
       loading.dismiss()
       alert.present();
@@ -118,7 +118,7 @@ export class SignInPage {
           const alert = this.alertCtrl.create({
             subTitle: Error.message,
             buttons: ['OK'],
-            cssClass: 'myAlert'
+            // cssClass: 'myAlert'
           });
           alert.present();
           resolve()
@@ -135,7 +135,7 @@ export class SignInPage {
             }
           }
         ],
-        cssClass: 'myAlert'
+        // cssClass: 'myAlert'
       });
       alert.present();
     })

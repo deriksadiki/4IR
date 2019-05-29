@@ -1,6 +1,6 @@
 page-edit-user-profile {
     .theCard{
-        padding-top: 150px;
+        padding-top: 70px;
         width: 100%;
       }
     .btnActions {
@@ -19,7 +19,7 @@ page-edit-user-profile {
         margin-bottom: 20px;
         padding-left: 10px;
         padding-right: 10px;
-        border-bottom: 2px solid #dcc050;
+        // border-bottom: 2px solid #dcc050;
       }
       .topPart {
         width: 100%;
@@ -50,14 +50,14 @@ page-edit-user-profile {
           margin-left:10%;
       }
       .theFab{
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.304);
-        background-color: black;
+        // box-shadow: 0 0 10px rgba(0, 0, 0, 0.304);
+        background-color: white;
     }
     .round{
         width: 180px;
         height: 180px;
         border-radius: 100px;
-        border: white solid 2px;
+        // border: white solid 2px;
         margin: 0 auto;
         box-shadow: 0 2px 15px grey;
         position: relative;
@@ -77,11 +77,11 @@ page-edit-user-profile {
         position: relative;
     }
     .Add{
-        color: #157491;
-        text-shadow: 0 0 5px white;
-        font-size: 3.2em;
+        color: #04592a;
+        // text-shadow: 0 0 5px white;
+        font-size: 2.2em;
         position: relative;
-        bottom: 30px;
+        bottom: 70px;
         left: 60%;
         text-shadow: 0 0 0 black;
     }
