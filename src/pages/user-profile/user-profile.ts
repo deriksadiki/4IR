@@ -49,5 +49,16 @@ export class UserProfilePage {
   GoToEditProfile(){
     this.navCtrl.push(EditUserProfilePage)
   }
-
+  m = 0
+  togglePopover(){
+    var popo = document.getElementById("popover")
+    if(this.m == 0){
+      this.m = 1;
+      popo.style.right = "0";
+    }
+    else{
+      this.m = 0;
+      popo.style.right = "-160px";
+    }
+  }
 }
