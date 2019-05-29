@@ -377,4 +377,12 @@ setTimeout(() => {
   //   this.showAllorgList =true ;
     
   // }
+
+  goToViewPage(name) {;
+    for (var x = 0; x < this.orgArray.length; x++) {
+      if (name == this.orgArray[x].orgName) {
+        this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x] });
+      }
+    }
+  }
 }
