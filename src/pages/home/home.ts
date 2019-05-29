@@ -589,7 +589,6 @@ resolve () ;
    
   }
   Userprofile() {
-
     this.IRmethods.checkAuthState().then(data => {
       if (data == false) {
         let alert = this.alertCtrl.create({
