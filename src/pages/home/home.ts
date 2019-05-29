@@ -685,8 +685,6 @@ resolve () ;
   }
   n = 1
   toggleMap() {
-    console.log("clicked");
-
     var theHeader = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
     var theMap = document.getElementById("mapView");
     var theList = document.getElementById("list");
@@ -706,6 +704,9 @@ resolve () ;
       theList.style.display = "block";
       theHeader[0].style.display = "block";
     }
+
+    console.log(this.n);
+    
   }
 
   storeOrgNames(names) {
