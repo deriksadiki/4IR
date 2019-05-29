@@ -23,10 +23,10 @@ export class MyApp {
       
       IRhubProvider.checkstate().then((data: any) => {
         if (data == 1) {
-          this.rootPage = StartPage
+          this.rootPage = HomePage
         }
         else {
-          this.rootPage = SignInPage
+          this.rootPage = StartPage
         }
       })
       // Okay, so the platform is ready and our plugins are available.
