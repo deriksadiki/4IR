@@ -1,8 +1,13 @@
 <ion-content *ngFor="let displayDetails of orgArray">
 
     <div id="theMap">
-        <ion-fab mini>
-            <button ion-fab (click)="getDirection()">
+        <ion-fab top right id="googleMaps">
+            <button ion-fab mini>
+                <ion-icon name="compass"></ion-icon>
+            </button>
+        </ion-fab>
+        <ion-fab>
+            <button ion-fab mini (click)="getDirection()">
                 <ion-icon name="arrow-back"></ion-icon>
             </button>
         </ion-fab>
@@ -45,7 +50,9 @@
                     <ion-icon name="mail" (click)="email(displayDetails.email)"></ion-icon>
                 </div>
                 <div class="btn">
-                    <ion-icon name="globe" (click)="email(displayDetails.email)"></ion-icon>
+                    <a href="https://www.google.com">
+                        <ion-icon name="globe"></ion-icon>
+                    </a>
                 </div>
             </div>
             <div class="segments">
