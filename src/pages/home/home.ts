@@ -340,9 +340,6 @@ export class HomePage {
   directionsDisplay;
   service;
   geocoder;
-
-  custom1 = "primary";
-  custom2 = "inactive";
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
@@ -358,6 +355,32 @@ export class HomePage {
       }, 2500);
     })
 
+    
+   
+
+
+
+    
+
+    this.IRmethods.checkAuthState().then(data => {
+      if (data == true) {
+        this.logInState = true;
+        this.IRmethods.getProfile().then((data: any) => {
+          console.log(this.logInState);
+
+          this.img = data;
+        })
+      }
+      else if (data == false) {
+        this.img = "assets/imgs/default.png";
+      }
+    })
+  }
+
+
+
+  ionViewWillEnter() {
+
     setTimeout(() => {
       this.IRmethods.getUserLocation().then((data: any) => {
         console.log(data);
@@ -368,8 +391,6 @@ export class HomePage {
         this.lng = data.coords.longitude
         console.log(this.lat);
   
-  
-  
       }).catch(()=>{
         console.log("show-map-error");
         const options = {
@@ -379,12 +400,9 @@ export class HomePage {
         }
         this.map = new google.maps.Map(this.mapRef.nativeElement, options);
   
-        
-  
       })
       
     }, 5000);
-   
 
 
 
@@ -403,33 +421,13 @@ export class HomePage {
             this.nearby =nearbyOrgs ;
 
             console.log(this.nearby);
-            
-
-
-          })
+           })
         })
       })
 
     }, 8000);
 
-    this.IRmethods.checkAuthState().then(data => {
-      if (data == true) {
-        this.logInState = true;
-        this.IRmethods.getProfile().then((data: any) => {
-          console.log(this.logInState);
 
-          this.img = data;
-        })
-      }
-      else if (data == false) {
-        this.img = "assets/imgs/Defaults/default.png";
-      }
-    })
-  }
-
-
-
-  ionViewWillEnter() {
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsRenderer;
@@ -799,17 +797,12 @@ export class HomePage {
     
     this.showNearbyList =true ;
     this. showAllOrganisation =false ;
-    
-    this.custom1 = "inactive"
-    this.custom2 = "primary"
   }
 
 
   all(){
     this.showNearbyList =false;
     this. showAllOrganisation =true;
-    this.custom1 = "primary"
-    this.custom2 = "inactive"
   }
  
   scroll(event) {
