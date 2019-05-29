@@ -1,4 +1,23 @@
 page-home {
+
+    .stars {
+        // border: 2px solid red;
+        height: 30px;
+        position: absolute;
+        width: 60%;
+        left: 50%;
+        top: 60%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        font-size: 25px;
+        text-shadow: 0 0 10px black;
+        text-align: center;
+        font-weight: 700;
+        color: #dcc050;
+        ion-icon {
+            margin: 0 auto;
+        }
+    }
     .starRating{
         color: #ffd700;
     }
