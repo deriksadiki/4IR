@@ -68,6 +68,17 @@ export class HomePage {
 
 
 
+    }).catch(()=>{
+      console.log("show-map-error");
+      const options = {
+        center: { lat: -25.7479, lng: 28.2293},
+        zoom: 8,
+        disableDefaultUI: true,
+      }
+      this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+
+      
+
     })
 
 
@@ -120,16 +131,16 @@ export class HomePage {
     this.service = new google.maps.DistanceMatrixService();
     this.geocoder = new google.maps.Geocoder;
   
-   this.initMap() ;
+   this.initMap().then(()=>{
+     console.log("showMap");
+     
+   }) ;
 
   }
 
 
   initMap() {
-   
-
-return new Promise((resolve , reject)=>{
-
+   return new Promise((resolve , reject)=>{
   const options = {
     center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
     zoom: 8,
@@ -146,18 +157,15 @@ return new Promise((resolve , reject)=>{
   });
 
   setTimeout(() => {
-    this.markers();
+    this.markers().then(()=>{
+      console.log("show Marker");
+      
+    });
   }, 4000)
-
-
-
- resolve () ;
-
-
+resolve () ;
 })
     
-
-  }
+}
 
 
 
