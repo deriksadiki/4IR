@@ -115,7 +115,7 @@ export class IRhubProvider {
             name: name,
             email: email,
             downloadurl: "../../assets/imgs/Defaults/default.jpg",
-            address: "",
+            cell:""
           })
           var user = firebase.auth().currentUser;
           user.sendEmailVerification().then(function () {
@@ -482,7 +482,7 @@ export class IRhubProvider {
   }
 
 
-  update(name, email, downloadurl, address) {
+  update(name, email, downloadurl,cell) {
     this.ProfileArr.length = 0;
     return new Promise((pass, fail) => {
       this.ngzone.run(() => {
@@ -491,7 +491,7 @@ export class IRhubProvider {
           name: name,
           email: email,
           downloadurl: downloadurl,
-          address: address,
+          cell:cell
        
         });
       })

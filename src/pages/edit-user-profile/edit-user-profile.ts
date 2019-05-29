@@ -20,6 +20,7 @@ export class EditUserProfilePage implements OnInit{
   name;
   email;
   address;
+  cell
   imageArr = new Array();
   constructor(public navCtrl: NavController, public navParams: NavParams,public irhubProvider:IRhubProvider,public alertCtrl:AlertController,public toastCtrl:ToastController) {
     this.retreivePics1()
@@ -46,7 +47,7 @@ export class EditUserProfilePage implements OnInit{
   EditPrfile(){
     this.irhubProvider.uploadProfilePic(this.downloadurl, this.name).then(data => {
       console.log('added to db');
-      this.irhubProvider.update(this.name, this.email, this.downloadurl, this.address).then((data) => {
+      this.irhubProvider.update(this.name, this.email, this.downloadurl,this.cell).then((data) => {
         this.imageArr.push(data);
       });
       console.log(this.imageArr);

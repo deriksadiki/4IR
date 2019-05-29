@@ -1,3 +1,24 @@
 page-edit-user-profile {
+    .theCard{
+        padding-top: 250px;
+        width: 100%;
+      }
+    .btnActions {
+        height: 30px;
+        width: 230px;
+        border-radius: 50px;
+        margin: 0 auto;
+        background: radial-gradient(color($colors, primary))
+      }
 
-}
+      .user-input {
+        background: whitesmoke;
+        border-radius: 50px;
+        height: 40px;
+        margin-bottom: 20px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-bottom: 2px solid #dcc050;
+      }
+   
+} 

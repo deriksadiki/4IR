@@ -14,9 +14,9 @@
 
 
 <ion-content *ngFor="let displayDetails of orgArray">
-        <div #map id="map"  *ngIf="showMap"></div>
-<button ion-button (click)="navigate()">navigate</button> 
-<button ion-button (click)="getDistance()">get Distance </button> 
+    <div #map id="map" *ngIf="showMap"></div>
+    <button ion-button (click)="navigate()">navigate</button>
+    <button ion-button (click)="getDistance()">get Distance </button>
     <div class="topHalf">
         <div class="top">
             <div class="hubName">
@@ -33,11 +33,11 @@
         </div>
         <div class="mid" padding>
             <img src="../../assets/imgs/Defaults/default.png" alt="" class="logo">
-            <div class="desc">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste commodi impedit blanditiis, magnam quae molestiae illo assumenda laborum explicabo? Impedit?</div>
+            <div class="desc">{{displayDetails.desc}}</div>
         </div>
         <div class="mid">
             <div class="btn">
-                <ion-icon name="call"></ion-icon>
+                <ion-icon name="call" (click)="call(displayDetails.cell)"></ion-icon>
                 <p>Call</p>
             </div>
             <div class="btn" (click)="getDirection()">
@@ -45,7 +45,7 @@
                 <p>Get Directions</p>
             </div>
             <div class="btn">
-                <ion-icon name="mail"></ion-icon>
+                <ion-icon name="mail" (click)="email(displayDetails.email)"></ion-icon>
                 <p>Email</p>
             </div>
         </div>
@@ -102,51 +102,112 @@
         <div *ngSwitchCase="'reviews'" class="ratingsSeg">
             <p>How was your experience with this organisation?</p>
             <div class="rater">
-                <ion-icon name="star-outline"></ion-icon>
-                <ion-icon name="star-outline"></ion-icon>
-                <ion-icon name="star-outline"></ion-icon>
-                <ion-icon name="star-outline"></ion-icon>
-                <ion-icon name="star-outline"></ion-icon>
+                <ion-icon name={{Star1}} (click)="comment('1')"></ion-icon>
+                <ion-icon name={{Star2}} (click)="comment('2')"></ion-icon>
+                <ion-icon name={{Star3}} (click)="comment('3')"></ion-icon>
+                <ion-icon name={{Star4}} (click)="comment('4')"></ion-icon>
+                <ion-icon name={{Star5}} (click)="comment('5')"></ion-icon>
             </div>
             <div class="reviews">
                 <ion-card>
+                    <div *ngFor="let a of commentArr">
+                        <ion-item>
+                            <ion-avatar item-start>
+                                <img src="{{a.url}}">
+                            </ion-avatar>
+                            <h2>{{a.username}}</h2>
+                            <div *ngIf="a.rating == 0; then loggedIn0">
+                                </div>
+                                <div *ngIf="a.rating == 1; then loggedIn1">
+                                </div>
+                                <div *ngIf="a.rating == 2; then loggedIn2">
+                                </div>
+                                <div *ngIf="a.rating == 3; then loggedIn3">
+                                </div>
+                                <div *ngIf="a.rating == 4; then loggedIn4">
+                                </div>
+                                <div *ngIf="a.rating == 5; then loggedIn5">
+                                </div>
+                                <ng-template #loggedIn0>
+                                  <p>
+                                    <ion-icon class="TheStar" name="star"></ion-icon>
+                                    <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                    <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                    <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                    <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                  </p>
+                                </ng-template>
+                                <ng-template #loggedIn1>
+                                  <p>
+                                    <ion-icon class="TheStar" name="star"></ion-icon>
+                                    <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                    <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                    <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                    <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                  </p>
+                                </ng-template>
+                                <ng-template #loggedIn2>
+                                  <p>
+                                    <ion-icon class="TheStar" name="star"></ion-icon>
+                                    <ion-icon class="TheStar" name="star"></ion-icon>
+                                    <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                    <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                    <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                  </p>
+                                </ng-template>
+                                <ng-template #loggedIn3>
+                                  <p>
+                                    <ion-icon class="TheStar" name="star"></ion-icon>
+                                    <ion-icon class="TheStar" name="star"></ion-icon>
+                                    <ion-icon class="TheStar" name="star"></ion-icon>
+                                    <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                    <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                  </p>
+                                </ng-template>
+                                <ng-template #loggedIn4>
+                                  <p>
+                                    <ion-icon class="TheStar" name="star"></ion-icon>
+                                    <ion-icon class="TheStar" name="star"></ion-icon>
+                                    <ion-icon class="TheStar" name="star"></ion-icon>
+                                    <ion-icon class="TheStar" name="star"></ion-icon>
+                                    <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                  </p>
+                                </ng-template>
+                                <ng-template #loggedIn5>
+                                  <p>
+                                    <ion-icon class="TheStar" name="star"></ion-icon>
+                                    <ion-icon class="TheStar" name="star"></ion-icon>
+                                    <ion-icon class="TheStar" name="star"></ion-icon>
+                                    <ion-icon class="TheStar" name="star"></ion-icon>
+                                    <ion-icon class="TheStar" name="star"></ion-icon>
+                                  </p>
+                                </ng-template>
+                        </ion-item>
+                        <ion-card-content>
+                            <p>{{a.comment}}</p>
+                        </ion-card-content>
 
-                    <ion-item>
-                        <ion-avatar item-start>
-                            <img src="../../assets/imgs/Defaults/default.png">
-                        </ion-avatar>
-                        <h2>Marty McFly</h2>
-                        <p>
-                            <ion-icon name="star-outline"></ion-icon>
-                            <ion-icon name="star-outline"></ion-icon>
-                            <ion-icon name="star-outline"></ion-icon>
-                            <ion-icon name="star-outline"></ion-icon>
-                            <ion-icon name="star-outline"></ion-icon>
-                        </p>
-                    </ion-item>
-                    <ion-card-content>
-                        <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>
-                    </ion-card-content>
+                        <ion-row>
+                            <ion-col>
+                                <!-- <button ion-button icon-start clear small>
+                                      <ion-icon name="thumbs-up"></ion-icon>
+                                      <div>12 Likes</div>
+                                    </button> -->
+                            </ion-col>
+                            <ion-col>
+                                <!-- <button ion-button icon-start clear small>
+                                      <ion-icon name="text"></ion-icon>
+                                      <div>4 Comments</div>
+                                    </button> -->
+                            </ion-col>
+                            <ion-col align-self-center text-center>
+                                <ion-note>
+                                    {{a.date}}
+                                </ion-note>
+                            </ion-col>
+                        </ion-row>
+                    </div>
 
-                    <ion-row>
-                        <ion-col>
-                            <!-- <button ion-button icon-start clear small>
-                          <ion-icon name="thumbs-up"></ion-icon>
-                          <div>12 Likes</div>
-                        </button> -->
-                        </ion-col>
-                        <ion-col>
-                            <!-- <button ion-button icon-start clear small>
-                          <ion-icon name="text"></ion-icon>
-                          <div>4 Comments</div>
-                        </button> -->
-                        </ion-col>
-                        <ion-col align-self-center text-center>
-                            <ion-note>
-                                11h ago
-                            </ion-note>
-                        </ion-col>
-                    </ion-row>
 
                 </ion-card>
             </div>
@@ -160,43 +221,12 @@
                     </ion-note>
                 </ion-item>
                 <ion-card-content>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maiores corrupti ipsum enim! Velit molestiae asperiores vitae voluptas ex repellat odio ratione laborum praesentium, omnis quos, esse possimus numquam enim ipsum. Maxime velit
-                        non architecto repudiandae qui perspiciatis reiciendis, accusantium omnis beatae nobis adipisci molestias laboriosam voluptatum aliquam neque autem tempora.</p>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maiores corrupti ipsum enim! Velit molestiae
+                        asperiores vitae voluptas ex repellat odio ratione laborum praesentium, omnis quos, esse possimus
+                        numquam enim ipsum. Maxime velit non architecto repudiandae qui perspiciatis reiciendis, accusantium
+                        omnis beatae nobis adipisci molestias laboriosam voluptatum aliquam neque autem tempora.</p>
                 </ion-card-content>
             </ion-card>
         </ion-list>
     </div>
-
-
-    <!-- <img src="../../assets/download.png.png"> {{displayDetails.orgName}}
-    <br> {{displayDetails.category}}
-    <br> {{displayDetails.region}}
-    <br>
-    <br>
-    <ion-icon name="call" (click)="call(displayDetails.cell)">Call</ion-icon><br>
-    <ion-icon name="mail" (click)="email(displayDetails.email)">Email</ion-icon>
-
-    <ion-icon name={{Star1}} (click)="comment('1')"></ion-icon>
-    <ion-card>
-        <div class="theDiv" *ngFor="let a of commentArr">
-            <ion-item>
-                <ion-avatar item-start>
-                    <img class="profilePic" [src]="a.url">
-                </ion-avatar>
-                <b>
-          <h2>{{a.username}}</h2>
-        </b>
-                <p style="color: #166b85">{{a.date}}</p>
-
-            </ion-item>
-            <ion-card-content>
-                <p class="message">{{a.comment}}</p>
-            </ion-card-content>
-            <hr>
-        </div>
-    </ion-card> -->
-
-
-   
-
 </ion-content>

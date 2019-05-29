@@ -21,7 +21,7 @@ export class HomePage {
 
   //variables
   loading;
-  nearby = new Array() ;
+  nearby = new Array();
   //variables
   items = new Array()
   orgNames = new Array()
@@ -34,14 +34,15 @@ export class HomePage {
   textField;
   img = "../../assets/imgs/Defaults/default.png";
   toggleState = "map";
-  showNearbyList:boolean =false ;
-  showAllOrganisation:boolean =true ;
-
+  showNearbyList: boolean = false;
+  showAllOrganisation: boolean = true;
+  
   //Google services
   directionsService;
   directionsDisplay;
   service;
   geocoder;
+  rateState
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
@@ -51,7 +52,7 @@ export class HomePage {
       setTimeout(() => {
         var names = this.IRmethods.getOrgNames()
         console.log(names);
-        
+
         this.storeOrgNames(names)
         // this.loading.dismiss()
       }, 2500);
@@ -68,16 +69,16 @@ export class HomePage {
 
 
 
-    }).catch(()=>{
+    }).catch(() => {
       console.log("show-map-error");
       const options = {
-        center: { lat: -25.7479, lng: 28.2293},
+        center: { lat: -25.7479, lng: 28.2293 },
         zoom: 8,
         disableDefaultUI: true,
       }
       this.map = new google.maps.Map(this.mapRef.nativeElement, options);
 
-      
+
 
     })
 
@@ -95,10 +96,10 @@ export class HomePage {
           console.log(radius);
           this.IRmethods.getNearByOrganizations(radius, data).then((nearbyOrgs: any) => {
             console.log(nearbyOrgs);
-            this.nearby =nearbyOrgs ;
+            this.nearby = nearbyOrgs;
 
             console.log(this.nearby);
-            
+
 
 
           })
@@ -120,6 +121,7 @@ export class HomePage {
         this.img = "assets/imgs/default.png";
       }
     })
+
   }
 
 
@@ -130,42 +132,42 @@ export class HomePage {
     this.directionsDisplay = new google.maps.DirectionsRenderer;
     this.service = new google.maps.DistanceMatrixService();
     this.geocoder = new google.maps.Geocoder;
-  
-   this.initMap().then(()=>{
-     console.log("showMap");
-     
-   }) ;
+
+    this.initMap().then(() => {
+      console.log("showMap");
+
+    });
 
   }
 
 
   initMap() {
-   return new Promise((resolve , reject)=>{
-  const options = {
-    center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
-    zoom: 8,
-    disableDefaultUI: true,
+    return new Promise((resolve, reject) => {
+      const options = {
+        center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
+        zoom: 8,
+        disableDefaultUI: true,
+      }
+      this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+
+      // adding user marker to the map 
+      this.marker = new google.maps.Marker({
+        map: this.map,
+        zoom: 10,
+        position: this.map.getCenter()
+        //animation: google.maps.Animation.DROP,
+      });
+
+      setTimeout(() => {
+        this.markers().then(() => {
+          console.log("show Marker");
+
+        });
+      }, 4000)
+      resolve();
+    })
+
   }
-  this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-
-  // adding user marker to the map 
-  this.marker = new google.maps.Marker({
-    map: this.map,
-    zoom: 10,
-    position: this.map.getCenter()
-    //animation: google.maps.Animation.DROP,
-  });
-
-  setTimeout(() => {
-    this.markers().then(()=>{
-      console.log("show Marker");
-      
-    });
-  }, 4000)
-resolve () ;
-})
-    
-}
 
 
 
@@ -227,7 +229,7 @@ resolve () ;
 
   markers() {
 
-    return new Promise((resolve , reject)=>{
+    return new Promise((resolve, reject) => {
       console.log(this.orgArray);
       for (let index = 0; index < this.orgArray.length; index++) {
         var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
@@ -239,11 +241,11 @@ resolve () ;
           zoom: 8,
         });
 
-        resolve() ;
+        resolve();
       }
 
     })
-   
+
   }
   Userprofile() {
 
@@ -321,7 +323,7 @@ resolve () ;
       // this.initializeItems();
       // this.setArrayBack(this.tempArray)
       restOf[0].style.paddingTop = "210px";
-      
+
 
     }
     else if (this.searchDismissState == "search") {
@@ -377,17 +379,17 @@ resolve () ;
     }
   }
 
-  storeOrgNames(names){
+  storeOrgNames(names) {
     this.orgNames = names;
     console.log(this.orgNames);
-    
+
   }
 
   initializeItems() {
     this.items = this.orgNames
   }
 
- getItems(ev) {
+  getItems(ev) {
     // Reset items back to all of the items
     this.initializeItems();
 
@@ -398,22 +400,22 @@ resolve () ;
     if (val && val.trim() != '') {
       this.items = this.items.filter((item) => {
         console.log(val);
-        
+
         return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
-    else if (val == "" ||val == null) {
+    else if (val == "" || val == null) {
       this.items = [];
     }
     console.log(this.items);
-    
+
   }
 
 
-  near(){
+  near() {
     console.log("clicked");
     console.log(this.nearby);
-    
+
   }
 
   goToViewPage(name) {
@@ -421,16 +423,17 @@ resolve () ;
       if (name == this.orgArray[x].orgName) {
         this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x] });
       }
-    
-  }
-    this.showNearbyList =true ;
-    this. showAllOrganisation =false ;
+
+    }
+    this.showNearbyList = true;
+    this.showAllOrganisation = false;
   }
 
 
-  all(){
-    this.showNearbyList =false;
-    this. showAllOrganisation =true;
+  all() {
+    this.showNearbyList = false;
+    this.showAllOrganisation = true;
   }
+
 
 }

@@ -112,108 +112,109 @@ export class ViewOrganizationInforPage implements OnInit {
    
     console.log("testmap");
    
-    // this.retrieveComments();
+    this.retrieveComments();
   }
 
-  // retrieveComments() {
-  //   this.commentArr = [];
-  //   this.irhubProvider.viewComments(this.comments, this.imageKey).then((data: any) => {
-  //     this.commentArr = data;
-  //     this.commentArr.reverse(); 
+  retrieveComments() {
+    this.commentArr = [];
+    this.irhubProvider.viewComments(this.comments, this.imageKey).then((data: any) => {
+      this.commentArr = data;
+      console.log(this.commentArr)
+      // this.commentArr.reverse(); 
 
-  //     let rating = this.irhubProvider.getRating();
-  //     if (rating > 0) {
-  //       this.rate(rating);
-  //       this.rateState = true;
-  //     }
-  //     else if (rating == undefined || rating == 0) {
-  //       this.rateState = false
-  //     }
+      let rating = this.irhubProvider.getRating();
+      if (rating > 0) {
+        this.rate(rating);
+        this.rateState = true;
+      }
+      else if (rating == undefined || rating == 0) {
+        this.rateState = false
+      }
 
-  //   })
-  // }
+    })
+  }
 
-  // comment(num) {
-  //   this.irhubProvider.checkAuthState().then(data => {
-  //     if (data == true) {
-  //       console.log(data);
-  //       if (this.rateState == false || this.rateState == undefined) {
-  //         const prompt = this.alertCtrl.create({
-  //           // title: 'Comment',
-  //           message: "Pleave leave your comment below",
-  //           inputs: [
-  //             {
-  //               name: 'comments',
-  //               placeholder: 'comments'
-  //             },
-  //           ],
-  //           buttons: [
-  //             {
-  //               text: 'Cancel',
-  //               handler: data => {
-  //                 console.log('Cancel clicked');
-  //               }
-  //             },
-  //             {
-  //               text: 'Comment',
-  //               handler: data => {
-  //                 console.log('Saved clicked' + data.comments);
-  //                 this.irhubProvider.comments(data.comments, this.imageKey, num).then((data) => {
-  //                   this.irhubProvider.viewComments(this.comments, this.imageKey).then((data: any) => {
-  //                     var y = this.orgArray[0].avg + 1;
-  //                     var x = ((num - this.orgArray[0].rating) / y);
-  //                     x = x + this.orgArray[0].rating
-  //                     this.orgArray[0].rating = Math.round(x);
-  //                     this.commentArr = data;
-  //                     this.commentArr.reverse();
-  //                     this.commentArr.length = 0;
-  //                     this.retrieveComments();
-  //                     this.rate(num);
-  //                     this.rateState = true;
-  //                   })
-  //                 })
-  //               }
-  //             }
-  //           ],
-  //           cssClass: 'myAlert',
-  //         });
-  //         prompt.present();
-  //       }
-  //       else if (this.rateState == true) {
-  //         let alert = this.alertCtrl.create({
-  //           title: 'Oops!',
-  //           subTitle: 'You cannot rate more than once',
-  //           buttons: ['Ok']
-  //         });
-  //         alert.present();
-  //       }
-  //     }
-  //     else {
-  //       let alert = this.alertCtrl.create({
-  //         title: '',
-  //         subTitle: 'You have to sign in before you can rate this organistion, would you like to sign in now?',
-  //         buttons: [
-  //           {
-  //             text: 'Sign in',
-  //             handler: data => {
-  //               var opt = "rate";
-  //               this.navCtrl.push(SignInPage, { option: opt, obj: this.orgArray })
-  //             }
-  //           },
-  //           {
-  //             text: 'Cancel',
-  //             handler: data => {
-  //               this.retrieveComments();
-  //             }
-  //           }
-  //         ],
-  //         cssClass: 'myAlert',
-  //       });
-  //       alert.present();
-  //     }
-  //   })
+  comment(num) {
+    this.irhubProvider.checkAuthState().then(data => {
+      if (data == true) {
+        console.log(data);
+        if (this.rateState == false || this.rateState == undefined) {
+          const prompt = this.alertCtrl.create({
+            // title: 'Comment',
+            message: "Pleave leave your comment below",
+            inputs: [
+              {
+                name: 'comments',
+                placeholder: 'comments'
+              },
+            ],
+            buttons: [
+              {
+                text: 'Cancel',
+                handler: data => {
+                  console.log('Cancel clicked');
+                }
+              },
+              {
+                text: 'Comment',
+                handler: data => {
+                  console.log('Saved clicked' + data.comments);
+                  this.irhubProvider.comments(data.comments, this.imageKey, num).then((data) => {
+                    this.irhubProvider.viewComments(this.comments, this.imageKey).then((data: any) => {
+                      var y = this.orgArray[0].avg + 1;
+                      var x = ((num - this.orgArray[0].rating) / y);
+                      x = x + this.orgArray[0].rating
+                      this.orgArray[0].rating = Math.round(x);
+                      this.commentArr = data;
+                      // this.commentArr.reverse();
+                      this.commentArr.length = 0;
+                      this.retrieveComments();
+                      this.rate(num);
+                      this.rateState = true;
+                    })
+                  })
+                }
+              }
+            ],
+            // cssClass: 'myAlert',
+          });
+          prompt.present();
+        }
+        else if (this.rateState == true) {
+          let alert = this.alertCtrl.create({
+            title: 'Oops!',
+            subTitle: 'You cannot rate more than once',
+            buttons: ['Ok']
+          });
+          alert.present();
+        }
+      }
+      else {
+        let alert = this.alertCtrl.create({
+          title: '',
+          subTitle: 'You have to sign in before you can rate this organistion, would you like to sign in now?',
+          buttons: [
+            {
+              text: 'Sign in',
+              handler: data => {
+                var opt = "rate";
+                this.navCtrl.push(SignInPage, { option: opt, obj: this.orgArray })
+              }
+            },
+            {
+              text: 'Cancel',
+              handler: data => {
+                this.retrieveComments();
+              }
+            }
+          ],
+          cssClass: 'myAlert',
+        });
+        alert.present();
+      }
+    })
 
-  // }
+  }
 
   rate(num) {
     if (num == 1) {
