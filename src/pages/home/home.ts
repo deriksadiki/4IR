@@ -444,17 +444,18 @@ export class HomePage {
   initMap() {
 
    return new Promise((resolve , reject)=>{
+  setTimeout(() => {
+  this.IRmethods.getUserLocation().then((data: any) => {
+    console.log(data);
+    console.log(data.coords.latitude);
+    console.log(data.coords.longitude);
 
-    this.IRmethods.getUserLocation().then((data: any) => {
-      console.log(data);
-      console.log(data.coords.latitude);
-      console.log(data.coords.longitude);
+    this.lat = data.coords.latitude;
+    this.lng = data.coords.longitude
+    console.log(this.lat);
+    console.log(this.lng);
 
-      this.lat = data.coords.latitude;
-      this.lng = data.coords.longitude
-      console.log(this.lat);
- })
-
+    
   const options = {
     center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
     zoom: 8,
@@ -473,8 +474,7 @@ export class HomePage {
     //animation: google.maps.Animation.DROP,
   });
 
-  
-  
+
   setTimeout(() => {
     this.markers().then(()=>{
       console.log("show Marker");
@@ -482,7 +482,8 @@ export class HomePage {
     });
   }, 8000)
 
- var infowindow = new google.maps.InfoWindow();
+
+  var infowindow = new google.maps.InfoWindow();
   this.marker.addListener('click', function() {
     console.log("clicked Marker");
     console.log();
@@ -490,7 +491,13 @@ export class HomePage {
     
     
    });
-resolve () ;
+   resolve () ;
+    
+})
+  
+}, 5000);
+    
+
 })
     
 }
