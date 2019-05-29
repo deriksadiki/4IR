@@ -355,30 +355,33 @@ export class HomePage {
       }, 2500);
     })
 
-    
-    this.IRmethods.getUserLocation().then((data: any) => {
-      console.log(data);
-      console.log(data.coords.latitude);
-      console.log(data.coords.longitude);
-
-      this.lat = data.coords.latitude;
-      this.lng = data.coords.longitude
-      console.log(this.lat);
-
-
-
-    }).catch(()=>{
-      console.log("show-map-error");
-      const options = {
-        center: { lat: -25.7479, lng: 28.2293},
-        zoom: 8,
-        disableDefaultUI: true,
-      }
-      this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-
+    setTimeout(() => {
+      this.IRmethods.getUserLocation().then((data: any) => {
+        console.log(data);
+        console.log(data.coords.latitude);
+        console.log(data.coords.longitude);
+  
+        this.lat = data.coords.latitude;
+        this.lng = data.coords.longitude
+        console.log(this.lat);
+  
+  
+  
+      }).catch(()=>{
+        console.log("show-map-error");
+        const options = {
+          center: { lat: -25.7479, lng: 28.2293},
+          zoom: 8,
+          disableDefaultUI: true,
+        }
+        this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+  
+        
+  
+      })
       
-
-    })
+    }, 5000);
+   
 
 
 

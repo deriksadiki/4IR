@@ -1,4 +1,7 @@
 page-home {
+    .starRating{
+        color: #ffd700;
+    }
     .cards {
         box-shadow: 0 5px 5px rgba(128, 128, 128, 0.866);
         transition: 500ms;
@@ -203,6 +206,7 @@ page-home {
             object-fit: cover;
         }
     }
+    
     // #all {
     //     margin: ;
     // }

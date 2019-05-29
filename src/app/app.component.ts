@@ -9,6 +9,7 @@ import { IRhubProvider } from '../providers/i-rhub/i-rhub';
 import { SignUpPage } from '../pages/sign-up/sign-up';
 import { ViewOrganizationInforPage } from '../pages/view-organization-infor/view-organization-infor';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
+import { StartPage } from '../pages/start/start';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,7 +26,7 @@ export class MyApp {
           this.rootPage = HomePage
         }
         else {
-          this.rootPage = SignInPage
+          this.rootPage = StartPage
         }
       })
       // Okay, so the platform is ready and our plugins are available.

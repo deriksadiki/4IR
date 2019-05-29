@@ -25,8 +25,8 @@ export class ViewOrganizationInforPage implements OnInit {
   commentArr = new Array();
   comments;
   imageKey;
-  map ;
-  marker; 
+  map;
+  marker;
   state = ["star-outline", "star-outline", "star-outline", "star-outline", "star-outline"]
   Star1 = "star-outline";
   Star2 = "star-outline";
@@ -37,12 +37,12 @@ export class ViewOrganizationInforPage implements OnInit {
   destlat;
   destlong;
   currentUserlat;
-  currentUserlng ;
+  currentUserlng;
 
   showtime;
-  showDistance ;
-  showMap:boolean =false; 
-  showContent:boolean =true ;
+  showDistance;
+  showMap: boolean = false;
+  showContent: boolean = true;
   //Google services
   directionsService;
   directionsDisplay;
@@ -50,7 +50,7 @@ export class ViewOrganizationInforPage implements OnInit {
   geocoder;
 
   tabs;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private emailComposer: EmailComposer,private callNumber: CallNumber,public irhubProvider: IRhubProvider,public alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController) {
     this.initMap()
     this.tabs = "gallery";
     this.orgArray.push(this.navParams.get('orgObject'));
@@ -63,10 +63,10 @@ export class ViewOrganizationInforPage implements OnInit {
     console.log(this.orgArray[0].lat);
 
     this.destlat = this.orgArray[0].lat
-    this. destlong = this.orgArray[0].long
+    this.destlong = this.orgArray[0].long
 
 
-   this.initMap()
+    this.initMap()
 
   }
 
@@ -88,13 +88,13 @@ export class ViewOrganizationInforPage implements OnInit {
 
       this.currentUserlat = data.coords.latitude;
       this.currentUserlng = data.coords.longitude
-     
+
 
 
     })
 
 
-    
+
   }
 
 
@@ -110,111 +110,112 @@ export class ViewOrganizationInforPage implements OnInit {
     // setTimeout(()=>{
     //   this.initMap();
     // }, 4000)
-   
+
     console.log("testmap");
-   
-    // this.retrieveComments();
+
+    this.retrieveComments();
   }
 
-  // retrieveComments() {
-  //   this.commentArr = [];
-  //   this.irhubProvider.viewComments(this.comments, this.imageKey).then((data: any) => {
-  //     this.commentArr = data;
-  //     this.commentArr.reverse(); 
+  retrieveComments() {
+    this.commentArr = [];
+    this.irhubProvider.viewComments(this.comments, this.imageKey).then((data: any) => {
+      this.commentArr = data;
+      console.log(this.commentArr)
+      // this.commentArr.reverse(); 
 
-  //     let rating = this.irhubProvider.getRating();
-  //     if (rating > 0) {
-  //       this.rate(rating);
-  //       this.rateState = true;
-  //     }
-  //     else if (rating == undefined || rating == 0) {
-  //       this.rateState = false
-  //     }
+      let rating = this.irhubProvider.getRating();
+      if (rating > 0) {
+        this.rate(rating);
+        this.rateState = true;
+      }
+      else if (rating == undefined || rating == 0) {
+        this.rateState = false
+      }
 
-  //   })
-  // }
+    })
+  }
 
-  // comment(num) {
-  //   this.irhubProvider.checkAuthState().then(data => {
-  //     if (data == true) {
-  //       console.log(data);
-  //       if (this.rateState == false || this.rateState == undefined) {
-  //         const prompt = this.alertCtrl.create({
-  //           // title: 'Comment',
-  //           message: "Pleave leave your comment below",
-  //           inputs: [
-  //             {
-  //               name: 'comments',
-  //               placeholder: 'comments'
-  //             },
-  //           ],
-  //           buttons: [
-  //             {
-  //               text: 'Cancel',
-  //               handler: data => {
-  //                 console.log('Cancel clicked');
-  //               }
-  //             },
-  //             {
-  //               text: 'Comment',
-  //               handler: data => {
-  //                 console.log('Saved clicked' + data.comments);
-  //                 this.irhubProvider.comments(data.comments, this.imageKey, num).then((data) => {
-  //                   this.irhubProvider.viewComments(this.comments, this.imageKey).then((data: any) => {
-  //                     var y = this.orgArray[0].avg + 1;
-  //                     var x = ((num - this.orgArray[0].rating) / y);
-  //                     x = x + this.orgArray[0].rating
-  //                     this.orgArray[0].rating = Math.round(x);
-  //                     this.commentArr = data;
-  //                     this.commentArr.reverse();
-  //                     this.commentArr.length = 0;
-  //                     this.retrieveComments();
-  //                     this.rate(num);
-  //                     this.rateState = true;
-  //                   })
-  //                 })
-  //               }
-  //             }
-  //           ],
-  //           cssClass: 'myAlert',
-  //         });
-  //         prompt.present();
-  //       }
-  //       else if (this.rateState == true) {
-  //         let alert = this.alertCtrl.create({
-  //           title: 'Oops!',
-  //           subTitle: 'You cannot rate more than once',
-  //           buttons: ['Ok']
-  //         });
-  //         alert.present();
-  //       }
-  //     }
-  //     else {
-  //       let alert = this.alertCtrl.create({
-  //         title: '',
-  //         subTitle: 'You have to sign in before you can rate this organistion, would you like to sign in now?',
-  //         buttons: [
-  //           {
-  //             text: 'Sign in',
-  //             handler: data => {
-  //               var opt = "rate";
-  //               this.navCtrl.push(SignInPage, { option: opt, obj: this.orgArray })
-  //             }
-  //           },
-  //           {
-  //             text: 'Cancel',
-  //             handler: data => {
-  //               this.retrieveComments();
-  //             }
-  //           }
-  //         ],
-  //         cssClass: 'myAlert',
-  //       });
-  //       alert.present();
-  //     }
-  //   })
+  comment(num) {
+    this.irhubProvider.checkAuthState().then(data => {
+      if (data == true) {
+        console.log(data);
+        if (this.rateState == false || this.rateState == undefined) {
+          const prompt = this.alertCtrl.create({
+            // title: 'Comment',
+            message: "Pleave leave your comment below",
+            inputs: [
+              {
+                name: 'comments',
+                placeholder: 'comments'
+              },
+            ],
+            buttons: [
+              {
+                text: 'Cancel',
+                handler: data => {
+                  console.log('Cancel clicked');
+                }
+              },
+              {
+                text: 'Comment',
+                handler: data => {
+                  console.log('Saved clicked' + data.comments);
+                  this.irhubProvider.comments(data.comments, this.imageKey, num).then((data) => {
+                    this.irhubProvider.viewComments(this.comments, this.imageKey).then((data: any) => {
+                      var y = this.orgArray[0].avg + 1;
+                      var x = ((num - this.orgArray[0].rating) / y);
+                      x = x + this.orgArray[0].rating
+                      this.orgArray[0].rating = Math.round(x);
+                      this.commentArr = data;
+                      // this.commentArr.reverse();
+                      this.commentArr.length = 0;
+                      this.retrieveComments();
+                      this.rate(num);
+                      this.rateState = true;
+                    })
+                  })
+                }
+              }
+            ],
+            // cssClass: 'myAlert',
+          });
+          prompt.present();
+        }
+        else if (this.rateState == true) {
+          let alert = this.alertCtrl.create({
+            title: 'Oops!',
+            subTitle: 'You cannot rate more than once',
+            buttons: ['Ok']
+          });
+          alert.present();
+        }
+      }
+      else {
+        let alert = this.alertCtrl.create({
+          title: '',
+          subTitle: 'You have to sign in before you can rate this organistion, would you like to sign in now?',
+          buttons: [
+            {
+              text: 'Sign in',
+              handler: data => {
+                var opt = "rate";
+                this.navCtrl.push(SignInPage, { option: opt, obj: this.orgArray })
+              }
+            },
+            {
+              text: 'Cancel',
+              handler: data => {
+                this.retrieveComments();
+              }
+            }
+          ],
+          cssClass: 'myAlert',
+        });
+        alert.present();
+      }
+    })
 
-  // }
+  }
 
   rate(num) {
     if (num == 1) {
@@ -311,37 +312,37 @@ export class ViewOrganizationInforPage implements OnInit {
     // Send a text message using default options
     this.emailComposer.open(email);
   }
-//show map 
+  //show map 
 
 
-initMap() {
- 
-  
+  initMap() {
 
-  return new Promise ((resolve , reject)=>{
 
-    setTimeout(() => {
-      const options = {
-        center: { lat: parseFloat(this.currentUserlat), lng: parseFloat(this.currentUserlng) },
-        zoom: 8,
-        disableDefaultUI: true,
-      }
-      this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-      this.marker = new google.maps.Marker({
-        map: this.map,
-        zoom: 10,
-        position: this.map.getCenter()
-     });
-    },4000);
-    console.log("show-map");
-   
 
-    resolve()
-  })
-  
- 
+    return new Promise((resolve, reject) => {
 
-}
+      setTimeout(() => {
+        const options = {
+          center: { lat: parseFloat(this.currentUserlat), lng: parseFloat(this.currentUserlng) },
+          zoom: 8,
+          disableDefaultUI: true,
+        }
+        this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+        this.marker = new google.maps.Marker({
+          map: this.map,
+          zoom: 10,
+          position: this.map.getCenter()
+        });
+      }, 4000);
+      console.log("show-map");
+
+
+      resolve()
+    })
+
+
+
+  }
 
   getDistance() {
     console.log(this.destlat, this.destlong);
@@ -364,13 +365,13 @@ initMap() {
               var element = results[j];
               console.log(element);
 
-              this.showtime =element.duration.text;
-              this.showDistance =element.distance.text ;
+              this.showtime = element.duration.text;
+              this.showDistance = element.distance.text;
 
               console.log(this.showtime);
               console.log(this.showDistance);
-              
-              
+
+
 
             }
           }
@@ -378,37 +379,62 @@ initMap() {
       });
 
   }
+  q = 0
+  loadMap = 0
   getDirection() {
-    
-this.initMap() ;
-this.showMap =true 
-this.showContent =false ;
+    var theMap = document.getElementById("theMap");
+    var theContent = document.getElementById("orgView") 
+    if (this.loadMap == 0) {
+      this.loadMap = 1;
+      this.initMap();
+      if (this.q == 0) {
+        this.q = 1
+        theMap.style.display = "block";
+        theContent.style.display = "none";
+      }
+    }
+    else {
+      if (this.q == 0) {
+        this.q = 1
+        theMap.style.display = "block";
+        theContent.style.display = "none";
+      }
+      else {
 
-    
-}
+        this.q = 0
+        theMap.style.display = "none";
+        theContent.style.display = "block";
+      }
+    }
+
+    console.log(this.q);
 
 
-  navigate (){
+  }
+
+
+  navigate() {
     if (this.directionsDisplay != null) {
       this.directionsDisplay.setMap(null);
 
-     console.log("directionDisplay has something");
+      console.log("directionDisplay has something");
+      this.getDistance()
 
     } else {
-    console.log("directionDisplay has nothing");
+      console.log("directionDisplay has nothing");
 
-}
+    }
 
-setTimeout(() => {
- 
+    setTimeout(() => {
 
-  let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
-  let destination = new google.maps.LatLng(this.destlat, this.destlong);
-  this.directionsDisplay.setMap(this.map);
-  console.log(this.directionsDisplay);
-  
- this.irhubProvider.calculateAndDisplayRoute(userCurrentLocation, destination, this.directionsDisplay, this.directionsService) ;
-}, 1000);
+
+      let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
+      let destination = new google.maps.LatLng(this.destlat, this.destlong);
+      this.directionsDisplay.setMap(this.map);
+      console.log(this.directionsDisplay);
+
+      this.irhubProvider.calculateAndDisplayRoute(userCurrentLocation, destination, this.directionsDisplay, this.directionsService);
+    }, 1000);
 
   }
 }

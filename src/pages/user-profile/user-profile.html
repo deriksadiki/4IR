@@ -1,17 +1,57 @@
 <ion-content *ngFor="let userdetails of detailArray">
 
-  <div class="topPart">
-    <img id="DP" src="../../assets/imgs/Defaults/default.png" alt="">
+  <div id="popover">
+    <button ion-button full clear (click)="GoToEditProfile()">Edit Profile</button>
+    <button ion-button full clear (click)="logOut()">Sign Out</button>
   </div>
-  <div class="name">
-    <h3>John Doe</h3>
-    <p>email@example.com</p>
-    <p>0813917127</p>
-  </div>
-  <div class="slides">
-    <div class="places">
-      Places
+  <div class="topHalf">
+  
+      <button ion-button id="opts" clear color="secondary" (click)="togglePopover()">
+        <ion-icon name="more"></ion-icon>
+      </button>
+
+    <div class="topPart" (click)="removePopover()">
+      <img id="DP" src="{{userdetails.downloadurl}}" alt="" imageViewer  (click)="removePopover()">
     </div>
+    <div class="name" (click)="removePopover()">
+      <h3>{{userdetails.name}}</h3>
+      <p>{{userdetails.email}}</p>
+      <p>0813917127</p>
+      <!-- <p>4877 Ugago Street <br>
+        protea glen ext 3 <br>
+        Johannesburg <br>
+        1819
+      </p> -->
+    </div>
+  </div>
+  <div class="slides" (click)="removePopover()">
+    <div class="places">
+      Reviewed Places
+    </div>
+    <div></div>
+    <ion-slides class="ionSlide" slidesPerView="2.1">
+      <ion-slide>
+        <div class="placeContainer">
+          <div class="date">
+            <p>03/30/2019</p>
+          </div>
+          <div class="stars">
+            <p>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"></ion-icon>
+            </p>
+          </div>
+          <img src="../../assets/imgs/Defaults/default.png" alt="">
+        </div>
+        <div class="companyName">
+          <p>
+            university of south africa</p>
+        </div>
+      </ion-slide>
+    </ion-slides>
   </div>
   <!-- <div class="theHead">
 

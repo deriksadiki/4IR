@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { HomePage } from '../home/home';
+import { SignInPage } from '../sign-in/sign-in';
+import { SignUpPage } from '../sign-up/sign-up';
 
 /**
  * Generated class for the StartPage page.
@@ -22,4 +25,15 @@ export class StartPage {
     console.log('ionViewDidLoad StartPage');
   }
 
+  exploreApp(){
+    this.navCtrl.push(HomePage)
+  }
+  signIn(){
+
+    this.navCtrl.push(SignInPage)
+  }
+  signUp(){
+    this.navCtrl.push(SignUpPage)
+
+  }
 }
