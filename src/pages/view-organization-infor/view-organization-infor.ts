@@ -42,6 +42,7 @@ export class ViewOrganizationInforPage implements OnInit {
   showtime;
   showDistance ;
   showMap:boolean =false; 
+  showContent:boolean =true ;
   //Google services
   directionsService;
   directionsDisplay;
@@ -381,6 +382,7 @@ initMap() {
     
 this.initMap() ;
 this.showMap =true 
+this.showContent =false ;
 
     
 }

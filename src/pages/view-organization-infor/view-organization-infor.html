@@ -14,9 +14,16 @@
 
 
 <ion-content *ngFor="let displayDetails of orgArray">
-        <div #map id="map"  *ngIf="showMap"></div>
-<button ion-button (click)="navigate()">navigate</button> 
-<button ion-button (click)="getDistance()">get Distance </button> 
+        <button ion-button (click)="navigate()">navigate</button> 
+        <button ion-button (click)="getDistance()">get Distance </button>
+        <div #map id="map"  *ngIf="showMap">
+
+                
+        </div>
+        
+        <div *ngIf="showContent">
+               
+            
     <div class="topHalf">
         <div class="top">
             <div class="hubName">
@@ -166,6 +173,8 @@
             </ion-card>
         </ion-list>
     </div>
+
+        </div>
 
 
     <!-- <img src="../../assets/download.png.png"> {{displayDetails.orgName}}
