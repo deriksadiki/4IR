@@ -39,15 +39,16 @@ export class UserProfilePage {
       this.detailArray.push(details);
     });
 
-    // this.irhubProvider.getTotalRatings().then((data:any) =>{
-    //   this.ratings.length =0;
-    //   this.totrating = this.irhubProvider.getTotRating();
-    //   if (this.totrating == undefined || this.totrating == null){
-    //     this.totrating = 0;
-    //   }
-    //   this.ratings = data;
-    //   console.log(this.ratings)
-    // })
+    this.irhubProvider.getTotalRatings().then((data:any) =>{
+      this.ratings.length =0;
+      this.totrating = this.irhubProvider.getTotRating();
+      if (this.totrating == undefined || this.totrating == null){
+        this.totrating = 0;
+        this.ratings.length =0;
+      }
+      this.ratings = data;
+      console.log(data)
+    })
 
 
   }

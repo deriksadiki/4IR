@@ -424,19 +424,19 @@ export class HomePage {
 
     }, 8000);
 
-    // this.IRmethods.checkAuthState().then(data => {
-    //   if (data == true) {
-    //     this.logInState = true;
-    //     this.IRmethods.getProfile().then((data: any) => {
-    //       console.log(this.logInState);
-
-    //       this.img = data;
-    //     })
-    //   }
-    //   else if (data == false) {
-    //     this.img = "assets/imgs/default.png";
-    //   }
-    // })
+    this.IRmethods.checkAuthState().then(data => {
+      if (data == true) {
+        this.logInState = true;
+        this.IRmethods.getProfile().then((data: any) => {
+          console.log(this.logInState);
+          this.img = data;
+          console.log(this.img)
+        })
+      }
+      else if (data == false) {
+        this.img = "assets/imgs/default.png";
+      }
+    })
 
   }
 
@@ -577,7 +577,6 @@ export class HomePage {
 
   }
   Userprofile() {
-
     this.IRmethods.checkAuthState().then(data => {
       if (data == false) {
         let alert = this.alertCtrl.create({

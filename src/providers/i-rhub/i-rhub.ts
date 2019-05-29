@@ -18,22 +18,22 @@ export class IRhubProvider {
   orgArray = new Array();
   commentArr = new Array();
   stayLoggedIn;
-  ProfileArr= new Array();
+  ProfileArr = new Array();
   downloadurl;
   rating;
   ratedOrgs = new Array();
-  orgNames =  new Array();
+  orgNames = new Array();
   url;
   totRating;
   auth = firebase.auth();
-  nearByOrg ;
+  nearByOrg;
   categoryArr;
   constructor(public ngzone: NgZone, public alertCtrl: AlertController,
-    public loadingCtrl: LoadingController,public geo :Geolocation) {
+    public loadingCtrl: LoadingController, public geo: Geolocation) {
 
 
 
-  
+
   }
 
   SignIn(email, password) {
@@ -100,7 +100,7 @@ export class IRhubProvider {
       alert.present();
     })
   }
-  
+
   Signup(email, password, name) {
     return new Promise((resolve, reject) => {
       this.ngzone.run(() => {
@@ -116,7 +116,7 @@ export class IRhubProvider {
             name: name,
             email: email,
             downloadurl: "../../assets/imgs/Defaults/default.jpg",
-            cell:""
+            cell: ""
           })
           var user = firebase.auth().currentUser;
           user.sendEmailVerification().then(function () {
@@ -188,7 +188,7 @@ export class IRhubProvider {
                 long: details[keys[x]].long,
                 lat: details[keys[x]].lat,
                 img: details[keys[x]].downloadurl,
-                desc:details[keys[x]].desc,
+                desc: details[keys[x]].desc,
                 category: details[keys[x]].category,
                 id: keys[x]
               }
@@ -202,13 +202,13 @@ export class IRhubProvider {
     })
   }
 
-  storeOrgNames(name){
+  storeOrgNames(name) {
     this.orgNames.push(name);
     console.log(this.orgNames);
-    
+
   }
 
-  getOrgNames(){
+  getOrgNames() {
     return this.orgNames
   }
 
@@ -236,7 +236,7 @@ export class IRhubProvider {
   }
 
 
-  
+
   checkAuthState() {
     return new Promise((accpt, rej) => {
       this.ngzone.run(() => {
@@ -251,12 +251,12 @@ export class IRhubProvider {
     })
   }
 
-  comments(comment: any, commentKey: any,rating) {
+  comments(comment: any, commentKey: any, rating) {
     let user = firebase.auth().currentUser;
     return new Promise((accpt, rejc) => {
       this.ngzone.run(() => {
         var day = moment().format('MMMM Do YYYY, h:mm:ss a');
-        firebase.database().ref("Reviews/" +commentKey).push({
+        firebase.database().ref("Reviews/" + commentKey).push({
           comment: comment,
           uid: user.uid,
           date: day,
@@ -355,19 +355,28 @@ export class IRhubProvider {
       this.ngzone.run(() => {
         let userID = firebase.auth().currentUser;
         var numRating = 0;
-      firebase.database.ref("Reviews/").on("value", (data: any) => {
+        firebase.database().ref("Reviews/").on("value", (data: any) => {
+          this.ratedOrgs = [];
           if (data.val() != null || data.val() != undefined) {
+            let details = data.val();
+            console.log(details)
+            console.log(data)
             let keys = Object.keys(data.val());
             for (var x = 0; x < keys.length; x++) {
-              firebase.database.ref("Reviews/" + keys[x]).on("value", (data2: any) => {
+              firebase.database().ref("Reviews/"  + keys[x]).on("value", (data2: any) => {
+                this.ratedOrgs = [];
                 var values = data2.val();
+                console.log(values)
                 let inderKeys = Object.keys(values);
                 for (var i = 0; i < inderKeys.length; i++) {
                   if (values[inderKeys[i]].uid == userID.uid) {
-                    firebase.database.ref('4IR_Hubs/').on("value", (data3: any) => {
+                    firebase.database().ref('4IR_Hubs/').on("value", (data3: any) => {
+                      let deatils2 = data3.val();
+                      console.log(deatils2)
                       var xx = Object.keys(data3.val())
                       for (var p = 0; p < xx.length; p++) {
-                        firebase.database.ref('4IR_Hubs/' + xx[p] + '/' + keys[x]).on("value", (data4: any) => {
+                        firebase.database().ref('4IR_Hubs/' + xx[p] ).on("value", (data4: any) => {
+                          // this.ratedOrgs = [];
                           if (data4.val() != undefined || data4.val() != null) {
                             console.log(data4.val());
                             if (data3.val() != null || data3.val() != undefined) {
@@ -411,6 +420,7 @@ export class IRhubProvider {
                             console.log(organizationObject);
 
                             this.ratedOrgs.push(organizationObject)
+                            console.log(this.ratedOrgs)
                           }
                         })
                       }
@@ -423,8 +433,11 @@ export class IRhubProvider {
               })
             }
           }
+
           this.assignTotRating(numRating);
+          console.log(this.ratedOrgs)
           accpt(this.ratedOrgs);
+         
         })
 
       })
@@ -483,17 +496,17 @@ export class IRhubProvider {
   }
 
 
-  update(name, email, downloadurl,cell) {
+  update(name, email, downloadurl, cell) {
     this.ProfileArr.length = 0;
     return new Promise((pass, fail) => {
       this.ngzone.run(() => {
-        var userID  = firebase.auth().currentUser
+        var userID = firebase.auth().currentUser
         firebase.database().ref("Users/" + "/" + "App_Users/" + userID.uid).update({
           name: name,
           email: email,
           downloadurl: downloadurl,
-          cell:cell
-       
+          cell: cell
+
         });
       })
     })
@@ -526,7 +539,7 @@ export class IRhubProvider {
   }
 
 
-  
+
 
 
 
@@ -534,13 +547,13 @@ export class IRhubProvider {
 
   //user Location Method 
 
-  getUserLocation(){
-    return new Promise((resolve, reject)=>{
+  getUserLocation() {
+    return new Promise((resolve, reject) => {
       this.geo.getCurrentPosition().then((resp) => {
         resolve(resp)
-       }).catch((error) => {
-         console.log('Error getting location', error);
-       });
+      }).catch((error) => {
+        console.log('Error getting location', error);
+      });
     })
   }
 
@@ -548,9 +561,9 @@ export class IRhubProvider {
 
   calculateAndDisplayRoute(location, destination, directionsDisplay, directionsService) {
 
-    console.log(  location);
+    console.log(location);
 
-    console.log( destination);
+    console.log(destination);
 
     directionsService.route({
       origin: location,
@@ -566,7 +579,7 @@ export class IRhubProvider {
       } else {
         console.log(status);
         console.log("not working");
-        
+
 
       }
     });
@@ -574,271 +587,271 @@ export class IRhubProvider {
 
   //creating a  radius
 
-  createPositionRadius(latitude, longitude){
+  createPositionRadius(latitude, longitude) {
     var leftposition, rightposition, downposition, uposititon;
-    return new Promise ((accpt, rej) =>{
-      
-        var downlat = new String(latitude); 
-        var latIndex = downlat.indexOf( "." ); 
-        var down = parseInt(downlat.substr(latIndex + 1,2)) + 6;
-        var down = parseInt(downlat.substr(latIndex + 1,2)) + 12;
-        if (down >= 100){
-          if (downlat.substr(0,1) == "-"){
-            var firstDigits = parseInt(downlat.substr(0,3)) + 1;
-          }
-          else{
-            var firstDigits = parseInt(downlat.substr(0,2)) - 1;
-          }
-          var remainder = down - 100;
-          if (remainder >= 10){
-            downposition = firstDigits + "." + remainder;
-          }
-          else{
-            downposition = firstDigits +  ".0" + remainder;
-          }
-          
-        }else{
-          if (downlat.substr(0,1) == "-"){
-            downposition =  downlat.substr(0,3) + "." + down ;
-          }
-          else{
-            downposition = downlat.substr(0,2) + "." + down;
-          }
-        
-        }
-        
-        //up  position
-        var uplat = new String(latitude); 
-        var latIndex = uplat .indexOf( "." ); 
-        var up= parseInt(uplat .substr(latIndex + 1,2)) - 6;
-        var up= parseInt(uplat .substr(latIndex + 1,2)) - 12;
-        if (up <= 0){
-          if (uplat.substr(0,1) == "-"){
-            var firstDigits = parseInt(uplat.substr(0,3)) + 1;
-          }
-          else{
-            var firstDigits = parseInt(uplat.substr(0,2)) - 1;
-          }
-          var remainder = down - 100;
-          if (remainder >= 10){
-            uposititon = firstDigits + "." + remainder;
-          }
-          else{
-            uposititon = firstDigits +  ".0" + remainder;
-          }
-        }else{
-          if (uplat.substr(0,1) == "-"){
-            uposititon = uplat.substr(0,3) + "." + up ;
-          }
-          else{
-            uposititon = uplat.substr(0,2) + "." + up ;
-          }
-          
-        }
-          //left position
-         var leftlat = new String(longitude);
-         var longIndex =  leftlat.indexOf(".");
-         var left =  parseInt(leftlat.substr(longIndex + 1,2)) - 6;
-         var left =  parseInt(leftlat.substr(longIndex + 1,2)) - 12;
-         if (left >= 100){
-           if (leftlat.substr(0,1) == "-"){
-              var firstDigits =  parseInt(leftlat.substr(0,3)) - 1;
-           }else{
-            var firstDigits =  parseInt(leftlat.substr(0,2)) + 1;
-           }
-           var remainder = left - 100;
-           leftposition= firstDigits +  ".0" + remainder;
-         }else{
-           if (leftlat.substr(0,1) == "-"){
-            var firstDigits= parseInt(leftlat.substr(0,3)) + 1;
-           }
-           else{
-            var firstDigits= parseInt(leftlat.substr(0,2)) - 1;
-           }
-          
-           if (left == 0){
-            var remainder = 0;
-           }
-           else{
-            var remainder = left - 12;
-           }
-           
-           leftposition = firstDigits +  ".0" + remainder;
-        
-         }
-            //right position
-            var rightlat = new String(longitude);
-            var longIndex =  rightlat.indexOf(".");
-            var right =  parseInt(rightlat.substr(longIndex + 1,2)) + 6;
-            var right =  parseInt(rightlat.substr(longIndex + 1,2)) + 12;
-            if (right >= 100){
-              if (rightlat.substr(0,1) == "-"){
-                 var firstDigits =  parseInt(rightlat.substr(0,3)) - 1;
-              }else{
-               var firstDigits =  parseInt(rightlat.substr(0,2)) + 1;
-              }
-              var remainder =  right - 100;
-              rightposition = firstDigits +  ".0" + remainder;
-            }else{
-              rightposition = rightlat.substr(0,2) + "." + right;
-              if (left == 0){
-                var remainder = 0;
-               }
-               else{
-                var remainder = left - 12;
-               }
-               
-               rightposition  = firstDigits +  ".0" + remainder;
-            }
-        
-        
-            let radius ={
-              left: leftposition,
-              right : rightposition,
-              up : uposititon,
-              down : downposition
-            }
+    return new Promise((accpt, rej) => {
 
-            accpt(radius);
-      
-// down  position
+      var downlat = new String(latitude);
+      var latIndex = downlat.indexOf(".");
+      var down = parseInt(downlat.substr(latIndex + 1, 2)) + 6;
+      var down = parseInt(downlat.substr(latIndex + 1, 2)) + 12;
+      if (down >= 100) {
+        if (downlat.substr(0, 1) == "-") {
+          var firstDigits = parseInt(downlat.substr(0, 3)) + 1;
+        }
+        else {
+          var firstDigits = parseInt(downlat.substr(0, 2)) - 1;
+        }
+        var remainder = down - 100;
+        if (remainder >= 10) {
+          downposition = firstDigits + "." + remainder;
+        }
+        else {
+          downposition = firstDigits + ".0" + remainder;
+        }
 
-   
+      } else {
+        if (downlat.substr(0, 1) == "-") {
+          downposition = downlat.substr(0, 3) + "." + down;
+        }
+        else {
+          downposition = downlat.substr(0, 2) + "." + down;
+        }
+
+      }
+
+      //up  position
+      var uplat = new String(latitude);
+      var latIndex = uplat.indexOf(".");
+      var up = parseInt(uplat.substr(latIndex + 1, 2)) - 6;
+      var up = parseInt(uplat.substr(latIndex + 1, 2)) - 12;
+      if (up <= 0) {
+        if (uplat.substr(0, 1) == "-") {
+          var firstDigits = parseInt(uplat.substr(0, 3)) + 1;
+        }
+        else {
+          var firstDigits = parseInt(uplat.substr(0, 2)) - 1;
+        }
+        var remainder = down - 100;
+        if (remainder >= 10) {
+          uposititon = firstDigits + "." + remainder;
+        }
+        else {
+          uposititon = firstDigits + ".0" + remainder;
+        }
+      } else {
+        if (uplat.substr(0, 1) == "-") {
+          uposititon = uplat.substr(0, 3) + "." + up;
+        }
+        else {
+          uposititon = uplat.substr(0, 2) + "." + up;
+        }
+
+      }
+      //left position
+      var leftlat = new String(longitude);
+      var longIndex = leftlat.indexOf(".");
+      var left = parseInt(leftlat.substr(longIndex + 1, 2)) - 6;
+      var left = parseInt(leftlat.substr(longIndex + 1, 2)) - 12;
+      if (left >= 100) {
+        if (leftlat.substr(0, 1) == "-") {
+          var firstDigits = parseInt(leftlat.substr(0, 3)) - 1;
+        } else {
+          var firstDigits = parseInt(leftlat.substr(0, 2)) + 1;
+        }
+        var remainder = left - 100;
+        leftposition = firstDigits + ".0" + remainder;
+      } else {
+        if (leftlat.substr(0, 1) == "-") {
+          var firstDigits = parseInt(leftlat.substr(0, 3)) + 1;
+        }
+        else {
+          var firstDigits = parseInt(leftlat.substr(0, 2)) - 1;
+        }
+
+        if (left == 0) {
+          var remainder = 0;
+        }
+        else {
+          var remainder = left - 12;
+        }
+
+        leftposition = firstDigits + ".0" + remainder;
+
+      }
+      //right position
+      var rightlat = new String(longitude);
+      var longIndex = rightlat.indexOf(".");
+      var right = parseInt(rightlat.substr(longIndex + 1, 2)) + 6;
+      var right = parseInt(rightlat.substr(longIndex + 1, 2)) + 12;
+      if (right >= 100) {
+        if (rightlat.substr(0, 1) == "-") {
+          var firstDigits = parseInt(rightlat.substr(0, 3)) - 1;
+        } else {
+          var firstDigits = parseInt(rightlat.substr(0, 2)) + 1;
+        }
+        var remainder = right - 100;
+        rightposition = firstDigits + ".0" + remainder;
+      } else {
+        rightposition = rightlat.substr(0, 2) + "." + right;
+        if (left == 0) {
+          var remainder = 0;
+        }
+        else {
+          var remainder = left - 12;
+        }
+
+        rightposition = firstDigits + ".0" + remainder;
+      }
+
+
+      let radius = {
+        left: leftposition,
+        right: rightposition,
+        up: uposititon,
+        down: downposition
+      }
+
+      accpt(radius);
+
+      // down  position
+
+
     })
-  
+
   }
 
-//get current location
-
-  getCurrentLocation(lat, lng){
-    
-     return new Promise ((accpt, rej) =>{
-      
-        console.log("provider outside getCurPos");
-        this.createPositionRadius(lat, lng).then((data:any) =>{
-         accpt(data);
-       })
-      })
-      
-}
-
-getCurrentLocations(){
   //get current location
-   return new Promise ((accpt, rej) =>{
-   
+
+  getCurrentLocation(lat, lng) {
+
+    return new Promise((accpt, rej) => {
+
+      console.log("provider outside getCurPos");
+      this.createPositionRadius(lat, lng).then((data: any) => {
+        accpt(data);
+      })
+    })
+
+  }
+
+  getCurrentLocations() {
+    //get current location
+    return new Promise((accpt, rej) => {
+
       this.geo.getCurrentPosition().then((resp) => {
         console.log(resp);
-        
-     
-          accpt(resp);
-   
-         }).catch((error) => {
-           console.log('Error getting location', error.message);
-           
-         });
-    })
-  
-    
- }
 
-getNearByOrganizations(radius,org){
-  return new Promise((accpt,rej) =>{
-    
+
+        accpt(resp);
+
+      }).catch((error) => {
+        console.log('Error getting location', error.message);
+
+      });
+    })
+
+
+  }
+
+  getNearByOrganizations(radius, org) {
+    return new Promise((accpt, rej) => {
+
       this.nearByOrg = []
-      this.getCurrentLocations().then((resp:any) =>{
-      console.log(resp);
-      
-      var lat =  new String(resp.coords.latitude).substr(0,6);
-      console.log(lat);
-      console.log(resp.coords.latitude)
-     var long = new String(resp.coords.longitude).substr(0,5);
-      console.log(long);
-      console.log(resp.coords.longitude);
-      for (var x = 0; x < org.length; x++){
-        var orglat = new String(org[x].lat).substr(0,6);
-        var orgLong =  new String(org[x].long).substr(0,5);
-        
-        
-        
-        
-        if ((orgLong  <= long  && orgLong  >= radius.left || orgLong  >= long  && orgLong  <= radius.right) && (orglat >= lat && orglat <= radius.down || orglat <= lat && orglat >= radius.up)){
-          console.log("In nearby");
-          
-       this.nearByOrg.push(org[x]);
-        console.log(this.nearByOrg);
-        accpt(this.nearByOrg)
+      this.getCurrentLocations().then((resp: any) => {
+        console.log(resp);
 
-        }else {
-          console.log("kb");
-          
-        }
-      }
-     
-    })
-    
-    
-  })
-}
+        var lat = new String(resp.coords.latitude).substr(0, 6);
+        console.log(lat);
+        console.log(resp.coords.latitude)
+        var long = new String(resp.coords.longitude).substr(0, 5);
+        console.log(long);
+        console.log(resp.coords.longitude);
+        for (var x = 0; x < org.length; x++) {
+          var orglat = new String(org[x].lat).substr(0, 6);
+          var orgLong = new String(org[x].long).substr(0, 5);
 
-DisplayCategory(Category) {
-  return new Promise((accpt, rej) => {
-    this.categoryArr.length = 0;
-   firebase.database().ref('4IR_Hubs').on('value', (data) => {
-      if (data.val() != undefined || data.val() != null) {
-        this.ngzone.run(() => {
-          this.categoryArr.length = 0;
-          let SelectCategory = data.val();
-          let keys = Object.keys(SelectCategory);
-          for (var i = 0; i < keys.length; i++) {
-            let k = keys[i];
-            firebase.database().ref('Reviews/' + k).on('value', (data2) => {
-              let totalRating = 0;
-              let avg = 0;
-              if (data2.val() != null || data2.val() != undefined) {
-                let ratings = data2.val();
-                let ratingsKeys = Object.keys(ratings);
-                for (var x = 0; x < ratingsKeys.length; x++) {
-                  totalRating = totalRating + ratings[ratingsKeys[x]].rate
-                  avg++;
-                }
-                if (totalRating != 0)
-                  totalRating = totalRating / avg;
-                totalRating = Math.round(totalRating)
-              }
-              firebase.database().ref('4IR_Hubs/' + k).on('value', (data2) => {
-                var branch = data2.val();
-                var bKeys = Object.keys(branch)
-                for (var p = 0; p < bKeys.length; p++) {
-                  var x = bKeys[p]
-                  if (branch[x].category == Category) {
-                  
-                    let obj = {
-                      orgCat: branch[x].category,
-                      orgName: branch[x].name,
-                      orgContact: branch[x].Telephone,
-                      orgPicture: branch[x].downloadurl,
-                      orgLat: branch[x].lat,
-                      orgLong: branch[x].long,
-                      orgEmail: branch[x].Email,
-                      orgAbout: branch[x].desc,
-                      key: x,
-                      rating: totalRating,
-                      city: branch[x].region,
-                      views:branch[x].views
-                    }
-                    this.categoryArr.push(obj);
-                  }
-                }
-              })
-            })
+
+
+
+          if ((orgLong <= long && orgLong >= radius.left || orgLong >= long && orgLong <= radius.right) && (orglat >= lat && orglat <= radius.down || orglat <= lat && orglat >= radius.up)) {
+            console.log("In nearby");
+
+            this.nearByOrg.push(org[x]);
+            console.log(this.nearByOrg);
+            accpt(this.nearByOrg)
+
+          } else {
+            console.log("kb");
+
           }
-          console.log(this.categoryArr)
-          accpt(this.categoryArr);
-        })
-      }
+        }
+
+      })
+
+
     })
-  })
-}
+  }
+
+  DisplayCategory(Category) {
+    return new Promise((accpt, rej) => {
+      this.categoryArr.length = 0;
+      firebase.database().ref('4IR_Hubs').on('value', (data) => {
+        if (data.val() != undefined || data.val() != null) {
+          this.ngzone.run(() => {
+            this.categoryArr.length = 0;
+            let SelectCategory = data.val();
+            let keys = Object.keys(SelectCategory);
+            for (var i = 0; i < keys.length; i++) {
+              let k = keys[i];
+              firebase.database().ref('Reviews/' + k).on('value', (data2) => {
+                let totalRating = 0;
+                let avg = 0;
+                if (data2.val() != null || data2.val() != undefined) {
+                  let ratings = data2.val();
+                  let ratingsKeys = Object.keys(ratings);
+                  for (var x = 0; x < ratingsKeys.length; x++) {
+                    totalRating = totalRating + ratings[ratingsKeys[x]].rate
+                    avg++;
+                  }
+                  if (totalRating != 0)
+                    totalRating = totalRating / avg;
+                  totalRating = Math.round(totalRating)
+                }
+                firebase.database().ref('4IR_Hubs/' + k).on('value', (data2) => {
+                  var branch = data2.val();
+                  var bKeys = Object.keys(branch)
+                  for (var p = 0; p < bKeys.length; p++) {
+                    var x = bKeys[p]
+                    if (branch[x].category == Category) {
+
+                      let obj = {
+                        orgCat: branch[x].category,
+                        orgName: branch[x].name,
+                        orgContact: branch[x].Telephone,
+                        orgPicture: branch[x].downloadurl,
+                        orgLat: branch[x].lat,
+                        orgLong: branch[x].long,
+                        orgEmail: branch[x].Email,
+                        orgAbout: branch[x].desc,
+                        key: x,
+                        rating: totalRating,
+                        city: branch[x].region,
+                        views: branch[x].views
+                      }
+                      this.categoryArr.push(obj);
+                    }
+                  }
+                })
+              })
+            }
+            console.log(this.categoryArr)
+            accpt(this.categoryArr);
+          })
+        }
+      })
+    })
+  }
 
 
 }
