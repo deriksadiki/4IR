@@ -1,5 +1,5 @@
 <ion-header class="ionHeader">
-  <div class="theHead">
+  <div class="theHead" padding>
     <ion-title class="theTitle">
       <b>4IR HUB</b>
     </ion-title>
@@ -10,8 +10,8 @@
       </button>
       <!-- <ion-input maxLength="44" class="searchBar" type="text" placeholder="Search by city (e.g johannesburg)" [(ngModel)]="searchTerm" (ionInput)="getItems($event)"></ion-input> -->
 
-      <ion-input class="searchBar" placeholder="Search by city or name" (ionInput)="getItems($event)">
-      </ion-input>
+      <ion-searchbar class="searchBar" placeholder="Search by city or name" (ionInput)="getItems($event)">
+      </ion-searchbar>
 
 
       <div class="profile">

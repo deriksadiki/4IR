@@ -340,6 +340,8 @@ export class HomePage {
   directionsDisplay;
   service;
   geocoder;
+  custom1 = "primary";
+  custom2 = "inactive";
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
@@ -654,7 +656,7 @@ export class HomePage {
       this.searchDismissState = "search";
       // console.log(this.state);
       searcher[0].style.width = "0";
-      searcher[0].style.left = "-10%";
+      searcher[0].style.left = "-35%";
       searcher[0].style.top = "18px";
       theTitle[0].style.opacity = "1";
 
@@ -797,12 +799,18 @@ export class HomePage {
     
     this.showNearbyList =true ;
     this. showAllOrganisation =false ;
+    this.custom1 = "inactive";
+    this.custom2 = "primary";
   }
 
 
   all(){
     this.showNearbyList =false;
     this. showAllOrganisation =true;
+
+    
+  this.custom1 = "primary";
+  this.custom2 = "inactive";
   }
  
   scroll(event) {
@@ -858,6 +866,7 @@ export class HomePage {
       splitter[0].style.height = "190px";
 
     }
-
+    console.log(event.scrollTop);
+    
   }
 }

@@ -2,6 +2,7 @@ page-edit-user-profile {
   .theCard {
     padding-top: 70px;
     width: 100%;
+    animation: 1s fadeInUp;
   }
   .btnActions {
     height: 30px;
@@ -47,7 +48,7 @@ page-edit-user-profile {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.205);
   }
   ion-input {
-    margin-left: 10%;
+    margin: 0 auto;
   }
   .theFab {
     // box-shadow: 0 0 10px rgba(0, 0, 0, 0.304);
@@ -62,11 +63,13 @@ page-edit-user-profile {
     box-shadow: 0 2px 15px grey;
     position: relative;
     top: 50px;
+    animation: 1s fadeInUp;
   }
   h1 {
     text-align: center;
     margin-bottom: 30px;
     text-transform: capitalize;
+    height: 30px;
   }
   .picture {
     width: 150px;
