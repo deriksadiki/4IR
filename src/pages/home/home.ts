@@ -367,13 +367,13 @@ export class HomePage {
         this.logInState = true;
         this.IRmethods.getProfile().then((data: any) => {
           console.log(this.logInState);
-
           this.img = data;
         })
       }
       else if (data == false) {
         this.img = "assets/imgs/default.png";
       }
+      
     })
   }
 
@@ -806,7 +806,7 @@ export class HomePage {
   }
  
   scroll(event) {
-    console.log(event.scrollTop);
+    // console.log(event.scrollTop);
     
     var theCard = document.getElementsByClassName("options") as HTMLCollectionOf<HTMLElement>;
     var nav = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
