@@ -103,10 +103,6 @@
           <img class="image" src="../../assets/imgs/Defaults/default.png" />
         </ion-thumbnail>
         <h2>{{ a.orgName }}</h2>
-        <p>
-          <ion-icon name="ios-wifi"></ion-icon>
-          <img src="../../assets/icon/notes.svg" id="cash" alt="">
-        </p>
         <div *ngIf="a.rating == 0; then loggedIn0">
         </div>
         <div *ngIf="a.rating == 1; then loggedIn1">
@@ -120,13 +116,13 @@
         <div *ngIf="a.rating == 5; then loggedIn5">
         </div>
         <!-- <ng-template #loggedIn0> -->
-          <p class="starRating">
-            <ion-icon name="star-outline"></ion-icon>
-            <ion-icon name="star-outline"></ion-icon>
-            <ion-icon name="star-outline"></ion-icon>
-            <ion-icon name="star-outline"></ion-icon>
-            <ion-icon name="star-outline"></ion-icon>
-          </p>
+        <p class="starRating">
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+        </p>
         <!-- </ng-template> -->
         <ng-template #loggedIn1>
           <p class="starRating">
@@ -173,6 +169,11 @@
             <ion-icon name="star"></ion-icon>
           </p>
         </ng-template>
+
+        <p>
+          <ion-icon name="ios-wifi"></ion-icon>
+          <img src="../../assets/icon/notes.svg" id="cash" alt="">
+        </p>
         <button ion-button icon-only color="custom" clear item-end>
           <ion-icon name="arrow-forward"></ion-icon>
         </button>
@@ -187,8 +188,10 @@
         <img class="image" src="../../assets/imgs/Defaults/default.png" />
       </ion-thumbnail>
       <h2>{{ a.orgName }}</h2>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore accusamus eum dignissimos distinctio perferendis quisquam
-        tenetur culpa ea laboriosam nesciunt dolorem, aliquam voluptatibus fugit, atque inventore quasi, aspernatur blanditiis
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore accusamus eum dignissimos distinctio
+        perferendis quisquam
+        tenetur culpa ea laboriosam nesciunt dolorem, aliquam voluptatibus fugit, atque inventore quasi, aspernatur
+        blanditiis
         placeat.
       </p>
 

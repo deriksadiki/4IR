@@ -16,7 +16,7 @@
     <div class="name" (click)="removePopover()">
       <h3>{{userdetails.name}}</h3>
       <p>{{userdetails.email}}</p>
-      <p>0813917127</p>
+      <p>{{userdetails.cell}}</p>
       <!-- <p>4877 Ugago Street <br>
         protea glen ext 3 <br>
         Johannesburg <br>
@@ -30,6 +30,9 @@
     </div>
    
     <ion-slides class="ionSlide" slidesPerView="2.1">
+        <div *ngIf="!i" class="empty">
+          no data
+        </div>
         <div *ngFor="let i of ratings; let ind = index" (click)="viewMore(ind)">
             <ion-slide>
                 <div class="placeContainer">

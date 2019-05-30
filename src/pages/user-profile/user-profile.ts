@@ -39,6 +39,8 @@ export class UserProfilePage {
       this.detailArray.length = 0;
       console.log(details)
       this.detailArray.push(details);
+      console.log(details);
+      
     });
 
     this.irhubProvider.getTotalRatings().then((data:any) =>{
