@@ -37,21 +37,6 @@
             Near Me
           </button>
         </div>
-        <!-- <ion-grid>
-          <ion-row>
-            <ion-col>Show Hubs</ion-col>
-            <ion-col align-self-end>
-              <button class="selects" id="all" ion-button color="{{ custom1 }}" (click)="all()">
-                All
-              </button>
-            </ion-col>
-            <ion-col>
-              <button class="selects" ion-button color="{{ custom2 }}" (click)="near()">
-                Near Me
-              </button>
-            </ion-col>
-          </ion-row>
-        </ion-grid> -->
       </ion-card>
     </div>
   </div>
@@ -72,10 +57,6 @@
         <ion-option value="n64">n64</ion-option>
         <ion-option value="ps">ps</ion-option>
         <ion-option value="nes">nes</ion-option>
-        <!-- <ion-option value="theraphy">Cat4</ion-option>
-        <ion-option value="Psychiatric">Cat5</ion-option>
-        <ion-option value="social centre">Cat6</ion-option> -->
-        <!-- <ion-option value="Rehab">Cat7</ion-option> -->
       </ion-select>
     </ion-item>
     <img [src]="img" class="displayPic" id="imgOnMap" alt="" (click)="Userprofile()" />
@@ -87,12 +68,12 @@
   </div>
 
   <!-- to show list of organization -->
+  <ion-list>
+    <ion-item id="searched-items" *ngFor="let item of items" (click)="goToViewPage(item)">
+      {{item}}
+    </ion-item>
+  </ion-list>
   <div id="list" padding>
-    <ion-list>
-      <ion-item *ngFor="let item of items" (click)="goToViewPage(item)">
-        {{ item}}
-      </ion-item>
-    </ion-list>
 
     <div class="split"></div>
 

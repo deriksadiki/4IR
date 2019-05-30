@@ -1,4 +1,4 @@
-<ion-content *ngFor="let userdetails of detailArray">
+<!-- <ion-content *ngFor="let userdetails of detailArray">
 
   <div id="popover">
     <button ion-button full clear (click)="GoToEditProfile()">Edit Profile</button>
@@ -17,11 +17,6 @@
       <h3>{{userdetails.name}}</h3>
       <p>{{userdetails.email}}</p>
       <p>{{userdetails.cell}}</p>
-      <!-- <p>4877 Ugago Street <br>
-        protea glen ext 3 <br>
-        Johannesburg <br>
-        1819
-      </p> -->
     </div>
   </div>
   <div class="slides" (click)="removePopover()">
@@ -37,7 +32,6 @@
             <ion-slide>
                 <div class="placeContainer">
                   <div class="date">
-                    <!-- <p>{{i.date}</p> -->
                   </div>
                   <div class="stars">
                       <div *ngIf="userdetails.rating == 0; then loggedIn0">
@@ -117,38 +111,133 @@
         </div>
     </ion-slides>
   </div>
-  <!-- <div class="theHead">
+</ion-content> -->
 
-        <div class="moveimage">
-            <img  width="150px;" height="150px;" class="image" src="{{userdetails.downloadurl}}">
+<ion-content class="body">
+    <div class="popover">
+      <button ion-button clear class="popoverOptions" (click)="GoToEditProfile()" color="custom">Edit Profile</button>
+      <button ion-button clear class="popoverOptions" (click)="logOut()" color="custom">Sign Out</button>
+    </div>
+    <ion-fab top right>
+      <button ion-fab clear mini color="trans" class="settings" icon-only (click)="showPopover()">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-fab>
+  
+  
+    <div class="body" (click)="bodyClick()">
+      <div class="navs">
+  
+        <div class="profile" *ngFor="let item of detailArray">
+          <div class="gradient">
+            <div class="username">
+              <h3>{{item.name}} {{item.surname}}</h3>
+              <!-- <p id="reviews">Made {{totrating}} Reviews</p> -->
+            </div>
+          </div>
+          <img src="{{item.downloadurl}}" class="displayPicture" alt="">
+          <div class="restOfBody">
+            <p class="infogram" id="theAbout">About</p>
+            <ion-card class="infoCard" padding>
+              <p class="subInfogram">email</p>
+              <p>{{item.email}}</p>
+              <br>
+              <p class="subInfogram">
+                mobile
+              </p>
+              <p>{{item.cell}}</p>
+            </ion-card>
+  
+            <p class="infogram" id="myReviews">My Reviews ({{totrating}})</p>
+          </div>
         </div>
       </div>
-  <div class="popover">
-    <button ion-button clear class="popoverOptions" (click)="editProfile()" color="custom">Edit Profile</button>
-    <button ion-button clear class="popoverOptions" (click)="logOut()" color="custom">Sign Out</button>
-  </div>
-  <ion-fab top left>
-    <button ion-fab clear mini color="transparent" class="back" icon-only (click)="GoTOHomePage()">
-      <ion-icon name="arrow-back"></ion-icon>
-    </button>
-  </ion-fab>
-  <ion-fab top right>
-    <button ion-fab clear mini color="transparent" class="settings" icon-only (click)="showPopover()">
-      <ion-icon name="settings"></ion-icon>
-    </button>
-  </ion-fab>
-
-
- 
-    <div class="move">
-        <div>{{userdetails.name}}</div>
-        <div>{{userdetails.email}}</div>
-    
-        <div>{{userdetails.address}}</div>
     </div>
- 
- 
+    <div class="empty" *ngIf="ratings.length == 0 || ratings.length == undefined">
+      <img class="telescope" src="../../assets/imgs/Defaults/empty.png" alt="">  
+      <p class="itsEmpty">You haven't made any reviews so far...</p>
+      </div>
+    <ion-slides slidesPerView="2" color="dark">
   
-  <button ion-button (click)="logOut()">logOut</button>
-  <button ion-button (click)="  GoToEditProfile()">Edit Profile</button> -->
-</ion-content>
+      <div *ngFor="let i of ratings; let ind = index" (click)="viewMore(ind)">
+        <ion-slide>
+          <ion-card class="list">
+            <h3 class="orgName">{{i.orgName}}</h3>
+            <div class="stars">
+              <div *ngIf="i.rating == 0; then loggedIn0">
+              </div>
+              <div *ngIf="i.rating == 1; then loggedIn1">
+              </div>
+              <div *ngIf="i.rating == 2; then loggedIn2">
+              </div>
+              <div *ngIf="i.rating == 3; then loggedIn3">
+              </div>
+              <div *ngIf="i.rating == 4; then loggedIn4">
+              </div>
+              <div *ngIf="i.rating == 5; then loggedIn5">
+              </div>
+              <ng-template #loggedIn0>
+                <i>
+                  <ion-icon name="star-outline"></ion-icon>
+                  <ion-icon name="star-outline"></ion-icon>
+                  <ion-icon name="star-outline"></ion-icon>
+                  <ion-icon name="star-outline"></ion-icon>
+                  <ion-icon name="star-outline"></ion-icon>
+                </i>
+              </ng-template>
+              <ng-template #loggedIn1>
+                <i>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star-outline"></ion-icon>
+                  <ion-icon name="star-outline"></ion-icon>
+                  <ion-icon name="star-outline"></ion-icon>
+                  <ion-icon name="star-outline"></ion-icon>
+                </i>
+              </ng-template>
+              <ng-template #loggedIn2>
+                <i>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star-outline"></ion-icon>
+                  <ion-icon name="star-outline"></ion-icon>
+                  <ion-icon name="star-outline"></ion-icon>
+                </i>
+              </ng-template>
+              <ng-template #loggedIn3>
+                <i>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star-outline"></ion-icon>
+                  <ion-icon name="star-outline"></ion-icon>
+                </i>
+              </ng-template>
+              <ng-template #loggedIn4>
+                <i>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star-outline"></ion-icon>
+                </i>
+              </ng-template>
+              <ng-template #loggedIn5>
+                <i>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                  <ion-icon name="star"></ion-icon>
+                </i>
+              </ng-template>
+            </div>
+            <div class="overlay">
+  
+            </div>
+            <img class="orgImage" src="{{i.orgPicture}}" alt="">
+  
+          </ion-card>
+        </ion-slide>
+      </div>
+    </ion-slides>
+  </ion-content>

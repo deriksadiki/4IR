@@ -1,178 +1,198 @@
-    page-view-organization-infor {
-        .TheStar{
-             color:goldenrod
-        }
-        #map{
-            width:100%;
-            height: 100%;
-        }
-        .topHalf {
-            // height: 65%;
-            // border: 2px solid red;
-        }
-        .top {
-            height: 200px;
-            position: relative;
-        }
-        .desc {
-            padding-left: 10px;
-        }
-        .hubName {
-            position: absolute;
-            width: 95%;
-            left: 50%;
-            top: 40%;
-            transform: translate(-50%, -50%);
-            // border: 2px solid green;
-            min-height: 30px;
-            text-align: center;
-            font-weight: 700;
-            text-shadow: 0 0 10px black;
-            color: white;
-            font-size: 110%;
-            text-transform: capitalize;
-        }
-        #orgView{
-            display: block;
-            animation: 1s fadeIn;
-        }
-        #map{
-            height: 100%;
-            width: 100%;
-        }
-        #googleMaps{
-            right: 55px;
-            top: 00px;
-        }
-        #theMap{
-            width: 100%;
-            height: 100%;
-            display: none;
-            animation: 1s fadeIn;
-            button{
-                position: absolute;
-            }
-            #navigate{
-                bottom: 0px;
-                z-index: 100;
-                width: 100%;
-                left: 50%;
-                transform: translateX(-50%);
-                height: 50px;
-            }
-            #getDistance{
-                position: absolute;
-                z-index: 100;
-                bottom: 50px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: white;
-                padding: 5px;
-                box-shadow: 0 0 10px black;
-                border-radius: 5px;
-            }
-            .moreinfo{
-
-            }
-        }
-        #coverImage {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            // border-bottom-right-radius: 40%;
-            // border-bottom-left-radius: 40%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.336);
-        }
-        .stars {
-            // border: 2px solid red;
-            height: 30px;
-            position: absolute;
-            width: 60%;
-            left: 50%;
-            top: 60%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            font-size: 25px;
-            text-shadow: 0 0 10px black;
-            text-align: center;
-            font-weight: 700;
-            color: #dcc050;
-            ion-icon {
-                margin: 0 auto;
-            }
-        }
-        ion-item{
-            h2{
-                text-transform: capitalize;
-            }
-        }
-        .mid {
-            display: flex;
-            flex-wrap: nowrap;
-            margin-bottom: 10px;
-            // border: 2px solid red;
-            .logo {
-                width: 60px;
-                height: 60px;
-                object-fit: contain;
-            }
-            .btn {
-                width: 100%;
-                // border: 2px solid green;
-                text-align: center;
-                p {
-                    margin-top: 0;
-                }
-                ion-icon {
-                    font-size: 30px;
-                    color: #dcc050;
-                }
-            }
-            .btn:active {
-                background: whitesmoke;
-            }
-        }
-        #gallery {
-            display: flex;
-            flex-wrap: wrap;
-            img {
-                height: 80px;
-                margin: 0 auto;
-                // border: 2px solid red;
-            }
-        }
-        .ratingsSeg {
-            text-align: center;
-            padding-bottom: 20px;
-        }
-        .rater {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.39);
-            padding-bottom: 20px;
-            ion-icon {
-                font-size: 25px;
-                margin: auto 10px;
-                color: gold;
-            }
-        }
-        ion-card p {
-            text-align: left;
-            ion-icon {
-                color: black;
-            }
-        }
-        ion-card {
-            box-shadow: 0 0 10px;
-            margin-bottom: 10px;
-        }
-        ion-note{
-            // border: 2px solid red;
-
-        }
-
-        #galleryList{
-            height: 50%;
-            overflow-y: scroll;
-        }
-
-        
+page-view-organization-infor {
+  .TheStar {
+    color: goldenrod;
+  }
+  #map {
+    width: 100%;
+    height: 100%;
+  }
+  .topHalf {
+    // height: 65%;
+    // border: 2px solid red;
+  }
+  .top {
+    height: 20%;
+    position: relative;
+  }
+  .desc {
+    padding-left: 10px;
+  }
+  .hubName {
+    position: absolute;
+    width: 95%;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    // border: 2px solid green;
+    min-height: 30px;
+    text-align: center;
+    font-weight: 700;
+    text-shadow: 0 0 10px black;
+    color: white;
+    font-size: 110%;
+    text-transform: capitalize;
+  }
+  #orgView {
+    display: block;
+    animation: 1s fadeIn;
+  }
+  #map {
+    height: 100%;
+    width: 100%;
+  }
+  #googleMaps {
+    right: 55px;
+    top: 00px;
+  }
+  #theMap {
+    width: 100%;
+    height: 100%;
+    display: none;
+    animation: 1s fadeIn;
+    button {
+      position: absolute;
     }
+    #navigate {
+      bottom: 0px;
+      z-index: 100;
+      width: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 50px;
+    }
+    #getDistance {
+      position: absolute;
+      z-index: 100;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 5px;
+      box-shadow: 0 0 10px black;
+      border-radius: 5px;
+    }
+    .moreinfo {
+    }
+  }
+  #coverImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    // border-bottom-right-radius: 40%;
+    // border-bottom-left-radius: 40%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.336);
+  }
+  .stars {
+    // border: 2px solid red;
+    height: 30px;
+    position: absolute;
+    width: 60%;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    font-size: 25px;
+    text-shadow: 0 0 10px black;
+    text-align: center;
+    font-weight: 700;
+    color: #dcc050;
+    ion-icon {
+      margin: 0 auto;
+    }
+  }
+  ion-item {
+    h2 {
+      text-transform: capitalize;
+    }
+  }
+  #rightNote {
+    // border: 2px solid red;
+    margin-right: 0;
+  }
+  .mid {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-bottom: 10px;
+    // border: 2px solid red;
+    .logo {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
+    .btn {
+      width: 100%;
+      // border: 2px solid green;
+      text-align: center;
+      p {
+        margin-top: 0;
+      }
+      ion-icon {
+        font-size: 30px;
+        color: #dcc050;
+      }
+    }
+    .btn:active {
+      background: whitesmoke;
+    }
+  }
+  #gallery {
+    display: flex;
+    flex-wrap: wrap;
+    img {
+      height: 80px;
+      margin: 0 auto;
+      // border: 2px solid red;
+    }
+  }
+  .ratingsSeg {
+    text-align: center;
+    padding-bottom: 20px;
+  }
+  .rater {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.39);
+    padding-bottom: 20px;
+    ion-icon {
+      font-size: 25px;
+      margin: auto 10px;
+      color: gold;
+    }
+  }
+  ion-card p {
+    text-align: left;
+    ion-icon {
+      color: black;
+    }
+  }
+  .segments {
+    height: 6vh;
+    ion-segment-button {
+      height: 5vh;
+    }
+  }
+  ion-card {
+    box-shadow: 0 0 10px;
+    // margin-bottom: 10px;
+  }
+  ion-note {
+    // border: 2px solid red;
+  }
+
+  #segView {
+    height: 94vh;
+    overflow-y: scroll;
+    // border: 2px solid red;
+  }
+
+  #lie {
+    text-align: center;
+  }
+  #emptyIMG {
+    height: 80px;
+  }
+  .emptyCont {
+    position: relative;
+    // border: 2px solid red;
+    text-align: center;
+    margin-top: 5px;
+  }
+}

@@ -653,9 +653,6 @@ export class HomePage {
 
 
   goToViewPage(name) {
-    ;
-
-
     for (var x = 0; x < this.orgArray.length; x++) {
       if (name == this.orgArray[x].orgName) {
         this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x] });
@@ -792,6 +789,8 @@ export class HomePage {
   }
 
   getItems(ev) {
+
+    var listContent = document.getElementById("list")
     // Reset items back to all of the items
     this.initializeItems();
 
@@ -810,6 +809,12 @@ export class HomePage {
       this.items = [];
     }
     console.log(this.items);
+    if(val == "" || val == " " || val == null){
+      listContent.style.display = "block"
+    }
+    else{
+      listContent.style.display = "none"
+    }
 
   }
 
