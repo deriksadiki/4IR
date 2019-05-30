@@ -4,6 +4,7 @@ import { EmailComposer } from '@ionic-native/email-composer'
 import { CallNumber } from '@ionic-native/call-number';
 import { IRhubProvider } from '../../providers/i-rhub/i-rhub'
 import { SignInPage } from '../sign-in/sign-in';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 
 
 declare var google;
@@ -50,7 +51,7 @@ export class ViewOrganizationInforPage implements OnInit {
   geocoder;
 
   tabs;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator) {
     this.initMap()
     this.tabs = "gallery";
     this.orgArray.push(this.navParams.get('orgObject'));
@@ -435,6 +436,20 @@ export class ViewOrganizationInforPage implements OnInit {
 
       this.irhubProvider.calculateAndDisplayRoute(userCurrentLocation, destination, this.directionsDisplay, this.directionsService);
     }, 1000);
+
+  }
+
+  googleMap(){
+    this.orgArray[0].address ;
+
+    console.log(this.orgArray[0].address );
+    
+
+    this.launchNavigator.navigate("2127 Chris Hani Rd, Klipspruit, Soweto, 1809") 
+  .then(
+    success => console.log('Launched navigator'),
+    error => console.log('Error launching navigator', error)
+  );
 
   }
 }

@@ -18,6 +18,9 @@ import { EditUserProfilePage } from '../pages/edit-user-profile/edit-user-profil
 import { EmailComposer } from '@ionic-native/email-composer';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { StartPage } from '../pages/start/start';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
+
+
 
 @NgModule({
   declarations: [
@@ -55,7 +58,7 @@ import { StartPage } from '../pages/start/start';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     IRhubProvider,Geolocation ,
     EmailComposer,
-    CallNumber
+    CallNumber , LaunchNavigator
   ]
 })
 export class AppModule {}
