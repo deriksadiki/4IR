@@ -349,19 +349,10 @@ export class HomePage {
       setTimeout(() => {
         var names = this.IRmethods.getOrgNames()
         console.log(names);
-        
         this.storeOrgNames(names)
         this.loading.dismiss()
       }, 2500);
     })
-
-    
-   
-
-
-
-    
-
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
         this.logInState = true;
@@ -380,7 +371,11 @@ export class HomePage {
 
 
   ionViewWillEnter() {
-
+    this.loading = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'Please wait...',
+    });
+    this.loading.present();
     setTimeout(() => {
       this.IRmethods.getUserLocation().then((data: any) => {
         console.log(data);
@@ -502,10 +497,6 @@ export class HomePage {
 })
     
 }
-
-
-
-
 
 
   getDirection() {
@@ -787,7 +778,6 @@ export class HomePage {
       this.items = [];
     }
     console.log(this.items);
-    
   }
 
 

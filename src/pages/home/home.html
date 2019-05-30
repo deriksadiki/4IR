@@ -10,8 +10,8 @@
       </button>
       <!-- <ion-input maxLength="44" class="searchBar" type="text" placeholder="Search by city (e.g johannesburg)" [(ngModel)]="searchTerm" (ionInput)="getItems($event)"></ion-input> -->
 
-      <ion-input class="searchBar" placeholder="Search by city or name" (ionInput)="getItems($event)">
-      </ion-input>
+      <ion-searchbar class="searchBar" placeholder="Search by city or name" (ionInput)="getItems($event)">
+      </ion-searchbar>
 
 
       <div class="profile">
@@ -89,7 +89,7 @@
   <!-- to show list of organization -->
   <div id="list" padding>
     <ion-list>
-      <ion-item *ngFor="let item of items" (click)="goToViewPage(item)">
+      <ion-item *ngFor="let item of items">
         {{ item}}
       </ion-item>
     </ion-list>
