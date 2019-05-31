@@ -163,7 +163,7 @@
 
   </div>
 
-  <div *ngFor="let a of nearby">
+  <div *ngFor="let a of nearby" padding>
     <ion-item (click)="goToViewPage(a.orgName)" no-padding class="listedCard" no-lines *ngIf="showNearbyList">
       <ion-thumbnail item-start large>
         <img class="image" src="../../assets/imgs/Defaults/default.png" />

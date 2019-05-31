@@ -852,7 +852,7 @@ export class HomePage {
     console.log(event.directionY);
     if (event.directionY == "down") {
 
-      if (event.scrollTop >= 100) {
+      if (event.scrollTop >= 150) {
         // console.log("hide card");
 
         theCard[0].style.height = "50px";
