@@ -18,24 +18,25 @@
   
     
       <div class="round" align="center">
-        <img class="picture" for="file" [src]="downloadurl" imageViewer>
-        <h1>{{name}}</h1>
+        <label for="file" id="cam">
+        <img class="picture" for="file" [src]="downloadurl">
+      </label>
       </div>
       <div class="fileChooser">
         <div>
-          <label for="file" id="cam">
-            <ion-icon class="Add" name="add-circle"></ion-icon>
-          </label>
-          <input id="file" type="file" accept="image/*" (change)="insertpic($event)">
+          <!-- <label for="file" id="cam">
+          </label> -->
+          <input id="file" type="file" accept="image/*" (change)="UploadProfilePic($event)">
         </div>
       </div>
 
   <div class="theCard">
-      <ion-input placeholder="Username" id="anim1" type="text" class="user-input" [(ngModel)]="name" ></ion-input>
-      <ion-input placeholder="Email" id="anim1" type="email" class="user-input" [(ngModel)]="email" ></ion-input>
+      <h1>{{name}}</h1>
+      <ion-input placeholder="Username" id="anim1" maxLength="25" type="text" class="user-input" [(ngModel)]="name" ></ion-input>
+      <ion-input placeholder="Email" id="anim1" type="email" class="user-input" [(ngModel)]="email" disabled></ion-input>
       <!-- update -->
       <!-- <ion-input placeholder="Address" id="anim1" type="text" class="user-input" [(ngModel)]="address" ></ion-input> -->
-      <ion-input placeholder="Contact Details" id="anim1" type="number" class="user-input"[(ngModel)]="cell" ></ion-input>
+      <ion-input placeholder="Contact Details" id="anim1" type="tel" class="user-input"[(ngModel)]="cell" ></ion-input>
       <button ion-button block id="anim1" class="btnActions" (click)="EditPrfile()">Edit Profile</button>
   </div>
 

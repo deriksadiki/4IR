@@ -1,246 +1,245 @@
 page-home {
+  .starRating {
+    color: #ffd700;
+  }
+  .cards {
+    box-shadow: 0 5px 5px rgba(128, 128, 128, 0.866);
+    transition: 500ms;
+    padding: 0;
+    margin-bottom: 20px;
+    height: 110px;
+  }
+  #map {
+    width: 100%;
+    height: 100%;
+    display: block;
+    animation: fadeIn 1s;
+    z-index: 0;
+  }
+  //   =========================
+  #mapView {
+    width: 100%;
+    height: 100%;
+    display: none;
+    // border: 2px solid red;
+    overflow-y: hidden;
+  }
+  .theHead {
+    transition: 500ms;
+    height: 120px;
+    background: whitesmoke;
+    position: relative;
+    box-shadow: 0 0 5px #fff;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.363);
+    // margin: 0 auto;
+    position: relative;
+    display: block;
+  }
+  .hidden {
+    width: 35px;
+    height: 0px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background: red;
+    opacity: 0;
+    z-index: 1;
+  }
+  #funnel {
+    font-size: 28px;
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    text-shadow: 0 0 5px black;
+    color: white;
+    z-index: 1;
+  }
+  .split {
+    height: 190px;
+    transition: 1s;
+  }
+  .theTitle {
+    transition: 500ms;
+    color: white;
+    position: absolute;
+    // border: 2px solid red;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    // left: 0%;
+  }
+  b {
+    color: rgb(26, 26, 26);
+  }
+  // .top {
+  //     position: relative;
+  //     background: #166b85;
+  //     // border: 2px solid red
+  // }
+  .more {
+    transition: 700ms;
+    color: rgb(17, 17, 17);
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    z-index: 1;
+    // font-size: 12px;
+    // padding-right: 7px;
+    // border: 1px solid white;
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    // text-align: right;
+  }
+  .searchBar{
+    transition: 700ms;
+    // border-radius: 550px;
+    // background: white;
+    padding-left: 10px;
+    position: absolute;
+    top: 18px;
+    width: 0;
+    margin-right: 20px;
+    left: -35%;
+    height: 40px;
+    // transform: rotateY(180DEG)
+  }
+  .profile {
+    transition: 700ms;
+    color: white;
+    position: absolute;
+    top: 25px;
+    left: 10px;
+    z-index: 1;
+    // height: 40px;
+    // width: 40px;
+    border-radius: 40px;
+    font-size: 25px;
+    font-weight: bold;
+    padding-left: 10px;
+  }
+  .displayPic {
+    // margin-top: 8px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50px;
+    object-fit: cover;
+    font-size: 3em;
+    color: black;
+    z-index: 1;
+  }
+  #imgOnMap {
+    position: absolute;
+    top: 25px;
+    left: 20px;
+  }
+  #searched-items{
+    animation:  1s fadeIn;
+  }
+  .options {
+    height: 130px;
+    width: 85%;
+    // box-shadow: 0 10px 15px grey;
+    border-radius: 5px;
+    transition: 700ms;
+    background: white;
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-53%);
+    z-index: 100;
+    // display: flex;
+    @media screen and (min-width: 700px){
 
-    .stars {
-        // border: 2px solid red;
-        height: 30px;
-        position: absolute;
-        width: 60%;
-        left: 50%;
-        top: 60%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        font-size: 25px;
-        text-shadow: 0 0 10px black;
-        text-align: center;
-        font-weight: 700;
-        color: #dcc050;
-        ion-icon {
-            margin: 0 auto;
-        }
+      transform: translateX(-52%);
     }
-    .starRating{
-        color: #ffd700;
+  }
+  .intro {
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+  }
+  .statement {
+    font-size: 16px;
+    font-weight: bolder;
+    margin-top: 10px;
+    color: orange;
+    // text-shadow: 0 0 5px greenyellow
+  }
+  .finePrint {
+    font-size: 14px;
+    color: grey;
+  }
+  .myFlexBox {
+    position: absolute;
+    bottom: 10px;
+    padding-left: 10px;
+    display: flex;
+    width: 100%;
+  }
+  .selects {
+    border-radius: 5px;
+    height: 20px;
+    font-size: 70%;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .ionHeader {
+    height: 0px;
+    display: block;
+    animation: fadeIn 1s;
+  }
+  .theLabel {
+    padding: 5px;
+    width: 60%;
+  }
+  #list {
+    display: block;
+    animation: fadeIn 1s;
+  }
+  #cash {
+      width: 15px;
+      position: absolute;
+      margin-top: 0px;
+      margin-left: 2px;
+    //   background: black
+  }
+  .listedCard {
+    box-shadow: 0 5px 5px rgba(128, 128, 128, 0.5);
+    border-radius: 5px;
+    transition: 500ms;
+    padding: 0;
+    margin-bottom: 20px;
+    height: 80px;
+  }
+  .item ion-thumbnail {
+    min-width: 80px;
+    min-height: 80px;
+    img {
+      max-width: 80px;
+      min-width: 80px;
+      height: 80px;
+      object-fit: cover;
     }
-    .cards {
-        box-shadow: 0 5px 5px rgba(128, 128, 128, 0.866);
-        transition: 500ms;
-        padding: 0;
-        margin-bottom: 20px;
-        height: 110px;
+  }
+
+  // #all {
+  //     margin: ;
+  // }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
     }
-    #map {
-        width: 100%;
-        height: 100%;
-        display: block;
-        animation: fadeIn 1s;
-        z-index: 0;
+    20% {
+      opacity: 0;
     }
-    //   =========================
-    #mapView {
-        width: 100%;
-        height: 100%;
-        display: none;
-        // border: 2px solid red;
-        overflow-y: hidden;
+    100% {
+      opacity: 1;
     }
-    .theHead {
-        transition: 500ms;
-        height: 120px;
-        background: whitesmoke;
-        position: relative;
-        box-shadow: 0 0 5px #fff;
-        border-bottom-right-radius: 16px;
-        border-bottom-left-radius: 16px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.363);
-    }
-    .hidden {
-        width: 35px;
-        height: 0px;
-        position: absolute;
-        right: 20px;
-        top: 20px;
-        background: red;
-        opacity: 0;
-        z-index: 1;
-    }
-    #funnel {
-        font-size: 28px;
-        position: absolute;
-        right: 25px;
-        top: 25px;
-        text-shadow: 0 0 5px black;
-        color: white;
-        z-index: 1;
-    }
-    .split {
-        height: 190px;
-        transition: 1s;
-    }
-    .theTitle {
-        transition: 500ms;
-        color: white;
-        position: absolute;
-        // border: 2px solid red;
-        top: 25px;
-        left: 50%;
-        transform: translateX(-50%);
-        // left: 0%;
-    }
-    b {
-        color: rgb(26, 26, 26);
-    }
-    // .top {
-    //     position: relative;
-    //     background: #166b85;
-    //     // border: 2px solid red
-    // }
-    .more {
-        transition: 700ms;
-        color: rgb(17, 17, 17);
-        position: absolute;
-        top: 20px;
-        right: 10px;
-        z-index: 1;
-        // font-size: 12px;
-        // padding-right: 7px;
-        // border: 1px solid white;
-        height: 40px;
-        width: 40px;
-        border-radius: 50px;
-        // text-align: right;
-    }
-    .searchBar {
-        transition: 700ms;
-        border-radius: 550px;
-        background: white;
-        padding-left: 10px;
-        position: absolute;
-        top: 18px;
-        width: 0;
-        margin-right: 20px;
-        left: -10%;
-        // transform: rotateY(180DEG)
-    }
-    .profile {
-        transition: 700ms;
-        color: white;
-        position: absolute;
-        top: 25px;
-        left: 10px;
-        z-index: 1;
-        // height: 40px;
-        // width: 40px;
-        border-radius: 40px;
-        font-size: 25px;
-        font-weight: bold;
-        padding-left: 10px;
-    }
-    .displayPic {
-        // margin-top: 8px;
-        width: 35px;
-        height: 35px;
-        border-radius: 50px;
-        object-fit: cover;
-        font-size: 3em;
-        color: black;
-        z-index: 1;
-    }
-    #imgOnMap {
-        position: absolute;
-        top: 25px;
-        left: 20px;
-    }
-    .options {
-        height: 130px;
-        width: 90%;
-        // box-shadow: 0 10px 15px grey;
-        border-radius: 5px;
-        transition: 700ms;
-        background: white;
-        position: absolute;
-        top: 60px;
-        left: 50%;
-        transform: translateX(-52.5%);
-        z-index: 100;
-        // display: flex;
-    }
-    .intro {
-        padding-left: 10px;
-        padding-top: 10px;
-        padding-right: 10px;
-    }
-    .statement {
-        font-size: 16px;
-        font-weight: bolder;
-        margin-top: 10px;
-        color: orange;
-        // text-shadow: 0 0 5px greenyellow
-    }
-    .finePrint {
-        font-size: 14px;
-        color: grey;
-    }
-    .myFlexBox {
-        position: absolute;
-        bottom: 10px;
-        padding-left: 10px;
-        display: flex;
-        width: 100%;
-    }
-    .selects {
-        border-radius: 5px;
-        height: 20px;
-        font-size: 70%;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-    .ionHeader {
-        height: 0px;
-        display: block;
-        animation: fadeIn 1s;
-    }
-    .theLabel {
-        padding: 5px;
-        width: 60%;
-    }
-    #list {
-        display: block;
-        animation: fadeIn 1s;
-    }
-    .listedCard {
-        box-shadow: 0 5px 5px rgba(128, 128, 128, 0.5);
-        border-radius: 5px;
-        transition: 500ms;
-        padding: 0;
-        margin-bottom: 20px;
-        height: 110px;
-    }
-    .item ion-thumbnail {
-        min-width: 110px;
-        min-height: 110px;
-        img {
-            max-width: 80px;
-            min-width: 110px;
-            height: 110px;
-            object-fit: cover;
-        }
-    }
-    
-    // #all {
-    //     margin: ;
-    // }
-    @keyframes fadeIn {
-        0% {
-            opacity: 0;
-        }
-        20% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
-    ion-col {
-        border: 2px solid red
-    }
+  }
+  ion-col {
+    border: 2px solid red;
+  }
 }

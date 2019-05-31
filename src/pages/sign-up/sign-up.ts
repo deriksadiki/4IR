@@ -31,7 +31,7 @@ export class SignUpPage {
       this.irhubProvider.Signup(email,password,username).then(() => {
         const alert = this.alertCtrl.create({
           // title: "No Name",
-          subTitle: "We have sent you a link on your email ,Please verify your email",
+          subTitle: "We have sent you a link on your email, Please verify your email",
           // cssClass : 'myAlert',
           buttons: [
             {

@@ -1,5 +1,5 @@
 <ion-header class="ionHeader">
-  <div class="theHead">
+  <div class="theHead" padding>
     <ion-title class="theTitle">
       <b>4IR HUB</b>
     </ion-title>
@@ -37,27 +37,12 @@
             Near Me
           </button>
         </div>
-        <!-- <ion-grid>
-          <ion-row>
-            <ion-col>Show Hubs</ion-col>
-            <ion-col align-self-end>
-              <button class="selects" id="all" ion-button color="{{ custom1 }}" (click)="all()">
-                All
-              </button>
-            </ion-col>
-            <ion-col>
-              <button class="selects" ion-button color="{{ custom2 }}" (click)="near()">
-                Near Me
-              </button>
-            </ion-col>
-          </ion-row>
-        </ion-grid> -->
       </ion-card>
     </div>
   </div>
 </ion-header>
 
-<ion-content>
+<ion-content (ionScroll)="scroll($event)">
   <ion-fab bottom right>
     <button ion-fab mini (click)="toggleMap()">
       <ion-icon name="{{toggleState}}"></ion-icon>
@@ -72,10 +57,6 @@
         <ion-option value="n64">n64</ion-option>
         <ion-option value="ps">ps</ion-option>
         <ion-option value="nes">nes</ion-option>
-        <!-- <ion-option value="theraphy">Cat4</ion-option>
-        <ion-option value="Psychiatric">Cat5</ion-option>
-        <ion-option value="social centre">Cat6</ion-option> -->
-        <!-- <ion-option value="Rehab">Cat7</ion-option> -->
       </ion-select>
     </ion-item>
     <img [src]="img" class="displayPic" id="imgOnMap" alt="" (click)="Userprofile()" />
@@ -87,12 +68,12 @@
   </div>
 
   <!-- to show list of organization -->
+  <ion-list>
+    <ion-item id="searched-items" *ngFor="let item of items" (click)="goToViewPage(item)">
+      {{item}}
+    </ion-item>
+  </ion-list>
   <div id="list" padding>
-    <ion-list>
-      <ion-item *ngFor="let item of items">
-        {{ item}}
-      </ion-item>
-    </ion-list>
 
     <div class="split"></div>
 
@@ -103,8 +84,6 @@
           <img class="image" src="../../assets/imgs/Defaults/default.png" />
         </ion-thumbnail>
         <h2>{{ a.orgName }}</h2>
-        <p>{{a.desc}}
-        </p>
         <div *ngIf="a.rating == 0; then loggedIn0">
         </div>
         <div *ngIf="a.rating == 1; then loggedIn1">
@@ -118,13 +97,13 @@
         <div *ngIf="a.rating == 5; then loggedIn5">
         </div>
         <!-- <ng-template #loggedIn0> -->
-          <p class="starRating">
-            <ion-icon name="star-outline"></ion-icon>
-            <ion-icon name="star-outline"></ion-icon>
-            <ion-icon name="star-outline"></ion-icon>
-            <ion-icon name="star-outline"></ion-icon>
-            <ion-icon name="star-outline"></ion-icon>
-          </p>
+        <p class="starRating">
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star-outline"></ion-icon>
+        </p>
         <!-- </ng-template> -->
         <ng-template #loggedIn1>
           <p class="starRating">
@@ -171,6 +150,11 @@
             <ion-icon name="star"></ion-icon>
           </p>
         </ng-template>
+
+        <p>
+          <ion-icon name="ios-wifi"></ion-icon>
+          <img src="../../assets/icon/notes.svg" id="cash" alt="">
+        </p>
         <button ion-button icon-only color="custom" clear item-end>
           <ion-icon name="arrow-forward"></ion-icon>
         </button>
@@ -185,8 +169,10 @@
         <img class="image" src="../../assets/imgs/Defaults/default.png" />
       </ion-thumbnail>
       <h2>{{ a.orgName }}</h2>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore accusamus eum dignissimos distinctio perferendis quisquam
-        tenetur culpa ea laboriosam nesciunt dolorem, aliquam voluptatibus fugit, atque inventore quasi, aspernatur blanditiis
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore accusamus eum dignissimos distinctio
+        perferendis quisquam
+        tenetur culpa ea laboriosam nesciunt dolorem, aliquam voluptatibus fugit, atque inventore quasi, aspernatur
+        blanditiis
         placeat.
       </p>
 
