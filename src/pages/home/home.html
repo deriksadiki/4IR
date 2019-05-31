@@ -20,8 +20,8 @@
       </div>
       <ion-card class="options">
         <div class="intro">
-          <p class="statement">
-            <ion-icon name="pin"></ion-icon> {{ location }}
+          <p id="statement">
+            <ion-icon name="pin" id="icon"></ion-icon> {{ userLocation}}
           </p>
           <i class="finePrint">
             4IR Hub uses your location to provide you with places near you.</i>
@@ -163,7 +163,7 @@
 
   </div>
 
-  <div *ngFor="let a of nearby">
+  <div *ngFor="let a of nearby" padding>
     <ion-item (click)="goToViewPage(a.orgName)" no-padding class="listedCard" no-lines *ngIf="showNearbyList">
       <ion-thumbnail item-start large>
         <img class="image" src="../../assets/imgs/Defaults/default.png" />

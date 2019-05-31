@@ -4,7 +4,7 @@ import { IRhubProvider } from '../../providers/i-rhub/i-rhub';
 import { SignInPage } from '../sign-in/sign-in';
 import { UserProfilePage } from '../user-profile/user-profile';
 import { ViewOrganizationInforPage } from '../view-organization-infor/view-organization-infor';
-import { Component, ViewChild, ElementRef } from '@angular/core'
+import { Component, ViewChild, ElementRef, style } from '@angular/core'
 import { Geolocation } from '@ionic-native/geolocation';
 
 declare var google;
@@ -343,6 +343,9 @@ export class HomePage {
   custom1 = "primary";
   custom2 = "inactive";
 
+  userLocation = "Searching for location" ;
+
+
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
@@ -369,7 +372,7 @@ export class HomePage {
         this.logInState = true;
         this.IRmethods.getProfile().then((data: any) => {
           console.log(data);
-          
+
           console.log(this.logInState);
           this.img = data;
         })
@@ -378,14 +381,10 @@ export class HomePage {
         this.img = "assets/imgs/default.png";
       }
     });
-    
+
   }
-  selectcategory(){
-    console.log(this.category);
-   this.map.setMap(null)
-  //  this.showMultipleMarker.marker.setMap(null);
-  }
-  checkVerification(){
+
+  checkVerification() {
     this.IRmethods.checkVerification().then((data: any) => {
       if (data == 0) {
         const alert = this.alertCtrl.create({
@@ -412,14 +411,24 @@ export class HomePage {
     });
     this.loading.present();
     setTimeout(() => {
+      document.getElementById("icon").style.color = "#ff6337";
       this.IRmethods.getUserLocation().then((data: any) => {
         console.log(data);
         console.log(data.coords.latitude);
         console.log(data.coords.longitude);
-
         this.lat = data.coords.latitude;
         this.lng = data.coords.longitude
         console.log(this.lat);
+
+
+        this.IRmethods.getLocation(this.lat, this.lng).then((data: any) => {
+          console.log(data);
+
+          this.userLocation = data
+
+        })
+        document.getElementById("icon").style.color = "#009975"
+        document.getElementById("statement").style.color = "#009975"
 
       }).catch(() => {
         console.log("show-map-error");
@@ -428,6 +437,9 @@ export class HomePage {
           zoom: 8,
           disableDefaultUI: true,
         }
+        document.getElementById("icon").style.color = "#c72c41";
+        document.getElementById("statement").style.color = "##c72c41"
+        this.userLocation = "Disabled"
         this.map = new google.maps.Map(this.mapRef.nativeElement, options);
 
       })
@@ -449,6 +461,8 @@ export class HomePage {
           this.IRmethods.getNearByOrganizations(radius, data).then((nearbyOrgs: any) => {
             console.log(nearbyOrgs);
             this.nearby = nearbyOrgs;
+
+            console.log(nearbyOrgs[0]);
 
             console.log(this.nearby);
           })
@@ -532,56 +546,6 @@ export class HomePage {
   }
 
 
-  getDirection() {
-    if (this.directionsDisplay != null) {
-      this.directionsDisplay.setMap(null);
-
-      console.log("directionDisplay has something");
-
-    } else {
-      console.log("directionDisplay has nothing");
-
-    }
-    let userCurrentLocation = new google.maps.LatLng(this.lat, this.lng);
-    let destination = new google.maps.LatLng(-26.2583, 27.9014);
-    this.directionsDisplay.setMap(this.map);
-    this.IRmethods.calculateAndDisplayRoute(userCurrentLocation, destination, this.directionsDisplay, this.directionsService)
-
-
-
-  }
-
-
-
-  // get Distance and Time 
-
-
-  getDistance() {
-    let userCurrentLocation = new google.maps.LatLng(this.lat, this.lng);
-    let destination = new google.maps.LatLng(-26.2583, 27.9014);
-    this.service.getDistanceMatrix(
-      {
-        origins: [userCurrentLocation],
-        destinations: [destination],
-        travelMode: 'DRIVING'
-      }, (response, status) => {
-        if (status == 'OK') {
-          var origins = response.originAddresses;
-          var destinations = response.destinationAddresses;
-
-          for (var i = 0; i < origins.length; i++) {
-            var results = response.rows[i].elements;
-            for (var j = 0; j < results.length; j++) {
-              var element = results[j];
-              console.log(element);
-
-            }
-          }
-        }
-      });
-
-  }
-
 
   // get all marker for all organisation
 
@@ -605,11 +569,7 @@ export class HomePage {
 
           console.log(this.orgArray[index]);
           console.log(index);
-
-
           this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
-
-
         });
 
         resolve();
@@ -810,10 +770,10 @@ export class HomePage {
       this.items = [];
     }
     console.log(this.items);
-    if(val == "" || val == " " || val == null){
+    if (val == "" || val == " " || val == null) {
       listContent.style.display = "block"
     }
-    else{
+    else {
       listContent.style.display = "none"
     }
 
@@ -840,60 +800,32 @@ export class HomePage {
     this.custom2 = "inactive";
   }
 
-  scroll(event) {
-    // console.log(event.scrollTop);
+  convertinCoordinate() {
 
-    var theCard = document.getElementsByClassName("options") as HTMLCollectionOf<HTMLElement>;
-    var nav = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
-    var searchBtn = document.getElementsByClassName("more") as HTMLCollectionOf<HTMLElement>;
-    var prof = document.getElementsByClassName("profile") as HTMLCollectionOf<HTMLElement>;
-    var barTitle = document.getElementsByClassName("theTitle") as HTMLCollectionOf<HTMLElement>;
-    var searchTxt = document.getElementsByClassName("searchBar") as HTMLCollectionOf<HTMLElement>;
-    var splitter = document.getElementsByClassName("split") as HTMLCollectionOf<HTMLElement>;
-    console.log(event.directionY);
-    if (event.directionY == "down") {
-
-      if (event.scrollTop >= 100) {
-        // console.log("hide card");
-
-        theCard[0].style.height = "50px";
-        theCard[0].style.top = "-65px";
-        theCard[0].style.opacity = "0";
-        splitter[0].style.height = "50px";
-        nav[0].style.height = "80px";
-
-
-        searchBtn[0].style.top = "0";
-
-        prof[0].style.top = "8px";
-
-        barTitle[0].style.top = "12px";
-
-        searchTxt[0].style.top = "5px";
-
-        // footBtn[0].style.top= "0";
-      }
-    }
-    else {
-      // console.log("show Card");
-      theCard[0].style.height = "130px";
-      theCard[0].style.top = "60px";
-      theCard[0].style.opacity = "1";
-
-      nav[0].style.height = "120px";
-
-      searchBtn[0].style.top = "20px";
-
-      prof[0].style.top = "25px";
-
-      barTitle[0].style.top = "25px";
-
-      searchTxt[0].style.top = "18px";
-
-      splitter[0].style.height = "190px";
-
-    }
-    console.log(event.scrollTop);
+    console.log(this.lat);
+    this.IRmethods.getLocation(this.lat, this.lng).then((data: any) => {
+      console.log(data);
+  this.userLocation = "Soweto"
+    })
 
   }
+
+  selectcategory(){
+    console.log("clicked");
+    console.log(this.category);
+    const options = {
+      center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
+      zoom: 8,
+      disableDefaultUI: true,
+      styles: this.mapStyles
+
+    }
+    this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+    for (let index = 0; index < this.orgArray.length; index++) {
+          
+      
+    }
+    
+  }
+
 }

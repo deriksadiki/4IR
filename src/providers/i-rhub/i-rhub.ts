@@ -5,6 +5,8 @@ import moment from 'moment';
 import { Geolocation } from '@ionic-native/geolocation';
 
 declare var firebase;
+
+declare var google ;
 /*
   Generated class for the IRhubProvider provider.
   See https://angular.io/guide/dependency-injection for more info on providers
@@ -27,6 +29,7 @@ export class IRhubProvider {
   auth = firebase.auth();
   nearByOrg;
   categoryArr;
+  address ;
   constructor(public ngzone: NgZone, public alertCtrl: AlertController,
     public loadingCtrl: LoadingController, public geo: Geolocation) {
 
@@ -820,4 +823,25 @@ export class IRhubProvider {
   }
 
 
+  getLocation(lat , lng){
+   return new Promise((resolve, reject)=>{
+      setTimeout(() => {
+        var geocoder = new google.maps.Geocoder;
+        var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
+          geocoder.geocode({'location': latlng}, function(results, status) {
+          var address =  results[0].address_components[3].short_name ;
+          console.log(address);
+          console.log(results[0]);
+          resolve(address)
+      }, 4000);
+     
+        
+        
+      
+        
+       })
+
+      
+    })
+  }
 }

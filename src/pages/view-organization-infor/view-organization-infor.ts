@@ -5,7 +5,7 @@ import { CallNumber } from '@ionic-native/call-number';
 import { IRhubProvider } from '../../providers/i-rhub/i-rhub'
 import { SignInPage } from '../sign-in/sign-in';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
-
+import { LoadingController } from 'ionic-angular';
 
 declare var google;
 /**
@@ -51,8 +51,8 @@ export class ViewOrganizationInforPage implements OnInit {
   geocoder;
 
   tabs;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator) {
-    this.initMap()
+  constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController) {
+    //this.initMap()
     this.tabs = "gallery";
     this.orgArray.push(this.navParams.get('orgObject'));
     console.log(this.navParams.get('orgObject'))
@@ -67,7 +67,7 @@ export class ViewOrganizationInforPage implements OnInit {
     this.destlong = this.orgArray[0].long
 
 
-    this.initMap()
+    //this.initMap()
 
   }
 
@@ -321,6 +321,11 @@ export class ViewOrganizationInforPage implements OnInit {
 
 
     return new Promise((resolve, reject) => {
+      const loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 3000
+      });
+      loader.present();
 
       setTimeout(() => {
         const options = {
@@ -441,11 +446,7 @@ export class ViewOrganizationInforPage implements OnInit {
 
   googleMap(){
     this.orgArray[0].address ;
-
-    console.log(this.orgArray[0].address );
-    
-
-    this.launchNavigator.navigate("2127 Chris Hani Rd, Klipspruit, Soweto, 1809") 
+  this.launchNavigator.navigate("2127 Chris Hani Rd, Klipspruit, Soweto, 1809") 
   .then(
     success => console.log('Launched navigator'),
     error => console.log('Error launching navigator', error)

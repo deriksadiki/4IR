@@ -161,7 +161,7 @@ page-home {
     padding-top: 10px;
     padding-right: 10px;
   }
-  .statement {
+  #statement {
     font-size: 16px;
     font-weight: bolder;
     margin-top: 10px;
@@ -241,5 +241,9 @@ page-home {
   }
   ion-col {
     border: 2px solid red;
+  }
+
+  #icon{
+      color:orange;
   }
 }
