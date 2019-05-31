@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams,AlertController,ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,AlertController,ToastController,LoadingController  } from 'ionic-angular';
 import { IRhubProvider } from '../../providers/i-rhub/i-rhub'
+import { UserProfilePage } from '../user-profile/user-profile';
 /**
  * Generated class for the EditUserProfilePage page.
  *
@@ -22,7 +23,7 @@ export class EditUserProfilePage implements OnInit{
   address;
   cell
   imageArr = new Array();
-  constructor(public navCtrl: NavController, public navParams: NavParams,public irhubProvider:IRhubProvider,public alertCtrl:AlertController,public toastCtrl:ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public irhubProvider:IRhubProvider,public alertCtrl:AlertController,public toastCtrl:ToastController,public loadingCtrl: LoadingController) {
     this.retreivePics1()
   }
 
@@ -39,32 +40,44 @@ export class EditUserProfilePage implements OnInit{
       this.email = details.email;
       // this.address = details.address;;
       this.downloadurl = details.downloadurl;
+      this.cell = details.cell;
       // this.tempImg = details.downloadurl;
   
     })
   }
 
   EditPrfile(){
+    let loading = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'Please wait...',
+      duration: 4000000
+    });
+    loading.present();
     this.irhubProvider.uploadProfilePic(this.downloadurl, this.name).then(data => {
       console.log('added to db');
       this.irhubProvider.update(this.name, this.email, this.downloadurl,this.cell).then((data) => {
         this.imageArr.push(data);
       });
       console.log(this.imageArr);
+      loading.dismiss();
+      // this.viewCtrl.dismiss();
       const toast = this.toastCtrl.create({
         message: 'Profile successfully updated!',
         duration: 3000
       });
       toast.present();
+      this.navCtrl.pop();
 
     },
       Error => {
+        loading.dismiss();
         const alert = this.alertCtrl.create({
           subTitle: Error.message,
           buttons: ['OK']
         });
         alert.present();
       })
+      // this.viewCtrl.dismiss()
   }
 
   getUid1() {
@@ -106,8 +119,8 @@ export class EditUserProfilePage implements OnInit{
 
         if (event.target.files[0].size > 1500000) {
           let alert = this.alertCtrl.create({
-            title: "Oh no!",
-            subTitle: "your photo is too large, please choose a photo with 1.5MB or less.",
+            title: "Photo too large",
+            subTitle: "Please choose a photo with 1.5MB or less.",
             buttons: ['OK']
           });
           alert.present();

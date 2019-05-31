@@ -1,93 +1,99 @@
 page-edit-user-profile {
-    .theCard{
-        padding-top: 70px;
-        width: 100%;
-      }
-    .btnActions {
-        height: 30px;
-        width: 230px;
-        border-radius: 50px;
-        margin: 0 auto;
-        background: radial-gradient(color($colors, primary))
-      }
+  .theCard {
+    padding-top: 70px;
+    width: 100%;
+    animation: 1s fadeInUp;
+  }
+  .btnActions {
+    height: 30px;
+    width: 230px;
+    border-radius: 50px;
+    margin: 0 auto;
+    background: radial-gradient(color($colors, primary));
+  }
 
-      .user-input {
-        background: whitesmoke;
-        border-radius: 50px;
-        height: 40px;
-        width: 80%;
-        margin-bottom: 20px;
-        padding-left: 10px;
-        padding-right: 10px;
-        // border-bottom: 2px solid #dcc050;
-      }
-      .topPart {
-        width: 100%;
-        height: 25%;
-        // border: 2px solid red;
-        border-bottom-right-radius: 50%;
-        border-bottom-left-radius: 50%;
-        text-align: center;
-        // background: whitesmoke;
-        // box-shadow: 0 0 10px rgba(0, 0, 0, 0.233);
-        #DP {
-          width: 180px;
-          height: 180px;
-          border-radius: 90px;
-          transform: translateY(45px);
-          box-shadow: 0 10px 10px rgba(0, 0, 0, 0.103);
-        }
-      }
+  .user-input {
+    background: whitesmoke;
+    border-radius: 50px;
+    height: 40px;
+    width: 80%;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    // border-bottom: 2px solid #dcc050;
+  }
+  .topPart {
+    width: 100%;
+    height: 25%;
+    // border: 2px solid red;
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+    text-align: center;
+    // background: whitesmoke;
+    // box-shadow: 0 0 10px rgba(0, 0, 0, 0.233);
+    #DP {
+      width: 180px;
+      height: 180px;
+      border-radius: 90px;
+      transform: translateY(45px);
+      box-shadow: 0 10px 10px rgba(0, 0, 0, 0.103);
+    }
+  }
 
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.205);
-      }
-      ion-input{
-          margin-left:10%;
-      }
-      .theFab{
-        // box-shadow: 0 0 10px rgba(0, 0, 0, 0.304);
-        background-color: white;
-    }
-    .round{
-        width: 180px;
-        height: 180px;
-        border-radius: 100px;
-        // border: white solid 2px;
-        margin: 0 auto;
-        box-shadow: 0 2px 15px grey;
-        position: relative;
-        top: 50px;
-    }
-    .picture{
-        width: 180px;
-        height: 180px;
-        border-radius: 100px;
-        margin: 0 auto;
-        object-fit: cover;
-    }
-    .fileChooser{
-        position: relative;
-        top: 80px;
-        font-size: 1.5em;
-        position: relative;
-    }
-    .Add{
-        color: #04592a;
-        // text-shadow: 0 0 5px white;
-        font-size: 2.2em;
-        position: relative;
-        bottom: 70px;
-        left: 60%;
-        text-shadow: 0 0 0 black;
-    }
-    #file{
-        display: none;
-    }
-
-   
-} 
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.205);
+  }
+  ion-input {
+    margin: 0 auto;
+  }
+  .theFab {
+    // box-shadow: 0 0 10px rgba(0, 0, 0, 0.304);
+    background-color: white;
+  }
+  .round {
+    width: 150px;
+    height: 150px;
+    border-radius: 100px;
+    // border: white solid 2px;
+    margin: 0 auto;
+    box-shadow: 0 2px 15px grey;
+    position: relative;
+    top: 50px;
+    animation: 1s fadeInUp;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: capitalize;
+    height: 30px;
+  }
+  .picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 100px;
+    margin: 0 auto;
+    object-fit: cover;
+  }
+  .fileChooser {
+    position: relative;
+    top: 80px;
+    font-size: 1.5em;
+    position: relative;
+  }
+  .Add {
+    color: #04592a;
+    // text-shadow: 0 0 5px white;
+    font-size: 2.2em;
+    position: relative;
+    bottom: 70px;
+    left: 60%;
+    text-shadow: 0 0 0 black;
+  }
+  #file {
+    display: none;
+  }
+}

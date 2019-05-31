@@ -9,7 +9,6 @@ declare var firebase;
 declare var google ;
 /*
   Generated class for the IRhubProvider provider.
-
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
@@ -30,6 +29,7 @@ export class IRhubProvider {
   auth = firebase.auth();
   nearByOrg;
   categoryArr;
+  address ;
   constructor(public ngzone: NgZone, public alertCtrl: AlertController,
     public loadingCtrl: LoadingController, public geo: Geolocation) {
 
@@ -57,51 +57,18 @@ export class IRhubProvider {
     })
   }
 
-  forgotpassword(email) {
-    return new Promise((resolve, reject) => {
-      this.ngzone.run(() => {
-        if (email == null || email == undefined) {
-          const alert = this.alertCtrl.create({
-            subTitle: 'Please enter your Email.',
-            buttons: ['OK']
-          });
-          alert.present();
-        }
-        else if (email != null || email != undefined) {
-          firebase.auth().sendPasswordResetEmail(email).then(() => {
-            const alert = this.alertCtrl.create({
-              title: 'Password request Sent',
-              subTitle: "We've sent you and email with a reset link, go to your email to recover your account.",
-              buttons: ['OK']
+  forgetPassword(email){
 
-            });
-            alert.present();
-            resolve()
-          }, Error => {
-            const alert = this.alertCtrl.create({
-              subTitle: Error.message,
-              buttons: ['OK']
-            });
-            alert.present();
-            resolve()
-          });
-        }
-      })
-    }).catch((error) => {
-      const alert = this.alertCtrl.create({
-        subTitle: error.message,
-        buttons: [
-          {
-            text: 'ok',
-            handler: data => {
-              console.log('Cancel clicked');
-            }
-          }
-        ]
-      });
-      alert.present();
+    return new Promise((resolve, reject)=>{
+      firebase.auth().sendPasswordResetEmail(email) .then(()=> {
+        resolve();
+        } , (error)=>{
+          reject(error)
     })
-  }
+   
+   })
+   
+   }
 
   Signup(email, password, name) {
     return new Promise((resolve, reject) => {
@@ -114,7 +81,7 @@ export class IRhubProvider {
         loading.present();
         return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
           var user = firebase.auth().currentUser
-          firebase.database().ref("profiles/" + user.uid).set({
+          firebase.database().ref("Users/App_Users/" + user.uid).set({
             name: name,
             email: email,
             downloadurl: "../../assets/imgs/Defaults/default.jpg",
@@ -857,16 +824,24 @@ export class IRhubProvider {
 
 
   getLocation(lat , lng){
-    new Promise((resolve, reject)=>{
-      
-      var geocoder = new google.maps.Geocoder;
-      var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
-      geocoder.geocode({'location': latlng}, function(results, status) {
-
-        console.log(results);
+   return new Promise((resolve, reject)=>{
+      setTimeout(() => {
+        var geocoder = new google.maps.Geocoder;
+        var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
+          geocoder.geocode({'location': latlng}, function(results, status) {
+          var address =  results[0].address_components[3].short_name ;
+          console.log(address);
+          console.log(results[0]);
+          resolve(address)
+      }, 4000);
+     
         
-    resolve(results)
-    })
+        
+      
+        
+       })
+
+      
     })
   }
 }
