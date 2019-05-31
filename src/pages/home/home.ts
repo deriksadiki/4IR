@@ -4,7 +4,7 @@ import { IRhubProvider } from '../../providers/i-rhub/i-rhub';
 import { SignInPage } from '../sign-in/sign-in';
 import { UserProfilePage } from '../user-profile/user-profile';
 import { ViewOrganizationInforPage } from '../view-organization-infor/view-organization-infor';
-import { Component, ViewChild, ElementRef } from '@angular/core'
+import { Component, ViewChild, ElementRef, style } from '@angular/core'
 import { Geolocation } from '@ionic-native/geolocation';
 
 declare var google;
@@ -118,6 +118,7 @@ export class HomePage {
   toggleState = "map";
   showNearbyList:boolean =false ;
   showAllOrganisation:boolean =true ;
+  iconAdress= "Stil searching for Address"
 
 
  mapStyles =[
@@ -341,7 +342,7 @@ export class HomePage {
   service;
   geocoder;
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
-
+  
     this.IRmethods.getAllOrganizations().then((data: any) => {
       this.orgArray = data;
 
@@ -380,16 +381,20 @@ export class HomePage {
 
 
   ionViewWillEnter() {
-
+    
     setTimeout(() => {
+      document.getElementById("icon").style.color="#ff6337";
       this.IRmethods.getUserLocation().then((data: any) => {
         console.log(data);
         console.log(data.coords.latitude);
         console.log(data.coords.longitude);
-  
+        document.getElementById("statement").style.color="#009975"
+        document.getElementById("icon").style.color="#009975";
         this.lat = data.coords.latitude;
         this.lng = data.coords.longitude
         console.log(this.lat);
+
+        this.iconAdress= "Soweto"
   
       }).catch(()=>{
         console.log("show-map-error");
@@ -398,13 +403,17 @@ export class HomePage {
           zoom: 8,
           disableDefaultUI: true,
         }
+        document.getElementById("icon").style.color="#c72c41";
+        document.getElementById("statement").style.color="##c72c41"
         this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+
+        this.iconAdress= "No Address" ;
   
       })
       
     }, 5000);
 
-
+    
 
     setTimeout(() => {
       this.IRmethods.getCurrentLocation(this.lat, this.lng).then((radius: any) => {
@@ -420,6 +429,8 @@ export class HomePage {
             console.log(nearbyOrgs);
             this.nearby =nearbyOrgs ;
 
+            console.log(nearbyOrgs[0]);
+            
             console.log(this.nearby);
            })
         })
@@ -427,7 +438,7 @@ export class HomePage {
 
     }, 8000);
 
-
+    
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsRenderer;
@@ -438,6 +449,8 @@ export class HomePage {
      console.log("showMap");
      
    }) ;
+
+   this.convertinCoordinate()
 
   }
 
@@ -803,6 +816,38 @@ export class HomePage {
   all(){
     this.showNearbyList =false;
     this. showAllOrganisation =true;
+  }
+
+ convertinCoordinate( ){
+  
+console.log(this.lat);
+
+    
+    
+  
+      
+
+      var geocoder = new google.maps.Geocoder;
+      var latlng = {lat: parseFloat(this.lat), lng: parseFloat(this.lng)};
+      geocoder.geocode({'location': latlng}, function(results, status) {
+
+        console.log(results);
+        
+      // if (status === 'OK') {
+      //   if (results[0]) {
+      //     console.log(results);
+          
+      //   } else {
+      //     window.alert('No results found');
+      //   }
+      // } else {
+      //  console.log(status);
+       
+      // }
+    })
+      
+    
+    
   }
 
 }

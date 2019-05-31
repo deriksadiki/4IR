@@ -5,6 +5,8 @@ import moment from 'moment';
 import { Geolocation } from '@ionic-native/geolocation';
 
 declare var firebase;
+
+declare var google ;
 /*
   Generated class for the IRhubProvider provider.
 
@@ -854,4 +856,17 @@ export class IRhubProvider {
   }
 
 
+  getLocation(lat , lng){
+    new Promise((resolve, reject)=>{
+      
+      var geocoder = new google.maps.Geocoder;
+      var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
+      geocoder.geocode({'location': latlng}, function(results, status) {
+
+        console.log(results);
+        
+    resolve(results)
+    })
+    })
+  }
 }

@@ -6,10 +6,10 @@
     <div class="bottomHalf" padding>
       <p>Fill in the form to get signed up.</p>
       <div class="theCard">
-          <ion-input placeholder="Name" type="text" class="user-input" id="anim1"></ion-input>
-          <ion-input placeholder="Email" type="text" class="user-input" id="anim2"></ion-input>
-          <ion-input placeholder="Password" type="password" class="user-input" id="anim4"></ion-input>
-          <button ion-button block class="btnActions" id="anim5">SIGN UP</button>
+          <ion-input placeholder="Name" type="text" #username class="user-input" id="anim1"></ion-input>
+          <ion-input placeholder="Email" type="text"   #email class="user-input" id="anim2"></ion-input>
+          <ion-input placeholder="Password" type="password"  #password class="user-input" id="anim4"></ion-input>
+          <button ion-button block class="btnActions" id="anim5" (click)="SignUp(username.value,email.value,password.value)">SIGN UP</button>
     
       </div>
     </div>

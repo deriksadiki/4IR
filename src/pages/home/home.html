@@ -20,8 +20,8 @@
       </div>
       <ion-card class="options">
         <div class="intro">
-          <p class="statement">
-            <ion-icon name="pin"></ion-icon> {{ location }}
+          <p id="statement">
+            <ion-icon name="pin" id="icon"></ion-icon> {{ iconAdress}}
           </p>
           <i class="finePrint">
             4IR Hub uses your location to provide you with places near you.</i>
@@ -197,5 +197,5 @@
     </ion-item>
   </div>
 
-
+<button ion-button  (click)="convertinCoordinate()">getdirection</button>
 </ion-content>
