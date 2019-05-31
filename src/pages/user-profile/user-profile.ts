@@ -24,6 +24,7 @@ export class UserProfilePage {
   detailArray = new Array();
   totrating = 0;
   ratings = new Array();
+  popState = 0;
   constructor(public navCtrl: NavController, public navParams: NavParams, public irhubProvider: IRhubProvider) {
   }
 
@@ -39,6 +40,8 @@ export class UserProfilePage {
       this.detailArray.length = 0;
       console.log(details)
       this.detailArray.push(details);
+      console.log(details);
+      
     });
 
     this.irhubProvider.getTotalRatings().then((data:any) =>{
@@ -56,6 +59,7 @@ export class UserProfilePage {
   }
 
   logOut() {
+    this.bodyClick()
     this.irhubProvider.logout().then(() => {
       this.navCtrl.push(StartPage, { out: 'logout' });
     }, (error) => {
@@ -63,7 +67,8 @@ export class UserProfilePage {
     })
   }
   GoToEditProfile() {
-    this.navCtrl.push(EditUserProfilePage)
+    this.navCtrl.push(EditUserProfilePage);
+    this.bodyClick()
   }
   m = 0;
 
@@ -85,6 +90,49 @@ export class UserProfilePage {
   }
   viewMore(ind){
     this.navCtrl.push(ViewOrganizationInforPage, { orgObject:this.ratings[ind] });
+  }
+
+  
+  showPopover(){
+    this.popState =1
+    console.log(this.popState);
+    var thePop = document.getElementsByClassName("popover") as HTMLCollectionOf <HTMLElement>;
+    let theState = this.popState;
+    var setBtn = document.getElementsByClassName("settings") as HTMLCollectionOf <HTMLElement>;
+
+    if (theState == 1){
+      thePop[0].style.right = "0";
+      setBtn[0].style.right = "-50px";
+      thePop[0].style.zIndex = "10000000";
+    }
+    else{
+      thePop[0].style.right = "-50%";
+      setBtn[0].style.right = "10px";
+    }
+  }
+  removePopper(){
+    this.popState = 0;
+    var setBtn = document.getElementsByClassName("settings") as HTMLCollectionOf <HTMLElement>;
+    var thePop = document.getElementsByClassName("popover") as HTMLCollectionOf <HTMLElement>;
+    let theState = this.popState;
+    if (theState == 1){
+      thePop[0].style.right = "0";
+      thePop[0].style.opacity = "0";
+      thePop[0].style.zIndex = "10000000";
+      setBtn[0].style.right = "-50px";
+    }
+    else{
+      thePop[0].style.right = "-50%";
+      thePop[0].style.opacity = "1";
+      thePop[0].style.zIndex = "-1000";
+      setBtn[0].style.right = "-10px";
+      
+    }
+    console.log(this.popState);
+    
+  }
+  bodyClick(){
+    this.removePopper()
   }
 
 }
