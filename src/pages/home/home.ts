@@ -820,6 +820,7 @@ export class HomePage {
 
 
   near() {
+    // var nearOrgs = document.getElementById("filteredNearBy");
     console.log("clicked");
     console.log(this.nearby);
 
@@ -827,6 +828,7 @@ export class HomePage {
     this.showAllOrganisation = false;
     this.custom1 = "inactive";
     this.custom2 = "primary";
+    // nearOrgs.style.display = "block";
   }
 
 
@@ -852,7 +854,7 @@ export class HomePage {
     console.log(event.directionY);
     if (event.directionY == "down") {
 
-      if (event.scrollTop >= 150) {
+      // if (event.scrollTop > 250) {
         // console.log("hide card");
 
         theCard[0].style.height = "50px";
@@ -871,7 +873,7 @@ export class HomePage {
         searchTxt[0].style.top = "5px";
 
         // footBtn[0].style.top= "0";
-      }
+      // }
     }
     else {
       // console.log("show Card");

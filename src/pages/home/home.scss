@@ -135,6 +135,9 @@ page-home {
     top: 25px;
     left: 20px;
   }
+  #filteredNearBy{
+    display: none;
+  }
   #searched-items{
     animation:  1s fadeIn;
   }
@@ -213,6 +216,7 @@ page-home {
     padding: 0;
     margin-bottom: 20px;
     height: 80px;
+    animation: 1s fadeIn;
   }
   .item ion-thumbnail {
     min-width: 80px;
