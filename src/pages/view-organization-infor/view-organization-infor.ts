@@ -445,7 +445,7 @@ export class ViewOrganizationInforPage implements OnInit {
   }
 
   googleMap(){
-    this.orgArray[0].address ;
+   
   this.launchNavigator.navigate("2127 Chris Hani Rd, Klipspruit, Soweto, 1809") 
   .then(
     success => console.log('Launched navigator'),

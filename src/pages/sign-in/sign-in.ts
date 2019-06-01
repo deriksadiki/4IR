@@ -81,7 +81,7 @@ export class SignInPage {
           // cssClass: 'myAlert',
           inputs: [
             {
-              name: 'title',
+              name: 'email',
               placeholder: 'Your email address'
             },
           ],
@@ -97,6 +97,16 @@ export class SignInPage {
               text: 'Send',
               handler: data => {
                 console.log('Saved clicked');
+
+                this.irhubProvider.forgetPassword(data.email).then(()=>{
+                  console.log("forgot password works");
+                  const alert = this.alertCtrl.create({
+                    title: 'Confirmation',
+                    subTitle: "Please check your email to reset your password",
+                    buttons: ['OK']
+                  });
+                  alert.present();
+                })
               }
             }
           ],

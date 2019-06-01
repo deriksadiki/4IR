@@ -343,8 +343,10 @@ export class HomePage {
   custom1 = "primary";
   custom2 = "inactive";
 
-  userLocation = "Searching for location" ;
-  category ;
+  userLocation = "Searching for location";
+  category;
+
+  contactsValidation ;
 
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
 
@@ -417,17 +419,10 @@ export class HomePage {
         this.lng = data.coords.longitude
         console.log(this.lat);
 
-
         this.IRmethods.getLocation(this.lat, this.lng).then((data: any) => {
           console.log(data);
-
           this.userLocation = data
-
         })
-
-
-
-
         document.getElementById("icon").style.color = "#009975"
         document.getElementById("statement").style.color = "#009975"
 
@@ -807,27 +802,52 @@ export class HomePage {
     console.log(this.lat);
     this.IRmethods.getLocation(this.lat, this.lng).then((data: any) => {
       console.log(data);
-  this.userLocation = "Soweto"
+      this.userLocation = "Soweto"
     })
 
   }
 
-  selectcategory(){
-    console.log("clicked");
-    console.log(this.category);
-    const options = {
-      center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
-      zoom: 8,
-      disableDefaultUI: true,
-      styles: this.mapStyles
+  selectcategory() {
 
-    }
-    this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-    for (let index = 0; index < this.orgArray.length; index++) {
-          
-      
-    }
-    
+    return new Promise((resolve, reject) => {
+
+      const options = {
+        center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
+        zoom: 8,
+        disableDefaultUI: true,
+        styles: this.mapStyles
+      }
+      this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+      // adding user marker to the map 
+      this.marker = new google.maps.Marker({
+        map: this.map,
+        zoom: 10,
+
+        position: this.map.getCenter()
+        //animation: google.maps.Animation.DROP,
+      });
+
+
+      for (let index = 0; index < this.orgArray.length; index++) {
+
+          if(this.category == this.orgArray[index].category){
+            console.log(this.orgArray[index]);
+            this.showMultipleMarker = new google.maps.Marker({
+              map: this.map,
+              //  icon: this.icon,
+              position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
+              label: name,
+              zoom: 8,
+            });
+            
+          }
+      }
+
+    })
+
+
+
   }
 
+   
 }

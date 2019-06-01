@@ -835,11 +835,7 @@ export class IRhubProvider {
           resolve(address)
       }, 4000);
      
-        
-        
-      
-        
-       })
+         })
 
       
     })
