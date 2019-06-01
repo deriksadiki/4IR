@@ -8,6 +8,7 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
 import { LoadingController } from 'ionic-angular';
 
 declare var google;
+declare var firebase
 /**
  * Generated class for the ViewOrganizationInforPage page.
  *
@@ -24,6 +25,7 @@ export class ViewOrganizationInforPage implements OnInit {
   @ViewChild('map') mapRef: ElementRef;
   orgArray = new Array();
   commentArr = new Array();
+  detailArray = new Array();
   comments;
   imageKey;
   map;
@@ -49,7 +51,8 @@ export class ViewOrganizationInforPage implements OnInit {
   directionsDisplay;
   service;
   geocoder;
-
+  username;
+  url;
   tabs;
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController) {
     //this.initMap()
@@ -68,6 +71,23 @@ export class ViewOrganizationInforPage implements OnInit {
 
 
     //this.initMap()
+
+    let userID = firebase.auth().currentUser;
+    firebase.database().ref("Users/" + "/" + "App_Users/" + userID.uid).on('value', (data: any) => {
+      let details = data.val();
+      this.detailArray.length = 0;
+      console.log(details)
+      this.detailArray.push(details);
+      console.log(details);
+
+
+      this.username = this.detailArray[0].name;
+      this.url = this.detailArray[0].downloadurl
+
+      console.log(this.username)
+      console.log(this.url)
+      
+    });
 
   }
 
@@ -161,7 +181,7 @@ export class ViewOrganizationInforPage implements OnInit {
                 text: 'Comment',
                 handler: data => {
                   console.log('Saved clicked' + data.comments);
-                  this.irhubProvider.comments(data.comments, this.imageKey, num).then((data) => {
+                  this.irhubProvider.comments(data.comments, this.imageKey, num,this.url,this.username).then((data) => {
                     this.irhubProvider.viewComments(this.comments, this.imageKey).then((data: any) => {
                       var y = this.orgArray[0].avg + 1;
                       var x = ((num - this.orgArray[0].rating) / y);
