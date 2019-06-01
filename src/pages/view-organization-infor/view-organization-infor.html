@@ -84,20 +84,27 @@
                         <img id="emptyIMG" src="../../assets/empty.jfif">
                         <p id="lie">There are no uploads avaliable yet .....</p>
                     </div> -->
-                    <ion-list>
-                        <ion-card>
-                            <ion-item>
-                                <h2> Unlimited WiFi</h2>
-                                <ion-note>
-                                    R200.00
-                                </ion-note>
-                            </ion-item>
-                            <ion-card-content>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. A, soluta.
-                                </p>
-                            </ion-card-content>
-                        </ion-card>
-                    </ion-list>
+                  
+                        <h2> {{wifiRange1}}</h2>
+                  
+                   
+                    <div  *ngFor="let a of services"> 
+                        <ion-list>
+                            <ion-card>
+                                <ion-item>
+                                  
+                                    <ion-note>
+                                        R200.00
+                                    </ion-note>
+                                </ion-item>
+                                <ion-card-content>
+                                    <p>{{a}}
+                                    </p>
+                                </ion-card-content>
+                            </ion-card>
+                        </ion-list>
+                    </div>
+                
                 </div>
 
                 <ion-list *ngSwitchCase="'reviews'">

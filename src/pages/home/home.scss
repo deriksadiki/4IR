@@ -225,9 +225,10 @@ page-home {
     }
   }
 
-  // #all {
-  //     margin: ;
-  // }
+  #all {
+      width: 91%;
+      margin: 20px auto;
+  }
   @keyframes fadeIn {
     0% {
       opacity: 0;

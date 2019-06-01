@@ -84,7 +84,7 @@ export class IRhubProvider {
           firebase.database().ref("Users/App_Users/" + user.uid).set({
             name: name,
             email: email,
-            downloadurl: "../../assets/imgs/Defaults/default.jpg",
+            downloadurl: "../../assets/imgs/Defaults/default.jfif",
             cell: ""
           })
           var user = firebase.auth().currentUser;
@@ -165,7 +165,11 @@ export class IRhubProvider {
                 img: details[keys[x]].downloadurl,
                 desc: details[keys[x]].desc,
                 category: details[keys[x]].category,
-                id: keys[x]
+                id: keys[x],
+                wifiRange:details[keys[x]].wifiRange,
+                wifi:details[keys[x]].wifi,
+                service:details[keys[x]].service,
+                website:details[keys[x]].website
               }
               this.storeOrgNames(details[keys[x]].name);
               this.orgArray.push(orgObject)
