@@ -388,10 +388,10 @@ export class HomePage {
     this.IRmethods.checkVerification().then((data: any) => {
       if (data == 0) {
         const alert = this.alertCtrl.create({
+          cssClass: "myAlert",
           // title: "No Password",
           subTitle: "We have sent you a verification mail, Please activate your account with the link in the mail",
           buttons: ['OK'],
-          cssClass: 'myAlert',
         });
         // loadingCtrl.dismiss()
         alert.present();
@@ -584,6 +584,7 @@ export class HomePage {
     this.IRmethods.checkAuthState().then(data => {
       if (data == false) {
         let alert = this.alertCtrl.create({
+          cssClass: "myAlert",
           subTitle: 'You have to sign in before you can view your profile, would you like to sign in now?',
           // cssClass: 'myAlert',
           buttons: [
@@ -691,6 +692,7 @@ export class HomePage {
     this.IRmethods.checkAuthState().then(data => {
       if (data == false) {
         let alert = this.alertCtrl.create({
+          cssClass: "myAlert",
           subTitle: 'You have to sign in before you can view your profile, would you like to sign in now?',
           // cssClass: 'myAlert',
           buttons: [

@@ -217,6 +217,7 @@ export class ViewOrganizationInforPage implements OnInit {
         }
         else if (this.rateState == true) {
           let alert = this.alertCtrl.create({
+            cssClass: "myAlert",
             title: 'Oops!',
             subTitle: 'You cannot rate more than once',
             buttons: ['Ok']
@@ -226,6 +227,7 @@ export class ViewOrganizationInforPage implements OnInit {
       }
       else {
         let alert = this.alertCtrl.create({
+          cssClass: "myAlert",
           title: '',
           subTitle: 'You have to sign in before you can rate this organistion, would you like to sign in now?',
           buttons: [
@@ -243,7 +245,6 @@ export class ViewOrganizationInforPage implements OnInit {
               }
             }
           ],
-          cssClass: 'myAlert',
         });
         alert.present();
       }
