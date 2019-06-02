@@ -26,8 +26,9 @@
         </button>
     </ion-fab> -->
     <div class="cover">
-        <img id="myLogo" src="../../assets/imgs/Defaults/default.png" alt="">
-        <img id="myCover" src="../../assets/imgs/Defaults/default.png" alt="">
+        <img id="myLogo" src="{{i.logo}}" alt="">
+        <img id="myCover" src="{{i.img}}" alt="">     
+        <h2> {{wifiRange1}}</h2>
     </div>
     <div class="details">
         <div class="orgName">
@@ -85,23 +86,22 @@
                         <p id="lie">There are no uploads avaliable yet .....</p>
                     </div> -->
                   
-                        <h2> {{wifiRange1}}</h2>
                   
                    
                     <div  *ngFor="let a of services"> 
                         <ion-list>
-                            <ion-card>
-                                <ion-item>
+                           <p>{{a}}</p>
+                                <!-- <ion-item>
                                   
-                                    <ion-note>
+                                    <ion-note class="price">
                                         R200.00
                                     </ion-note>
                                 </ion-item>
                                 <ion-card-content>
                                     <p>{{a}}
                                     </p>
-                                </ion-card-content>
-                            </ion-card>
+                                </ion-card-content> -->
+                          
                         </ion-list>
                     </div>
                 

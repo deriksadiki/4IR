@@ -342,7 +342,7 @@ export class HomePage {
   geocoder;
   custom1 = "primary";
   custom2 = "inactive";
-
+  pic
   userLocation = "Searching for location" ;
 
 
@@ -350,14 +350,13 @@ export class HomePage {
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
       this.orgArray = data;
-
       console.log(this.orgArray);
-      setTimeout(() => {
+      // setTimeout(() => {
         var names = this.IRmethods.getOrgNames()
         console.log(names);
         this.storeOrgNames(names)
-        this.loading.dismiss()
-      }, 2500);
+        // this.loading.dismiss()
+      // }, 2500);
     })
 
 
@@ -405,11 +404,11 @@ export class HomePage {
 
 
   ionViewWillEnter() {
-    this.loading = this.loadingCtrl.create({
-      spinner: 'bubbles',
-      content: 'Please wait...',
-    });
-    this.loading.present();
+    // this.loading = this.loadingCtrl.create({
+    //   spinner: 'bubbles',
+    //   content: 'Please wait...',
+    // });
+    // this.loading.present();
     setTimeout(() => {
       document.getElementById("icon").style.color = "#ff6337";
       this.IRmethods.getCurrentLocations().then((data: any) => {

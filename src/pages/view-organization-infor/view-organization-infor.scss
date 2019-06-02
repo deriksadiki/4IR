@@ -22,6 +22,9 @@
     button {
       position: absolute;
     }
+    .price{
+      margin-left:10px;
+    }
     #navigate {
       bottom: 0px;
       z-index: 100;
@@ -44,7 +47,7 @@
     .moreinfo {
     }
   }
-
+  
   .TheStar {
     color: goldenrod;
   }
@@ -69,6 +72,10 @@
   left: 50%;
   top: 150px;
   transform: translateX(-50%)
+}
+
+.price{
+  margin-right:-60%;
 }
 .details{
   padding-top: 70px;

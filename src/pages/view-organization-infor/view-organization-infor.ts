@@ -57,6 +57,8 @@ export class ViewOrganizationInforPage implements OnInit {
   services;
   wifiRange1;
   website;
+  image
+  logopic
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController) {
     //this.initMap()
     this.tabs = "gallery";
@@ -64,11 +66,13 @@ export class ViewOrganizationInforPage implements OnInit {
     console.log(this.navParams.get('orgObject'))
     this.imageKey = this.orgArray[0].id;
     this.wifiRange1 = this.orgArray[0].wifiRange;
+    this.image = this.orgArray[0].img
+    this.logopic = this.orgArray[0].logo
 
     this.website = this.orgArray[0].website
-    console.log(this.website)
+    console.log(this.orgArray)
 
-    console.log(this.wifiRange1)
+    console.log(this.image)
     this.services = this.orgArray[0].service[0]
 
     console.log(this.services)

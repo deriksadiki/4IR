@@ -81,7 +81,7 @@
       <!-- <div *ngIf="x.orgName == a"> -->
       <ion-item (click)="goToViewPage(a.orgName)" no-padding class="listedCard" no-lines *ngIf="showAllOrganisation">
         <ion-thumbnail item-start large>
-          <img class="image" src="../../assets/imgs/Defaults/default.png" />
+          <img class="image" src="{{a.img}}" />
         </ion-thumbnail>
         <h2>{{ a.orgName }}</h2>
         <p>{{a.desc}}</p>
