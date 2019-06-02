@@ -41,7 +41,7 @@ export class ViewOrganizationInforPage implements OnInit {
   destlong;
   currentUserlat;
   currentUserlng;
-
+  destMaker  ;
   showtime;
   showDistance;
   showMap: boolean = false;
@@ -58,6 +58,8 @@ export class ViewOrganizationInforPage implements OnInit {
   wifiRange1;
   website;
   address ;
+  loginState = this.navParams.get('loginState')
+currentLocState = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController) {
     //this.initMap()
     this.tabs = "gallery";
@@ -91,6 +93,7 @@ export class ViewOrganizationInforPage implements OnInit {
 
     //this.initMap()
 
+    if (this.loginState){
     let userID = firebase.auth().currentUser;
     firebase.database().ref("Users/" + "/" + "App_Users/" + userID.uid).on('value', (data: any) => {
       let details = data.val();
@@ -107,6 +110,7 @@ export class ViewOrganizationInforPage implements OnInit {
       console.log(this.url)
 
     });
+    }
 
   }
 
@@ -119,26 +123,33 @@ export class ViewOrganizationInforPage implements OnInit {
     this.service = new google.maps.DistanceMatrixService();
     this.geocoder = new google.maps.Geocoder;
 
-
-
     this.irhubProvider.getUserLocation().then((data: any) => {
+      if (data != null){
+        this.currentLocState = true;
       console.log(data);
       console.log(data.coords.latitude);
       console.log(data.coords.longitude);
-
       this.currentUserlat = data.coords.latitude;
       this.currentUserlng = data.coords.longitude
-
-
-
+      }
     })
-
-
-
   }
 
 
+getLocation(){
+  this.irhubProvider.getUserLocation().then((data: any) => {
+    if (data != null){
+      this.currentLocState = true;
+    console.log(data);
+    console.log(data.coords.latitude);
+    console.log(data.coords.longitude);
 
+    this.currentUserlat = data.coords.latitude;
+    this.currentUserlng = data.coords.longitude
+    this.showMapContent();
+    }
+  })
+}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ViewOrganizationInforPage');
@@ -386,8 +397,7 @@ export class ViewOrganizationInforPage implements OnInit {
     })
 
 
-
-  }
+}
 
   getDistance() {
     console.log(this.destlat, this.destlong);
@@ -417,16 +427,40 @@ export class ViewOrganizationInforPage implements OnInit {
               console.log(this.showDistance);
 
 
-
-            }
           }
-        }
+          }
+
+          this.destinationMarker() ;
+         }
       });
 
   }
   q = 0
   loadMap = 0
   getDirection() {
+    if (this.currentLocState == false){
+      const confirm = this.alertCtrl.create({
+        message: 'Your location is currently turned off, do you want to turn it on now?',
+        buttons: [
+          {
+            text: 'Disagree',
+            handler: () => {
+              console.log('Disagree clicked');
+            }
+          },
+          {
+            text: 'Agree',
+            handler: () => {
+              console.log('Agree clicked');
+              this.getLocation();
+            }
+          }
+        ]
+      });
+      confirm.present();
+
+    }
+    else{
     var theMap = document.getElementById("theMap");
     var theContent = document.getElementById("orgView")
     if (this.loadMap == 0) {
@@ -451,12 +485,58 @@ export class ViewOrganizationInforPage implements OnInit {
         theContent.style.display = "block";
       }
     }
+  }
 
     console.log(this.q);
 
 
   }
 
+
+  showMapContent(){
+    var theMap = document.getElementById("theMap");
+    var theContent = document.getElementById("orgView")
+    if (this.loadMap == 0) {
+      this.loadMap = 1;
+      this.initMap();
+      if (this.q == 0) {
+        this.q = 1
+        theMap.style.display = "block";
+        theContent.style.display = "none";
+      }
+    }
+    else {
+      if (this.q == 0) {
+        this.q = 1
+        theMap.style.display = "block";
+        theContent.style.display = "none";
+      }
+      else {
+
+        this.q = 0
+        theMap.style.display = "none";
+        theContent.style.display = "block";
+      }
+    }
+  }
+
+
+  destinationMarker(){
+//this.destlat, this.destlong
+let deslat = this.destlat ;
+let deslng = this.destlat ;
+
+
+this.destMaker = new google.maps.Marker({
+  map: this.map,
+  //  icon: this.icon,
+  position: { lat: parseFloat(this.destlat), lng: parseFloat(this.destlong) },
+  label: name,
+  zoom: 8,
+});
+
+
+  }
 
   navigate() {
     if (this.directionsDisplay != null) {
