@@ -10,7 +10,7 @@
       </button>
       <!-- <ion-input maxLength="44" class="searchBar" type="text" placeholder="Search by city (e.g johannesburg)" [(ngModel)]="searchTerm" (ionInput)="getItems($event)"></ion-input> -->
 
-      <ion-searchbar class="searchBar" [(ngModel)]="searchItem" placeholder="Search by  name" (ionInput)="getItems($event)">
+      <ion-searchbar class="searchBar" [(ngModel)]="searchItem" placeholder="Search by name" (ionInput)="getItems($event)">
       </ion-searchbar>
 
 
@@ -21,7 +21,8 @@
       <ion-card class="options">
         <div class="intro">
           <p id="statement">
-            <ion-icon name="pin" id="icon"></ion-icon> <span [innerHTML]=userLocation.substr(0,34)></span> 
+            <ion-icon name="pin" id="icon"></ion-icon>
+            <span [innerHTML]=userLocation.substr(0,34)></span>
           </p>
           <i class="finePrint">
             4IR Hub uses your location to provide you with places near you.</i>
@@ -69,9 +70,10 @@
   </div>
 
   <!-- to show list of organization -->
-  <ion-list>
-    <ion-item id="searched-items" *ngFor="let item of items" (click)="goToViewPage(item)"> <br><br>
-      {{item}}
+  <ion-list id="searchlist">
+    <ion-item id="searched-items" *ngFor="let item of items" (click)="goToViewPage(item)">
+      <br>
+      <br> {{item}}
     </ion-item>
   </ion-list>
   <div id="list" padding>
@@ -86,51 +88,71 @@
         </ion-thumbnail>
         <h2>{{ a.orgName }}</h2>
         <p>{{a.desc}}</p>
-    
 
-      
-            <div *ngIf="a.freeWifi == 1; then loggedIn0">
-              </div><br>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
               <div *ngIf="a.wifi == 1; then loggedIn1">
               </div>
 
-              <ng-template #loggedIn0>
-                 <p>
-                  <img src="../../assets/icon/notes.svg" id="cash" alt="">
-                </p>
-                </ng-template> 
-                
-                <ng-template #loggedIn1>
-                  <p>
-                    <ion-icon name="ios-wifi"></ion-icon>
-                  </p>
-                </ng-template>
-      
-    
+            </ion-col>
+            <ion-col>
+              <div *ngIf="a.freeWifi == 1; then loggedIn0">
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+
+
+
+        <ng-template #loggedIn0>
+          <p>
+            <img src="../../assets/icon/notes.svg" id="cash" alt="">
+          </p>
+        </ng-template>
+
+        <ng-template #loggedIn1>
+          <p>
+            <ion-icon name="ios-wifi"></ion-icon>
+          </p>
+        </ng-template>
+
+
+
       </ion-item>
+    </div>
+
+
+
+
+
+    <div *ngFor="let a of nearby">
+      <ion-item (click)="goToViewPage(a.orgName)" no-padding class="listedCard" no-lines *ngIf="showNearbyList" id="all">
+        <ion-thumbnail item-start large>
+          <img class="image" src="../../assets/imgs/Defaults/default.png" />
+        </ion-thumbnail>
+        <h2>{{ a.orgName }}</h2>
+        <p>{{a.desc}}
+        </p>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-icon name="ios-wifi"></ion-icon>
+            </ion-col>
+            <ion-col>
+              <img src="../../assets/icon/notes.svg" id="cash" alt="">
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+
+
+        <button ion-button icon-only color="custom" clear item-end>
+          <ion-icon name="ios-arrow-forward"></ion-icon>
+        </button>
+      </ion-item>
+    </div>
+
   </div>
-  
-
-  
-
-
-  <div *ngFor="let a of nearby">
-    <ion-item (click)="goToViewPage(a.orgName)" no-padding class="listedCard" no-lines *ngIf="showNearbyList" id="all">
-      <ion-thumbnail item-start large>
-        <img class="image" src="../../assets/imgs/Defaults/default.png" />
-      </ion-thumbnail>
-      <h2>{{ a.orgName }}</h2>
-      <p>{{a.desc}}
-      </p>
-      <p>
-        <ion-icon name="ios-wifi"></ion-icon>
-        <img src="../../assets/icon/notes.svg" id="cash" alt="">
-      </p>
-      <button ion-button icon-only color="custom" clear item-end>
-        <ion-icon name="ios-arrow-forward"></ion-icon>
-      </button>
-    </ion-item>
-  </div>
-  
-</div>
 </ion-content>

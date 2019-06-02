@@ -62,6 +62,8 @@ export class ViewOrganizationInforPage implements OnInit {
   address ;
   loginState = this.navParams.get('loginState')
 currentLocState = false;
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController) {
     //this.initMap()
     this.tabs = "gallery";
@@ -469,7 +471,7 @@ getLocation(){
     }
     else{
     var theMap = document.getElementById("theMap");
-    var theContent = document.getElementById("orgView")
+    var theContent = document.getElementById("orgView");
     if (this.loadMap == 0) {
       this.loadMap = 1;
       this.initMap();
