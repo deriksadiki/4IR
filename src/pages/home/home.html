@@ -85,8 +85,6 @@
         </ion-thumbnail>
         <h2>{{ a.orgName }}</h2>
         <p>{{a.desc}}</p>
-    
-
         <p>
           <ion-icon name="ios-wifi"></ion-icon>
           <img src="../../assets/icon/notes.svg" id="cash" alt="">
@@ -97,7 +95,8 @@
       </ion-item>
     </div>
 
-  </div>
+  
+
 
   <div *ngFor="let a of nearby">
     <ion-item (click)="goToViewPage(a.orgName)" no-padding class="listedCard" no-lines *ngIf="showNearbyList" id="all">
@@ -119,5 +118,5 @@
     </ion-item>
   </div>
 
-
+</div>
 </ion-content>
