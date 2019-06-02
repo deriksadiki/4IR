@@ -27,6 +27,18 @@ page-sign-in {
     width: 100%;
     z-index: 0;
     background: whitesmoke;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    z-index: 1;
+    display: block;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    will-change: scroll-position;
+    contain: size style layout;
   }
   .userContent {
     height: 100%;
@@ -110,7 +122,7 @@ page-sign-in {
     border-top-left-radius: 16px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: cen ter;
     flex-direction: column;
     #curve {
       height: 40px;
@@ -174,4 +186,5 @@ page-sign-in {
       opacity: 1;
     }
   }
+
 }

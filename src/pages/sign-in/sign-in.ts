@@ -46,10 +46,10 @@ export class SignInPage {
       this.irhubProvider.checkVerification().then((data: any) => {
         if (data == 0) {
           const alert = this.alertCtrl.create({
+            cssClass: "myAlert",
             // title: "No Password",
             subTitle: "We have sent you a verification mail, Please activate your account with the link in the mail",
             buttons: ['OK'],
-            cssClass: 'myAlert',
           });
           loading.dismiss()
           alert.present();
@@ -61,6 +61,7 @@ export class SignInPage {
       })
     }).catch((error) => {
       const alert = this.alertCtrl.create({
+        cssClass: "myAlert",
         // title: "No Password",
         subTitle: error.message,
         buttons: ['OK'],
@@ -75,6 +76,7 @@ export class SignInPage {
     return new Promise((resolve, reject) => {
       if (this.email == null || this.email == undefined) {
         const alert = this.alertCtrl.create({
+          cssClass: "myAlert",
           title: 'Forgot your password?',
           message: "We just need your registered email address to reset your password.",
           
@@ -85,7 +87,6 @@ export class SignInPage {
               placeholder: 'Your email address'
             },
           ],
-          cssClass: 'myAlert',
           buttons: [
             {
               text: 'Cancel',
@@ -116,16 +117,17 @@ export class SignInPage {
       else if (this.email != null || this.email != undefined) {
         firebase.auth().sendPasswordResetEmail(this.email).then(() => {
           const alert = this.alertCtrl.create({
+            cssClass: "myAlert",
             title: 'Password request Sent',
             subTitle: "We've sent you and email with a reset link, go to your email to recover your account.",
             buttons: ['OK'],
-            cssClass: 'myAlert'
 
           });
           alert.present();
           resolve()
         }, Error => {
           const alert = this.alertCtrl.create({
+            cssClass: "myAlert",
             subTitle: Error.message,
             buttons: ['OK'],
             // cssClass: 'myAlert'
@@ -136,6 +138,7 @@ export class SignInPage {
       }
     }).catch((error) => {
       const alert = this.alertCtrl.create({
+        cssClass: "myAlert",
         subTitle: error.message,
         buttons: [
           {
@@ -145,7 +148,6 @@ export class SignInPage {
             }
           }
         ],
-        // cssClass: 'myAlert'
       });
       alert.present();
     })

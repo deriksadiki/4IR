@@ -192,6 +192,7 @@ getLocation(){
         console.log(data);
         if (this.rateState == false || this.rateState == undefined) {
           const prompt = this.alertCtrl.create({
+            cssClass: "myAlert",
             // title: 'Comment',
             message: "Pleave leave your comment below",
             inputs: [
@@ -234,6 +235,7 @@ getLocation(){
         }
         else if (this.rateState == true) {
           let alert = this.alertCtrl.create({
+            cssClass: "myAlert",
             title: 'Oops!',
             subTitle: 'You cannot rate more than once',
             buttons: ['Ok']
@@ -243,6 +245,7 @@ getLocation(){
       }
       else {
         let alert = this.alertCtrl.create({
+          cssClass: "myAlert",
           title: '',
           subTitle: 'You have to sign in before you can rate this organistion, would you like to sign in now?',
           buttons: [
@@ -260,7 +263,6 @@ getLocation(){
               }
             }
           ],
-          cssClass: 'myAlert',
         });
         alert.present();
       }

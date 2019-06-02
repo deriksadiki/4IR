@@ -72,6 +72,7 @@ export class EditUserProfilePage implements OnInit{
       Error => {
         loading.dismiss();
         const alert = this.alertCtrl.create({
+          cssClass: "myAlert",
           subTitle: Error.message,
           buttons: ['OK']
         });
@@ -119,6 +120,7 @@ export class EditUserProfilePage implements OnInit{
 
         if (event.target.files[0].size > 1500000) {
           let alert = this.alertCtrl.create({
+            cssClass: "myAlert",
             title: "Photo too large",
             subTitle: "Please choose a photo with 1.5MB or less.",
             buttons: ['OK']

@@ -390,10 +390,10 @@ export class HomePage {
     this.IRmethods.checkVerification().then((data: any) => {
       if (data == 0) {
         const alert = this.alertCtrl.create({
+          cssClass: "myAlert",
           // title: "No Password",
           subTitle: "We have sent you a verification mail, Please activate your account with the link in the mail",
           buttons: ['OK'],
-          cssClass: 'myAlert',
         });
         // loadingCtrl.dismiss()
         alert.present();
@@ -593,6 +593,7 @@ export class HomePage {
     this.IRmethods.checkAuthState().then(data => {
       if (data == false) {
         let alert = this.alertCtrl.create({
+          cssClass: "myAlert",
           subTitle: 'You have to sign in before you can view your profile, would you like to sign in now?',
           // cssClass: 'myAlert',
           buttons: [
@@ -705,6 +706,7 @@ export class HomePage {
     this.IRmethods.checkAuthState().then(data => {
       if (data == false) {
         let alert = this.alertCtrl.create({
+          cssClass: "myAlert",
           subTitle: 'You have to sign in before you can view your profile, would you like to sign in now?',
           // cssClass: 'myAlert',
           buttons: [
@@ -957,7 +959,7 @@ tempArray =  new Array();
     var searchTxt = document.getElementsByClassName("searchBar") as HTMLCollectionOf<HTMLElement>;
     var splitter = document.getElementsByClassName("split") as HTMLCollectionOf<HTMLElement>;
     console.log(event.directionY);
-    if (event.directionY == "down") {
+    if (event.directionY == "down" && event.scrollTop > 90) {
 
       // if (event.scrollTop > 250) {
         // console.log("hide card");
@@ -965,19 +967,19 @@ tempArray =  new Array();
         theCard[0].style.height = "50px";
         theCard[0].style.top = "-65px";
         theCard[0].style.opacity = "0";
-        splitter[0].style.height = "50px";
+        // splitter[0].style.height = "50px";
         nav[0].style.height = "80px";
 
 
-        searchBtn[0].style.top = "0";
+        // searchBtn[0].style.top = "0";
 
-        prof[0].style.top = "8px";
+        // prof[0].style.top = "8px";
 
-        barTitle[0].style.top = "12px";
+        // barTitle[0].style.top = "12px";
 
-        searchTxt[0].style.top = "5px";
+        // searchTxt[0].style.top = "5px";
 
-        // footBtn[0].style.top= "0";
+        
       // }
     }
     else {
@@ -988,15 +990,15 @@ tempArray =  new Array();
 
       nav[0].style.height = "120px";
 
-      searchBtn[0].style.top = "20px";
+      // searchBtn[0].style.top = "20px";
 
-      prof[0].style.top = "25px";
+      // prof[0].style.top = "25px";
 
-      barTitle[0].style.top = "25px";
+      // barTitle[0].style.top = "25px";
 
-      searchTxt[0].style.top = "18px";
+      // searchTxt[0].style.top = "18px";
 
-      splitter[0].style.height = "190px";
+      // splitter[0].style.height = "190px";
 
     }
     console.log(event.scrollTop);
