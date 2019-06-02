@@ -26,6 +26,7 @@
         </button>
     </ion-fab> -->
 
+ 
     <div id="orgView" *ngFor="let i of orgArray">
         <div class="cover">
             <img id="myLogo" src="../../assets/imgs/Defaults/default.png" alt="">
@@ -48,6 +49,13 @@
             <div class="description" padding>
                 {{i.desc}}
             </div>
+            <br>
+        </div>
+        </div>
+            <div #destmap id="destmap" (click)="getDirection()">
+                </div>
+                <br>
+                <div id="orgView" *ngFor="let i of orgArray">
             <div class="actions">
                 <div class="icons" (click)="getDirection()">
                     <ion-icon name="navigate"></ion-icon>
@@ -320,7 +328,6 @@
                 </div>
     
             </div>
-        </div> 
-    </div>
+</div>
     
 </ion-content>

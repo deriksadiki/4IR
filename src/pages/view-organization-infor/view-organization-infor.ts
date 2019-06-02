@@ -23,6 +23,8 @@ declare var firebase
 })
 export class ViewOrganizationInforPage implements OnInit {
   @ViewChild('map') mapRef: ElementRef;
+  @ViewChild('destmap') mapRef2: ElementRef;
+
   orgArray = new Array();
   commentArr = new Array();
   detailArray = new Array();
@@ -67,7 +69,7 @@ currentLocState = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController) {
     //this.initMap()
     this.tabs = "gallery";
-  
+ 
     
     this.orgArray.push(this.navParams.get('orgObject'));
     console.log(this.orgArray);
@@ -97,7 +99,7 @@ currentLocState = false;
     this.destlat = this.orgArray[0].lat
     this.destlong = this.orgArray[0].long
 
-
+    this.destinationMap()
     //this.initMap()
 
     if (this.loginState){
@@ -137,7 +139,7 @@ currentLocState = false;
       console.log(data.coords.latitude);
       console.log(data.coords.longitude);
       this.currentUserlat = data.coords.latitude;
-      this.currentUserlng = data.coords.longitude
+      this.currentUserlng = data.coords.longitude;
       }
     })
   }
@@ -373,6 +375,29 @@ getLocation(){
     this.emailComposer.open(email);
   }
   //show map 
+  map2;
+  destinationMap(){
+    const loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      duration: 3000
+    });
+    loader.present();
+
+    setTimeout(() => {
+      const options = {
+        center: {  lat: parseFloat(this.destlat), lng: parseFloat(this.destlong) },
+        zoom: 8,
+        disableDefaultUI: true,
+      }
+      this.map2 = new google.maps.Map(this.mapRef2.nativeElement, options);
+      this.marker = new google.maps.Marker({
+        map: this.map2,
+        zoom: 10,
+        position: this.map2.getCenter()
+      });
+    }, 4000);
+    console.log("show-map");
+  }
 
 
   initMap() {
@@ -382,7 +407,6 @@ getLocation(){
     return new Promise((resolve, reject) => {
       const loader = this.loadingCtrl.create({
         content: "Please wait...",
-        duration: 3000
       });
       loader.present();
 
@@ -398,7 +422,8 @@ getLocation(){
           zoom: 10,
           position: this.map.getCenter()
         });
-      }, 4000);
+        loader.dismiss();
+      }, 7000);
       console.log("show-map");
 
 
