@@ -533,6 +533,13 @@ export class HomePage {
             this.markers().then(() => {
               console.log("show Marker");
               this.loading.dismiss()
+
+
+
+
+
+
+
               
             });
           }, 8000)
