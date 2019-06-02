@@ -174,6 +174,7 @@ export class ViewOrganizationInforPage implements OnInit {
         console.log(data);
         if (this.rateState == false || this.rateState == undefined) {
           const prompt = this.alertCtrl.create({
+            cssClass: "myAlert",
             // title: 'Comment',
             message: "Pleave leave your comment below",
             inputs: [
