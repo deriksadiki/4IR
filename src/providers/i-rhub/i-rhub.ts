@@ -24,6 +24,7 @@ export class IRhubProvider {
   rating;
   ratedOrgs = new Array();
   orgNames = new Array();
+  categoryArray = new Array();
   url;
   totRating;
   auth = firebase.auth();
@@ -154,7 +155,14 @@ export class IRhubProvider {
             this.orgNames.length = 0;
             let details = data.val();
             let keys = Object.keys(details);
+            console.log(data.val());
             for (var x = 0; x < keys.length; x++) {
+              var pay = 0;
+              var wifi = 0;
+              if (details[keys[x]].freeWifi == "Yes")
+              pay = 1;
+              if (details[keys[x]].wifi == "Yes")
+              wifi = 1;
               let orgObject = {
                 orgName: details[keys[x]].name,
                 email: details[keys[x]].email,
@@ -168,11 +176,13 @@ export class IRhubProvider {
                 category: details[keys[x]].category,
                 id: keys[x],
                 wifiRange:details[keys[x]].wifiRange,
-                wifi:details[keys[x]].wifi,
+                wifi:wifi,
                 service:details[keys[x]].service,
-                website:details[keys[x]].website
+                website:details[keys[x]].website,
+                address:details[keys[x]].address ,
+                freeWifi:pay
               }
-              this.storeOrgNames(details[keys[x]].name);
+              this.storeOrgNames(details[keys[x]].name, details[keys[x]].category);
               this.orgArray.push(orgObject)
             }
             resolve(this.orgArray)
@@ -183,8 +193,9 @@ export class IRhubProvider {
     })
   }
 
-  storeOrgNames(name) {
+  storeOrgNames(name, cat) {
     this.orgNames.push(name);
+    this.orgNames.push(cat);
     console.log(this.orgNames);
 
   }
@@ -536,7 +547,7 @@ export class IRhubProvider {
       this.geo.getCurrentPosition().then((resp) => {
         resolve(resp)
       }).catch((error) => {
-        reject('')
+        resolve(null)
         console.log('Error getting location', error);
       });
     })
@@ -847,15 +858,11 @@ export class IRhubProvider {
           console.log(address);
           console.log(results[0]);
           resolve(address)
-        }, 4000);
+      }, 4000);
+     
+         })
 
-
-
-
-
-      })
-
-
+      
     })
   }
 }

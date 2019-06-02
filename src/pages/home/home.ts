@@ -19,6 +19,8 @@ export class HomePage {
   viewDetailsArray = new Array();
   logInState;
   category;
+  locationState ;
+  searchItem ;
   styles: [
     { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
     { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
@@ -350,6 +352,7 @@ export class HomePage {
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
       this.orgArray = data;
+      this.setBackItems();
       console.log(this.orgArray);
       // setTimeout(() => {
         var names = this.IRmethods.getOrgNames()
@@ -418,28 +421,29 @@ export class HomePage {
         this.lat = data.coords.latitude;
         this.lng = data.coords.longitude
         console.log(this.lat);
-
-
+        this.locationState  = true ;
         this.IRmethods.getLocation(this.lat, this.lng).then((data: any) => {
           console.log(data);
-
           this.userLocation = data
-
         })
         document.getElementById("icon").style.color = "#009975"
         document.getElementById("statement").style.color = "#009975"
 
       }, Error => {
+        this.locationState = false ;
         console.log(Error.message);
         console.log("show-map-error");
+        this.lat =-25.7479;
+        this.lng = 28.2293 
         const options = {
           center: { lat: -25.7479, lng: 28.2293 },
           zoom: 8,
           disableDefaultUI: true,
         }
+        this.userLocation = "Disabled"
         document.getElementById("icon").style.color = "#ff0000";
         document.getElementById("statement").style.color = "#ff0000"
-        this.userLocation = "Disabled"
+ 
         this.map = new google.maps.Map(this.mapRef.nativeElement, options);
       })
 
@@ -486,18 +490,24 @@ export class HomePage {
 
 
   initMap() {
-
-    return new Promise((resolve, reject) => {
+   return new Promise((resolve, reject) => {
       setTimeout(() => {
         this.IRmethods.getUserLocation().then((data: any) => {
-          console.log(data);
-          console.log(data.coords.latitude);
-          console.log(data.coords.longitude);
-
-          this.lat = data.coords.latitude;
-          this.lng = data.coords.longitude
-          console.log(this.lat);
-          console.log(this.lng);
+          if (data ==undefined || data == null){
+            this.lat =-25.7479;
+            this.lng = 28.2293 
+          }
+          else{
+            console.log(data);
+            console.log(data.coords.latitude);
+            console.log(data.coords.longitude);
+  
+            this.lat = data.coords.latitude;
+            this.lng = data.coords.longitude
+            console.log(this.lat);
+            console.log(this.lng);
+  
+          }
 
 
           const options = {
@@ -532,7 +542,7 @@ export class HomePage {
             console.log("clicked Marker");
             console.log()
 
-          });
+         });
           resolve();
 
         })
@@ -616,7 +626,7 @@ export class HomePage {
   goToViewPage(name) {
     for (var x = 0; x < this.orgArray.length; x++) {
       if (name == this.orgArray[x].orgName) {
-        this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x] });
+        this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x], loginState:this.logInState});
       }
     }
   }
@@ -653,6 +663,11 @@ export class HomePage {
       // this, this.searchTerm = "";
       // this.initializeItems();
       // this.setArrayBack(this.tempArray)
+      this.items = [];
+      this.searchItem = "";
+      this.getItems(event);
+      // this.filterItems('');
+      this.setBackItems();
       restOf[0].style.paddingTop = "210px";
 
 
@@ -676,7 +691,7 @@ export class HomePage {
       prof[0].style.top = "8px";
 
       restOf[0].style.paddingTop = "60px";
-      // this.filtereditems = [];
+
 
 
 
@@ -741,23 +756,54 @@ export class HomePage {
   }
 
   storeOrgNames(names) {
-    this.orgNames = names;
+    this.orgNames[0] = names[0]
+    for (var x = 1; x < names.length; x++){
+      var state = 0;
+      for (var i = 0; i < this.orgNames.length; i++){
+        if (this.orgNames[i] == names[x]){
+          state = 1;
+          break;
+        }
+      }
+      if (state == 0){
+        this.orgNames[x] = names[x]
+      }
+    }
     console.log(this.orgNames);
-
   }
-
+tempArray =  new Array();
   initializeItems() {
     this.items = this.orgNames
+  }
+  filterItems(val){
+    if (val && val.trim() != '') {
+      this.items = this.items.filter((item) => {
+        console.log(val);
+
+        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
+    else if (val == "" || val == null) {
+      this.items = [];
+    }
+  }
+
+
+  setBackItems(){
+  this.tempArray = this.orgArray
   }
 
   getItems(ev) {
 
     var listContent = document.getElementById("list")
     // Reset items back to all of the items
+    this.items = [];
+    this.tempArray = [];
     this.initializeItems();
+    this.setBackItems();
 
     // set val to the value of the ev target
-    var val = ev.target.value;
+    var val = this.searchItem;
 
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
@@ -771,6 +817,12 @@ export class HomePage {
       this.items = [];
     }
     console.log(this.items);
+  // this.tempArray = [];
+  //   for (var x = 0; x < this.items.length; x++){
+  //     if (this.orgArray[x].orgName == this.items[x]){
+  //       this.tempArray = this.orgArray[x]
+  //     }
+  //   }
     if (val == "" || val == " " || val == null) {
       listContent.style.display = "block"
     }
@@ -783,12 +835,27 @@ export class HomePage {
 
   near() {
 
+
+    if (this.locationState == true){
+      if(this.nearby.length == 0){
+        const alert = this.alertCtrl.create({
+          // title: "No Password",
+          subTitle: "Currently we don't have nearby organisation",
+          buttons: ['OK'],
+          cssClass: 'myAlert',
+        });
+        // loadingCtrl.dismiss()
+        alert.present();
+
+      }
+      else{
     let loading = this.loadingCtrl.create({
       spinner: 'bubbles',
       content: 'please wait...',
       duration: 4000000
     });
     loading.present();
+
 
 
     console.log("clicked");
@@ -798,7 +865,18 @@ export class HomePage {
     this.showAllOrganisation = false;
     this.custom1 = "inactive";
     this.custom2 = "primary";
-    loading.dismiss();
+    loading.dismiss();}
+  }
+    else{
+      const alert = this.alertCtrl.create({
+        // title: "No Password",
+        subTitle: "Currently your location is off",
+        buttons: ['OK'],
+        cssClass: 'myAlert',
+      });
+      // loadingCtrl.dismiss()
+      alert.present();
+    }
   }
 
 
@@ -816,27 +894,59 @@ export class HomePage {
     console.log(this.lat);
     this.IRmethods.getLocation(this.lat, this.lng).then((data: any) => {
       console.log(data);
-  this.userLocation = "Soweto"
+      this.userLocation = "Soweto"
     })
 
   }
 
-  selectcategory(){
-    console.log("clicked");
-    console.log(this.category);
-    const options = {
-      center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
-      zoom: 8,
-      disableDefaultUI: true,
-      styles: this.mapStyles
+  selectcategory() {
 
-    }
-    this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-    for (let index = 0; index < this.orgArray.length; index++) {
-          
-      
-    }
-    
+    return new Promise((resolve, reject) => {
+
+      const options = {
+        center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
+        zoom: 8,
+        disableDefaultUI: true,
+        styles: this.mapStyles
+      }
+      this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+      // adding user marker to the map 
+      this.marker = new google.maps.Marker({
+        map: this.map,
+        zoom: 10,
+
+        position: this.map.getCenter()
+        //animation: google.maps.Animation.DROP,
+      });
+
+
+      for (let index = 0; index < this.orgArray.length; index++) {
+
+          if(this.category == this.orgArray[index].category){
+            console.log(this.orgArray[index]);
+            this.showMultipleMarker = new google.maps.Marker({
+              map: this.map,
+              //  icon: this.icon,
+              position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
+              label: name,
+              zoom: 8,
+            });
+
+            console.log(this.orgArray[index]);
+          this.showMultipleMarker.addListener('click', () => {
+
+          console.log(this.orgArray[index]);
+          console.log(index);
+          this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
+        });
+            
+          }
+      }
+
+    })
+
+
+
   }
   scroll(event) {
     // console.log(event.scrollTop);
@@ -895,4 +1005,5 @@ export class HomePage {
 
   }
 
+   
 }

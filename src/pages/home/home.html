@@ -10,7 +10,7 @@
       </button>
       <!-- <ion-input maxLength="44" class="searchBar" type="text" placeholder="Search by city (e.g johannesburg)" [(ngModel)]="searchTerm" (ionInput)="getItems($event)"></ion-input> -->
 
-      <ion-searchbar class="searchBar" placeholder="Search by city or name" (ionInput)="getItems($event)">
+      <ion-searchbar class="searchBar" [(ngModel)]="searchItem" placeholder="Search by  name" (ionInput)="getItems($event)">
       </ion-searchbar>
 
 
@@ -28,7 +28,6 @@
         </div>
         <div class="myFlexBox">
           <div class="theLabel">
-            Show Hubs
           </div>
           <button class="selects" ion-button color="{{ custom1 }}" (click)="all()">
             All
@@ -52,11 +51,13 @@
   <div id="mapView">
     <ion-icon id="funnel" name="funnel"></ion-icon>
     <ion-item class="hidden">
-      <ion-label>Filtey by</ion-label>
+      <ion-label>Filter by category</ion-label>
       <ion-select [(ngModel)]="category" (ionChange)="selectcategory()" color="custom" id="drop">
-        <ion-option value="n64">n64</ion-option>
-        <ion-option value="ps">ps</ion-option>
-        <ion-option value="nes">nes</ion-option>
+        <ion-option value="High Education Institution">High Education Institution</ion-option>
+        <ion-option value="Library">Library</ion-option>
+        <ion-option value="Learning Center">Learning Center</ion-option>
+        <ion-option value="InterCafe">InterCafe</ion-option>
+        <ion-option value="Mall">Mall</ion-option>
       </ion-select>
     </ion-item>
     <img [src]="img" class="displayPic" id="imgOnMap" alt="" (click)="Userprofile()" />
@@ -69,7 +70,7 @@
 
   <!-- to show list of organization -->
   <ion-list>
-    <ion-item id="searched-items" *ngFor="let item of items" (click)="goToViewPage(item)">
+    <ion-item id="searched-items" *ngFor="let item of items" (click)="goToViewPage(item)"> <br><br>
       {{item}}
     </ion-item>
   </ion-list>
@@ -77,7 +78,7 @@
 
     <div class="split"></div>
 
-    <div *ngFor="let a of orgArray">
+    <div *ngFor="let a of tempArray">
       <!-- <div *ngIf="x.orgName == a"> -->
       <ion-item (click)="goToViewPage(a.orgName)" no-padding class="listedCard" no-lines *ngIf="showAllOrganisation">
         <ion-thumbnail item-start large>
@@ -85,15 +86,30 @@
         </ion-thumbnail>
         <h2>{{ a.orgName }}</h2>
         <p>{{a.desc}}</p>
-        <p>
-          <ion-icon name="ios-wifi"></ion-icon>
-          <img src="../../assets/icon/notes.svg" id="cash" alt="">
-        </p>
-        <button ion-button icon-only color="custom" clear item-end>
-          <ion-icon name="ios-arrow-forward"></ion-icon>
-        </button> 
+    
+
+      
+            <div *ngIf="a.freeWifi == 1; then loggedIn0">
+              </div><br>
+              <div *ngIf="a.wifi == 1; then loggedIn1">
+              </div>
+
+              <ng-template #loggedIn0>
+                 <p>
+                  <img src="../../assets/icon/notes.svg" id="cash" alt="">
+                </p>
+                </ng-template> 
+                
+                <ng-template #loggedIn1>
+                  <p>
+                    <ion-icon name="ios-wifi"></ion-icon>
+                  </p>
+                </ng-template>
+      
+    
       </ion-item>
-    </div>
+  </div>
+  
 
   
 
@@ -106,8 +122,6 @@
       <h2>{{ a.orgName }}</h2>
       <p>{{a.desc}}
       </p>
-
-
       <p>
         <ion-icon name="ios-wifi"></ion-icon>
         <img src="../../assets/icon/notes.svg" id="cash" alt="">
