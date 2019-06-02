@@ -138,9 +138,14 @@ page-home {
   #filteredNearBy{
     display: none;
   }
+  #searchlist{
+    position: relative;
+    top: 2%
+  }
   #searched-items{
     animation:  1s fadeIn;
-  }
+
+}
   .options {
     height: 130px;
     width: 85%;
@@ -244,9 +249,7 @@ page-home {
       opacity: 1;
     }
   }
-  ion-col {
-    border: 2px solid red;
-  }
+
 
   #icon{
       color:orange;

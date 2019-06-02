@@ -668,7 +668,7 @@ export class HomePage {
       this.getItems(event);
       // this.filterItems('');
       this.setBackItems();
-      restOf[0].style.paddingTop = "210px";
+      //restOf[0].style.paddingTop = "210px";
 
 
     }
@@ -690,7 +690,7 @@ export class HomePage {
       searchBtn[0].style.top = "0";
       prof[0].style.top = "8px";
 
-      restOf[0].style.paddingTop = "60px";
+      //restOf[0].style.paddingTop = "60px";
 
 
 
@@ -794,7 +794,7 @@ tempArray =  new Array();
   }
 
   getItems(ev) {
-
+    var header = document.getElementById("theHead")
     var listContent = document.getElementById("list")
     // Reset items back to all of the items
     this.items = [];
@@ -829,7 +829,7 @@ tempArray =  new Array();
     else {
       listContent.style.display = "none"
     }
-
+    //header.style.display = "none"
   }
 
 
