@@ -10,12 +10,15 @@ import { SignUpPage } from '../pages/sign-up/sign-up';
 import { ViewOrganizationInforPage } from '../pages/view-organization-infor/view-organization-infor';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { StartPage } from '../pages/start/start';
+import { timer } from 'rxjs/observable/timer';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   rootPage:any;
+
+  showSplash = true; 
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public IRhubProvider:IRhubProvider) {
     platform.ready().then(() => {
@@ -36,9 +39,11 @@ export class MyApp {
       })
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
+      // statusBar.styleDefault();
       statusBar.styleLightContent();
       splashScreen.hide();
+
+      timer(3000).subscribe(() => this.showSplash = false)
     });
   }
 }

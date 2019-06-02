@@ -114,7 +114,7 @@ export class HomePage {
   showMultipleMarker;
   searchDismissState = "search";
   textField;
-  img = "../../assets/imgs/Defaults/default.png";
+  img = "../../assets/imgs/defaultImage.png";
   toggleState = "map";
   showNearbyList: boolean = false;
   showAllOrganisation: boolean = true;
@@ -381,7 +381,7 @@ export class HomePage {
         })
       }
       else if (data == false) {
-        this.img = "assets/imgs/default.png";
+        this.img = "assets/imgs/defaultImage.png";
       }
     });
 
@@ -482,8 +482,7 @@ export class HomePage {
 
 
   initMap() {
-
-    return new Promise((resolve, reject) => {
+   return new Promise((resolve, reject) => {
       setTimeout(() => {
         this.IRmethods.getUserLocation().then((data: any) => {
           console.log(data);
@@ -778,6 +777,15 @@ export class HomePage {
 
 
   near() {
+
+    let loading = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'please wait...',
+      duration: 4000000
+    });
+    loading.present();
+
+
     console.log("clicked");
     console.log(this.nearby);
 
@@ -785,6 +793,7 @@ export class HomePage {
     this.showAllOrganisation = false;
     this.custom1 = "inactive";
     this.custom2 = "primary";
+    loading.dismiss();
   }
 
 

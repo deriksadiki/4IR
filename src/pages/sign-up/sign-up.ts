@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angul
 import { LoadingController } from 'ionic-angular';
 import { IRhubProvider } from '../../providers/i-rhub/i-rhub'
 import { SignInPage } from '../sign-in/sign-in';
+import { StartPage } from '../start/start';
 declare var firebase
 /**
  * Generated class for the SignUpPage page.
@@ -37,7 +38,8 @@ export class SignUpPage {
             {
               text: 'Ok',
               handler: () => {
-             this.navCtrl.pop()
+            this.navCtrl.push(StartPage)
+
               }
             },
           ]

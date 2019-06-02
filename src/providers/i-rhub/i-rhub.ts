@@ -6,7 +6,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 
 declare var firebase;
 
-declare var google ;
+declare var google;
 /*
   Generated class for the IRhubProvider provider.
   See https://angular.io/guide/dependency-injection for more info on providers
@@ -29,7 +29,7 @@ export class IRhubProvider {
   auth = firebase.auth();
   nearByOrg;
   categoryArr;
-  address ;
+  address;
   constructor(public ngzone: NgZone, public alertCtrl: AlertController,
     public loadingCtrl: LoadingController, public geo: Geolocation) {
 
@@ -57,18 +57,18 @@ export class IRhubProvider {
     })
   }
 
-  forgetPassword(email){
+  forgetPassword(email) {
 
-    return new Promise((resolve, reject)=>{
-      firebase.auth().sendPasswordResetEmail(email) .then(()=> {
+    return new Promise((resolve, reject) => {
+      firebase.auth().sendPasswordResetEmail(email).then(() => {
         resolve();
-        } , (error)=>{
-          reject(error)
+      }, (error) => {
+        reject(error)
+      })
+
     })
-   
-   })
-   
-   }
+
+  }
 
   Signup(email, password, name) {
     return new Promise((resolve, reject) => {
@@ -84,7 +84,7 @@ export class IRhubProvider {
           firebase.database().ref("Users/App_Users/" + user.uid).set({
             name: name,
             email: email,
-            downloadurl: "../../assets/imgs/Defaults/default.jpg",
+            downloadurl: "../../assets/imgs/Defaults/default.jfif",
             cell: ""
           })
           var user = firebase.auth().currentUser;
@@ -141,6 +141,12 @@ export class IRhubProvider {
   getAllOrganizations() {
     return new Promise((resolve, reject) => {
       this.ngzone.run(() => {
+        let loading = this.loadingCtrl.create({
+          spinner: 'bubbles',
+          content: 'please wait...',
+          duration: 4000000
+        });
+        loading.present();
         var user = firebase.auth().currentUser;
         firebase.database().ref("4IR_Hubs").on("value", (data: any) => {
           if (data.val() != null) {
@@ -159,12 +165,18 @@ export class IRhubProvider {
                 img: details[keys[x]].downloadurl,
                 desc: details[keys[x]].desc,
                 category: details[keys[x]].category,
-                id: keys[x]
+                id: keys[x],
+                wifiRange:details[keys[x]].wifiRange,
+                wifi:details[keys[x]].wifi,
+                service:details[keys[x]].service,
+                website:details[keys[x]].website,
+                address:details[keys[x]].address
               }
               this.storeOrgNames(details[keys[x]].name);
               this.orgArray.push(orgObject)
             }
             resolve(this.orgArray)
+            loading.dismiss();
           }
         });
       })
@@ -220,7 +232,7 @@ export class IRhubProvider {
     })
   }
 
-  comments(comment: any, commentKey: any, rating) {
+  comments(comment: any, commentKey: any, rating, url, username) {
     let user = firebase.auth().currentUser;
     return new Promise((accpt, rejc) => {
       this.ngzone.run(() => {
@@ -229,6 +241,8 @@ export class IRhubProvider {
           comment: comment,
           uid: user.uid,
           date: day,
+          url: url,
+          username: username,
           rate: parseInt(rating)
         })
         accpt('success');
@@ -241,11 +255,13 @@ export class IRhubProvider {
     return new Promise((accpt, rejc) => {
       this.ngzone.run(() => {
         firebase.database().ref("Reviews/" + commentKey).on("value", (data: any) => {
-          this.commentArr.length = 0;
+          // this.commentArr.length = 0;
           let user = firebase.auth().currentUser
           let CommentDetails = data.val();
+          console.log(CommentDetails)
           if (data.val() != null || data.val() != undefined) {
             let keys1: any = Object.keys(CommentDetails);
+            console.log(keys1)
             for (var i = 0; i < keys1.length; i++) {
               let key = keys1[i];
               let chckId = CommentDetails[key].uid;
@@ -253,22 +269,19 @@ export class IRhubProvider {
                 comment: CommentDetails[key].comment,
                 rating: parseInt(CommentDetails[key].rate),
                 uid: CommentDetails[key].uid,
-                url: this.downloadurl,
-                username: "",
+                url: CommentDetails[key].url,
+                username: CommentDetails[key].username,
                 date: moment(CommentDetails[key].date, 'MMMM Do YYYY, h:mm:ss a').startOf('minutes').fromNow(),
                 key: key,
               }
+              console.log(obj)
+              this.commentArr.push(obj)
+              console.log(this.commentArr)
               if (user) {
                 if (user.uid == CommentDetails[key].uid) {
                   this.assignRating(CommentDetails[key].rate)
                 }
               }
-              this.viewUserProfile(chckId).then((profileData: any) => {
-                obj.url = profileData.downloadurl;
-                obj.username = profileData.name;
-                this.commentArr.push(obj);
-                console.log(this.commentArr)
-              });
             }
             accpt(this.commentArr);
             console.log(this.commentArr);
@@ -332,19 +345,27 @@ export class IRhubProvider {
             console.log(data)
             let keys = Object.keys(data.val());
             for (var x = 0; x < keys.length; x++) {
-              firebase.database().ref("Reviews/"  + keys[x]).on("value", (data2: any) => {
+              firebase.database().ref("Reviews/" + keys[x]).on("value", (data2: any) => {
+                console.log(keys[x])
                 this.ratedOrgs = [];
                 var values = data2.val();
                 console.log(values)
+
                 let inderKeys = Object.keys(values);
+                console.log(inderKeys)
                 for (var i = 0; i < inderKeys.length; i++) {
+
                   if (values[inderKeys[i]].uid == userID.uid) {
+                    console.log('in');
+                    
+                    console.log(values[inderKeys[i]].uid)
+                    console.log(userID.uid)
                     firebase.database().ref('4IR_Hubs/').on("value", (data3: any) => {
                       let deatils2 = data3.val();
                       console.log(deatils2)
                       var xx = Object.keys(data3.val())
                       for (var p = 0; p < xx.length; p++) {
-                        firebase.database().ref('4IR_Hubs/' + xx[p] ).on("value", (data4: any) => {
+                        firebase.database().ref('4IR_Hubs/' + xx[p]).on("value", (data4: any) => {
                           // this.ratedOrgs = [];
                           if (data4.val() != undefined || data4.val() != null) {
                             console.log(data4.val());
@@ -372,19 +393,13 @@ export class IRhubProvider {
                               orgPicture: data4.val().downloadurl,
                               orgLat: data4.val().lat,
                               orgLong: data4.val().long,
-                              // orgEmail:data4.val().Email,
                               orgAbout: data4.val().desc,
                               rating: values[inderKeys[i]].rate,
                               key: keys[x],
                               comment: values[inderKeys[i]].comment,
-                              // // orgPrice: orgs.Price,
-                              // orgGallery: gal1,
-                              // orgGallery1: gal2,
-                              // orgGallery2: gal3,
-                              // view:data4.val().view,
+
                               orgId: xx[p],
                               city: data4.val().region,
-                              // orgLogo: data4.val().Logo,
                             }
                             console.log(organizationObject);
 
@@ -406,7 +421,7 @@ export class IRhubProvider {
           this.assignTotRating(numRating);
           console.log(this.ratedOrgs)
           accpt(this.ratedOrgs);
-         
+
         })
 
       })
@@ -823,13 +838,13 @@ export class IRhubProvider {
   }
 
 
-  getLocation(lat , lng){
-   return new Promise((resolve, reject)=>{
+  getLocation(lat, lng) {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         var geocoder = new google.maps.Geocoder;
-        var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
-          geocoder.geocode({'location': latlng}, function(results, status) {
-          var address =  results[0].address_components[3].short_name ;
+        var latlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
+        geocoder.geocode({ 'location': latlng }, function (results, status) {
+          var address = results[0].address_components[3].short_name;
           console.log(address);
           console.log(results[0]);
           resolve(address)

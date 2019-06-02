@@ -8,6 +8,7 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
 import { LoadingController } from 'ionic-angular';
 
 declare var google;
+declare var firebase
 /**
  * Generated class for the ViewOrganizationInforPage page.
  *
@@ -24,6 +25,7 @@ export class ViewOrganizationInforPage implements OnInit {
   @ViewChild('map') mapRef: ElementRef;
   orgArray = new Array();
   commentArr = new Array();
+  detailArray = new Array();
   comments;
   imageKey;
   map;
@@ -49,16 +51,36 @@ export class ViewOrganizationInforPage implements OnInit {
   directionsDisplay;
   service;
   geocoder;
-
+  username;
+  url;
   tabs;
+  services;
+  wifiRange1;
+  website;
+  address ;
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController) {
     //this.initMap()
     this.tabs = "gallery";
+  
+    
     this.orgArray.push(this.navParams.get('orgObject'));
+    console.log(this.orgArray);
+    
     console.log(this.navParams.get('orgObject'))
     this.imageKey = this.orgArray[0].id;
+    this.wifiRange1 = this.orgArray[0].wifiRange;
+    this.address =this.orgArray[0].address 
+    console.log(this.address);
+    
+    this.website = this.orgArray[0].website
+    console.log(this.website)
+
+    console.log(this.wifiRange1)
+    this.services = this.orgArray[0].service[0]
+
+    console.log(this.services)
     console.log(this.imageKey);
-    console.log(this.orgArray);
+    console.log(this.wifiRange1);
 
 
     console.log(this.orgArray[0].lat);
@@ -68,6 +90,23 @@ export class ViewOrganizationInforPage implements OnInit {
 
 
     //this.initMap()
+
+    let userID = firebase.auth().currentUser;
+    firebase.database().ref("Users/" + "/" + "App_Users/" + userID.uid).on('value', (data: any) => {
+      let details = data.val();
+      this.detailArray.length = 0;
+      console.log(details)
+      this.detailArray.push(details);
+      console.log(details);
+
+
+      this.username = this.detailArray[0].name;
+      this.url = this.detailArray[0].downloadurl
+
+      console.log(this.username)
+      console.log(this.url)
+
+    });
 
   }
 
@@ -161,7 +200,7 @@ export class ViewOrganizationInforPage implements OnInit {
                 text: 'Comment',
                 handler: data => {
                   console.log('Saved clicked' + data.comments);
-                  this.irhubProvider.comments(data.comments, this.imageKey, num).then((data) => {
+                  this.irhubProvider.comments(data.comments, this.imageKey, num, this.url, this.username).then((data) => {
                     this.irhubProvider.viewComments(this.comments, this.imageKey).then((data: any) => {
                       var y = this.orgArray[0].avg + 1;
                       var x = ((num - this.orgArray[0].rating) / y);
@@ -389,7 +428,7 @@ export class ViewOrganizationInforPage implements OnInit {
   loadMap = 0
   getDirection() {
     var theMap = document.getElementById("theMap");
-    var theContent = document.getElementById("orgView") 
+    var theContent = document.getElementById("orgView")
     if (this.loadMap == 0) {
       this.loadMap = 1;
       this.initMap();
@@ -445,8 +484,11 @@ export class ViewOrganizationInforPage implements OnInit {
   }
 
   googleMap(){
+
+    console.log(this.address);
+    
    
-  this.launchNavigator.navigate("2127 Chris Hani Rd, Klipspruit, Soweto, 1809") 
+  this.launchNavigator.navigate(this.address) 
   .then(
     success => console.log('Launched navigator'),
     error => console.log('Error launching navigator', error)
