@@ -1,11 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<<<<<<< HEAD
 <widget id="io.ionic.starter" version="0.0.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>MyApp</name>
-=======
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>4IR</name>
->>>>>>> b4ac9b9cb82021b0f27a96685711a74ba418f0b1
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
@@ -22,10 +17,7 @@
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="FadeSplashScreenDuration" value="300" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
-<<<<<<< HEAD
     <preference name="StatusBarBackgroundColor" value="white" />
-=======
->>>>>>> b4ac9b9cb82021b0f27a96685711a74ba418f0b1
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="10000" />
     <preference name="AutohideSplashScreen" value="false" />

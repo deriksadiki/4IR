@@ -21,7 +21,7 @@
       <ion-card class="options">
         <div class="intro">
           <p id="statement">
-            <ion-icon name="pin" id="icon"></ion-icon> {{ userLocation}}
+            <ion-icon name="pin" id="icon"></ion-icon> <span [innerHTML]=userLocation.substr(0,34)></span> 
           </p>
           <i class="finePrint">
             4IR Hub uses your location to provide you with places near you.</i>
@@ -90,7 +90,7 @@
           <img src="../../assets/icon/notes.svg" id="cash" alt="">
         </p>
         <button ion-button icon-only color="custom" clear item-end>
-          <ion-icon name="arrow-forward"></ion-icon>
+          <ion-icon name="ios-arrow-forward"></ion-icon>
         </button> 
       </ion-item>
     </div>
@@ -113,10 +113,10 @@
         <img src="../../assets/icon/notes.svg" id="cash" alt="">
       </p>
       <button ion-button icon-only color="custom" clear item-end>
-        <ion-icon name="arrow-forward"></ion-icon>
+        <ion-icon name="ios-arrow-forward"></ion-icon>
       </button>
     </ion-item>
   </div>
-  <!-- <h2 text-left><span [innerHTML]=a.name.substr(0,21)></span>...</h2> -->
+  
 </div>
 </ion-content>
