@@ -412,7 +412,7 @@ export class HomePage {
     this.loading.present();
     setTimeout(() => {
       document.getElementById("icon").style.color = "#ff6337";
-      this.IRmethods.getUserLocation().then((data: any) => {
+      this.IRmethods.getCurrentLocations().then((data: any) => {
         console.log(data);
         console.log(data.coords.latitude);
         console.log(data.coords.longitude);
@@ -430,18 +430,18 @@ export class HomePage {
         document.getElementById("icon").style.color = "#009975"
         document.getElementById("statement").style.color = "#009975"
 
-      }).catch(() => {
+      }, Error => {
+        console.log(Error.message);
         console.log("show-map-error");
         const options = {
           center: { lat: -25.7479, lng: 28.2293 },
           zoom: 8,
           disableDefaultUI: true,
         }
-        document.getElementById("icon").style.color = "#c72c41";
-        document.getElementById("statement").style.color = "##c72c41"
+        document.getElementById("icon").style.color = "#ff0000";
+        document.getElementById("statement").style.color = "#ff0000"
         this.userLocation = "Disabled"
         this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-
       })
 
     }, 5000);

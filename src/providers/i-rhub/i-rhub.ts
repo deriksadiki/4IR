@@ -521,6 +521,7 @@ export class IRhubProvider {
       this.geo.getCurrentPosition().then((resp) => {
         resolve(resp)
       }).catch((error) => {
+        reject('')
         console.log('Error getting location', error);
       });
     })
@@ -710,11 +711,9 @@ export class IRhubProvider {
 
       this.geo.getCurrentPosition().then((resp) => {
         console.log(resp);
-
-
         accpt(resp);
-
       }).catch((error) => {
+        rej('')
         console.log('Error getting location', error.message);
 
       });
