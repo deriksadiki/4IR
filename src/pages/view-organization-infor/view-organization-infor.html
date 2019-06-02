@@ -95,10 +95,10 @@
                             <p id="lie">There are no uploads avaliable yet .....</p>
                         </div> -->
                       
-                            <h2> {{wifiRange1}}</h2>
+                            <!-- <h2> {{wifiRange1}}</h2> -->
                       
                        
-                        <div  *ngFor="let a of services"> 
+                        <!-- <div  *ngFor="let a of services"> 
                             <ion-list>
                                 <ion-card>
                                     <ion-item>
@@ -108,17 +108,34 @@
                                         </ion-note>
                                     </ion-item>
                                     <ion-card-content>
-                                        <p>{{a}}
-                                        </p>
+                                       
                                     </ion-card-content>
                                 </ion-card>
                             </ion-list>
-                        </div>
-                    
+                        </div> -->
+                        <div  *ngFor="let a of services"> 
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col>
+                                     <h6 text-left>{{a}}
+                                     </h6>
+                                </ion-col>
+                            <ion-col>
+                                    <h6 text-right>R200.00
+                                    </h6>
+                            </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                        <p padding-left padding-right>
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veritatis eveniet iste maiores mollitia veniam nulla impedit, exercitationem doloremque, sint quo dolor! Autem beatae inventore officiis provident tempore, praesentium eum dignissimos!
+                        </p>
+                        <div class="line"></div>
+                    </div>
                     </div>
     
                     <ion-list *ngSwitchCase="'reviews'">
-                        <div class="StarCard">
+                            <h3 text-center >Rate this organisation!</h3>
+                        <!-- <div class="StarCard">
                             <div class="ratings" align="center">
                                 <div *ngIf="rateState == false; then loggedIn5 ">
                                 </div>
@@ -138,10 +155,10 @@
                                     <h3 class="OrgMessage">Thank you for rating this organisation.</h3>
                                 </ng-template>
                             </div>
-                        </div>
-                        <ion-card class="comments">
+                        </div> -->
+                 
                             <div class="theDiv" *ngFor="let a of commentArr">
-                                <ion-item>
+                                <!-- <ion-item>
                                     <ion-avatar item-start>
                                         <img class="profilePic" [src]="a.url">
                                     </ion-avatar>
@@ -219,9 +236,35 @@
                                 <ion-card-content>
                                     <p class="message">{{a.comment}}</p>
                                 </ion-card-content>
-                                <hr>
+                                <hr> -->
+                                <ion-card class="cardf">
+                                    <ion-item>
+                                            <ion-avatar item-start>
+                                                    <img class="profilePic" [src]="a.url">
+                                                </ion-avatar>
+                                                <h2>{{a.username}}</h2>
+                                    </ion-item>
+                                    <ion-card-content>
+                                        <p >
+                                            {{a.comment}}
+                                        </p>
+                                    </ion-card-content>
+                                    <p padding-right item-end style="color: gray ;text-align: end " >
+                                            {{a.date}}
+                                        </p>
+
+                                </ion-card>
                             </div>
-                        </ion-card>
+                        
+                        <ion-fab right >
+                                <button ion-fab color="primary"><ion-icon name="star"></ion-icon></button>
+                                <ion-fab-list side="left">
+                                  <button ion-fab><ion-icon color="primary" name="star"></ion-icon></button>
+                                  <button ion-fab><ion-icon  color="primary" name="star"></ion-icon></button>
+                                  <button ion-fab><ion-icon  color="primary" name="star"></ion-icon></button>
+                                  <button ion-fab><ion-icon  color="primary" name="star"></ion-icon></button>
+                                </ion-fab-list>
+                              </ion-fab>
                     </ion-list>
     
     

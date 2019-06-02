@@ -183,3 +183,28 @@ h3{
 ion-card-header{
   font-weight: bold;
 }
+.line{
+  margin: 0 auto;
+  width: 95%;
+  border-bottom-color: #dcc050;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+p{
+  margin-top: 0%;
+  margin-bottom: 3%
+}
+h6{
+  margin-top: 0%;
+  margin-bottom: 0%
+}
+.cardf{
+  border-radius: 10px
+}
+ion-avatar{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end
+}
+
+
