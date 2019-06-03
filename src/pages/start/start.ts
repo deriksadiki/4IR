@@ -36,4 +36,5 @@ export class StartPage {
     this.navCtrl.push(SignUpPage)
 
   }
+
 }

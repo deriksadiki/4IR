@@ -1,10 +1,10 @@
 page-start {
   .theBody {
-      animation: 700ms fadeIn;
+    animation: 700ms fadeIn;
     height: 100%;
     width: 100%;
-    background: url("../../assets/imgs/Defaults/parl.jpg");
-    background-size: cover;
+    // background: url("../../assets/imgs/Defaults/parl.jpg");
+    // background-size: cover;
     text-align: center;
     color: black;
     // filter: grayscale(80%);
@@ -29,7 +29,6 @@ page-start {
     color: rgb(19, 19, 19);
     text-shadow: 0 0 10px black;
     z-index: 1;
-
     button {
       margin: 0;
       //   height: 50px;
@@ -40,6 +39,7 @@ page-start {
     // border: 2px solid green;
     padding-left: 20px;
     padding-right: 20px;
+    // border: 2px solid red;
     button {
       border-radius: 50px;
       animation: fadeIn 1s;
@@ -47,51 +47,38 @@ page-start {
       margin: 50px auto;
       background: linear-gradient(grey, rgba(128, 128, 128, 0.171));
       animation: 1s bounceInUp;
-      
     }
   }
-
-  
   .logs {
     display: flex;
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 5px;
     button {
-    //   height: 50px;
+      //   height: 50px;
       animation: fadeIn 1.5s;
     }
     // border: 2px solid green;
   }
   .logs > button:nth-child(1) {
     // background: rgb(10, 117, 60);
-    border-top: 1px solid  rgba(85, 85, 85, 0.397);
+    border-top: 1px solid rgba(85, 85, 85, 0.39);
     // border-right: .5px solid black;
   }
   .logs > button:nth-child(2) {
     // background: rgb(10, 117, 60);
-    border-top: 1px solid  rgba(85, 85, 85, 0.397);
-    border-left: .5px solid  rgba(85, 85, 85, 0.603);
+    border-top: 1px solid rgba(85, 85, 85, 0.39);
+    border-left: 0.5px solid rgba(85, 85, 85, 0.39);
   }
   #logo {
-    height: 30%;
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translateX(-50%);
+    height: 120px;
+    // position: absolute;
+    // top: 10%;
+    // left: 50%;
+    // transform: translateX(-50%);
     z-index: 10000000;
     animation: start 700ms;
   }
-
-  .filter {
-    background: radial-gradient(rgba(255, 255, 255, 0.561), white);
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    z-index: 0;
-  }
-
   @keyframes start {
     0% {
       height: 25%;
@@ -103,7 +90,6 @@ page-start {
       height: 30%;
     }
   }
-
   @keyframes fadeIn {
     0% {
       opacity: 0;
@@ -115,5 +101,90 @@ page-start {
       opacity: 1;
     }
   }
+  #under {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.712)), url("../../assets/imgs/Defaults/parl.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: blur(2px);
+  }
+  .radial{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(rgba(255, 255, 255, 0.1), white);
+  }
+  ion-slides {
+    z-index: 1;
+    height: 90%;
+  }
+  ion-slide {
+    color: rgb(20, 20, 20);
+    // text-shadow: 0 0 10px black;
+    h2 {
+      font-size: 38px;
+    }
+    p {
+      font-size: 90%;
+      padding-top: 10px;
+    }
+  }#ico{
+    
+  width: 40px;
+  }
+  #cash {
+    width: 38px;
+    margin-left: 10px;
+    // filter: invert(100%);
+    // position: absolute;
+    // margin-top: 0px;
+    // margin-left: 2px;
+    //   background: black
+  }
+  #start {
+    // width: 50px;
+    height: 50px;
+    border-radius: 60px;
+    border: 2px solid;
+    font-weight: 800;
+  }
+  #explore {
+    padding-left: 10px;
+  }
+  #par {
+    padding: 20px;
+  }
+  
+.swiper-pagination-bullet, .swiper-pagination-bullet-active{
+  background: rgb(0, 0, 0);
+}
+#coins{
+  margin-left: 10px;  
+}
 
+ion-icon {
+  color: rgb(81, 81, 81);
+  &[class*="appname-"] {
+      // Instead of using the font-based icons
+      // We're applying SVG masks
+      mask-size: contain;
+      mask-position: 50% 50%;
+      mask-repeat: no-repeat;
+      background: currentColor;
+      width: 1em;
+      height: 1em;
+  }
+  // custom icons
+  &[class*="appname-coins"] {
+      mask-image: url(../assets/imgs/Defaults/coin-stack.svg);
+  }
+  // &[class*="appname-customicon2"] {
+  //     // mask-image: url(../assets/img/customicon2.svg);
+  // }
+  // &[class*="appname-customicon3"] {
+  //     // mask-image: url(../assets/img/customicon3.svg);
+  // }
+}
 }
