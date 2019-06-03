@@ -378,6 +378,7 @@ getLocation(){
   map2;
   destinationMap(){
     const loader = this.loadingCtrl.create({
+      spinner: 'bubbles',
       content: "Please wait...",
       duration: 3000
     });
@@ -406,6 +407,7 @@ getLocation(){
 
     return new Promise((resolve, reject) => {
       const loader = this.loadingCtrl.create({
+        spinner: 'bubbles',
         content: "Please wait...",
       });
       loader.present();

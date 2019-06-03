@@ -186,7 +186,7 @@ ion-card-header{
 .line{
   margin: 0 auto;
   width: 95%;
-  border-bottom-color: #dcc050;
+  border-bottom-color: #aaaaaa;
   border-bottom-style: solid;
   border-bottom-width: 1px;
 }
@@ -198,13 +198,56 @@ h6{
   margin-top: 0%;
   margin-bottom: 0%
 }
-.cardf{
-  border-radius: 10px
+.cardf {
+  border-radius: 15px 15px 15px 15px; 
 }
-ion-avatar{
+.label-md {
+  margin: 0px 0px 0px 0;
+}
+.imgg {
+  max-height: 100px;
+  max-width: 100px;
+  border: 0;
+  box-shadow: 2px,2px 8px rgb(0, 0, 0)
+}
+ion-avatar {
   display: flex;
   justify-content: flex-end;
-  align-items: flex-end
+  align-items: flex-end;
 }
-
+.card-header-md + .card-content-md, .card-md .item + .card-content-md {
+  padding-top: 5px;
+}
+.card-content-md {
+  padding-top: 4px;
+  padding-right: 16px;
+  padding-bottom: 13px;
+  padding-left: 15px;
+  font-size: 1.6rem;
+  line-height: 1.5;
+}
+.item-md h2 {
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 2px;
+  margin-left: 6px;
+  font-size: 1.8rem;
+  font-weight: normal;
+  padding-top: 0px;
+}
+.chatbubble{
+  background-color: whitesmoke;
+  border-radius: 25px
+}
+.col{
+  padding-bottom: 0%;
+  margin-bottom: 0%;
+}
+.grid{
+  padding-bottom: 0%;
+  margin-bottom: 0%;
+}
+.item-md{
+  padding: 15px
+}
 
