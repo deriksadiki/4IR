@@ -245,6 +245,15 @@ export class IRhubProvider {
   }
 
   comments(comment: any, commentKey: any, rating, url, username) {
+    console.log(comment);
+    console.log(commentKey);
+    console.log(rating);
+    console.log(url);
+    console.log(username);
+    
+    
+    
+    
     let user = firebase.auth().currentUser;
     return new Promise((accpt, rejc) => {
       this.ngzone.run(() => {
@@ -259,6 +268,8 @@ export class IRhubProvider {
         })
         accpt('success');
       });
+    }).catch((error)=>{
+      console.log(error)
     })
   }
 

@@ -102,6 +102,7 @@ export class SignInPage {
                 this.irhubProvider.forgetPassword(data.email).then(()=>{
                   console.log("forgot password works");
                   const alert = this.alertCtrl.create({
+                    cssClass: "myAlert",
                     title: 'Confirmation',
                     subTitle: "Please check your email to reset your password",
                     buttons: ['OK']

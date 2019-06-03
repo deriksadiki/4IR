@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.ionic.starter" version="0.0.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MyApp</name>
+    <name>4IR</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
@@ -93,5 +93,4 @@
         <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="{AIzaSyAT55USDnQ-tZLHJlzryDJbxseD8sLSdZE}" />
         <variable name="OKHTTP_VERSION" value="3.12.0" />
     </plugin>
-    <engine name="android" spec="8.0.0" />
 </widget>

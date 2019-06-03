@@ -51,16 +51,19 @@
 
   <div id="mapView">
     <ion-icon id="funnel" name="funnel"></ion-icon>
-    <ion-item class="hidden">
-      <ion-label>Filter by category</ion-label>
-      <ion-select [(ngModel)]="category" (ionChange)="selectcategory()" color="custom" id="drop">
-        <ion-option value="High Education Institution">High Education Institution</ion-option>
-        <ion-option value="Library">Library</ion-option>
-        <ion-option value="Learning Center">Learning Center</ion-option>
-        <ion-option value="InterCafe">InterCafe</ion-option>
-        <ion-option value="Mall">Mall</ion-option>
-      </ion-select>
-    </ion-item>
+    <div class="head" style="background-color: forestgreen">
+        <ion-item class="hidden" color="seeThrough"  >
+            <ion-label>Filter by category</ion-label>
+            <ion-select [(ngModel)]="category" (ionChange)="selectcategory()" color="custom" id="drop">
+              <ion-option value="High Education Institution">High Education Institution</ion-option>
+              <ion-option value="Library">Library</ion-option>
+              <ion-option value="Learning Center">Learning Center</ion-option>
+              <ion-option value="InterCafe">InterCafe</ion-option>
+              <ion-option value="Mall">Mall</ion-option>
+            </ion-select>
+          </ion-item>
+    </div>
+   
     <img [src]="img" class="displayPic" id="imgOnMap" alt="" (click)="Userprofile()" />
     <div class="slideShow">
 
@@ -119,7 +122,9 @@
         </ng-template>
 
 
-
+        <button ion-button icon-only color="custom" clear item-end>
+            <ion-icon name="ios-arrow-forward"></ion-icon>
+          </button>
       </ion-item>
     </div>
 
@@ -130,24 +135,36 @@
     <div *ngFor="let a of nearby">
       <ion-item (click)="goToViewPage(a.orgName)" no-padding class="listedCard" no-lines *ngIf="showNearbyList" id="all">
         <ion-thumbnail item-start large>
-          <img class="image" src="../../assets/imgs/Defaults/default.png" />
+          <img class="image" src="{{a.img}}"/>
         </ion-thumbnail>
         <h2>{{ a.orgName }}</h2>
         <p>{{a.desc}}
         </p>
         <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-icon name="ios-wifi"></ion-icon>
-            </ion-col>
-            <ion-col>
+            <ion-row>
+              <ion-col>
+                <div *ngIf="a.wifi == 1; then loggedIn1">
+                </div>
+  
+              </ion-col>
+              <ion-col>
+                <div *ngIf="a.freeWifi == 1; then loggedIn0">
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+        <ng-template #loggedIn0>
+            <p>
               <img src="../../assets/icon/notes.svg" id="cash" alt="">
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-
-
-
+            </p>
+          </ng-template>
+  
+          <ng-template #loggedIn1>
+            <p>
+              <ion-icon name="ios-wifi"></ion-icon>
+            </p>
+          </ng-template>
         <button ion-button icon-only color="custom" clear item-end>
           <ion-icon name="ios-arrow-forward"></ion-icon>
         </button>

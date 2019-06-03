@@ -426,8 +426,8 @@ export class HomePage {
           console.log(data);
           this.userLocation = data
         })
-        document.getElementById("icon").style.color = "#009975"
-        document.getElementById("statement").style.color = "#009975"
+        document.getElementById("icon").style.color = "#04592a"
+        document.getElementById("statement").style.color = "#04592a"
 
       }, Error => {
         this.locationState = false ;
