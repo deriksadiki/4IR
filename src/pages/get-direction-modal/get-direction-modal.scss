@@ -1,0 +1,39 @@
+page-get-direction-modal {
+
+}
+#theMap {
+  width: 100%;
+  height: 100%;
+  display: none;
+  animation: 1s fadeIn;
+  button {
+    position: absolute;
+  }
+  .price{
+    margin-left:10px;
+  }
+  #navigate {
+    bottom: 0px;
+    z-index: 100;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 50px;
+  }
+  #getDistance {
+    position: absolute;
+    z-index: 100;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 5px;
+    box-shadow: 0 0 10px black;
+    border-radius: 5px;
+  }
+
+  #map{
+      width:100% ;
+      height: 100%;
+  }
+}

@@ -19,6 +19,7 @@ import { EmailComposer } from '@ionic-native/email-composer';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { StartPage } from '../pages/start/start';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
+import { GetDirectionModalPage } from '../pages/get-direction-modal/get-direction-modal';
 
 
 
@@ -32,7 +33,9 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
     UserProfilePage,
     ViewOrganizationInforPage,
     EditUserProfilePage,
-    StartPage
+    StartPage,
+    GetDirectionModalPage,
+
   
   ],
   imports: [
@@ -50,7 +53,8 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
     UserProfilePage,
     ViewOrganizationInforPage,
     EditUserProfilePage,
-    StartPage
+    StartPage,
+    GetDirectionModalPage
   ],
   providers: [
     StatusBar,

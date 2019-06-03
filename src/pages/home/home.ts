@@ -121,6 +121,13 @@ export class HomePage {
   showNearbyList: boolean = false;
   showAllOrganisation: boolean = true;
 
+  state = ["star-outline", "star-outline", "star-outline", "star-outline", "star-outline"]
+  Star1 = "star-outline";
+  Star2 = "star-outline";
+  Star3 = "star-outline";
+  Star4 = "star-outline";
+  Star5 = "star-outline";
+
 
   mapStyles = [
     {
@@ -345,7 +352,7 @@ export class HomePage {
   custom1 = "primary";
   custom2 = "inactive";
   pic
-  userLocation = "Searching for location" ;
+  userLocation = "Searching for location..." ;
 
 
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
@@ -405,6 +412,78 @@ export class HomePage {
     });
   }
 
+  rate(num) {
+    if (num == 1) {
+      if (this.Star1 == "star-outline") {
+        this.Star1 = "star";
+      }
+      else {
+        this.Star1 = "star-outline";
+        this.Star2 = "star-outline"
+        this.Star3 = "star-outline";
+        this.Star4 = "star-outline"
+        this.Star5 = "star-outline";
+      }
+    }
+    else if (num == 2) {
+      if (this.Star2 == "star-outline") {
+        this.Star1 = "star";
+        this.Star2 = "star";
+      }
+      else {
+        this.Star1 = "star";
+        this.Star2 = "star-outline"
+        this.Star3 = "star-outline";
+        this.Star4 = "star-outline"
+        this.Star5 = "star-outline";
+      }
+    }
+    else if (num == 3) {
+      if (this.Star3 == "star-outline") {
+        this.Star1 = "star";
+        this.Star2 = "star";
+        this.Star3 = "star";
+      }
+      else {
+        this.Star1 = "star";
+        this.Star2 = "star"
+        this.Star3 = "star-outline";
+        this.Star4 = "star-outline"
+        this.Star5 = "star-outline";
+      }
+    }
+    else if (num == 4) {
+      if (this.Star4 == "star-outline") {
+        this.Star1 = "star";
+        this.Star2 = "star";
+        this.Star3 = "star";
+        this.Star4 = "star";
+      }
+      else {
+        this.Star1 = "star";
+        this.Star2 = "star"
+        this.Star3 = "star";
+        this.Star4 = "star-outline"
+        this.Star5 = "star-outline";
+      }
+    }
+    else if (num == 5) {
+      if (this.Star5 == "star-outline") {
+        this.Star1 = "star";
+        this.Star2 = "star";
+        this.Star3 = "star";
+        this.Star4 = "star";
+        this.Star5 = "star";
+      }
+      else {
+        this.Star1 = "star";
+        this.Star2 = "star"
+        this.Star3 = "star";
+        this.Star4 = "star"
+        this.Star5 = "star-outline";
+      }
+    }
+  }
 
   ionViewWillEnter() {
     // this.loading = this.loadingCtrl.create({

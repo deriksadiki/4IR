@@ -7,12 +7,12 @@ import { SignInPage } from '../sign-in/sign-in';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { LoadingController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
-import { GetDirectionModalPage } from '../get-direction-modal/get-direction-modal';
+// import { GetDirectionModalPage } from '../get-direction-modal/get-direction-modal';
 
 declare var google;
 declare var firebase
 /**
- * Generated class for the ViewOrganizationInforPage page.
+ * Generated class for the GetDirectionModalPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -20,19 +20,18 @@ declare var firebase
 
 @IonicPage()
 @Component({
-  selector: 'page-view-organization-infor',
-  templateUrl: 'view-organization-infor.html',
+  selector: 'page-get-direction-modal',
+  templateUrl: 'get-direction-modal.html',
 })
-export class ViewOrganizationInforPage implements OnInit {
+export class GetDirectionModalPage {
+
   @ViewChild('map') mapRef: ElementRef;
-  @ViewChild('destmap') mapRef2: ElementRef;
+  //@ViewChild('destmap') mapRef2: ElementRef;
 
   orgArray = new Array();
   commentArr = new Array();
   detailArray = new Array();
   comments;
-
-  showBtn :boolean = true  ;
   imageKey;
   map;
   marker;
@@ -296,55 +295,55 @@ currentLocState = false;
     //this.initMap()
  
     
-    this.orgArray.push(this.navParams.get('orgObject'));
-    console.log(this.orgArray);
+    // this.orgArray.push(this.navParams.get('orgObject'));
+    // console.log(this.orgArray);
     
-    console.log(this.navParams.get('orgObject'))
-    this.imageKey = this.orgArray[0].id;
-    this.wifiRange1 = this.orgArray[0].wifiRange;
-    this.image = this.orgArray[0].img
-    this.logopic = this.orgArray[0].logo
+    // console.log(this.navParams.get('orgObject'))
+    // this.imageKey = this.orgArray[0].id;
+    // this.wifiRange1 = this.orgArray[0].wifiRange;
+    // this.image = this.orgArray[0].img
+    // this.logopic = this.orgArray[0].logo
 
-    this.address =this.orgArray[0].address 
-    console.log(this.logopic);
+    // this.address =this.orgArray[0].address 
+    // console.log(this.logopic);
     
-    this.website = this.orgArray[0].website
-    console.log(this.image)
+    // this.website = this.orgArray[0].website
+    // // console.log(this.image)
 
-    console.log(this.image)
-    this.services = this.orgArray[0].service[0]
+    // // console.log(this.image)
+    // this.services = this.orgArray[0].service[0]
 
-    console.log(this.services)
-    console.log(this.imageKey);
-    console.log(this.wifiRange1);
+    // console.log(this.services)
+    // console.log(this.imageKey);
+    // console.log(this.wifiRange1);
 
 
-    console.log(this.orgArray[0].lat);
+    // console.log(this.orgArray[0].lat);
 
-    this.destlat = this.orgArray[0].lat
-    this.destlong = this.orgArray[0].long
+    // this.destlat = this.orgArray[0].lat
+    // this.destlong = this.orgArray[0].long
 
-    this.destinationMap()
+    
     //this.initMap()
 
-    if (this.loginState){
-    let userID = firebase.auth().currentUser;
-    firebase.database().ref("Users/" + "/" + "App_Users/" + userID.uid).on('value', (data: any) => {
-      let details = data.val();
-      this.detailArray.length = 0;
-      console.log(details)
-      this.detailArray.push(details);
-      console.log(details);
+    // if (this.loginState){
+    // let userID = firebase.auth().currentUser;
+    // firebase.database().ref("Users/" + "/" + "App_Users/" + userID.uid).on('value', (data: any) => {
+    //   let details = data.val();
+    //   this.detailArray.length = 0;
+    //   console.log(details)
+    //   this.detailArray.push(details);
+    //   console.log(details);
 
 
-      this.username = this.detailArray[0].name;
-      this.url = this.detailArray[0].downloadurl
+    //   this.username = this.detailArray[0].name;
+    //   this.url = this.detailArray[0].downloadurl
 
-      console.log(this.username)
-      console.log(this.url)
+    //   console.log(this.username)
+    //   console.log(this.url)
 
-    });
-    }
+    // });
+    // }
 
   }
 
@@ -387,7 +386,7 @@ getLocation(){
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ViewOrganizationInforPage');
-
+    this.destinationMap()
 
   }
 
@@ -398,211 +397,16 @@ getLocation(){
 
     console.log("testmap");
 
-    this.retrieveComments();
+    //this.retrieveComments();
   }
 
-  retrieveComments() {
-    this.commentArr = [];
-    this.irhubProvider.viewComments(this.comments, this.imageKey).then((data: any) => {
-      this.commentArr = data;
-      console.log(this.commentArr)
-      // this.commentArr.reverse(); 
-
-      let rating = this.irhubProvider.getRating();
-      if (rating > 0) {
-        this.rate(rating);
-        this.rateState = true;
-      }
-      else if (rating == undefined || rating == 0) {
-        this.rateState = false
-      }
-
-    })
-  }
-
-  comment(num) {
-    this.irhubProvider.checkAuthState().then(data => {
-      if (data == true) {
-        console.log(data);
-        if (this.rateState == false || this.rateState == undefined) {
-          const prompt = this.alertCtrl.create({
-            cssClass: "myAlert",
-            // title: 'Comment',
-            message: "Pleave leave your comment below",
-            inputs: [
-              {
-                name: 'comments',
-                placeholder: 'comments'
-              },
-            ],
-            buttons: [
-              {
-                text: 'Cancel',
-                handler: data => {
-                  console.log('Cancel clicked');
-                }
-              },
-              {
-                text: 'Comment',
-                handler: data => {
-                  console.log('Saved clicked' + data.comments);
-                  this.irhubProvider.comments(data.comments, this.imageKey, num, this.url, this.username).then((data) => {
-                    this.irhubProvider.viewComments(this.comments, this.imageKey).then((data: any) => {
-                      var y = this.orgArray[0].avg + 1;
-                      var x = ((num - this.orgArray[0].rating) / y);
-                      x = x + this.orgArray[0].rating
-                      this.orgArray[0].rating = Math.round(x);
-                      this.commentArr = data;
-                      // this.commentArr.reverse();
-                      this.commentArr.length = 0;
-                      this.retrieveComments();
-                      this.rate(num);
-                      this.rateState = true;
-                    })
-                  })
-                }
-              }
-            ],
-            // cssClass: 'myAlert',
-          });
-          prompt.present();
-        }
-        else if (this.rateState == true) {
-          // let alert = this.alertCtrl.create({
-          //   cssClass: "myAlert",
-          //   title: 'Oops!',
-          //   subTitle: 'You cannot rate more than once',
-          //   buttons: ['Ok']
-          // });
-          // alert.present();
-
-          this.showBtn = false ;
-        }
-      }
-      else {
-        let alert = this.alertCtrl.create({
-          cssClass: "myAlert",
-          title: '',
-          subTitle: 'You have to sign in before you can rate this organistion, would you like to sign in now?',
-          buttons: [
-            {
-              text: 'Sign in',
-              handler: data => {
-                var opt = "rate";
-                this.navCtrl.push(SignInPage, { option: opt, obj: this.orgArray })
-              }
-            },
-            {
-              text: 'Cancel',
-              handler: data => {
-                this.retrieveComments();
-              }
-            }
-          ],
-        });
-        alert.present();
-      }
-    })
-
-  }
-
-  rate(num) {
-    if (num == 1) {
-      if (this.Star1 == "star-outline") {
-        this.Star1 = "star";
-      }
-      else {
-        this.Star1 = "star-outline";
-        this.Star2 = "star-outline"
-        this.Star3 = "star-outline";
-        this.Star4 = "star-outline"
-        this.Star5 = "star-outline";
-      }
-    }
-    else if (num == 2) {
-      if (this.Star2 == "star-outline") {
-        this.Star1 = "star";
-        this.Star2 = "star";
-      }
-      else {
-        this.Star1 = "star";
-        this.Star2 = "star-outline"
-        this.Star3 = "star-outline";
-        this.Star4 = "star-outline"
-        this.Star5 = "star-outline";
-      }
-    }
-    else if (num == 3) {
-      if (this.Star3 == "star-outline") {
-        this.Star1 = "star";
-        this.Star2 = "star";
-        this.Star3 = "star";
-      }
-      else {
-        this.Star1 = "star";
-        this.Star2 = "star"
-        this.Star3 = "star-outline";
-        this.Star4 = "star-outline"
-        this.Star5 = "star-outline";
-      }
-    }
-    else if (num == 4) {
-      if (this.Star4 == "star-outline") {
-        this.Star1 = "star";
-        this.Star2 = "star";
-        this.Star3 = "star";
-        this.Star4 = "star";
-      }
-      else {
-        this.Star1 = "star";
-        this.Star2 = "star"
-        this.Star3 = "star";
-        this.Star4 = "star-outline"
-        this.Star5 = "star-outline";
-      }
-    }
-    else if (num == 5) {
-      if (this.Star5 == "star-outline") {
-        this.Star1 = "star";
-        this.Star2 = "star";
-        this.Star3 = "star";
-        this.Star4 = "star";
-        this.Star5 = "star";
-      }
-      else {
-        this.Star1 = "star";
-        this.Star2 = "star"
-        this.Star3 = "star";
-        this.Star4 = "star"
-        this.Star5 = "star-outline";
-      }
-    }
-  }
+  
 
 
-  call(cell) {
-    console.log(cell);
+  
 
-    this.callNumber.callNumber(cell, true)
-      .then(res => console.log('Launched dialer!', res))
-      .catch(err => console.log('Error launching dialer', err));
-  }
-  email(emails) {
-    let email = {
-      to: emails,
-      cc: [],
-      bcc: [],
-      attachment: [],
-      subject: '',
-      body: '',
-      isHtml: false,
-      app: 'Gmail'
-    };
-    // Send a text message using default options
-    this.emailComposer.open(email);
-  }
   //show map 
-  map2;
+  
   destinationMap(){
     // const loader = this.loadingCtrl.create({
     //   content: "Please wait...",
@@ -617,11 +421,13 @@ getLocation(){
         disableDefaultUI: true,
         styles: this.mapStyles
       }
-      this.map2 = new google.maps.Map(this.mapRef2.nativeElement, options);
+    
+     
+      this.map = new google.maps.Map(this.map.nativeElement, options);
       this.marker = new google.maps.Marker({
-        map: this.map2,
+        map: this.map,
         zoom: 10,
-        position: this.map2.getCenter()
+        position: this.map.getCenter()
       });
     }, 4000);
     console.log("show-map");
@@ -842,10 +648,4 @@ this.destMaker = new google.maps.Marker({
 
   }
 
-
-  ShowBtnMethod(){
-    this.showBtn = false ;
-
-  }
 }
-

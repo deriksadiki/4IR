@@ -39,6 +39,8 @@ export class IRhubProvider {
 
   }
 
+  
+
   SignIn(email, password) {
     return firebase.auth().signInWithEmailAndPassword(email, password);
   }
@@ -99,8 +101,8 @@ export class IRhubProvider {
         }).catch((error) => {
           loading.dismiss();
           const alert = this.alertCtrl.create({
-            subTitle: error.message,
             cssClass: 'myAlert',
+            subTitle: error.message,
             buttons: [
               {
                 text: 'ok',

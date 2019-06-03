@@ -1,6 +1,6 @@
 <ion-content>
 
-    <div id="theMap">
+    <!-- <div id="theMap">
         <ion-fab top right id="googleMaps">
             <button ion-fab mini (click)="googleMap()">
                 <ion-icon name="compass"></ion-icon>
@@ -14,9 +14,16 @@
         <button ion-button clear class="moreinfo"></button>
         <button ion-button (click)="navigate()" id="navigate">GET DIRECTIONS</button>
         <p (click)="getDistance()" id="getDistance">{{showDistance}}</p>
+       
+       
         <div #map id="map">
         </div>
-    </div>
+    </div> -->
+
+
+
+
+
 
 
     <!-- <ion-fab top left class="backBtn">
@@ -52,14 +59,14 @@
             <br>
         </div>
     </div>
-    <div #destmap id="destmap" (click)="getDirection()">
+    <div #destmap id="destmap">
     </div>
     <br>
     <div id="orgView" *ngFor="let i of orgArray">
         <div class="actions">
-            <div class="icons" (click)="getDirection()">
+            <!-- <div class="icons" (click)="getDirection()">
                 <ion-icon name="navigate"></ion-icon>
-            </div>
+            </div> -->
             <div class="icons">
                 <ion-icon name="call" (click)="call(i.cell)"></ion-icon>
             </div>
@@ -88,7 +95,7 @@
         </div>
         <div class="switchCases">
             <div class="switch" no-padding [ngSwitch]="pet">
-                <div id="segView" *ngSwitchCase="'services'">
+                <div class="theView" id="segView" *ngSwitchCase="'services'">
 
                     <!-- <div class="emptyCont" *ngIf="services.length == 0 || services.length == undefined">
                             <img id="emptyIMG" src="../../assets/empty.jfif">
@@ -114,30 +121,24 @@
                             </ion-list>
                         </div> -->
                     <div *ngFor="let a of services">
-                        <ion-grid>
-                            <ion-row>
-                                <ion-col>
-                                    <h6 text-left>{{a}}
-                                    </h6>
-                                </ion-col>
-                                <ion-col>
-                                    <h6 text-right>R200.00
-                                    </h6>
-                                </ion-col>
-                            </ion-row>
-                        </ion-grid>
-                        <p padding-left padding-right>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veritatis eveniet iste maiores mollitia veniam nulla impedit, exercitationem
-                            doloremque, sint quo dolor! Autem beatae inventore officiis provident tempore, praesentium eum
-                            dignissimos!
-                        </p>
-                        <div class="line"></div>
+
+                        <div id="serv-list">
+                            <p class="NamePadding">{{a}}
+                            </p>
+
+                            <p class="ParagraphPadding">
+                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veritatis eveniet iste maiores mollitia veniam nulla impedit, exercitationem
+                                doloremque, sint quo dolor! Autem beatae inventore officiis provident tempore, praesentium
+                                eum dignissimos!
+                            </p>
+                            <div class="line"></div>
+                        </div>
+
                     </div>
                 </div>
 
-                <ion-list *ngSwitchCase="'reviews'">
-                    <!-- <h3 text-center>Rate this organisation!</h3> -->
-                    <div class="StarCard">
+                <ion-list class="theView" *ngSwitchCase="'reviews'">
+                    <!-- <div class="StarCard">
                             <div class="ratings" align="center">
                                 <div *ngIf="rateState == false; then loggedIn5 ">
                                 </div>
@@ -157,7 +158,7 @@
                                     <h3 class="OrgMessage">Thank you for rating this organisation.</h3>
                                 </ng-template>
                             </div>
-                        </div> 
+                        </div> -->
 
                     <div class="theDiv" *ngFor="let a of commentArr">
                         <!-- <ion-item>
@@ -239,58 +240,101 @@
                                     <p class="message">{{a.comment}}</p>
                                 </ion-card-content>
                                 <hr> -->
-                        <ion-card class="cardf">
-                            <ion-item>
-                                <ion-avatar item-start>
-                                    <img class="profilePic" [src]="a.url">
-                                </ion-avatar>
-                                <h2>{{a.username}}</h2>
-                            </ion-item>
-                            <ion-card-content>
-                                <p>
-                                    {{a.comment}}
-                                </p>
-                            </ion-card-content>
-                            <!-- <p padding-right item-end style="color: gray ;text-align: end ">
-                                {{a.date}}
-                            </p> -->
+                        <!-- <ion-card class="cardf"> -->
 
-                        </ion-card>
+                        <div class="rev-div">
+                            <img class="imgg" class="profilePic" [src]="a.url">
+                            <div class="speech-bubble">
+
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <p class="rev-name"> {{a.username}}</p>
+                                        </td>
+                                        <td align="right">
+                                            <p class="stars">
+                                                <ion-icon class="TheStar" name="star"></ion-icon>
+                                                <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                                <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                                <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                                <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                            </p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2">
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas dolorum placeat
+                                                quidem officiis. Ut dolorum velit itaque ad odio facere possimus ratione
+                                                at, eaque accusantium atque culpa quisquam ex quidem.</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <!-- <ion-item>
+                            <ion-avatar item-start>
+                                <img class="imgg" class="profilePic" [src]="a.url">
+                            </ion-avatar>
+                            <div class="chatbubble">
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col col-8>
+                                            <p class="rateName"></p>
+                                        </ion-col>
+                                        <ion-col col-4>
+
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
+
+                                <p class="rateComment">
+
+                                    {{a.comment}}
+
+                                </p>
+                            </div>
+                        </ion-item> -->
+                        <!-- <p padding-right item-end style="color: gray ;text-align: end ">
+                            {{a.date}}
+                        </p> -->
+
+
+                        <!-- </ion-card> -->
                     </div>
 
-                    <!-- <ion-fab right>
-
-                        <div *ngIf="rateState == false; then loggedIn5 ">
-                        </div>
-                        <div *ngIf="rateState == true; then loggedIn2">
-                        </div>
-                        <button ion-fab class="TheStar">
-                            <ion-icon name="star"></ion-icon>
+                    <ion-fab right mini>
+                        <button ion-fab mini style="background: white;  "  (click)="ShowBtnMethod()" *ngIf="showBtn">
+                            <ion-icon name="star" color="gold"></ion-icon>
                         </button>
+
+
+
                         <ion-fab-list side="left">
-                            <button ion-fab>
-                                <ion-icon name={{Star1}} (click)="comment('1')"></ion-icon>
+                            <button ion-fab style="background: whitesmoke;">
+                                <ion-icon class="TheStar1" name={{Star1}} (click)="comment('1')"></ion-icon>
                             </button>
-                            <button ion-fab>
-                                <ion-icon name={{Star2}} (click)="comment('2')"></ion-icon>
+                            <button ion-fab style="background: whitesmoke;">
+                                <ion-icon class="TheStar1" name={{Star1}} (click)="comment('2')"></ion-icon>
                             </button>
-                            <button ion-fab>
-                                <ion-icon name={{Star3}} (click)="comment('3')"></ion-icon>
+                            <button ion-fab style="background: whitesmoke;">
+                                <ion-icon class="TheStar1" name={{Star1}} (click)="comment('3')"></ion-icon>
                             </button>
-                            <button ion-fab>
-                                <ion-icon name={{Star4}} (click)="comment('4')"></ion-icon>
+                            <button ion-fab style="background: whitesmoke;">
+                                <ion-icon class="TheStar1" name={{Star1}} (click)="comment('4')"></ion-icon>
                             </button>
-                            <button ion-fab>
-                                <ion-icon name={{Star5}} (click)="comment('5')"></ion-icon>
+                            <button ion-fab style="background: whitesmoke;">
+                                <ion-icon class="TheStar1" name={{Star1}} (click)="comment('5')"></ion-icon>
                             </button>
                         </ion-fab-list>
-                    </ion-fab> -->
 
-
+                    </ion-fab>
                 </ion-list>
 
 
-                <div id="segView" *ngSwitchCase="'gallery'">
+                <div class="theView" id="segView" *ngSwitchCase="'gallery'">
                     <!-- <div class="emptyCont" *ngIf="gallery.length == 0 || gallery.length == undefined">
                                         <img id="emptyIMG" src="../../assets/empty.jfif">
                                         <p id="lie">There are no uploads avaliable yet .....</p>
