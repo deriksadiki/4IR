@@ -116,7 +116,7 @@ export class HomePage {
   showMultipleMarker;
   searchDismissState = "search";
   textField;
-  img = "../../assets/imgs/defaultImage.png";
+  img = "assets/imgs/defaultImage.png";
   toggleState = "map";
   showNearbyList: boolean = false;
   showAllOrganisation: boolean = true;
@@ -407,11 +407,11 @@ export class HomePage {
 
 
   ionViewWillEnter() {
-    this.loading = this.loadingCtrl.create({
-      spinner: 'bubbles',
-      content: 'Please wait...',
-    });
-    this.loading.present();
+    // this.loading = this.loadingCtrl.create({
+    //   spinner: 'bubbles',
+    //   content: 'Please wait...',
+    // });
+    // this.loading.present();
     setTimeout(() => {
       document.getElementById("icon").style.color = "#ff6337";
       this.IRmethods.getCurrentLocations().then((data: any) => {
@@ -532,7 +532,7 @@ export class HomePage {
           setTimeout(() => {
             this.markers().then(() => {
               console.log("show Marker");
-              this.loading.dismiss()
+              // this.loading.dismiss()
 
             });
           }, 8000)

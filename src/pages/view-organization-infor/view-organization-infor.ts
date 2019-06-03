@@ -81,10 +81,10 @@ currentLocState = false;
     this.logopic = this.orgArray[0].logo
 
     this.address =this.orgArray[0].address 
-    console.log(this.address);
+    console.log(this.logopic);
     
     this.website = this.orgArray[0].website
-    console.log(this.orgArray)
+    console.log(this.image)
 
     console.log(this.image)
     this.services = this.orgArray[0].service[0]
