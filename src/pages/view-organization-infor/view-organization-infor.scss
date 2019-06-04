@@ -85,6 +85,9 @@
       transform: translateX(-50%);
       height: 50px;
     }
+    .myFab{
+      display: block;
+    }
     #getDistance {
       position: absolute;
       z-index: 100;
@@ -99,7 +102,9 @@
     .moreinfo {
     }
   }
-  
+  .theStatements{
+    display: none;
+  }
   .TheStar {
     color: #dcc050;
     margin-top: 8px;

@@ -183,8 +183,12 @@ export class IRhubProvider {
                 totRating = Math.round( totRating)
                 }
                
+              var wifiValue;
+              console.log(details[keys[x]].freeWifi);
               
-              if (details[keys[x]].freeWifi == "Yes")
+              // if (details[keys[x]].freeWifi != undefined)
+              // wifiValue =  details[keys[x]].freeWifi
+              if ( wifiValue== "Yes")
               pay = 1;
               if (details[keys[x]].wifi == "Yes")
               wifi = 1;

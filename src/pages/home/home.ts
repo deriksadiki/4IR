@@ -1,5 +1,5 @@
 
-import { NavController, LoadingController, Loading, AlertController } from 'ionic-angular';
+import { NavController, Loading, AlertController } from 'ionic-angular';
 import { IRhubProvider } from '../../providers/i-rhub/i-rhub';
 import { SignInPage } from '../sign-in/sign-in';
 import { UserProfilePage } from '../user-profile/user-profile';
@@ -358,7 +358,7 @@ export class HomePage {
   userLocation = "Searching for location..." ;
 
 
-  constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public IRmethods: IRhubProvider,  public alertCtrl: AlertController) {
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
       this.orgArray = data;
@@ -942,12 +942,12 @@ tempArray =  new Array();
 
       }
       else{
-    let loading = this.loadingCtrl.create({
-      spinner: 'bubbles',
-      content: 'please wait...',
-      duration: 4000000
-    });
-    loading.present();
+    // let loading = this.loadingCtrl.create({
+    //   spinner: 'bubbles',
+    //   content: 'please wait...',
+    //   duration: 4000000
+    // });
+    // loading.present();
 
 
 
@@ -958,7 +958,8 @@ tempArray =  new Array();
     this.showAllOrganisation = false;
     this.custom1 = "inactive";
     this.custom2 = "primary";
-    loading.dismiss();}
+    // loading.dismiss();
+      }
   }
     else{
       const alert = this.alertCtrl.create({

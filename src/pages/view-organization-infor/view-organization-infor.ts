@@ -331,12 +331,6 @@ export class ViewOrganizationInforPage implements OnInit {
     if (this.loginState) {
       let userID = firebase.auth().currentUser;
 
-        if(userID.uid == null){
-          let btnOrder = document.getElementsByClassName('theStatements') as HTMLCollectionOf<HTMLElement>
-          btnOrder[0].style.display = "none";
-        }else{
-          this.showBtn = true;
-        }
       firebase.database().ref("Users/" + "/" + "App_Users/" + userID.uid).on('value', (data: any) => {
         let details = data.val();
         this.detailArray.length = 0;
@@ -355,7 +349,19 @@ export class ViewOrganizationInforPage implements OnInit {
       
       });
     }
+    console.log(this.loginState);
+    
 
+    // if(!this.loginState){
+    //   var btnOrder = document.getElementsByClassName("theStatements") as HTMLCollectionOf<HTMLElement>;
+
+    //   btnOrder[0].style.display = "none";
+    // }else{
+    //   // this.showBtn = true;
+    //   var btnOrder = document.getElementsByClassName('theStatements') as HTMLCollectionOf<HTMLElement>;
+    //   btnOrder[0].style.display= "block";
+
+    // }
      
 
 
