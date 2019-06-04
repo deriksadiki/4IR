@@ -3,6 +3,7 @@ import { LoadingController } from "ionic-angular";
 import { AlertController } from "ionic-angular";
 import moment from 'moment';
 import { Geolocation } from '@ionic-native/geolocation';
+// import { access } from 'fs';
 
 declare var firebase;
 
@@ -147,7 +148,6 @@ export class IRhubProvider {
         let loading = this.loadingCtrl.create({
           spinner: 'bubbles',
           content: 'please wait...',
-          duration: 4000000
         });
         loading.present();
         var user = firebase.auth().currentUser;
@@ -183,12 +183,8 @@ export class IRhubProvider {
                 totRating = Math.round( totRating)
                 }
                
-              var wifiValue;
-              console.log(details[keys[x]].freeWifi);
               
-              // if (details[keys[x]].freeWifi != undefined)
-              // wifiValue =  details[keys[x]].freeWifi
-              if ( wifiValue== "Yes")
+              if (details[keys[x]].freeWifi == "Yes")
               pay = 1;
               if (details[keys[x]].wifi == "Yes")
               wifi = 1;
@@ -216,8 +212,8 @@ export class IRhubProvider {
               this.orgArray.push(orgObject)
             })
             }
+            resolve(this.orgArray)
             setTimeout(() => {
-              resolve(this.orgArray)
               loading.dismiss();
             }, 3000);
            
@@ -230,11 +226,12 @@ export class IRhubProvider {
   storeOrgNames(name, cat) {
     this.orgNames.push(name);
     this.orgNames.push(cat);
-    console.log(this.orgNames);
+    // console.log(this.orgNames);
 
   }
 
   getOrgNames() {
+    console.log('get names');
     return this.orgNames
   }
 
@@ -254,6 +251,28 @@ export class IRhubProvider {
           }
         });
       })
+    })
+  }
+galleryArray = new Array()
+  getGallery(key){
+    return new Promise((accpt, rej) => {
+      this.ngzone.run(() => {
+            firebase.database().ref("Gallery/" + key).on('value', (data: any) => {
+              if (data.val() != null){
+                this.galleryArray.length = 0;
+                var pictures = data.val();
+                var keys = Object.keys(pictures)
+                for(var x = 0; x < keys.length; x++){
+                  var k = keys[x];
+                  this.galleryArray.push(pictures[k].GalUrl)
+                }
+               accpt(this.galleryArray) 
+              }
+           else {
+            console.log('no user');
+           }
+      })
+    })
     })
   }
 
@@ -279,15 +298,6 @@ export class IRhubProvider {
   }
 
   comments(comment: any, commentKey: any, rating, url, username) {
-    console.log(comment);
-    console.log(commentKey);
-    console.log(rating);
-    console.log(url);
-    console.log(username);
-    
-    
-    
-    
     let user = firebase.auth().currentUser;
     return new Promise((accpt, rejc) => {
       this.ngzone.run(() => {
@@ -311,41 +321,40 @@ export class IRhubProvider {
     this.rating = 0;
     return new Promise((accpt, rejc) => {
       this.ngzone.run(() => {
-        firebase.database().ref("Reviews/" + commentKey).on("value", (data: any) => {
+        firebase.database().ref("comments/" + commentKey).on("value", (data: any) => {
           // this.commentArr.length = 0;
           let user = firebase.auth().currentUser
           let CommentDetails = data.val();
-          console.log(CommentDetails)
           if (data.val() != null || data.val() != undefined) {
             let keys1: any = Object.keys(CommentDetails);
-            console.log(keys1)
             for (var i = 0; i < keys1.length; i++) {
               let key = keys1[i];
               let chckId = CommentDetails[key].uid;
               let obj = {
                 comment: CommentDetails[key].comment,
-                rating: parseInt(CommentDetails[key].rate),
                 uid: CommentDetails[key].uid,
-                url: CommentDetails[key].url,
+                url:  CommentDetails[key].url,
+                rating: parseInt(CommentDetails[key].rate),
                 username: CommentDetails[key].username,
                 date: moment(CommentDetails[key].date, 'MMMM Do YYYY, h:mm:ss a').startOf('minutes').fromNow(),
                 key: key,
               }
-              console.log(obj)
-              this.commentArr.push(obj)
-              console.log(this.commentArr)
               if (user) {
                 if (user.uid == CommentDetails[key].uid) {
                   this.assignRating(CommentDetails[key].rate)
                 }
               }
+           
+                this.commentArr.push(obj);
+                console.log(this.commentArr)
+         
             }
             accpt(this.commentArr);
             console.log(this.commentArr);
 
           }
           else {
-            this.orgArray.length = 0;
+            // this.categoryArr.length = 0;
             accpt('');
           }
 

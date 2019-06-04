@@ -20,7 +20,7 @@ export class HomePage {
   logInState;
   category;
   locationState ;
-  searchItem ;
+  searchItem : string;
   styles: [
     { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
     { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
@@ -364,12 +364,12 @@ export class HomePage {
       this.orgArray = data;
       this.setBackItems();
       console.log(this.orgArray);
-      // setTimeout(() => {
+      setTimeout(() => {
         var names = this.IRmethods.getOrgNames()
         console.log(names);
         this.storeOrgNames(names)
         // this.loading.dismiss()
-      // }, 2500);
+      }, 2500);
     })
 
 
@@ -488,7 +488,7 @@ export class HomePage {
     }
   }
 
-  ionViewWillEnter() {
+  ionViewDidLoad() {
     // this.loading = this.loadingCtrl.create({
     //   spinner: 'bubbles',
     //   content: 'Please wait...',
@@ -849,25 +849,33 @@ export class HomePage {
   }
 
   storeOrgNames(names) {
-    this.orgNames[0] = names[0]
-    for (var x = 1; x < names.length; x++){
-      var state = 0;
-      for (var i = 0; i < this.orgNames.length; i++){
-        if (this.orgNames[i] == names[x]){
-          state = 1;
-          break;
-        }
-      }
-      if (state == 0){
-        this.orgNames[x] = names[x]
-      }
-    }
-    console.log(this.orgNames);
+    this.orgNames = names;
+    // console.log(names);
+    
+    // this.orgNames[0] = names[0]
+    // for (var x = 1; x < names.length; x++){
+    //   var state = 0;
+    //   for (var i = 0; i < this.orgNames.length; i++){
+    //     if (this.orgNames[i] == names[x]){
+    //       state = 1;
+    //       break;
+    //     }
+    //   }
+    //   if (state == 0){
+    //     this.orgNames[x] = names[x]
+    //   }
+    // }
+    // console.log(this.orgNames);
   }
-tempArray =  new Array();
+
+  tempArray =  new Array();
   initializeItems() {
     this.items = this.orgNames
+    
+    console.log(this.items);
+    
   }
+
   filterItems(val){
     if (val && val.trim() != '') {
       this.items = this.items.filter((item) => {
@@ -896,18 +904,18 @@ tempArray =  new Array();
     this.setBackItems();
 
     // set val to the value of the ev target
-    var val = this.searchItem;
+   this.searchItem;
 
     // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
+    if (this.searchItem && this.searchItem.trim() != '') {
       this.items = this.items.filter((item) => {
-        console.log(val);
-
-        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        console.log(this.searchItem);
+        return (item.toLowerCase().indexOf(this.searchItem.toLowerCase()) > -1);
       })
     }
-    else if (val == "" || val == null) {
+    else if (this.searchItem == "" || this.searchItem == null) {
       this.items = [];
+      this.searchItem = ""
     }
     console.log(this.items);
   // this.tempArray = [];
@@ -916,7 +924,7 @@ tempArray =  new Array();
   //       this.tempArray = this.orgArray[x]
   //     }
   //   }
-    if (val == "" || val == " " || val == null) {
+    if (this.searchItem == "" || this.searchItem == " " || this.searchItem == null) {
       listContent.style.display = "block"
     }
     else {
@@ -933,7 +941,7 @@ tempArray =  new Array();
       if(this.nearby.length == 0){
         const alert = this.alertCtrl.create({
           // title: "No Password",
-          subTitle: "Currently we don't have nearby organisation",
+          subTitle: "We don't have organisations near by currently",
           buttons: ['OK'],
           cssClass: 'myAlert',
         });
@@ -964,7 +972,7 @@ tempArray =  new Array();
     else{
       const alert = this.alertCtrl.create({
         // title: "No Password",
-        subTitle: "Currently your location is off",
+        subTitle: "Please turn on your location to enjoy 4IR's full potential.",
         buttons: ['OK'],
         cssClass: 'myAlert',
       });

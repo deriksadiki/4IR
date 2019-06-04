@@ -70,7 +70,7 @@
 
     </div>
 
-    <ion-slides class="slides" slidesPerView="2" offset="50%" loop="false" spaceBetween="10">
+    <ion-slides class="slides" slidesPerView="2.5" offset="50%" loop="false" spaceBetween="10">
      
         <div class="theDiv" *ngFor="let i of orgArray">
           <ion-slide class="card-background-page">
@@ -79,7 +79,7 @@
               <img class="theImage" src="{{i.img}}" />
               <div class="card-title"><p>{{i.orgName}}</p></div>
               <div class="card-subtitle">
-                <div *ngIf="i.rating == 0; then loggedIn0">
+                <div *ngIf="i.rating == 0; then loggedIn110">
                 </div>
                 <div *ngIf="i.rating == 1; then loggedIn1">
                 </div>
@@ -91,7 +91,7 @@
                 </div>
                 <div *ngIf="i.rating == 5; then loggedIn5">
                 </div>
-                <ng-template #loggedIn0>
+                <ng-template #loggedIn110>
                   <i>
                     <ion-icon name="star-outline"></ion-icon>
                     <ion-icon name="star-outline"></ion-icon>
@@ -158,8 +158,7 @@
   <!-- to show list of organization -->
   <ion-list id="searchlist">
     <ion-item id="searched-items" *ngFor="let item of items" (click)="goToViewPage(item)">
-      <br>
-      <br> {{item}}
+     {{item}}
     </ion-item>
   </ion-list>
   <div id="list" padding>
@@ -205,7 +204,7 @@
             
             <ng-template #loggedIn0>
                 <p>
-                    <ion-icon class="TheStar" name="star"></ion-icon>
+                    <ion-icon class="TheStar" name="star-outline"></ion-icon>
                     <ion-icon class="TheStar" name="star-outline"></ion-icon>
                     <ion-icon class="TheStar" name="star-outline"></ion-icon>
                     <ion-icon class="TheStar" name="star-outline"></ion-icon>
@@ -369,7 +368,7 @@
                 
                 <ng-template #loggedIn0>
                     <p>
-                        <ion-icon class="TheStar" name="star"></ion-icon>
+                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
                         <ion-icon class="TheStar" name="star-outline"></ion-icon>
                         <ion-icon class="TheStar" name="star-outline"></ion-icon>
                         <ion-icon class="TheStar" name="star-outline"></ion-icon>

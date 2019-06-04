@@ -265,9 +265,11 @@ box-shadow: 0px -1px 7px -1px rgba(0,0,0,0.75);
   }
   #searchlist{
     position: relative;
-    top: 2%
+    top: 70px
   }
   #searched-items{
+    padding-top: 0;
+    margin-top: -10px;
     animation:  1s fadeIn;
 
 }
@@ -318,6 +320,10 @@ box-shadow: 0px -1px 7px -1px rgba(0,0,0,0.75);
     font-size: 70%;
     padding-left: 10px;
     padding-right: 10px;
+    .button-inner{
+      background: transparent 
+    }
+    
   }
   .ionHeader {
     height: 0px;
@@ -412,5 +418,14 @@ box-shadow: 0px -1px 7px -1px rgba(0,0,0,0.75);
     // }
   }
 }
-
+.alert-wrapper{
+  
+  .alert-head, .alert-radio-group, .alert-tappable, .alert-button-group, .button-inner, .button-effect, .alert-radio-label, .alert-radio-icon{
+    background-color: #04592a;
+    color: #ffffff !important;
+  }
+  .alert-radio-icon{
+    border: 2px solid white;
+  }
+}
 

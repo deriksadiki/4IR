@@ -102,9 +102,9 @@
     .moreinfo {
     }
   }
-  .theStatements{
-    display: none;
-  }
+  // .theStatements{
+  //   display: none;
+  // }
   .TheStar {
     color: #dcc050;
     margin-top: 8px;
@@ -130,7 +130,7 @@
   object-fit: contain;
   left: 50%;
   top: 150px;
-  transform: translateX(-50%)
+  transform: translateX(-50%);
 }
 
 .price{
@@ -357,5 +357,10 @@ ion-avatar {
 }
 .item-md{
   padding: 15px
+}
+.galuploaded-byOrg{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 

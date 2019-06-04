@@ -290,8 +290,9 @@ export class ViewOrganizationInforPage implements OnInit {
   address;
   loginState = this.navParams.get('loginState')
   currentLocState = false;
-
+  hideMe;
   theTabs = "services";
+  galleryArray = new Array();
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, public modalCtrl: ModalController) {
     
@@ -299,7 +300,11 @@ export class ViewOrganizationInforPage implements OnInit {
 
     this.orgArray.push(this.navParams.get('orgObject'));
     console.log(this.orgArray);
-
+this.irhubProvider.getGallery(this.orgArray[0].id).then((data:any) =>{
+  this.galleryArray = data;
+  console.log(this.galleryArray);
+  
+})
     console.log(this.navParams.get('orgObject'))
     this.imageKey = this.orgArray[0].id;
     this.wifiRange1 = this.orgArray[0].wifiRange;
@@ -337,7 +342,7 @@ export class ViewOrganizationInforPage implements OnInit {
         console.log(details)
         this.detailArray.push(details);
         console.log(details);
-
+        this.hideMe = true
 
         this.username = this.detailArray[0].name;
         this.url = this.detailArray[0].downloadurl
@@ -353,14 +358,8 @@ export class ViewOrganizationInforPage implements OnInit {
     
 
     // if(!this.loginState){
-    //   var btnOrder = document.getElementsByClassName("theStatements") as HTMLCollectionOf<HTMLElement>;
-
-    //   btnOrder[0].style.display = "none";
-    // }else{
-    //   // this.showBtn = true;
-    //   var btnOrder = document.getElementsByClassName('theStatements') as HTMLCollectionOf<HTMLElement>;
-    //   btnOrder[0].style.display= "block";
-
+   
+    //   this.hideMe = false;
     // }
      
 
@@ -425,8 +424,8 @@ export class ViewOrganizationInforPage implements OnInit {
     this.irhubProvider.viewComments(this.comments, this.imageKey).then((data: any) => {
       this.commentArr = data;
       console.log(this.commentArr)
-      this.commentArr.reverse(); 
-      this.commentArr.length=0;
+      // this.commentArr.reverse(); 
+      // this.commentArr.length=0;
 
       let rating = this.irhubProvider.getRating();
       if (rating > 0) {
@@ -475,7 +474,7 @@ export class ViewOrganizationInforPage implements OnInit {
                       this.orgArray[0].rating = Math.round(x);
                       this.commentArr = data;
                       // this.commentArr.reverse();
-                      this.commentArr.length = 0;
+                      // this.commentArr.length = 0;
                       this.retrieveComments();
                       this.rate(num);
                       this.rateState = true;
@@ -497,8 +496,6 @@ export class ViewOrganizationInforPage implements OnInit {
           });
           alert.present();
 
-          let btnOrder = document.getElementsByClassName('theStatements') as HTMLCollectionOf<HTMLElement>
-          btnOrder[0].style.display = "none";
         }
       }
       else {
@@ -691,19 +688,19 @@ export class ViewOrganizationInforPage implements OnInit {
 
   }
 
-  ShowBtnMethod(){
-    console.log("clicked")
+  // ShowBtnMethod(){
+  //   console.log("clicked")
 
-    //this.rateState == true
+  //   //this.rateState == true
 
-    if(this.rateState == true){
-      this.showBtn =false ;
-    }else{
-      this.showBtn =true ; 
-    }
+  //   if(this.rateState == true){
+  //     this.showBtn =false ;
+  //   }else{
+  //     this.showBtn =true ; 
+  //   }
 
-    console.log(this.rateState)
-  }
+  //   console.log(this.rateState)
+  // }
 
   getDirection() {
 

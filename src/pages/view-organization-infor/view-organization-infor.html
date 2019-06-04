@@ -2,8 +2,8 @@
 
     <div id="orgView" *ngFor="let i of orgArray">
         <div class="cover">
-            <img id="myLogo" src="{{i.logo}}" alt="">
-            <img id="myCover" src="{{i.img}}" alt="" imageViewer>
+            <img id="myLogo" src="{{i.logo}}" alt="" imageViewer>
+            <img id="myCover" src="{{i.img}}" alt="">
         </div>
         <div class="details">
             <div class="orgName">
@@ -89,13 +89,12 @@
                     <div *ngFor="let a of services">
 
                         <div id="serv-list">
-                            <p class="NamePadding">{{a}}
+                            <!-- <p>{{a.wifiRange1}}f</p> -->
+                            <p class="NamePadding">{{a.title}}
                             </p>
 
                             <p class="ParagraphPadding">
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veritatis eveniet iste maiores mollitia veniam nulla impedit, exercitationem
-                                doloremque, sint quo dolor! Autem beatae inventore officiis provident tempore, praesentium
-                                eum dignissimos!
+                                {{a.description}}
                             </p>
                             <div class="line"></div>
                         </div>
@@ -104,27 +103,27 @@
                 </div>
 
                 <ion-list class="theView" *ngSwitchCase="'reviews'">
-                    <!-- <div class="StarCard">
-                            <!-- <div class="ratings" align="center">
-                                <div *ngIf="rateState == false; then loggedIn5 ">
-                                </div>
-                                <div *ngIf="rateState == true; then loggedIn2">
-                                </div> -->
-                                <!-- <ng-template #loggedIn5>
-                                    <h1 class="h1">
-                                        <ion-icon name={{Star1}} (click)="comment('1')"></ion-icon>
-                                        <ion-icon name={{Star2}} (click)="comment('2')"></ion-icon>
-                                        <ion-icon name={{Star3}} (click)="comment('3')"></ion-icon>
-                                        <ion-icon name={{Star4}} (click)="comment('4')"></ion-icon>
-                                        <ion-icon name={{Star5}} (click)="comment('5')"></ion-icon>
-                                    </h1>
-                                    <h3>Rate this organisation!</h3>
-                                </ng-template>
-                                <ng-template #loggedIn2>
-                                    <h3 class="OrgMessage">Thank you for rating this organisation.</h3>
-                                </ng-template>
+                    <div class="StarCard">
+                        <div class="ratings" align="center">
+                            <div *ngIf="rateState == false; then loggedIn5 ">
                             </div>
-                        </div>  -->
+                            <div *ngIf="rateState == true; then loggedIn2">
+                            </div>
+                            <ng-template #loggedIn5>
+                                <h1 class="h1">
+                                    <ion-icon name={{Star1}} (click)="comment('1')"></ion-icon>
+                                    <ion-icon name={{Star2}} (click)="comment('2')"></ion-icon>
+                                    <ion-icon name={{Star3}} (click)="comment('3')"></ion-icon>
+                                    <ion-icon name={{Star4}} (click)="comment('4')"></ion-icon>
+                                    <ion-icon name={{Star5}} (click)="comment('5')"></ion-icon>
+                                </h1>
+                                <h3>Rate this organisation!</h3>
+                            </ng-template>
+                            <ng-template #loggedIn2>
+                                <h3 class="OrgMessage">Thank you for rating this organisation.</h3>
+                            </ng-template>
+                        </div>
+                    </div>
 
                     <div class="theDiv" *ngFor="let a of commentArr">
                         <!-- <ion-item>
@@ -271,9 +270,9 @@
                         <!-- </ion-card> -->
                     </div>
                     <div>
-                        
+
                     </div>
-                    <ion-fab right mini>
+                    <!-- <ion-fab right mini *ngIf="hideMe">
                         <button   class="theStatements" ion-fab mini style="background: white;"  (click)="ShowBtnMethod()" *ngIf="showBtn">
                             <ion-icon name="star" color="gold"></ion-icon>
                         </button>
@@ -298,101 +297,20 @@
                             </button>
                         </ion-fab-list>
 
-                    </ion-fab>
+                    </ion-fab> -->
                 </ion-list>
 
 
                 <div class="theView" id="segView" *ngSwitchCase="'gallery'">
-                    <!-- <div class="emptyCont" *ngIf="gallery.length == 0 || gallery.length == undefined">
-                                        <img id="emptyIMG" src="../../assets/empty.jfif">
-                                        <p id="lie">There are no uploads avaliable yet .....</p>
-                                    </div> -->
+                    <div class="emptyCont" *ngIf="galleryArray.length == 0 || galleryArray.length == undefined">
+                        <!-- <img id="emptyIMG" src="../../assets/empty.jfif"> -->
+                        <p id="lie">There are no uploads avaliable yet .....</p>
+                    </div>
 
                     <ion-grid>
                         <ion-row>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
-                            </ion-col>
-                            <ion-col col-4>
-                                <img src="../../assets/imgs/Defaults/default.png" alt="" imageViewer>
+                            <ion-col col-4 *ngFor="let i of galleryArray">
+                                <img class="galuploaded-byOrg" src="{{i}}" alt="" imageViewer>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
