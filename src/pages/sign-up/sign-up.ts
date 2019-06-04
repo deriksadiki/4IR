@@ -49,6 +49,9 @@ export class SignUpPage {
 
       }, (error) => {
         console.log(error.message);
+        this.email="";
+        this.password="";
+        this.username="";
       })
     
   }

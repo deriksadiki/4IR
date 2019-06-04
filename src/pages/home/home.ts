@@ -121,6 +121,9 @@ export class HomePage {
   showNearbyList: boolean = false;
   showAllOrganisation: boolean = true;
 
+  icon ='assets/imgs/wifi2.svg'
+  locIcon='assets/imgs/loc-user.svg'
+
   state = ["star-outline", "star-outline", "star-outline", "star-outline", "star-outline"]
   Star1 = "star-outline";
   Star2 = "star-outline";
@@ -593,7 +596,8 @@ export class HomePage {
             center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
             zoom: 8,
             disableDefaultUI: true,
-            styles: this.mapStyles
+            styles: this.mapStyles,
+            icon: this.icon,
 
           }
           this.map = new google.maps.Map(this.mapRef.nativeElement, options);
@@ -602,7 +606,7 @@ export class HomePage {
           this.marker = new google.maps.Marker({
             map: this.map,
             zoom: 10,
-
+            icon: this.locIcon,
             position: this.map.getCenter()
             //animation: google.maps.Animation.DROP,
           });
@@ -635,6 +639,15 @@ export class HomePage {
   }
 
 
+  viewDetails(name) {
+    for (var i = 0; i < this.orgArray.length; i++) {
+      if (this.orgArray[i].orgName == name) {
+        this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[i] })
+      
+        break;
+      }
+    }
+  }
 
   // get all marker for all organisation
 
@@ -647,7 +660,7 @@ export class HomePage {
         var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
         this.showMultipleMarker = new google.maps.Marker({
           map: this.map,
-          //  icon: this.icon,
+           icon: this.icon,
           position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
           label: name,
           zoom: 8,
@@ -987,14 +1000,15 @@ tempArray =  new Array();
         center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
         zoom: 8,
         disableDefaultUI: true,
-        styles: this.mapStyles
+        styles: this.mapStyles,
+        icon:this.icon
       }
       this.map = new google.maps.Map(this.mapRef.nativeElement, options);
       // adding user marker to the map 
       this.marker = new google.maps.Marker({
         map: this.map,
         zoom: 10,
-
+       icon:this.locIcon,
         position: this.map.getCenter()
         //animation: google.maps.Animation.DROP,
       });
@@ -1006,7 +1020,7 @@ tempArray =  new Array();
             console.log(this.orgArray[index]);
             this.showMultipleMarker = new google.maps.Marker({
               map: this.map,
-              //  icon: this.icon,
+               icon: this.icon,
               position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
               label: name,
               zoom: 8,
