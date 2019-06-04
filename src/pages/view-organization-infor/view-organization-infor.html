@@ -1,39 +1,5 @@
 <ion-content>
 
-    <!-- <div id="theMap">
-        <ion-fab top right id="googleMaps">
-            <button ion-fab mini (click)="googleMap()">
-                <ion-icon name="compass"></ion-icon>
-            </button>
-        </ion-fab>
-        <ion-fab>
-            <button ion-fab mini (click)="getDirection()">
-                <ion-icon name="arrow-back"></ion-icon>
-            </button>
-        </ion-fab>
-        <button ion-button clear class="moreinfo"></button>
-        <button ion-button (click)="navigate()" id="navigate">GET DIRECTIONS</button>
-        <p (click)="getDistance()" id="getDistance">{{showDistance}}</p>
-       
-       
-        <div #map id="map">
-        </div>
-    </div> -->
-
-
-
-
-
-
-
-    <!-- <ion-fab top left class="backBtn">
-
-        <button color="light" clear ion-button icon-only (click)="Back()">
-            <ion-icon class="arrow" name="arrow-back"></ion-icon>
-        </button>
-    </ion-fab> -->
-
-
     <div id="orgView" *ngFor="let i of orgArray">
         <div class="cover">
             <img id="myLogo" src="{{i.logo}}" alt="">
@@ -59,7 +25,7 @@
             <br>
         </div>
     </div>
-    <div #destmap id="destmap">
+    <div #destmap id="destmap" (click)="getDirection()">
     </div>
     <br>
     <div id="orgView" *ngFor="let i of orgArray">
