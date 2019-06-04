@@ -45,6 +45,38 @@ export class GetDirectionModalPage {
   Star5 = "star-outline";
 
 
+
+
+
+
+  rateState: boolean;
+  destlat;
+  destlong;
+  currentUserlat;
+  currentUserlng;
+  destMaker;
+  showtime;
+  showDistance;
+  showMap: boolean = false;
+  showContent: boolean = true;
+  //Google services
+  directionsService;
+  directionsDisplay;
+  service;
+  geocoder;
+  username;
+  url;
+  tabs;
+  services;
+  wifiRange1;
+  website;
+  image
+  logopic
+  address;
+  loginState = this.navParams.get('loginState')
+  currentLocState = false;
+  icon = 'assets/imgs/wifi2.svg'
+  locIcon = 'assets/imgs/loc-user.svg'
   mapStyles = [
     {
       "elementType": "geometry",
@@ -263,34 +295,6 @@ export class GetDirectionModalPage {
 
 
 
-
-  rateState: boolean;
-  destlat;
-  destlong;
-  currentUserlat;
-  currentUserlng;
-  destMaker;
-  showtime;
-  showDistance;
-  showMap: boolean = false;
-  showContent: boolean = true;
-  //Google services
-  directionsService;
-  directionsDisplay;
-  service;
-  geocoder;
-  username;
-  url;
-  tabs;
-  services;
-  wifiRange1;
-  website;
-  image
-  logopic
-  address;
-  loginState = this.navParams.get('loginState')
-  currentLocState = false;
-
   theTabs = "services";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, public modalCtrl: ModalController) {
@@ -358,12 +362,14 @@ export class GetDirectionModalPage {
           center: { lat: parseFloat(this.currentUserlat), lng: parseFloat(this.currentUserlng) },
           zoom: 8,
           disableDefaultUI: true,
+          styles: this.mapStyles
         }
         this.map = new google.maps.Map(this.mapRef.nativeElement, options);
         this.marker = new google.maps.Marker({
           map: this.map,
           zoom: 10,
           styles: this.mapStyles,
+          icon: this.locIcon,
           position: this.map.getCenter()
         });
         loader.dismiss();
@@ -396,7 +402,7 @@ export class GetDirectionModalPage {
               console.log(element);
 
               this.showtime = element.duration.text;
-              this.showDistance = element.distance.text;
+              this.showDistance = "Distance: " + element.distance.text;
 
               console.log(this.showtime);
               console.log(this.showDistance);
@@ -412,10 +418,11 @@ export class GetDirectionModalPage {
   destinationMarker() {
     this.destMaker = new google.maps.Marker({
       map: this.map,
-      //  icon: this.icon,
+      icon: this.icon,
       position: { lat: parseFloat(this.destCoords[0].lat), lng: parseFloat(this.destCoords[0].long) },
       label: name,
       zoom: 8,
+  
     });
 
 

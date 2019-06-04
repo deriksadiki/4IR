@@ -3,7 +3,7 @@
     <div id="orgView" *ngFor="let i of orgArray">
         <div class="cover">
             <img id="myLogo" src="{{i.logo}}" alt="">
-            <img id="myCover" src="{{i.img}}" alt="">
+            <img id="myCover" src="{{i.img}}" alt="" imageViewer>
         </div>
         <div class="details">
             <div class="orgName">
@@ -105,12 +105,12 @@
 
                 <ion-list class="theView" *ngSwitchCase="'reviews'">
                     <!-- <div class="StarCard">
-                            <div class="ratings" align="center">
+                            <!-- <div class="ratings" align="center">
                                 <div *ngIf="rateState == false; then loggedIn5 ">
                                 </div>
                                 <div *ngIf="rateState == true; then loggedIn2">
-                                </div>
-                                <ng-template #loggedIn5>
+                                </div> -->
+                                <!-- <ng-template #loggedIn5>
                                     <h1 class="h1">
                                         <ion-icon name={{Star1}} (click)="comment('1')"></ion-icon>
                                         <ion-icon name={{Star2}} (click)="comment('2')"></ion-icon>
@@ -124,7 +124,7 @@
                                     <h3 class="OrgMessage">Thank you for rating this organisation.</h3>
                                 </ng-template>
                             </div>
-                        </div> -->
+                        </div>  -->
 
                     <div class="theDiv" *ngFor="let a of commentArr">
                         <!-- <ion-item>
@@ -272,7 +272,7 @@
                     </div>
 
                     <ion-fab right mini>
-                        <button ion-fab mini style="background: white;  "  (click)="ShowBtnMethod()" *ngIf="showBtn">
+                        <button   class="theStatements" ion-fab mini style="background: white;"  (click)="ShowBtnMethod()" *ngIf="showBtn">
                             <ion-icon name="star" color="gold"></ion-icon>
                         </button>
 

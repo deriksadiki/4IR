@@ -6,27 +6,63 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <!-- <ion-navbar>
     <ion-title>getDirectionModal</ion-title>
-  </ion-navbar>
+  </ion-navbar> -->
 
 </ion-header>
 
 
-<ion-content >
+<ion-content>
 
-  <ion-fab top right id="googleMaps">
-          <button ion-fab mini (click)="googleMap()">
-              <ion-icon name="compass"></ion-icon>
-          </button>
-      </ion-fab>
-      <ion-fab>
-          
-      </ion-fab>
-      <button ion-button clear class="moreinfo"></button>
-      <button ion-button (click)="navigate()" id="navigate">GET DIRECTIONS</button>
-      <p (click)="getDistance()" id="getDistance">{{showDistance}}</p> 
+  <div id="nav-buttons">
 
-    <div #map id="map"></div>
-  
+    <table id="km-table">
+      <tr>
+        <td>
+          <p (click)="getDistance()" id="getDistance">{{showDistance}}</p>
+        </td>
+      </tr>
+    </table>
+
+    <table id="table">
+      <tr>
+        <td width="49%">
+          <div (click)="navigate()">
+            <ion-icon name="ios-compass"></ion-icon>
+            <p>Directions</p>
+          </div>
+        </td>
+
+        <td align="center">
+          <div id="line">
+
+          </div>
+        </td>
+
+        <td width="49%">
+          <div (click)="googleMap()">
+            <ion-icon name="ios-navigate"></ion-icon>
+            <p>Open Maps</p>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+
+  <!-- <ion-fab top right id="googleMaps">
+    <button ion-fab mini (click)="googleMap()">
+      <ion-icon name="compass"></ion-icon>
+    </button>
+  </ion-fab>
+  <ion-fab>
+
+  </ion-fab>
+  <button ion-button clear class="moreinfo"></button>
+  <button ion-button (click)="navigate()" id="navigate">GET DIRECTIONS</button>
+  <p (click)="getDistance()" id="getDistance">{{showDistance}}</p> -->
+
+  <div #map id="map"></div>
+
 </ion-content>

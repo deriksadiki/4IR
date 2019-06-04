@@ -42,7 +42,8 @@ export class ViewOrganizationInforPage implements OnInit {
   Star3 = "star-outline";
   Star4 = "star-outline";
   Star5 = "star-outline";
-
+  icon ='assets/imgs/wifi2.svg'
+  locIcon='assets/imgs/loc-user.svg'
 
   mapStyles = [
     {
@@ -329,6 +330,13 @@ export class ViewOrganizationInforPage implements OnInit {
 
     if (this.loginState) {
       let userID = firebase.auth().currentUser;
+
+        if(userID.uid == null){
+          let btnOrder = document.getElementsByClassName('theStatements') as HTMLCollectionOf<HTMLElement>
+          btnOrder[0].style.display = "none";
+        }else{
+          this.showBtn = true;
+        }
       firebase.database().ref("Users/" + "/" + "App_Users/" + userID.uid).on('value', (data: any) => {
         let details = data.val();
         this.detailArray.length = 0;
@@ -343,8 +351,13 @@ export class ViewOrganizationInforPage implements OnInit {
         console.log(this.username)
         console.log(this.url)
 
+
+      
       });
     }
+
+     
+
 
   }
 
@@ -406,7 +419,8 @@ export class ViewOrganizationInforPage implements OnInit {
     this.irhubProvider.viewComments(this.comments, this.imageKey).then((data: any) => {
       this.commentArr = data;
       console.log(this.commentArr)
-      // this.commentArr.reverse(); 
+      this.commentArr.reverse(); 
+      this.commentArr.length=0;
 
       let rating = this.irhubProvider.getRating();
       if (rating > 0) {
@@ -421,6 +435,7 @@ export class ViewOrganizationInforPage implements OnInit {
   }
 
   comment(num) {
+    this.commentArr = [];
     this.irhubProvider.checkAuthState().then(data => {
       if (data == true) {
         console.log(data);
@@ -468,15 +483,16 @@ export class ViewOrganizationInforPage implements OnInit {
           prompt.present();
         }
         else if (this.rateState == true) {
-          // let alert = this.alertCtrl.create({
-          //   cssClass: "myAlert",
-          //   title: 'Oops!',
-          //   subTitle: 'You cannot rate more than once',
-          //   buttons: ['Ok']
-          // });
-          // alert.present();
+          let alert = this.alertCtrl.create({
+            cssClass: "myAlert",
+            title: 'Oops!',
+            subTitle: 'You cannot rate more than once',
+            buttons: ['Ok']
+          });
+          alert.present();
 
-          this.showBtn = false;
+          let btnOrder = document.getElementsByClassName('theStatements') as HTMLCollectionOf<HTMLElement>
+          btnOrder[0].style.display = "none";
         }
       }
       else {
@@ -580,6 +596,10 @@ export class ViewOrganizationInforPage implements OnInit {
   }
 
 
+  ifOrderYes() {
+
+    }
+
   call(cell) {
     console.log(cell);
 
@@ -615,12 +635,14 @@ export class ViewOrganizationInforPage implements OnInit {
         center: { lat: parseFloat(this.destlat), lng: parseFloat(this.destlong) },
         zoom: 8,
         disableDefaultUI: true,
-        styles: this.mapStyles
+        styles: this.mapStyles,
+        icon:this.icon
       }
       this.map2 = new google.maps.Map(this.mapRef2.nativeElement, options);
       this.marker = new google.maps.Marker({
         map: this.map2,
         zoom: 10,
+        icon:this.icon,
         position: this.map2.getCenter()
       });
     }, 4000);
@@ -648,6 +670,7 @@ export class ViewOrganizationInforPage implements OnInit {
         this.marker = new google.maps.Marker({
           map: this.map,
           zoom: 10,
+          icon:this.icon,
           styles: this.mapStyles,
           position: this.map.getCenter()
         });
