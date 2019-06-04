@@ -13,30 +13,20 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content >
 
+  <ion-fab top right id="googleMaps">
+          <button ion-fab mini (click)="googleMap()">
+              <ion-icon name="compass"></ion-icon>
+          </button>
+      </ion-fab>
+      <ion-fab>
+          
+      </ion-fab>
+      <button ion-button clear class="moreinfo"></button>
+      <button ion-button (click)="navigate()" id="navigate">GET DIRECTIONS</button>
+      <p (click)="getDistance()" id="getDistance">{{showDistance}}</p> 
+
+    <div #map id="map"></div>
   
-  <!-- <div  #map id="theMap">
-    <ion-fab top right id="googleMaps">
-        <button ion-fab mini (click)="googleMap()">
-            <ion-icon name="compass"></ion-icon>
-        </button>
-    </ion-fab>
-    <ion-fab>
-        <button ion-fab mini (click)="getDirection()">
-            <ion-icon name="arrow-back"></ion-icon>
-        </button>
-    </ion-fab>
-    <button ion-button clear class="moreinfo"></button>
-    <button ion-button (click)="navigate()" id="navigate">GET DIRECTIONS</button>
-    <p (click)="getDistance()" id="getDistance">{{showDistance}}</p>
-    <div #map id="map">
-    </div>
-</div> -->
-
-<div  id="map">
-
-
-</div>
-
 </ion-content>

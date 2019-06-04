@@ -32,7 +32,7 @@ export class ViewOrganizationInforPage implements OnInit {
   detailArray = new Array();
   comments;
 
-  showBtn :boolean = true  ;
+  showBtn: boolean = true;
   imageKey;
   map;
   marker;
@@ -268,7 +268,7 @@ export class ViewOrganizationInforPage implements OnInit {
   destlong;
   currentUserlat;
   currentUserlng;
-  destMaker  ;
+  destMaker;
   showtime;
   showDistance;
   showMap: boolean = false;
@@ -286,28 +286,28 @@ export class ViewOrganizationInforPage implements OnInit {
   website;
   image
   logopic
-  address ;
+  address;
   loginState = this.navParams.get('loginState')
-currentLocState = false;
+  currentLocState = false;
 
-    theTabs = "services";
+  theTabs = "services";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController,public modalCtrl: ModalController) {
-    //this.initMap()
- 
+  constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, public modalCtrl: ModalController) {
     
+
+
     this.orgArray.push(this.navParams.get('orgObject'));
     console.log(this.orgArray);
-    
+
     console.log(this.navParams.get('orgObject'))
     this.imageKey = this.orgArray[0].id;
     this.wifiRange1 = this.orgArray[0].wifiRange;
     this.image = this.orgArray[0].img
     this.logopic = this.orgArray[0].logo
 
-    this.address =this.orgArray[0].address 
+    this.address = this.orgArray[0].address
     console.log(this.logopic);
-    
+
     this.website = this.orgArray[0].website
     console.log(this.image)
 
@@ -327,23 +327,23 @@ currentLocState = false;
     this.destinationMap()
     //this.initMap()
 
-    if (this.loginState){
-    let userID = firebase.auth().currentUser;
-    firebase.database().ref("Users/" + "/" + "App_Users/" + userID.uid).on('value', (data: any) => {
-      let details = data.val();
-      this.detailArray.length = 0;
-      console.log(details)
-      this.detailArray.push(details);
-      console.log(details);
+    if (this.loginState) {
+      let userID = firebase.auth().currentUser;
+      firebase.database().ref("Users/" + "/" + "App_Users/" + userID.uid).on('value', (data: any) => {
+        let details = data.val();
+        this.detailArray.length = 0;
+        console.log(details)
+        this.detailArray.push(details);
+        console.log(details);
 
 
-      this.username = this.detailArray[0].name;
-      this.url = this.detailArray[0].downloadurl
+        this.username = this.detailArray[0].name;
+        this.url = this.detailArray[0].downloadurl
 
-      console.log(this.username)
-      console.log(this.url)
+        console.log(this.username)
+        console.log(this.url)
 
-    });
+      });
     }
 
   }
@@ -358,32 +358,32 @@ currentLocState = false;
     this.geocoder = new google.maps.Geocoder;
 
     this.irhubProvider.getUserLocation().then((data: any) => {
-      if (data != null){
+      if (data != null) {
         this.currentLocState = true;
-      console.log(data);
-      console.log(data.coords.latitude);
-      console.log(data.coords.longitude);
-      this.currentUserlat = data.coords.latitude;
-      this.currentUserlng = data.coords.longitude;
+        console.log(data);
+        console.log(data.coords.latitude);
+        console.log(data.coords.longitude);
+        this.currentUserlat = data.coords.latitude;
+        this.currentUserlng = data.coords.longitude;
       }
     })
   }
 
 
-getLocation(){
-  this.irhubProvider.getUserLocation().then((data: any) => {
-    if (data != null){
-      this.currentLocState = true;
-    console.log(data);
-    console.log(data.coords.latitude);
-    console.log(data.coords.longitude);
+  getLocation() {
+    this.irhubProvider.getUserLocation().then((data: any) => {
+      if (data != null) {
+        this.currentLocState = true;
+        console.log(data);
+        console.log(data.coords.latitude);
+        console.log(data.coords.longitude);
 
-    this.currentUserlat = data.coords.latitude;
-    this.currentUserlng = data.coords.longitude
-    this.showMapContent();
-    }
-  })
-}
+        this.currentUserlat = data.coords.latitude;
+        this.currentUserlng = data.coords.longitude
+       
+      }
+    })
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ViewOrganizationInforPage');
@@ -476,7 +476,7 @@ getLocation(){
           // });
           // alert.present();
 
-          this.showBtn = false ;
+          this.showBtn = false;
         }
       }
       else {
@@ -603,7 +603,7 @@ getLocation(){
   }
   //show map 
   map2;
-  destinationMap(){
+  destinationMap() {
     // const loader = this.loadingCtrl.create({
     //   content: "Please wait...",
     //   duration: 3000
@@ -612,7 +612,7 @@ getLocation(){
 
     setTimeout(() => {
       const options = {
-        center: {  lat: parseFloat(this.destlat), lng: parseFloat(this.destlong) },
+        center: { lat: parseFloat(this.destlat), lng: parseFloat(this.destlong) },
         zoom: 8,
         disableDefaultUI: true,
         styles: this.mapStyles
@@ -660,192 +660,58 @@ getLocation(){
     })
 
 
-}
-
-  getDistance() {
-    console.log(this.destlat, this.destlong);
-    //WALKING ,BICYCLING , 
-    let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
-    let destination = new google.maps.LatLng(this.destlat, this.destlong);
-    this.service.getDistanceMatrix(
-      {
-        origins: [userCurrentLocation],
-        destinations: [destination],
-        travelMode: 'WALKING'
-      }, (response, status) => {
-        if (status == 'OK') {
-          var origins = response.originAddresses;
-          var destinations = response.destinationAddresses;
-
-          for (var i = 0; i < origins.length; i++) {
-            var results = response.rows[i].elements;
-            for (var j = 0; j < results.length; j++) {
-              var element = results[j];
-              console.log(element);
-
-              this.showtime = element.duration.text;
-              this.showDistance = element.distance.text;
-
-              console.log(this.showtime);
-              console.log(this.showDistance);
-
-
-          }
-          }
-
-          this.destinationMarker() ;
-         }
-      });
-
   }
-  q = 0
-  loadMap = 0
+
+  ShowBtnMethod(){
+    console.log("clicked")
+
+    //this.rateState == true
+
+    if(this.rateState == true){
+      this.showBtn =false ;
+    }else{
+      this.showBtn =true ; 
+    }
+
+    console.log(this.rateState)
+  }
+
   getDirection() {
+
+    let obj = {
+      lat: this.destlat,
+      long: this.destlong,
+      address :this.address
+    }
+
+    coordinateArray.push(obj)
 
     const modal = this.modalCtrl.create(GetDirectionModalPage);
     modal.present();
-    if (this.currentLocState == false){
-      const confirm = this.alertCtrl.create({
-        message: 'Your location is currently turned off, do you want to turn it on now?',
-        buttons: [
-          {
-            text: 'Disagree',
-            handler: () => {
-              console.log('Disagree clicked');
-            }
-          },
-          {
-            text: 'Agree',
-            handler: () => {
-              console.log('Agree clicked');
-              this.getLocation();
-            }
-          }
-        ]
-      });
-      confirm.present();
 
-    }
-    else{
-    var theMap = document.getElementById("theMap");
-    var theContent = document.getElementById("orgView");
-    if (this.loadMap == 0) {
-      this.loadMap = 1;
-      this.initMap();
-      if (this.q == 0) {
-        this.q = 1
-        theMap.style.display = "block";
-        theContent.style.display = "none";
-      }
-    }
-    else {
-      if (this.q == 0) {
-        this.q = 1
-        theMap.style.display = "block";
-        theContent.style.display = "none";
-      }
-      else {
+    console.log("clicked");
 
-        this.q = 0
-        theMap.style.display = "none";
-        theContent.style.display = "block";
-      }
-    }
-  }
-
-    console.log(this.q);
 
 
   }
 
 
-  showMapContent(){
-    var theMap = document.getElementById("theMap");
-    var theContent = document.getElementById("orgView")
-    if (this.loadMap == 0) {
-      this.loadMap = 1;
-      this.initMap();
-      if (this.q == 0) {
-        this.q = 1
-        theMap.style.display = "block";
-        theContent.style.display = "none";
-      }
-    }
-    else {
-      if (this.q == 0) {
-        this.q = 1
-        theMap.style.display = "block";
-        theContent.style.display = "none";
-      }
-      else {
-
-        this.q = 0
-        theMap.style.display = "none";
-        theContent.style.display = "block";
-      }
-    }
-  }
+  
 
 
-  destinationMarker(){
-//this.destlat, this.destlong
-let deslat = this.destlat ;
-let deslng = this.destlat ;
 
 
-this.destMaker = new google.maps.Marker({
-  map: this.map,
-  //  icon: this.icon,
-  position: { lat: parseFloat(this.destlat), lng: parseFloat(this.destlong) },
-  label: name,
-  zoom: 8,
-});
 
 
-  }
-
-  navigate() {
-    if (this.directionsDisplay != null) {
-      this.directionsDisplay.setMap(null);
-
-      console.log("directionDisplay has something");
-      this.getDistance()
-
-    } else {
-      console.log("directionDisplay has nothing");
-
-    }
-
-    setTimeout(() => {
 
 
-      let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
-      let destination = new google.maps.LatLng(this.destlat, this.destlong);
-      this.directionsDisplay.setMap(this.map);
-      console.log(this.directionsDisplay);
 
-      this.irhubProvider.calculateAndDisplayRoute(userCurrentLocation, destination, this.directionsDisplay, this.directionsService);
-    }, 1000);
-
-  }
-
-  googleMap(){
-
-    console.log(this.address);
-    
-   
-  this.launchNavigator.navigate(this.address) 
-  .then(
-    success => console.log('Launched navigator'),
-    error => console.log('Error launching navigator', error)
-  );
-
-  }
-
-
-  ShowBtnMethod(){
-    this.showBtn = false ;
-
-  }
 }
+
+
+
+
+var coordinateArray = new Array();
+
+export default coordinateArray;
 
