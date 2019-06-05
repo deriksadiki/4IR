@@ -6,6 +6,8 @@ import { IRhubProvider } from '../../providers/i-rhub/i-rhub'
 import { SignInPage } from '../sign-in/sign-in';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { LoadingController } from 'ionic-angular';
+import { ModalController } from 'ionic-angular';
+import { GetDirectionModalPage } from '../get-direction-modal/get-direction-modal';
 
 declare var google;
 declare var firebase
@@ -29,6 +31,8 @@ export class ViewOrganizationInforPage implements OnInit {
   commentArr = new Array();
   detailArray = new Array();
   comments;
+
+  showBtn: boolean = true;
   imageKey;
   map;
   marker;
@@ -38,12 +42,234 @@ export class ViewOrganizationInforPage implements OnInit {
   Star3 = "star-outline";
   Star4 = "star-outline";
   Star5 = "star-outline";
+  icon ='assets/imgs/wifi2.svg'
+  locIcon='assets/imgs/loc-user.svg'
+
+  mapStyles = [
+    {
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#ebe3cd"
+        }
+      ]
+    },
+    {
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#523735"
+        }
+      ]
+    },
+    {
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#f5f1e6"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative",
+      "elementType": "geometry.stroke",
+      "stylers": [
+        {
+          "color": "#c9b2a6"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative.land_parcel",
+      "elementType": "geometry.stroke",
+      "stylers": [
+        {
+          "color": "#dcd2be"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative.land_parcel",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#ae9e90"
+        }
+      ]
+    },
+    {
+      "featureType": "landscape.natural",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#dfd2ae"
+        }
+      ]
+    },
+    {
+      "featureType": "poi",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#dfd2ae"
+        }
+      ]
+    },
+    {
+      "featureType": "poi",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#93817c"
+        }
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "color": "#a5b076"
+        }
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#447530"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#f5f1e6"
+        }
+      ]
+    },
+    {
+      "featureType": "road.arterial",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#fdfcf8"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#f8c967"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "geometry.stroke",
+      "stylers": [
+        {
+          "color": "#e9bc62"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway.controlled_access",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#e98d58"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway.controlled_access",
+      "elementType": "geometry.stroke",
+      "stylers": [
+        {
+          "color": "#db8555"
+        }
+      ]
+    },
+    {
+      "featureType": "road.local",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#806b63"
+        }
+      ]
+    },
+    {
+      "featureType": "transit.line",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#dfd2ae"
+        }
+      ]
+    },
+    {
+      "featureType": "transit.line",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#8f7d77"
+        }
+      ]
+    },
+    {
+      "featureType": "transit.line",
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#ebe3cd"
+        }
+      ]
+    },
+    {
+      "featureType": "transit.station",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#dfd2ae"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "color": "#b9d3c2"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#92998d"
+        }
+      ]
+    }
+  ]
+
+
+
+
   rateState: boolean;
   destlat;
   destlong;
   currentUserlat;
   currentUserlng;
-  destMaker  ;
+  destMaker;
   showtime;
   showDistance;
   showMap: boolean = false;
@@ -61,28 +287,33 @@ export class ViewOrganizationInforPage implements OnInit {
   website;
   image
   logopic
-  address ;
+  address;
   loginState = this.navParams.get('loginState')
-currentLocState = false;
+  currentLocState = false;
+  hideMe;
+  theTabs = "services";
+  galleryArray = new Array();
 
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController) {
-    //this.initMap()
-    this.tabs = "gallery";
- 
+  constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, public modalCtrl: ModalController) {
     
+
+
     this.orgArray.push(this.navParams.get('orgObject'));
     console.log(this.orgArray);
-    
+this.irhubProvider.getGallery(this.orgArray[0].id).then((data:any) =>{
+  this.galleryArray = data;
+  console.log(this.galleryArray);
+  
+})
     console.log(this.navParams.get('orgObject'))
     this.imageKey = this.orgArray[0].id;
     this.wifiRange1 = this.orgArray[0].wifiRange;
     this.image = this.orgArray[0].img
     this.logopic = this.orgArray[0].logo
 
-    this.address =this.orgArray[0].address 
+    this.address = this.orgArray[0].address
     console.log(this.logopic);
-    
+
     this.website = this.orgArray[0].website
     console.log(this.image)
 
@@ -102,24 +333,36 @@ currentLocState = false;
     this.destinationMap()
     //this.initMap()
 
-    if (this.loginState){
-    let userID = firebase.auth().currentUser;
-    firebase.database().ref("Users/" + "/" + "App_Users/" + userID.uid).on('value', (data: any) => {
-      let details = data.val();
-      this.detailArray.length = 0;
-      console.log(details)
-      this.detailArray.push(details);
-      console.log(details);
+    if (this.loginState) {
+      let userID = firebase.auth().currentUser;
+
+      firebase.database().ref("Users/" + "/" + "App_Users/" + userID.uid).on('value', (data: any) => {
+        let details = data.val();
+        this.detailArray.length = 0;
+        console.log(details)
+        this.detailArray.push(details);
+        console.log(details);
+        this.hideMe = true
+
+        this.username = this.detailArray[0].name;
+        this.url = this.detailArray[0].downloadurl
+
+        console.log(this.username)
+        console.log(this.url)
 
 
-      this.username = this.detailArray[0].name;
-      this.url = this.detailArray[0].downloadurl
-
-      console.log(this.username)
-      console.log(this.url)
-
-    });
+      
+      });
     }
+    console.log(this.loginState);
+    
+
+    // if(!this.loginState){
+   
+    //   this.hideMe = false;
+    // }
+     
+
 
   }
 
@@ -133,32 +376,32 @@ currentLocState = false;
     this.geocoder = new google.maps.Geocoder;
 
     this.irhubProvider.getUserLocation().then((data: any) => {
-      if (data != null){
+      if (data != null) {
         this.currentLocState = true;
-      console.log(data);
-      console.log(data.coords.latitude);
-      console.log(data.coords.longitude);
-      this.currentUserlat = data.coords.latitude;
-      this.currentUserlng = data.coords.longitude;
+        console.log(data);
+        console.log(data.coords.latitude);
+        console.log(data.coords.longitude);
+        this.currentUserlat = data.coords.latitude;
+        this.currentUserlng = data.coords.longitude;
       }
     })
   }
 
 
-getLocation(){
-  this.irhubProvider.getUserLocation().then((data: any) => {
-    if (data != null){
-      this.currentLocState = true;
-    console.log(data);
-    console.log(data.coords.latitude);
-    console.log(data.coords.longitude);
+  getLocation() {
+    this.irhubProvider.getUserLocation().then((data: any) => {
+      if (data != null) {
+        this.currentLocState = true;
+        console.log(data);
+        console.log(data.coords.latitude);
+        console.log(data.coords.longitude);
 
-    this.currentUserlat = data.coords.latitude;
-    this.currentUserlng = data.coords.longitude
-    this.showMapContent();
-    }
-  })
-}
+        this.currentUserlat = data.coords.latitude;
+        this.currentUserlng = data.coords.longitude
+       
+      }
+    })
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ViewOrganizationInforPage');
@@ -182,6 +425,7 @@ getLocation(){
       this.commentArr = data;
       console.log(this.commentArr)
       // this.commentArr.reverse(); 
+      // this.commentArr.length=0;
 
       let rating = this.irhubProvider.getRating();
       if (rating > 0) {
@@ -196,6 +440,7 @@ getLocation(){
   }
 
   comment(num) {
+    this.commentArr = [];
     this.irhubProvider.checkAuthState().then(data => {
       if (data == true) {
         console.log(data);
@@ -229,7 +474,7 @@ getLocation(){
                       this.orgArray[0].rating = Math.round(x);
                       this.commentArr = data;
                       // this.commentArr.reverse();
-                      this.commentArr.length = 0;
+                      // this.commentArr.length = 0;
                       this.retrieveComments();
                       this.rate(num);
                       this.rateState = true;
@@ -250,6 +495,7 @@ getLocation(){
             buttons: ['Ok']
           });
           alert.present();
+
         }
       }
       else {
@@ -353,6 +599,10 @@ getLocation(){
   }
 
 
+  ifOrderYes() {
+
+    }
+
   call(cell) {
     console.log(cell);
 
@@ -376,24 +626,26 @@ getLocation(){
   }
   //show map 
   map2;
-  destinationMap(){
-    const loader = this.loadingCtrl.create({
-      spinner: 'bubbles',
-      content: "Please wait...",
-      duration: 3000
-    });
-    loader.present();
+  destinationMap() {
+    // const loader = this.loadingCtrl.create({
+    //   content: "Please wait...",
+    //   duration: 3000
+    // });
+    // loader.present();
 
     setTimeout(() => {
       const options = {
-        center: {  lat: parseFloat(this.destlat), lng: parseFloat(this.destlong) },
+        center: { lat: parseFloat(this.destlat), lng: parseFloat(this.destlong) },
         zoom: 8,
         disableDefaultUI: true,
+        styles: this.mapStyles,
+        icon:this.icon
       }
       this.map2 = new google.maps.Map(this.mapRef2.nativeElement, options);
       this.marker = new google.maps.Marker({
         map: this.map2,
         zoom: 10,
+        icon:this.icon,
         position: this.map2.getCenter()
       });
     }, 4000);
@@ -406,11 +658,10 @@ getLocation(){
 
 
     return new Promise((resolve, reject) => {
-      const loader = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: "Please wait...",
-      });
-      loader.present();
+      // const loader = this.loadingCtrl.create({
+      //   content: "Please wait...",
+      // });
+      // loader.present();
 
       setTimeout(() => {
         const options = {
@@ -422,9 +673,11 @@ getLocation(){
         this.marker = new google.maps.Marker({
           map: this.map,
           zoom: 10,
+          icon:this.icon,
+          styles: this.mapStyles,
           position: this.map.getCenter()
         });
-        loader.dismiss();
+        // loader.dismiss();
       }, 7000);
       console.log("show-map");
 
@@ -433,183 +686,58 @@ getLocation(){
     })
 
 
-}
-
-  getDistance() {
-    console.log(this.destlat, this.destlong);
-    //WALKING ,BICYCLING , 
-    let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
-    let destination = new google.maps.LatLng(this.destlat, this.destlong);
-    this.service.getDistanceMatrix(
-      {
-        origins: [userCurrentLocation],
-        destinations: [destination],
-        travelMode: 'WALKING'
-      }, (response, status) => {
-        if (status == 'OK') {
-          var origins = response.originAddresses;
-          var destinations = response.destinationAddresses;
-
-          for (var i = 0; i < origins.length; i++) {
-            var results = response.rows[i].elements;
-            for (var j = 0; j < results.length; j++) {
-              var element = results[j];
-              console.log(element);
-
-              this.showtime = element.duration.text;
-              this.showDistance = element.distance.text;
-
-              console.log(this.showtime);
-              console.log(this.showDistance);
-
-
-          }
-          }
-
-          this.destinationMarker() ;
-         }
-      });
-
   }
-  q = 0
-  loadMap = 0
+
+  // ShowBtnMethod(){
+  //   console.log("clicked")
+
+  //   //this.rateState == true
+
+  //   if(this.rateState == true){
+  //     this.showBtn =false ;
+  //   }else{
+  //     this.showBtn =true ; 
+  //   }
+
+  //   console.log(this.rateState)
+  // }
+
   getDirection() {
-    if (this.currentLocState == false){
-      const confirm = this.alertCtrl.create({
-        message: 'Your location is currently turned off, do you want to turn it on now?',
-        buttons: [
-          {
-            text: 'Disagree',
-            handler: () => {
-              console.log('Disagree clicked');
-            }
-          },
-          {
-            text: 'Agree',
-            handler: () => {
-              console.log('Agree clicked');
-              this.getLocation();
-            }
-          }
-        ]
-      });
-      confirm.present();
 
+    let obj = {
+      lat: this.destlat,
+      long: this.destlong,
+      address :this.address
     }
-    else{
-    var theMap = document.getElementById("theMap");
-    var theContent = document.getElementById("orgView");
-    if (this.loadMap == 0) {
-      this.loadMap = 1;
-      this.initMap();
-      if (this.q == 0) {
-        this.q = 1
-        theMap.style.display = "block";
-        theContent.style.display = "none";
-      }
-    }
-    else {
-      if (this.q == 0) {
-        this.q = 1
-        theMap.style.display = "block";
-        theContent.style.display = "none";
-      }
-      else {
 
-        this.q = 0
-        theMap.style.display = "none";
-        theContent.style.display = "block";
-      }
-    }
-  }
+    coordinateArray.push(obj)
 
-    console.log(this.q);
+    const modal = this.modalCtrl.create(GetDirectionModalPage);
+    modal.present();
+
+    console.log("clicked");
+
 
 
   }
 
 
-  showMapContent(){
-    var theMap = document.getElementById("theMap");
-    var theContent = document.getElementById("orgView")
-    if (this.loadMap == 0) {
-      this.loadMap = 1;
-      this.initMap();
-      if (this.q == 0) {
-        this.q = 1
-        theMap.style.display = "block";
-        theContent.style.display = "none";
-      }
-    }
-    else {
-      if (this.q == 0) {
-        this.q = 1
-        theMap.style.display = "block";
-        theContent.style.display = "none";
-      }
-      else {
-
-        this.q = 0
-        theMap.style.display = "none";
-        theContent.style.display = "block";
-      }
-    }
-  }
+  
 
 
-  destinationMarker(){
-//this.destlat, this.destlong
-let deslat = this.destlat ;
-let deslng = this.destlat ;
 
 
-this.destMaker = new google.maps.Marker({
-  map: this.map,
-  //  icon: this.icon,
-  position: { lat: parseFloat(this.destlat), lng: parseFloat(this.destlong) },
-  label: name,
-  zoom: 8,
-});
 
 
-  }
-
-  navigate() {
-    if (this.directionsDisplay != null) {
-      this.directionsDisplay.setMap(null);
-
-      console.log("directionDisplay has something");
-      this.getDistance()
-
-    } else {
-      console.log("directionDisplay has nothing");
-
-    }
-
-    setTimeout(() => {
 
 
-      let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
-      let destination = new google.maps.LatLng(this.destlat, this.destlong);
-      this.directionsDisplay.setMap(this.map);
-      console.log(this.directionsDisplay);
 
-      this.irhubProvider.calculateAndDisplayRoute(userCurrentLocation, destination, this.directionsDisplay, this.directionsService);
-    }, 1000);
-
-  }
-
-  googleMap(){
-
-    console.log(this.address);
-    
-   
-  this.launchNavigator.navigate(this.address) 
-  .then(
-    success => console.log('Launched navigator'),
-    error => console.log('Error launching navigator', error)
-  );
-
-  }
 }
+
+
+
+
+var coordinateArray = new Array();
+
+export default coordinateArray;
 

@@ -79,8 +79,6 @@ export class SignInPage {
           cssClass: "myAlert",
           title: 'Forgot your password?',
           message: "We just need your registered email address to reset your password.",
-          
-          // cssClass: 'myAlert',
           inputs: [
             {
               name: 'email',
@@ -102,12 +100,22 @@ export class SignInPage {
                 this.irhubProvider.forgetPassword(data.email).then(()=>{
                   console.log("forgot password works");
                   const alert = this.alertCtrl.create({
+                    cssClass: "myAlert",
                     title: 'Confirmation',
                     subTitle: "Please check your email to reset your password",
                     buttons: ['OK']
                   });
                   alert.present();
-                })
+                }, Error => {
+                  const alert = this.alertCtrl.create({
+                    cssClass: "myAlert",
+                    subTitle: Error.message,
+                    buttons: ['OK'],
+        
+                  });
+                  alert.present();
+                  resolve()
+                });
               }
             }
           ],
@@ -130,7 +138,7 @@ export class SignInPage {
             cssClass: "myAlert",
             subTitle: Error.message,
             buttons: ['OK'],
-            // cssClass: 'myAlert'
+
           });
           alert.present();
           resolve()
@@ -142,7 +150,7 @@ export class SignInPage {
         subTitle: error.message,
         buttons: [
           {
-            text: 'ok',
+            text: 'OK',
             handler: data => {
               console.log('Cancel clicked');
             }

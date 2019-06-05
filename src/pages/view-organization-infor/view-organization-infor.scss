@@ -1,10 +1,62 @@
-
-
-
-
-  #orgView {
+#orgView {
     display: block;
     animation: 1s fadeIn;
+  }
+
+  .rev-div {
+    display: flex;
+    flex-direction: row;
+    // background: green;
+    // justify-content: center;
+    align-items: center;
+    margin: 5px;
+    padding: 5px;
+
+
+    img {
+      height: 36px;
+      width: 36px;
+      border-radius: 50%;
+    }
+  }
+
+  .speech-bubble {
+    position: relative;
+    background: #f2f2f2;
+    border-radius: .4em;
+    min-width: 60%;
+    margin-right: 5%;
+    padding: 5px;
+
+    .rev-name {
+      font-weight: bold;
+      margin: 2px;
+    }
+    
+    p {
+      font-size: 90%;
+      margin: 2px;
+      color: grey;
+    }
+  }
+  
+  .speech-bubble:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 24px solid transparent;
+    border-left-color: #f2f2f2;
+    border-right: 0;
+    border-top: 0;
+    margin-top: -12px;
+    margin-right: -24px;
+  }
+
+  .orgName {
+    font-size: 90%;
   }
   #map {
     height: 100%;
@@ -33,6 +85,9 @@
       transform: translateX(-50%);
       height: 50px;
     }
+    .myFab{
+      display: block;
+    }
     #getDistance {
       position: absolute;
       z-index: 100;
@@ -47,9 +102,12 @@
     .moreinfo {
     }
   }
-  
+  // .theStatements{
+  //   display: none;
+  // }
   .TheStar {
-    color: goldenrod;
+    color: #dcc050;
+    margin-top: 8px;
   }
 .cover{
   height: 200px;
@@ -66,16 +124,21 @@
   width: 100px;
   height: 100px;
   border-radius: 50px;
-  border: 4px solid white;
+  border: 1px solid #dcc050;
+  background: white;
   position: absolute;
-  object-fit: cover;
+  object-fit: contain;
   left: 50%;
   top: 150px;
-  transform: translateX(-50%)
+  transform: translateX(-50%);
 }
 
 .price{
   margin-right:-60%;
+}
+.theView{
+  max-height: 90%;
+  overflow-y: scroll 
 }
 .details{
   padding-top: 70px;
@@ -94,6 +157,17 @@
 .category{
   color: grey;
   text-transform: capitalize;
+  margin-top: 5px;
+}
+.rateName{
+text-transform: capitalize;
+margin-top:-30%;
+}
+.TheStar1{
+  color:#DAA520;
+}
+.stars{
+  margin-top:50%;
 }
 .theStars{
   color: gold;
@@ -103,9 +177,31 @@
   color: gold;
 
 }
+.ParagraphPadding{
+  // padding-top:5px;
+  color: grey;
+  font-size: 90%;
+}
+.NamePadding{
+  // padding-top:10%;
+  color: rgb(36, 36, 36);
+}
+#serv-list {
+  // height: 50px;
+  // background: red;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+}
 #destmap{
   height: 30%;
-  width: 100%;
+  width: 90%;
+  padding-left:6px;
+  margin-left:5%;
+  border-radius: 5px;
+  background: url("../../assets/imgs/Defaults/Map.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 #needs{
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.342);
@@ -124,7 +220,8 @@ h3{
   font-size: 16px
 }
 .description{
-  
+  font-size: 90%;
+  color: rgb(47, 47, 47);
 }
 .galImg{
   height: 150px;
@@ -137,7 +234,12 @@ h3{
   width: 100%;
   text-align: center;
   // border-bottom: 1px solid grey;
-  padding-bottom: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  // border-top: 1px solid grey;
+  // border-bottom: 1px solid grey;
+  width: 90%;
+  margin-left: 5%;
 }
 .profilePic{
   
@@ -184,11 +286,17 @@ ion-card-header{
   font-weight: bold;
 }
 .line{
-  margin: 0 auto;
-  width: 95%;
-  border-bottom-color: #aaaaaa;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.249);
+  // width: 30%;
+  // position: absolute;
+  // right: 0;
+  // margin-right: 20px;
+  
+  // margin: 0 auto;
+  // width: 95%;
+  // border-bottom-color: #aaaaaa;
+  // border-bottom-style: solid;
+  // border-bottom-width: 1px;
 }
 p{
   margin-top: 0%;
@@ -236,7 +344,7 @@ ion-avatar {
   padding-top: 0px;
 }
 .chatbubble{
-  background-color: whitesmoke;
+  // background-color: whitesmoke;
   border-radius: 25px
 }
 .col{
@@ -249,5 +357,10 @@ ion-avatar {
 }
 .item-md{
   padding: 15px
+}
+.galuploaded-byOrg{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 

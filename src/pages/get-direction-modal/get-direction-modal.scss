@@ -1,0 +1,121 @@
+page-get-direction-modal {
+
+  #nav-buttons {
+    // background: green;
+    // height: 120px;
+    padding-bottom: 8%;
+    width: 80%;
+    position: absolute;
+    margin: 0 auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+
+    #km-table {
+      margin-bottom: 10%;
+      // width: 20%;
+      // background: red;
+      margin: 0 auto;
+      margin-bottom: 5%;
+
+      p {
+        -webkit-box-shadow: 1px 8px 16px -8px rgba(0,0,0,0.75);
+        -moz-box-shadow: 1px 8px 16px -8px rgba(0,0,0,0.75);
+        box-shadow: 1px 8px 16px -8px rgba(0,0,0,0.75);
+        background: white;
+        border-radius: 50px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+    }
+
+    #table {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.866);
+      border-radius: 50px;
+      -webkit-box-shadow: 1px 8px 16px -8px rgba(0,0,0,0.75);
+      -moz-box-shadow: 1px 8px 16px -8px rgba(0,0,0,0.75);
+      box-shadow: 1px 8px 16px -8px rgba(0,0,0,0.75);
+
+      #line {
+        height: 30px;
+        border-left: 1px solid rgba(128, 128, 128, 0.63);
+        // background: red;
+        width: 10px;
+      }
+
+      div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        ion-icon {
+          font-size: 200%;
+          // color: grey;
+        }
+
+        p {
+          color: grey;
+          font-size: 70%;
+          padding: 0px;
+          margin: 0px;
+        }
+      }
+
+    }
+
+  }
+
+
+  #map {
+    height: 100%;
+    width: 100%;
+  }
+  #googleMaps {
+    right: 55px;
+    top: 00px;
+  }
+
+  #theMap {
+    width: 100%;
+    height: 100%;
+  
+    animation: 1s fadeIn;
+    button {
+      position: absolute;
+    }
+    #navigate {
+      bottom: 0px;
+      z-index: 100;
+      width: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 50px;
+    }
+    #getDistance {
+      position: absolute;
+      z-index: 100;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 5px;
+      box-shadow: 0 0 10px black;
+      border-radius: 5px;
+    }
+   
+  }
+  
+}
+
+
+  
+

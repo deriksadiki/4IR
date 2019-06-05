@@ -1,5 +1,5 @@
 
-import { NavController, LoadingController, Loading, AlertController } from 'ionic-angular';
+import { NavController, Loading, AlertController } from 'ionic-angular';
 import { IRhubProvider } from '../../providers/i-rhub/i-rhub';
 import { SignInPage } from '../sign-in/sign-in';
 import { UserProfilePage } from '../user-profile/user-profile';
@@ -20,7 +20,7 @@ export class HomePage {
   logInState;
   category;
   locationState ;
-  searchItem ;
+  searchItem : string;
   styles: [
     { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
     { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
@@ -120,6 +120,16 @@ export class HomePage {
   toggleState = "map";
   showNearbyList: boolean = false;
   showAllOrganisation: boolean = true;
+
+  icon ='assets/imgs/wifi2.svg'
+  locIcon='assets/imgs/loc-user.svg'
+
+  state = ["star-outline", "star-outline", "star-outline", "star-outline", "star-outline"]
+  Star1 = "star-outline";
+  Star2 = "star-outline";
+  Star3 = "star-outline";
+  Star4 = "star-outline";
+  Star5 = "star-outline";
 
 
   mapStyles = [
@@ -345,21 +355,21 @@ export class HomePage {
   custom1 = "primary";
   custom2 = "inactive";
   pic
-  userLocation = "Searching for location" ;
+  userLocation = "Searching for location..." ;
 
 
-  constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public IRmethods: IRhubProvider,  public alertCtrl: AlertController) {
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
       this.orgArray = data;
       this.setBackItems();
       console.log(this.orgArray);
-      // setTimeout(() => {
+      setTimeout(() => {
         var names = this.IRmethods.getOrgNames()
         console.log(names);
         this.storeOrgNames(names)
         // this.loading.dismiss()
-      // }, 2500);
+      }, 2500);
     })
 
 
@@ -405,8 +415,80 @@ export class HomePage {
     });
   }
 
+  rate(num) {
+    if (num == 1) {
+      if (this.Star1 == "star-outline") {
+        this.Star1 = "star";
+      }
+      else {
+        this.Star1 = "star-outline";
+        this.Star2 = "star-outline"
+        this.Star3 = "star-outline";
+        this.Star4 = "star-outline"
+        this.Star5 = "star-outline";
+      }
+    }
+    else if (num == 2) {
+      if (this.Star2 == "star-outline") {
+        this.Star1 = "star";
+        this.Star2 = "star";
+      }
+      else {
+        this.Star1 = "star";
+        this.Star2 = "star-outline"
+        this.Star3 = "star-outline";
+        this.Star4 = "star-outline"
+        this.Star5 = "star-outline";
+      }
+    }
+    else if (num == 3) {
+      if (this.Star3 == "star-outline") {
+        this.Star1 = "star";
+        this.Star2 = "star";
+        this.Star3 = "star";
+      }
+      else {
+        this.Star1 = "star";
+        this.Star2 = "star"
+        this.Star3 = "star-outline";
+        this.Star4 = "star-outline"
+        this.Star5 = "star-outline";
+      }
+    }
+    else if (num == 4) {
+      if (this.Star4 == "star-outline") {
+        this.Star1 = "star";
+        this.Star2 = "star";
+        this.Star3 = "star";
+        this.Star4 = "star";
+      }
+      else {
+        this.Star1 = "star";
+        this.Star2 = "star"
+        this.Star3 = "star";
+        this.Star4 = "star-outline"
+        this.Star5 = "star-outline";
+      }
+    }
+    else if (num == 5) {
+      if (this.Star5 == "star-outline") {
+        this.Star1 = "star";
+        this.Star2 = "star";
+        this.Star3 = "star";
+        this.Star4 = "star";
+        this.Star5 = "star";
+      }
+      else {
+        this.Star1 = "star";
+        this.Star2 = "star"
+        this.Star3 = "star";
+        this.Star4 = "star"
+        this.Star5 = "star-outline";
+      }
+    }
+  }
 
-  ionViewWillEnter() {
+  ionViewDidLoad() {
     // this.loading = this.loadingCtrl.create({
     //   spinner: 'bubbles',
     //   content: 'Please wait...',
@@ -426,8 +508,8 @@ export class HomePage {
           console.log(data);
           this.userLocation = data
         })
-        document.getElementById("icon").style.color = "#009975"
-        document.getElementById("statement").style.color = "#009975"
+        document.getElementById("icon").style.color = "#04592a"
+        document.getElementById("statement").style.color = "#04592a"
 
       }, Error => {
         this.locationState = false ;
@@ -514,7 +596,8 @@ export class HomePage {
             center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
             zoom: 8,
             disableDefaultUI: true,
-            styles: this.mapStyles
+            styles: this.mapStyles,
+            icon: this.icon,
 
           }
           this.map = new google.maps.Map(this.mapRef.nativeElement, options);
@@ -523,7 +606,7 @@ export class HomePage {
           this.marker = new google.maps.Marker({
             map: this.map,
             zoom: 10,
-
+            icon: this.locIcon,
             position: this.map.getCenter()
             //animation: google.maps.Animation.DROP,
           });
@@ -556,6 +639,15 @@ export class HomePage {
   }
 
 
+  viewDetails(name) {
+    for (var i = 0; i < this.orgArray.length; i++) {
+      if (this.orgArray[i].orgName == name) {
+        this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[i] })
+      
+        break;
+      }
+    }
+  }
 
   // get all marker for all organisation
 
@@ -568,7 +660,7 @@ export class HomePage {
         var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
         this.showMultipleMarker = new google.maps.Marker({
           map: this.map,
-          //  icon: this.icon,
+           icon: this.icon,
           position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
           label: name,
           zoom: 8,
@@ -757,25 +849,33 @@ export class HomePage {
   }
 
   storeOrgNames(names) {
-    this.orgNames[0] = names[0]
-    for (var x = 1; x < names.length; x++){
-      var state = 0;
-      for (var i = 0; i < this.orgNames.length; i++){
-        if (this.orgNames[i] == names[x]){
-          state = 1;
-          break;
-        }
-      }
-      if (state == 0){
-        this.orgNames[x] = names[x]
-      }
-    }
-    console.log(this.orgNames);
+    this.orgNames = names;
+    // console.log(names);
+    
+    // this.orgNames[0] = names[0]
+    // for (var x = 1; x < names.length; x++){
+    //   var state = 0;
+    //   for (var i = 0; i < this.orgNames.length; i++){
+    //     if (this.orgNames[i] == names[x]){
+    //       state = 1;
+    //       break;
+    //     }
+    //   }
+    //   if (state == 0){
+    //     this.orgNames[x] = names[x]
+    //   }
+    // }
+    // console.log(this.orgNames);
   }
-tempArray =  new Array();
+
+  tempArray =  new Array();
   initializeItems() {
     this.items = this.orgNames
+    
+    console.log(this.items);
+    
   }
+
   filterItems(val){
     if (val && val.trim() != '') {
       this.items = this.items.filter((item) => {
@@ -804,18 +904,18 @@ tempArray =  new Array();
     this.setBackItems();
 
     // set val to the value of the ev target
-    var val = this.searchItem;
+   this.searchItem;
 
     // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
+    if (this.searchItem && this.searchItem.trim() != '') {
       this.items = this.items.filter((item) => {
-        console.log(val);
-
-        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        console.log(this.searchItem);
+        return (item.toLowerCase().indexOf(this.searchItem.toLowerCase()) > -1);
       })
     }
-    else if (val == "" || val == null) {
+    else if (this.searchItem == "" || this.searchItem == null) {
       this.items = [];
+      this.searchItem = ""
     }
     console.log(this.items);
   // this.tempArray = [];
@@ -824,7 +924,7 @@ tempArray =  new Array();
   //       this.tempArray = this.orgArray[x]
   //     }
   //   }
-    if (val == "" || val == " " || val == null) {
+    if (this.searchItem == "" || this.searchItem == " " || this.searchItem == null) {
       listContent.style.display = "block"
     }
     else {
@@ -841,7 +941,7 @@ tempArray =  new Array();
       if(this.nearby.length == 0){
         const alert = this.alertCtrl.create({
           // title: "No Password",
-          subTitle: "Currently we don't have nearby organisation",
+          subTitle: "We don't have organisations near by currently",
           buttons: ['OK'],
           cssClass: 'myAlert',
         });
@@ -850,12 +950,12 @@ tempArray =  new Array();
 
       }
       else{
-    let loading = this.loadingCtrl.create({
-      spinner: 'bubbles',
-      content: 'please wait...',
-      duration: 4000000
-    });
-    loading.present();
+    // let loading = this.loadingCtrl.create({
+    //   spinner: 'bubbles',
+    //   content: 'please wait...',
+    //   duration: 4000000
+    // });
+    // loading.present();
 
 
 
@@ -866,12 +966,13 @@ tempArray =  new Array();
     this.showAllOrganisation = false;
     this.custom1 = "inactive";
     this.custom2 = "primary";
-    loading.dismiss();}
+    // loading.dismiss();
+      }
   }
     else{
       const alert = this.alertCtrl.create({
         // title: "No Password",
-        subTitle: "Currently your location is off",
+        subTitle: "Please turn on your location to enjoy 4IR's full potential.",
         buttons: ['OK'],
         cssClass: 'myAlert',
       });
@@ -908,14 +1009,15 @@ tempArray =  new Array();
         center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
         zoom: 8,
         disableDefaultUI: true,
-        styles: this.mapStyles
+        styles: this.mapStyles,
+        icon:this.icon
       }
       this.map = new google.maps.Map(this.mapRef.nativeElement, options);
       // adding user marker to the map 
       this.marker = new google.maps.Marker({
         map: this.map,
         zoom: 10,
-
+       icon:this.locIcon,
         position: this.map.getCenter()
         //animation: google.maps.Animation.DROP,
       });
@@ -927,7 +1029,7 @@ tempArray =  new Array();
             console.log(this.orgArray[index]);
             this.showMultipleMarker = new google.maps.Marker({
               map: this.map,
-              //  icon: this.icon,
+               icon: this.icon,
               position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
               label: name,
               zoom: 8,
