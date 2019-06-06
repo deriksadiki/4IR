@@ -294,6 +294,8 @@ export class ViewOrganizationInforPage implements OnInit {
   theTabs = "services";
   galleryArray = new Array();
 
+  showandHideStars :boolean = true ;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, public modalCtrl: ModalController) {
     this.retrieveComments();
     // 
@@ -318,10 +320,10 @@ export class ViewOrganizationInforPage implements OnInit {
     // console.log(this.image)
 
     // console.log(this.image)
-    this.services = this.orgArray[0].programmeService[0]
+    this.services = this.orgArray[0].programmeService
     console.log(this.services)
 
-    // console.log(this.services)
+   console.log(this.services)
     // console.log(this.imageKey);
     console.log(this.orgArray);
 
@@ -483,6 +485,7 @@ export class ViewOrganizationInforPage implements OnInit {
                       this.retrieveComments();
                       this.rate(num);
                       this.rateState = true;
+                      this.showandHideStars =false ;
                     })
                   })
                 }
@@ -730,7 +733,14 @@ export class ViewOrganizationInforPage implements OnInit {
 
 
 
-
+  fabStar(){
+    if (this.showandHideStars == true){
+      this.showandHideStars = false;
+    }
+    else{
+      this.showandHideStars = true
+    }
+  }
 
 
 

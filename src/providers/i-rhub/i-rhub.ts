@@ -203,6 +203,7 @@ export class IRhubProvider {
                 fullDescription: details[keys[x]].fullDescription,
                 intro: details[keys[x]].intro,
                 lat: details[keys[x]].lat,
+                long:details[keys[x]].long ,
                 id: keys[x],
                 objectives:details[keys[x]].objectives,
                 // wifi:wifi,
