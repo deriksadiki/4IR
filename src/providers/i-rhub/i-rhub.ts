@@ -218,6 +218,7 @@ export class IRhubProvider {
                 targetAudience:details[keys[x]].targetAudience ,
                 twitter:details[keys[x]].twitter ,
                 img: details[keys[x]].downloadurl,
+                address: details[keys[x]].address ,
                 logo: details[keys[x]].downloadurlLogo,
                 rating :  totRating
               }

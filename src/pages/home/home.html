@@ -77,7 +77,7 @@
             <ion-card (click)="viewDetails(i.progName)">
               <div class="overlay"></div>
               <img class="theImage" src="{{i.img}}" />
-              <div class="card-title"><p>{{i.programCategory}}</p></div>
+              <div class="card-title"><p>{{i}}</p></div>
        
               <div class="card-subtitle">
                 <div *ngIf="i.rating == 0; then loggedIn110">
@@ -178,7 +178,7 @@
           </td>
 
           <td align="center|left">
-            <p class="org-name">{{ a.orgName }}</p>
+            <p class="org-name">{{ a.programCategory }}</p>
           </td>
 
           <td rowspan="3" width="5%">

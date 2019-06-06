@@ -366,7 +366,7 @@ name;
     this.IRmethods.getAllOrganizations().then((data:any)=>{
       console.log(data);
       this.orgArray =data
-      console.log(data.programCategory);
+      // console.log(data.programCategory);
       
       console.log(this.orgArray);
       
