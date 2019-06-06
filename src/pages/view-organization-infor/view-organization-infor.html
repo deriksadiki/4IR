@@ -138,9 +138,7 @@
         
                                             <tr>
                                                 <td colspan="2">
-                                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas dolorum placeat
-                                                        quidem officiis. Ut dolorum velit itaque ad odio facere possimus ratione
-                                                        at, eaque accusantium atque culpa quisquam ex quidem.</p>
+                                                    <p>{{p.comment}}</p>
                                                 </td>
                                             </tr>
                                         </table>
@@ -151,26 +149,26 @@
                                     <div>
         
                                     </div>
-                                    <ion-fab right mini  >
+                                    <ion-fab right mini  *ngIf="showFab">
                                         <button ion-fab mini style="background: white;"  (click)="fabStar()">
                                             <ion-icon class="TheStar1" name="star"></ion-icon>
                                         </button>
                                         <div  *ngIf="showandHideStars">
                                         <ion-fab-list side="left"> 
-                                            <button ion-fab style="background: whitesmoke;">
-                                                <ion-icon class="TheStar1" name="star" (click)="comment('1')"></ion-icon>
+                                            <button ion-fab style="background: whitesmoke;"  (click)="comment('1')">
+                                                <ion-icon class="TheStar1" name="star"></ion-icon>
                                             </button>
-                                            <button ion-fab style="background: whitesmoke;">
-                                                <ion-icon class="TheStar1" name="star" (click)="comment('2')"></ion-icon>
+                                            <button ion-fab style="background: whitesmoke;" (click)="comment('2')">
+                                                <ion-icon class="TheStar1" name="star" ></ion-icon>
                                             </button>
-                                            <button ion-fab style="background: whitesmoke;">
-                                                <ion-icon class="TheStar1" name="star" (click)="comment('3')"></ion-icon>
+                                            <button ion-fab style="background: whitesmoke;" (click)="comment('3')">
+                                                <ion-icon class="TheStar1" name="star" ></ion-icon>
                                             </button>
-                                            <button ion-fab style="background: whitesmoke;">
-                                                <ion-icon class="TheStar1" name="star" (click)="comment('4')"></ion-icon>
+                                            <button ion-fab style="background: whitesmoke;" (click)="comment('4')">
+                                                <ion-icon class="TheStar1" name="star" ></ion-icon>
                                             </button>
-                                            <button ion-fab style="background: whitesmoke;">
-                                                <ion-icon class="TheStar1" name="star" (click)="comment('5')"></ion-icon>
+                                            <button ion-fab style="background: whitesmoke;" (click)="comment('5')">
+                                                <ion-icon class="TheStar1" name="star" ></ion-icon>
                                             </button>
                                         </ion-fab-list>
                                     </div>
