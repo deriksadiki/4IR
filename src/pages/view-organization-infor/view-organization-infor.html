@@ -147,15 +147,16 @@
                                     </div>
                                 </div>
         
-                                < </div>
+                                </div>
                                     <div>
         
                                     </div>
-                                    <ion-fab right mini>
-                                        <button ion-fab mini style="background: white;">
+                                    <ion-fab right mini  >
+                                        <button ion-fab mini style="background: white;"  (click)="fabStar()">
                                             <ion-icon class="TheStar1" name="star"></ion-icon>
                                         </button>
-                                        <ion-fab-list side="left">
+                                        <div  *ngIf="showandHideStars">
+                                        <ion-fab-list side="left"> 
                                             <button ion-fab style="background: whitesmoke;">
                                                 <ion-icon class="TheStar1" name="star" (click)="comment('1')"></ion-icon>
                                             </button>
@@ -172,7 +173,7 @@
                                                 <ion-icon class="TheStar1" name="star" (click)="comment('5')"></ion-icon>
                                             </button>
                                         </ion-fab-list>
-        
+                                    </div>
                                     </ion-fab>
 
                     <!-- <div class="emptyCont" *ngIf="galleryArray.length == 0 || galleryArray.length == undefined">
