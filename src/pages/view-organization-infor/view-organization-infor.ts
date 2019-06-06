@@ -42,8 +42,8 @@ export class ViewOrganizationInforPage implements OnInit {
   Star3 = "star-outline";
   Star4 = "star-outline";
   Star5 = "star-outline";
-  icon ='assets/imgs/wifi2.svg'
-  locIcon='assets/imgs/loc-user.svg'
+  icon = 'assets/imgs/wifi2.svg'
+  locIcon = 'assets/imgs/loc-user.svg'
 
   mapStyles = [
     {
@@ -295,16 +295,16 @@ export class ViewOrganizationInforPage implements OnInit {
   galleryArray = new Array();
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, public modalCtrl: ModalController) {
-    
-
+    this.retrieveComments();
+    // 
 
     this.orgArray.push(this.navParams.get('orgObject'));
     console.log(this.orgArray);
-this.irhubProvider.getGallery(this.orgArray[0].id).then((data:any) =>{
-  this.galleryArray = data;
-  console.log(this.galleryArray);
-  
-})
+    this.irhubProvider.getGallery(this.orgArray[0].id).then((data: any) => {
+      this.galleryArray = data;
+      console.log(this.galleryArray);
+
+    })
     console.log(this.navParams.get('orgObject'))
     this.imageKey = this.orgArray[0].id;
     this.wifiRange1 = this.orgArray[0].wifiRange;
@@ -312,17 +312,18 @@ this.irhubProvider.getGallery(this.orgArray[0].id).then((data:any) =>{
     this.logopic = this.orgArray[0].logo
 
     this.address = this.orgArray[0].address
-    console.log(this.logopic);
+    // console.log(this.logopic);
 
     this.website = this.orgArray[0].website
-    console.log(this.image)
+    // console.log(this.image)
 
-    console.log(this.image)
-    this.services = this.orgArray[0].service[0]
-
+    // console.log(this.image)
+    this.services = this.orgArray[0].programmeService[0]
     console.log(this.services)
-    console.log(this.imageKey);
-    console.log(this.wifiRange1);
+
+    // console.log(this.services)
+    // console.log(this.imageKey);
+    console.log(this.orgArray);
 
 
     console.log(this.orgArray[0].lat);
@@ -341,27 +342,27 @@ this.irhubProvider.getGallery(this.orgArray[0].id).then((data:any) =>{
         this.detailArray.length = 0;
         console.log(details)
         this.detailArray.push(details);
-        console.log(details);
+        console.log(this.detailArray);
         this.hideMe = true
 
         this.username = this.detailArray[0].name;
         this.url = this.detailArray[0].downloadurl
 
         console.log(this.username)
-        console.log(this.url)
+        console.log(userID.uid)
 
 
-      
+
       });
     }
     console.log(this.loginState);
-    
+
 
     // if(!this.loginState){
-   
+
     //   this.hideMe = false;
     // }
-     
+
 
 
   }
@@ -369,6 +370,7 @@ this.irhubProvider.getGallery(this.orgArray[0].id).then((data:any) =>{
 
 
   ionViewWillEnter() {
+    this.retrieveComments();
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsRenderer;
@@ -398,7 +400,7 @@ this.irhubProvider.getGallery(this.orgArray[0].id).then((data:any) =>{
 
         this.currentUserlat = data.coords.latitude;
         this.currentUserlng = data.coords.longitude
-       
+
       }
     })
   }
@@ -416,7 +418,9 @@ this.irhubProvider.getGallery(this.orgArray[0].id).then((data:any) =>{
 
     console.log("testmap");
 
-    this.retrieveComments();
+    // this.retrieveComments();
+
+
   }
 
   retrieveComments() {
@@ -425,7 +429,7 @@ this.irhubProvider.getGallery(this.orgArray[0].id).then((data:any) =>{
       this.commentArr = data;
       console.log(this.commentArr)
       // this.commentArr.reverse(); 
-      // this.commentArr.length=0;
+      this.commentArr.length = 0;
 
       let rating = this.irhubProvider.getRating();
       if (rating > 0) {
@@ -473,8 +477,9 @@ this.irhubProvider.getGallery(this.orgArray[0].id).then((data:any) =>{
                       x = x + this.orgArray[0].rating
                       this.orgArray[0].rating = Math.round(x);
                       this.commentArr = data;
+                      console.log(this.commentArr);
                       // this.commentArr.reverse();
-                      // this.commentArr.length = 0;
+                      this.commentArr.length = 0;
                       this.retrieveComments();
                       this.rate(num);
                       this.rateState = true;
@@ -601,7 +606,7 @@ this.irhubProvider.getGallery(this.orgArray[0].id).then((data:any) =>{
 
   ifOrderYes() {
 
-    }
+  }
 
   call(cell) {
     console.log(cell);
@@ -639,13 +644,13 @@ this.irhubProvider.getGallery(this.orgArray[0].id).then((data:any) =>{
         zoom: 8,
         disableDefaultUI: true,
         styles: this.mapStyles,
-        icon:this.icon
+        icon: this.icon
       }
       this.map2 = new google.maps.Map(this.mapRef2.nativeElement, options);
       this.marker = new google.maps.Marker({
         map: this.map2,
         zoom: 10,
-        icon:this.icon,
+        icon: this.icon,
         position: this.map2.getCenter()
       });
     }, 4000);
@@ -673,7 +678,7 @@ this.irhubProvider.getGallery(this.orgArray[0].id).then((data:any) =>{
         this.marker = new google.maps.Marker({
           map: this.map,
           zoom: 10,
-          icon:this.icon,
+          icon: this.icon,
           styles: this.mapStyles,
           position: this.map.getCenter()
         });
@@ -688,26 +693,26 @@ this.irhubProvider.getGallery(this.orgArray[0].id).then((data:any) =>{
 
   }
 
-  // ShowBtnMethod(){
-  //   console.log("clicked")
+  ShowBtnMethod() {
+    console.log("clicked")
 
-  //   //this.rateState == true
+    //this.rateState == true
 
-  //   if(this.rateState == true){
-  //     this.showBtn =false ;
-  //   }else{
-  //     this.showBtn =true ; 
-  //   }
+    if (this.rateState == true) {
+      this.showBtn = false;
+    } else {
+      this.showBtn = true;
+    }
 
-  //   console.log(this.rateState)
-  // }
+    console.log(this.rateState)
+  }
 
   getDirection() {
 
     let obj = {
       lat: this.destlat,
       long: this.destlong,
-      address :this.address
+      address: this.address
     }
 
     coordinateArray.push(obj)
@@ -722,7 +727,7 @@ this.irhubProvider.getGallery(this.orgArray[0].id).then((data:any) =>{
   }
 
 
-  
+
 
 
 

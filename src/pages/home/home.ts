@@ -6,6 +6,8 @@ import { UserProfilePage } from '../user-profile/user-profile';
 import { ViewOrganizationInforPage } from '../view-organization-infor/view-organization-infor';
 import { Component, ViewChild, ElementRef, style } from '@angular/core'
 import { Geolocation } from '@ionic-native/geolocation';
+import { StartPage } from '../start/start';
+
 
 declare var google;
 @Component({
@@ -356,22 +358,22 @@ export class HomePage {
   custom2 = "inactive";
   pic
   userLocation = "Searching for location..." ;
-
+name;
 
   constructor(public navCtrl: NavController, public IRmethods: IRhubProvider,  public alertCtrl: AlertController) {
 
-    this.IRmethods.getAllOrganizations().then((data: any) => {
-      this.orgArray = data;
-      this.setBackItems();
+   setTimeout(()=>{
+    this.IRmethods.getAllOrganizations().then((data:any)=>{
+      console.log(data);
+      this.orgArray =data
+      console.log(data.programCategory);
+      
       console.log(this.orgArray);
-      setTimeout(() => {
-        var names = this.IRmethods.getOrgNames()
-        console.log(names);
-        this.storeOrgNames(names)
-        // this.loading.dismiss()
-      }, 2500);
+      
+      
     })
 
+   } , 8000)
 
 
   
@@ -489,6 +491,10 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
+
+
+    
+   
     // this.loading = this.loadingCtrl.create({
     //   spinner: 'bubbles',
     //   content: 'Please wait...',
@@ -570,6 +576,42 @@ export class HomePage {
     // this.checkVerification()
   }
 
+  ionViewDidEnter(){
+
+
+    this.IRmethods.getAllOrganizations().then((data: any) => {
+      this.orgArray = data;
+      this.setBackItems();
+      console.log(this.orgArray);
+      setTimeout(() => {
+        var names = this.IRmethods.getOrgNames()
+        console.log(names);
+        this.storeOrgNames(names)
+        // this.loading.dismiss()
+      }, 2500);
+    })
+
+
+    
+    this.IRmethods.checkAuthState().then(data => {
+      if (data == true) {
+        this.logInState = true;
+        this.IRmethods.getProfile().then((data: any) => {
+          console.log(data);
+
+          console.log(this.logInState);
+          this.img = data;
+        })
+      }
+      else if (data == false) {
+        this.img = "assets/imgs/defaultImage.png";
+      }
+    });
+
+  
+
+  }
+
 
   initMap() {
    return new Promise((resolve, reject) => {
@@ -640,8 +682,10 @@ export class HomePage {
 
 
   viewDetails(name) {
+    console.log(this.orgArray.length);
+    
     for (var i = 0; i < this.orgArray.length; i++) {
-      if (this.orgArray[i].orgName == name) {
+      if (this.orgArray[i].prograName == name) {
         this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[i] })
       
         break;
@@ -687,7 +731,7 @@ export class HomePage {
       if (data == false) {
         let alert = this.alertCtrl.create({
           cssClass: "myAlert",
-          subTitle: 'You have to sign in before you can view your profile, would you like to sign in now?',
+          subTitle: 'You have to sign in before you can view your profile, would you like to signin now?',
           // cssClass: 'myAlert',
           buttons: [
             {
@@ -695,7 +739,7 @@ export class HomePage {
               handler:
                 data => {
                   var opt = "profile";
-                  this.navCtrl.push(SignInPage, { option: opt })
+                  this.navCtrl.push(StartPage, { option: opt })
                 }
             },
             {
@@ -800,7 +844,7 @@ export class HomePage {
       if (data == false) {
         let alert = this.alertCtrl.create({
           cssClass: "myAlert",
-          subTitle: 'You have to sign in before you can view your profile, would you like to sign in now?',
+          subTitle: 'You have to sign in before you can view your profile, would you like to signin now?',
           // cssClass: 'myAlert',
           buttons: [
             {
@@ -808,7 +852,7 @@ export class HomePage {
               handler:
                 data => {
                   var opt = "profile";
-                  this.navCtrl.push(SignInPage, { option: opt })
+                  this.navCtrl.push(StartPage, { option: opt })
                 }
             },
             {
@@ -1035,10 +1079,10 @@ export class HomePage {
               zoom: 8,
             });
 
-            console.log(this.orgArray[index]);
+            // console.log(this.orgArray[index]);
           this.showMultipleMarker.addListener('click', () => {
 
-          console.log(this.orgArray[index]);
+          // console.log(this.orgArray[index]);
           console.log(index);
           this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
         });

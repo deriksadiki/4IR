@@ -19,7 +19,10 @@
       border-radius: 50%;
     }
   }
-
+.fontchange{
+ font-size:50%;
+ color:grey
+}
   .speech-bubble {
     position: relative;
     background: #f2f2f2;
@@ -267,11 +270,13 @@ h3{
 #lie{
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 55%;
+  padding-bottom:30%;
   transform: translate(-50%,20%)
 }
 #emptyIMG{
   height: 80px;
+  padding-left:30%;
 }
 .emptyCont{
   position: relative;

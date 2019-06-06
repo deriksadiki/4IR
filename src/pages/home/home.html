@@ -74,10 +74,11 @@
      
         <div class="theDiv" *ngFor="let i of orgArray">
           <ion-slide class="card-background-page">
-            <ion-card (click)="viewDetails(i.orgName)">
+            <ion-card (click)="viewDetails(i.progName)">
               <div class="overlay"></div>
               <img class="theImage" src="{{i.img}}" />
-              <div class="card-title"><p>{{i.orgName}}</p></div>
+              <div class="card-title"><p>{{i.programCategory}}</p></div>
+       
               <div class="card-subtitle">
                 <div *ngIf="i.rating == 0; then loggedIn110">
                 </div>
