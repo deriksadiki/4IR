@@ -74,10 +74,10 @@
      
         <div class="theDiv" *ngFor="let i of orgArray">
           <ion-slide class="card-background-page">
-            <ion-card (click)="viewDetails(i.progName)">
+            <ion-card (click)="viewDetails(i.orgName)">
               <div class="overlay"></div>
               <img class="theImage" src="{{i.img}}" />
-              <div class="card-title"><p>{{i}}</p></div>
+              <div class="card-title"><p>{{i.programCategory}}</p></div>
        
               <div class="card-subtitle">
                 <div *ngIf="i.rating == 0; then loggedIn110">
@@ -448,42 +448,6 @@
             </tr>
           </table>
 
-      <!-- <ion-item (click)="goToViewPage(a.orgName)" no-padding class="listedCard" no-lines *ngIf="showNearbyList" id="all">
-        <ion-thumbnail item-start large>
-          <img class="image" src="{{a.img}}" />
-        </ion-thumbnail>
-        <h2>{{ a.orgName }}</h2>
-        <p>{{a.desc}}
-        </p>
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <div *ngIf="a.wifi == 1; then loggedIn1">
-              </div>
-
-            </ion-col>
-            <ion-col>
-              <div *ngIf="a.freeWifi == 1; then loggedIn0">
-              </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-
-        <ng-template #loggedIn0>
-          <p>
-            <img src="../../assets/icon/notes.svg" id="cash" alt="">
-          </p>
-        </ng-template>
-
-        <ng-template #loggedIn1>
-          <p>
-            <ion-icon name="ios-wifi"></ion-icon>
-          </p>
-        </ng-template>
-        <button ion-button icon-only color="custom" clear item-end>
-          <ion-icon name="ios-arrow-forward"></ion-icon>
-        </button>
-      </ion-item> -->
     </div>
 
   </div>
