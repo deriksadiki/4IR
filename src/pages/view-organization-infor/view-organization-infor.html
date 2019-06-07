@@ -43,7 +43,7 @@
             </div>
             <div class="icons">
                 <a href="{{i.website}}">
-                    <ion-icon name="paper"></ion-icon>                
+                    <ion-icon name="paper"></ion-icon>
                 </a>
                 <p class="fontchange">apply</p>
             </div>
@@ -52,7 +52,7 @@
         <div class="ourSegment">
             <ion-segment color="bg" [(ngModel)]="pet">
                 <ion-segment-button value="programdetails">
-                    Program Details
+                    Programme
                 </ion-segment-button>
                 <ion-segment-button value="services">
                     Services
@@ -64,52 +64,61 @@
         </div>
         <div class="switchCases">
             <div class="switch" no-padding [ngSwitch]="pet">
-                <div class="theView" id="segView" *ngSwitchCase="'programdetails'">
+                <div class="theView" id="segView" *ngSwitchCase="'programdetails'" padding>
 
-           
-                    <h4>Objectives</h4>
-                    <p>{{i.objectives}}</p><br>
-
-                    <h4>programBenefits</h4>
-                    <p>{{i.programBenefits}}</p><br>
-
-                    <h4>eligibleCreteria</h4>
-                    <p>{{i.eligibleCreteria}}</p><br>
-                    <div class="icons">
-                        <a href="{{i.twitter}}">
-                            <ion-icon name="logo-twitter"></ion-icon>                
-                        </a>
-                        <p class="fontchange">Twitter</p>
-                    </div>
-
-                    <div class="icons">
-                        <a href="{{i.facebook}}">
-                            <ion-icon name="logo-facebook"></ion-icon>                
-                        </a>
-                        <p class="fontchange">facebook</p>
-                    </div>
+                    
+                    <p class="title">Objectives</p>
+                    <p>{{i.objectives}}</p>
 
 
-                 
+                    <p class="title">Programme Benefits</p>
+                    <p>{{i.programBenefits}}</p>
+
+                    <p class="title">Eligible Creteria</p>
+                    <p>{{i.eligibleCreteria}}</p>
+
+                    <p class="title">Social Media</p>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col>
+                                <div class="icons">
+                                    <a href="{{i.twitter}}">
+                                        <ion-icon name="logo-twitter"></ion-icon>
+                                    </a>
+                                    <p class="fontchange">Twitter</p>
+                                </div>
+                            </ion-col>
+                            <ion-col>
+                                <div class="icons">
+                                    <a href="{{i.facebook}}">
+                                        <ion-icon name="logo-facebook"></ion-icon>
+                                    </a>
+                                    <p class="fontchange">facebook</p>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+
+
                 </div>
 
                 <ion-list class="theView" *ngSwitchCase="'services'">
-             
-                        <div *ngFor="let a of services">
 
-                                <div id="serv-list">
-                                 
-                                    <p class="NamePadding">{{a.title}}
-                                    </p>
-        
-                                    <p class="ParagraphPadding">
-                                        {{a.description}}
-                                    </p>
-                                    <div class="line"></div>
-                                </div>
-        
-                            </div>
-                   
+                    <div *ngFor="let a of services">
+
+                        <div id="serv-list">
+
+                            <p class="NamePadding">{{a.title}}
+                            </p>
+
+                            <p class="ParagraphPadding">
+                                {{a.description}}
+                            </p>
+                            <div class="line"></div>
+                        </div>
+
+                    </div>
+
                 </ion-list>
 
 
@@ -138,41 +147,40 @@
         
                                             <tr>
                                                 <td colspan="2">
-                                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas dolorum placeat
-                                                        quidem officiis. Ut dolorum velit itaque ad odio facere possimus ratione
-                                                        at, eaque accusantium atque culpa quisquam ex quidem.</p>
+                                                    <p>{{p.comment}}</p>
                                                 </td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
         
-                                < </div>
+                                </div>
                                     <div>
         
                                     </div>
-                                    <ion-fab right mini>
-                                        <button ion-fab mini style="background: white;">
+                                    <ion-fab right mini  *ngIf="showFab">
+                                        <button ion-fab mini style="background: white;"  (click)="fabStar()">
                                             <ion-icon class="TheStar1" name="star"></ion-icon>
                                         </button>
-                                        <ion-fab-list side="left">
-                                            <button ion-fab style="background: whitesmoke;">
-                                                <ion-icon class="TheStar1" name="star" (click)="comment('1')"></ion-icon>
+                                        <div  *ngIf="showandHideStars">
+                                        <ion-fab-list side="left"> 
+                                            <button ion-fab style="background: whitesmoke;"  (click)="comment('1')">
+                                                <ion-icon class="TheStar1" name="star"></ion-icon>
                                             </button>
-                                            <button ion-fab style="background: whitesmoke;">
-                                                <ion-icon class="TheStar1" name="star" (click)="comment('2')"></ion-icon>
+                                            <button ion-fab style="background: whitesmoke;" (click)="comment('2')">
+                                                <ion-icon class="TheStar1" name="star" ></ion-icon>
                                             </button>
-                                            <button ion-fab style="background: whitesmoke;">
-                                                <ion-icon class="TheStar1" name="star" (click)="comment('3')"></ion-icon>
+                                            <button ion-fab style="background: whitesmoke;" (click)="comment('3')">
+                                                <ion-icon class="TheStar1" name="star" ></ion-icon>
                                             </button>
-                                            <button ion-fab style="background: whitesmoke;">
-                                                <ion-icon class="TheStar1" name="star" (click)="comment('4')"></ion-icon>
+                                            <button ion-fab style="background: whitesmoke;" (click)="comment('4')">
+                                                <ion-icon class="TheStar1" name="star" ></ion-icon>
                                             </button>
-                                            <button ion-fab style="background: whitesmoke;">
-                                                <ion-icon class="TheStar1" name="star" (click)="comment('5')"></ion-icon>
+                                            <button ion-fab style="background: whitesmoke;" (click)="comment('5')">
+                                                <ion-icon class="TheStar1" name="star" ></ion-icon>
                                             </button>
                                         </ion-fab-list>
-        
+                                    </div>
                                     </ion-fab>
 
                     <!-- <div class="emptyCont" *ngIf="galleryArray.length == 0 || galleryArray.length == undefined">
@@ -193,9 +201,9 @@
 
 
 
-                </div>
-
             </div>
+
         </div>
+    </div>
 
 </ion-content>

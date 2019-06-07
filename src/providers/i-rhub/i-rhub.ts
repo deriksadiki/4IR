@@ -203,6 +203,7 @@ export class IRhubProvider {
                 fullDescription: details[keys[x]].fullDescription,
                 intro: details[keys[x]].intro,
                 lat: details[keys[x]].lat,
+                long:details[keys[x]].long ,
                 id: keys[x],
                 objectives:details[keys[x]].objectives,
                 // wifi:wifi,
@@ -341,6 +342,8 @@ galleryArray = new Array()
       this.ngzone.run(() => {
         firebase.database().ref("Reviews/" + commentKey).on("value", (data: any) => {
           // this.commentArr.length = 0;
+          this.commentsArray.length = 0;
+          var obj ;
           let user = firebase.auth().currentUser
           let CommentDetails = data.val();
           if (data.val() != null || data.val() != undefined) {
@@ -348,7 +351,7 @@ galleryArray = new Array()
             for (var i = 0; i < keys1.length; i++) {
               let key = keys1[i];
               let chckId = CommentDetails[key].uid;
-               var obj = {
+                obj = {
                 comment: CommentDetails[key].comment,
                 uid: CommentDetails[key].uid,
                 url:  CommentDetails[key].url,
@@ -363,24 +366,21 @@ galleryArray = new Array()
                   this.assignRating(CommentDetails[key].rate)
                 }
               }
-                console.log(obj)
-                console.log("before");
-                tempArray.push(obj);
+              this.setComments(obj);
+                // console.log(obj)
+                // console.log("before");
+                // tempArray[i] = obj;
           
-                console.log(tempArray)
-                console.log("after");
-                console.log(tempArray)
-                accpt(tempArray);
+                // console.log(tempArray)
+                // console.log("after");
+                // console.log(tempArray)
+                accpt('');
          
             }
-            
-           
-
           }
-          // else {
-          //   this.commentArr=null;
-          //   // accpt(' ');
-          // }
+          else {
+           rejc('')
+          }
 
         }, Error => {
           rejc(Error.message)
@@ -389,6 +389,22 @@ galleryArray = new Array()
       })
     })
   }
+
+commentsArray =  new Array();
+  setComments(obj){
+    this.commentsArray.push(obj);
+    console.log(this.commentsArray);
+    
+  }
+
+  getAllComments(){
+    return new Promise((accpt, rejc) => {
+      console.log(this.commentsArray);
+      
+      accpt(this.commentsArray)
+    })
+  }
+
 
   assignRating(rating) {
     this.rating = rating;

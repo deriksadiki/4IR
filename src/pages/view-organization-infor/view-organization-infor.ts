@@ -294,8 +294,10 @@ export class ViewOrganizationInforPage implements OnInit {
   theTabs = "services";
   galleryArray = new Array();
 
+  showandHideStars :boolean;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, public modalCtrl: ModalController) {
-    this.retrieveComments();
+
     // 
 
     this.orgArray.push(this.navParams.get('orgObject'));
@@ -318,10 +320,10 @@ export class ViewOrganizationInforPage implements OnInit {
     // console.log(this.image)
 
     // console.log(this.image)
-    this.services = this.orgArray[0].programmeService[0]
+    this.services = this.orgArray[0].programmeService
     console.log(this.services)
 
-    // console.log(this.services)
+   console.log(this.services)
     // console.log(this.imageKey);
     console.log(this.orgArray);
 
@@ -422,27 +424,42 @@ export class ViewOrganizationInforPage implements OnInit {
 
 
   }
-
+  showFab:boolean;
   retrieveComments() {
     this.commentArr = [];
     this.irhubProvider.viewComments(this.comments, this.imageKey).then((data: any) => {
-      this.commentArr = data;
-      console.log(this.commentArr)
-      // this.commentArr.reverse(); 
       this.commentArr.length = 0;
+      this.irhubProvider.getAllComments().then((data2:any) =>{
+       this.commentArr = data2;
+        console.log(this.commentArr)
+        this.commentArr.reverse(); 
+        let rating = this.irhubProvider.getRating();
+        console.log(rating);
+        
+        if (rating > 0) {
+          this.rate(rating);
+          this.rateState = true;
+          this.showFab = false
+          console.log(this.showFab);
+          console.log(this.rateState);
+          
+          
+        }
+        else if (rating == undefined || rating == 0) {
+          this.rateState = false
+          this.showFab = true;
+        }
+     
+      })
+       
 
-      let rating = this.irhubProvider.getRating();
-      if (rating > 0) {
-        this.rate(rating);
-        this.rateState = true;
-      }
-      else if (rating == undefined || rating == 0) {
-        this.rateState = false
-      }
-
+    }, Error=>{
+      this.showFab = true;
+      console.log(this.showFab);
     })
+  
   }
-
+  
   comment(num) {
     this.commentArr = [];
     this.irhubProvider.checkAuthState().then(data => {
@@ -476,13 +493,14 @@ export class ViewOrganizationInforPage implements OnInit {
                       var x = ((num - this.orgArray[0].rating) / y);
                       x = x + this.orgArray[0].rating
                       this.orgArray[0].rating = Math.round(x);
-                      this.commentArr = data;
-                      console.log(this.commentArr);
+                      // this.commentArr = data;
+                      // console.log(this.commentArr);
                       // this.commentArr.reverse();
-                      this.commentArr.length = 0;
                       this.retrieveComments();
                       this.rate(num);
                       this.rateState = true;
+                      this.showandHideStars =false ;
+                      this.showFab = false;
                     })
                   })
                 }
@@ -721,16 +739,20 @@ export class ViewOrganizationInforPage implements OnInit {
     modal.present();
 
     console.log("clicked");
-
-
-
   }
 
 
 
 
 
-
+  fabStar(){
+    if (this.showandHideStars == undefined){
+      this.showandHideStars = true;
+    }
+    else if (this.showandHideStars == true){
+      this.showandHideStars = true
+    }
+  }
 
 
 
