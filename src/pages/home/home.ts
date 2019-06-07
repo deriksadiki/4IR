@@ -1,7 +1,7 @@
 
 
 
-import { NavController, Loading, AlertController } from 'ionic-angular';
+import { NavController, Loading, AlertController, LoadingController } from 'ionic-angular';
 import { IRhubProvider } from '../../providers/i-rhub/i-rhub';
 import { SignInPage } from '../sign-in/sign-in';
 import { UserProfilePage } from '../user-profile/user-profile';
@@ -23,8 +23,9 @@ export class HomePage {
   viewDetailsArray = new Array();
   logInState;
   category;
-  locationState ;
-  searchItem : string;
+  locationState;
+  colorState = false;
+  searchItem: string;
   styles: [
     { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
     { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
@@ -125,8 +126,8 @@ export class HomePage {
   showNearbyList: boolean = false;
   showAllOrganisation: boolean = true;
 
-  icon ='assets/imgs/wifi2.svg'
-  locIcon='assets/imgs/loc-user.svg'
+  icon = 'assets/imgs/wifi2.svg'
+  locIcon = 'assets/imgs/loc-user.svg'
 
   state = ["star-outline", "star-outline", "star-outline", "star-outline", "star-outline"]
   Star1 = "star-outline";
@@ -359,26 +360,26 @@ export class HomePage {
   custom1 = "primary";
   custom2 = "inactive";
   pic
-  userLocation = "Searching for location..." ;
-name;
+  userLocation = "Searching for location...";
+  name;
 
-  constructor(public navCtrl: NavController, public IRmethods: IRhubProvider,  public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
 
-   setTimeout(()=>{
-    this.IRmethods.getAllOrganizations().then((data:any)=>{
-      console.log(data);
-      this.orgArray =data
-      // console.log(data.programCategory);
-      
-      console.log(this.orgArray);
-      
-      
-    })
+    setTimeout(() => {
+      this.IRmethods.getAllOrganizations().then((data: any) => {
+        console.log(data);
+        this.orgArray = data
+        // console.log(data.programCategory);
 
-   } , 8000)
+        console.log(this.orgArray);
 
 
-  
+      })
+
+    }, 8000)
+
+
+
 
 
 
@@ -493,15 +494,12 @@ name;
   }
 
   ionViewDidLoad() {
-
-
-    
-   
-    // this.loading = this.loadingCtrl.create({
-    //   spinner: 'bubbles',
-    //   content: 'Please wait...',
-    // });
-    // this.loading.present();
+    let loading = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      duration: 222000,
+      content: 'please wait...',
+    });
+    loading.present();
     setTimeout(() => {
       document.getElementById("icon").style.color = "#ff6337";
       this.IRmethods.getCurrentLocations().then((data: any) => {
@@ -511,7 +509,7 @@ name;
         this.lat = data.coords.latitude;
         this.lng = data.coords.longitude
         console.log(this.lat);
-        this.locationState  = true ;
+        this.locationState = true;
         this.IRmethods.getLocation(this.lat, this.lng).then((data: any) => {
           console.log(data);
           this.userLocation = data
@@ -520,11 +518,11 @@ name;
         document.getElementById("statement").style.color = "#04592a"
 
       }, Error => {
-        this.locationState = false ;
+        this.locationState = false;
         console.log(Error.message);
         console.log("show-map-error");
-        this.lat =-25.7479;
-        this.lng = 28.2293 
+        this.lat = -25.7479;
+        this.lng = 28.2293
         const options = {
           center: { lat: -25.7479, lng: 28.2293 },
           zoom: 8,
@@ -533,7 +531,7 @@ name;
         this.userLocation = "Disabled"
         document.getElementById("icon").style.color = "#ff0000";
         document.getElementById("statement").style.color = "#ff0000"
- 
+
         this.map = new google.maps.Map(this.mapRef.nativeElement, options);
       })
 
@@ -561,7 +559,7 @@ name;
           })
         })
       })
-
+      loading.dismiss();
     }, 8000);
 
 
@@ -578,8 +576,8 @@ name;
     // this.checkVerification()
   }
 
-  ionViewDidEnter(){
-
+  ionViewDidEnter() {
+    this.all();
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
       this.orgArray = data;
@@ -594,7 +592,7 @@ name;
     })
 
 
-    
+
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
         this.logInState = true;
@@ -610,29 +608,29 @@ name;
       }
     });
 
-  
+
 
   }
 
 
   initMap() {
-   return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         this.IRmethods.getUserLocation().then((data: any) => {
-          if (data ==undefined || data == null){
-            this.lat =-25.7479;
-            this.lng = 28.2293 
+          if (data == undefined || data == null) {
+            this.lat = -25.7479;
+            this.lng = 28.2293
           }
-          else{
+          else {
             console.log(data);
             console.log(data.coords.latitude);
             console.log(data.coords.longitude);
-  
+
             this.lat = data.coords.latitude;
             this.lng = data.coords.longitude
             console.log(this.lat);
             console.log(this.lng);
-  
+
           }
 
 
@@ -670,7 +668,7 @@ name;
             console.log("clicked Marker");
             console.log()
 
-         });
+          });
           resolve();
 
         })
@@ -685,11 +683,11 @@ name;
 
   viewDetails(name) {
     console.log(this.orgArray.length);
-    
+
     for (var i = 0; i < this.orgArray.length; i++) {
       if (this.orgArray[i].prograName == name) {
         this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[i] })
-      
+
         break;
       }
     }
@@ -702,11 +700,12 @@ name;
     return new Promise((resolve, reject) => {
       console.log(this.orgArray);
       for (let index = 0; index < this.orgArray.length; index++) {
+        console.log(this.orgArray[index].orgName);
         let tracker = index;
         var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
         this.showMultipleMarker = new google.maps.Marker({
           map: this.map,
-           icon: this.icon,
+          icon: this.icon,
           position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
           label: name,
           zoom: 8,
@@ -765,7 +764,7 @@ name;
   goToViewPage(name) {
     for (var x = 0; x < this.orgArray.length; x++) {
       if (name == this.orgArray[x].orgName) {
-        this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x], loginState:this.logInState});
+        this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x], loginState: this.logInState });
       }
     }
   }
@@ -897,7 +896,7 @@ name;
   storeOrgNames(names) {
     this.orgNames = names;
     // console.log(names);
-    
+
     // this.orgNames[0] = names[0]
     // for (var x = 1; x < names.length; x++){
     //   var state = 0;
@@ -914,15 +913,15 @@ name;
     // console.log(this.orgNames);
   }
 
-  tempArray =  new Array();
+  tempArray = new Array();
   initializeItems() {
     this.items = this.orgNames
-    
+
     console.log(this.items);
-    
+
   }
 
-  filterItems(val){
+  filterItems(val) {
     if (val && val.trim() != '') {
       this.items = this.items.filter((item) => {
         console.log(val);
@@ -936,8 +935,8 @@ name;
   }
 
 
-  setBackItems(){
-  this.tempArray = this.orgArray
+  setBackItems() {
+    this.tempArray = this.orgArray
   }
 
   getItems(ev) {
@@ -950,7 +949,7 @@ name;
     this.setBackItems();
 
     // set val to the value of the ev target
-   this.searchItem;
+    this.searchItem;
 
     // if the value is an empty string don't filter the items
     if (this.searchItem && this.searchItem.trim() != '') {
@@ -964,12 +963,12 @@ name;
       this.searchItem = ""
     }
     console.log(this.items);
-  // this.tempArray = [];
-  //   for (var x = 0; x < this.items.length; x++){
-  //     if (this.orgArray[x].orgName == this.items[x]){
-  //       this.tempArray = this.orgArray[x]
-  //     }
-  //   }
+    // this.tempArray = [];
+    //   for (var x = 0; x < this.items.length; x++){
+    //     if (this.orgArray[x].orgName == this.items[x]){
+    //       this.tempArray = this.orgArray[x]
+    //     }
+    //   }
     if (this.searchItem == "" || this.searchItem == " " || this.searchItem == null) {
       listContent.style.display = "block"
     }
@@ -983,8 +982,8 @@ name;
   near() {
 
 
-    if (this.locationState == true){
-      if(this.nearby.length == 0){
+    if (this.locationState == true) {
+      if (this.nearby.length == 0) {
         const alert = this.alertCtrl.create({
           // title: "No Password",
           subTitle: "We don't have organisations near by currently",
@@ -995,27 +994,27 @@ name;
         alert.present();
 
       }
-      else{
-    // let loading = this.loadingCtrl.create({
-    //   spinner: 'bubbles',
-    //   content: 'please wait...',
-    //   duration: 4000000
-    // });
-    // loading.present();
+      else {
+        // let loading = this.loadingCtrl.create({
+        //   spinner: 'bubbles',
+        //   content: 'please wait...',
+        //   duration: 4000000
+        // });
+        // loading.present();
 
 
 
-    console.log("clicked");
-    console.log(this.nearby);
+        console.log("clicked");
+        console.log(this.nearby);
 
-    this.showNearbyList = true;
-    this.showAllOrganisation = false;
-    this.custom1 = "inactive";
-    this.custom2 = "primary";
-    // loading.dismiss();
+        this.showNearbyList = true;
+        this.showAllOrganisation = false;
+        this.custom1 = "inactive";
+        this.custom2 = "primary";
+        // loading.dismiss();
       }
-  }
-    else{
+    }
+    else {
       const alert = this.alertCtrl.create({
         // title: "No Password",
         subTitle: "Please turn on your location to enjoy 4IR's full potential.",
@@ -1029,12 +1028,18 @@ name;
 
 
   all() {
+
+
+    // if (this.colorState == true) {
+    // loading.present();
     this.showNearbyList = false;
     this.showAllOrganisation = true;
 
 
     this.custom1 = "primary";
     this.custom2 = "inactive";
+    // }
+    // loading.dismiss();
   }
 
   convertinCoordinate() {
@@ -1056,14 +1061,14 @@ name;
         zoom: 8,
         disableDefaultUI: true,
         styles: this.mapStyles,
-        icon:this.icon
+        icon: this.icon
       }
       this.map = new google.maps.Map(this.mapRef.nativeElement, options);
       // adding user marker to the map 
       this.marker = new google.maps.Marker({
         map: this.map,
         zoom: 10,
-       icon:this.locIcon,
+        icon: this.locIcon,
         position: this.map.getCenter()
         //animation: google.maps.Animation.DROP,
       });
@@ -1071,25 +1076,25 @@ name;
 
       for (let index = 0; index < this.orgArray.length; index++) {
 
-          if(this.category == this.orgArray[index].category){
-            console.log(this.orgArray[index]);
-            this.showMultipleMarker = new google.maps.Marker({
-              map: this.map,
-               icon: this.icon,
-              position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
-              label: name,
-              zoom: 8,
-            });
-
-            // console.log(this.orgArray[index]);
-          this.showMultipleMarker.addListener('click', () => {
+        if (this.category == this.orgArray[index].programCategory) {
+          console.log(this.orgArray[index]);
+          this.showMultipleMarker = new google.maps.Marker({
+            map: this.map,
+            icon: this.icon,
+            position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
+            label: name,
+            zoom: 8,
+          });
 
           // console.log(this.orgArray[index]);
-          console.log(index);
-          this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
-        });
-            
-          }
+          this.showMultipleMarker.addListener('click', () => {
+
+            // console.log(this.orgArray[index]);
+            console.log(index);
+            this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
+          });
+
+        }
       }
 
     })
@@ -1111,24 +1116,24 @@ name;
     if (event.directionY == "down" && event.scrollTop > 90) {
 
       // if (event.scrollTop > 250) {
-        // console.log("hide card");
+      // console.log("hide card");
 
-        theCard[0].style.height = "50px";
-        theCard[0].style.top = "-65px";
-        theCard[0].style.opacity = "0";
-        // splitter[0].style.height = "50px";
-        nav[0].style.height = "80px";
+      theCard[0].style.height = "50px";
+      theCard[0].style.top = "-65px";
+      theCard[0].style.opacity = "0";
+      // splitter[0].style.height = "50px";
+      nav[0].style.height = "80px";
 
 
-        // searchBtn[0].style.top = "0";
+      // searchBtn[0].style.top = "0";
 
-        // prof[0].style.top = "8px";
+      // prof[0].style.top = "8px";
 
-        // barTitle[0].style.top = "12px";
+      // barTitle[0].style.top = "12px";
 
-        // searchTxt[0].style.top = "5px";
+      // searchTxt[0].style.top = "5px";
 
-        
+
       // }
     }
     else {
@@ -1154,5 +1159,5 @@ name;
 
   }
 
-   
+
 }

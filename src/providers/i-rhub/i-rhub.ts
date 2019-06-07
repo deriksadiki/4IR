@@ -40,7 +40,7 @@ export class IRhubProvider {
 
   }
 
-  
+
 
   SignIn(email, password) {
     return firebase.auth().signInWithEmailAndPassword(email, password);
@@ -143,27 +143,29 @@ export class IRhubProvider {
   }
 
   getAllOrganizations() {
-    let loading = this.loadingCtrl.create({
-      spinner: 'bubbles',
-      content: 'please wait...',
-    });
-    loading.present();
     return new Promise((resolve, reject) => {
+   
       this.ngzone.run(() => {
+        // let loading = this.loadingCtrl.create({
+        //   spinner: 'bubbles',
+        //   duration: 222000,
+        //   content: 'please wait...',
+        // });
+        // loading.present();
         var user = firebase.auth().currentUser;
         firebase.database().ref("4IR_Hubs").on("value", (data: any) => {
-          if (data.val() != null || data.val() !=undefined)  {
+          if (data.val() != null || data.val() != undefined) {
             this.orgArray.length = 0;
             this.orgNames.length = 0;
             var totRating = 0;
             var counter;
-              var pay = 0;
-              var wifi = 0;
+            var pay = 0;
+            var wifi = 0;
             let details = data.val();
             let keys = Object.keys(details);
             console.log(details);
             console.log(keys);
-            
+
             for (var x = 0; x < keys.length; x++) {
               pay = 0;
               wifi = 0;
@@ -171,77 +173,78 @@ export class IRhubProvider {
               counter = 0;
               console.log(keys[x]);
               firebase.database().ref("Reviews/" + keys[x]).on("value", (ratings: any) => {
-                if (ratings.val() != null || ratings.val()!=undefined){
+                if (ratings.val() != null || ratings.val() != undefined) {
                   console.log(ratings.val());
                   var ratns = ratings.val();
                   var rKeys = Object.keys(ratns);
-                  for (var p = 0; p < rKeys.length; p++){
-                    var rk =  rKeys[p];
+                  for (var p = 0; p < rKeys.length; p++) {
+                    var rk = rKeys[p];
                     totRating = totRating + ratns[rk].rate
                     counter++;
                   }
                 }
-                if (totRating != 0){
-                totRating =  totRating / counter;
-                totRating = Math.round( totRating)
+                if (totRating != 0) {
+                  totRating = totRating / counter;
+                  totRating = Math.round(totRating)
                 }
-               
-              
-              // if (details[keys[x]].freeWifi == "Yes")
-              // pay = 1;
-              // if (details[keys[x]].wifi == "Yes")
-              // wifi = 1;
-              let orgObject = {
-               orgName:details[keys[x]].prograName,
-               applicationLink: details[keys[x]].applicationLink,
-                city: details[keys[x]].city,
-                closeApplicationDate: details[keys[x]].closeApplicationDate,
-                eligibleCreteria: details[keys[x]].eligibleCreteria,
-                email: details[keys[x]].email,
-                facebook: details[keys[x]].facebook,
-                fullDescription: details[keys[x]].fullDescription,
-                intro: details[keys[x]].intro,
-                lat: details[keys[x]].lat,
-                long:details[keys[x]].long ,
-                id: keys[x],
-                objectives:details[keys[x]].objectives,
-                // wifi:wifi,
-                openApplicationDate:details[keys[x]].openApplicationDate,
-                additionalBenefits: details[keys[x]].additionalBenefits,
-                programBenefits:details[keys[x]].programBenefits ,
-                programCategory:details[keys[x]].programCategory ,
-                programCloseDate:details[keys[x]].programCloseDate ,
-                programStartDate:details[keys[x]].programStartDate ,
-                programType:details[keys[x]].programType ,
-                programmeService:details[keys[x]].programmeService ,
-                promPhone:details[keys[x]].promPhone ,
-                targetAudience:details[keys[x]].targetAudience ,
-                twitter:details[keys[x]].twitter ,
-                img: details[keys[x]].downloadurl,
-                address: details[keys[x]].address ,
-                logo: details[keys[x]].downloadurlLogo,
-                rating :  totRating
-              }
-              this.storeOrgNames(details[keys[x]].prograName, details[keys[x]].programCategory);
-              this.orgArray.push(orgObject)
-              console.log(this.orgArray)
-            })
+
+
+                // if (details[keys[x]].freeWifi == "Yes")
+                // pay = 1;
+                // if (details[keys[x]].wifi == "Yes")
+                // wifi = 1;
+                let orgObject = {
+                  orgName: details[keys[x]].prograName,
+                  applicationLink: details[keys[x]].applicationLink,
+                  city: details[keys[x]].city,
+                  closeApplicationDate: details[keys[x]].closeApplicationDate,
+                  eligibleCreteria: details[keys[x]].eligibleCreteria,
+                  email: details[keys[x]].email,
+                  facebook: details[keys[x]].facebook,
+                  fullDescription: details[keys[x]].fullDescription,
+                  intro: details[keys[x]].intro,
+                  lat: details[keys[x]].lat,
+                  long: details[keys[x]].long,
+                  id: keys[x],
+                  objectives: details[keys[x]].objectives,
+                  // wifi:wifi,
+                  openApplicationDate: details[keys[x]].openApplicationDate,
+                  additionalBenefits: details[keys[x]].additionalBenefits,
+                  programBenefits: details[keys[x]].programBenefits,
+                  programCategory: details[keys[x]].programCategory,
+                  programCloseDate: details[keys[x]].programCloseDate,
+                  programStartDate: details[keys[x]].programStartDate,
+                  programType: details[keys[x]].programType,
+                  programmeService: details[keys[x]].programmeService,
+                  promPhone: details[keys[x]].promPhone,
+                  targetAudience: details[keys[x]].targetAudience,
+                  twitter: details[keys[x]].twitter,
+                  img: details[keys[x]].downloadurl,
+                  address: details[keys[x]].address,
+                  logo: details[keys[x]].downloadurlLogo,
+                  rating: totRating
+                }
+                this.storeOrgNames(details[keys[x]].prograName, details[keys[x]].programCategory);
+                this.orgArray.push(orgObject)
+                console.log(this.orgArray)
+              })
             }
             resolve(this.orgArray)
-            setTimeout(() => {
-              loading.dismiss();
-            }, 3000);
-           
-          }
-          else{
-            this.orgNames =null
+            // loading.dismiss();
+          //   setTimeout(() => {
+         
+          //   }, 3000);
+
+          // }
+          // else {
+          //   this.orgNames = null
           }
         });
       })
     })
   }
 
-  
+
 
   storeOrgNames(name, cat) {
     this.orgNames.push(name);
@@ -262,14 +265,14 @@ export class IRhubProvider {
           if (user) {
             firebase.database().ref("Users/" + "/" + "App_Users/" + user.uid).on('value', (data: any) => {
               let details = data.val();
-              if(data.val() !=null || data.val()!=undefined){
+              if (data.val() != null || data.val() != undefined) {
                 console.log(details)
                 accpt(details.downloadurl)
               }
-              else{
+              else {
                 details = null
               }
-           
+
               // console.log(details.downloadurl)
             })
           } else {
@@ -279,26 +282,26 @@ export class IRhubProvider {
       })
     })
   }
-galleryArray = new Array()
-  getGallery(key){
+  galleryArray = new Array()
+  getGallery(key) {
     return new Promise((accpt, rej) => {
       this.ngzone.run(() => {
-            firebase.database().ref("Gallery/" + key).on('value', (data: any) => {
-              if (data.val() != null){
-                this.galleryArray.length = 0;
-                var pictures = data.val();
-                var keys = Object.keys(pictures)
-                for(var x = 0; x < keys.length; x++){
-                  var k = keys[x];
-                  this.galleryArray.push(pictures[k].GalUrl)
-                }
-               accpt(this.galleryArray) 
-              }
-           else {
+        firebase.database().ref("Gallery/" + key).on('value', (data: any) => {
+          if (data.val() != null) {
+            this.galleryArray.length = 0;
+            var pictures = data.val();
+            var keys = Object.keys(pictures)
+            for (var x = 0; x < keys.length; x++) {
+              var k = keys[x];
+              this.galleryArray.push(pictures[k].GalUrl)
+            }
+            accpt(this.galleryArray)
+          }
+          else {
             console.log('no user');
-           }
+          }
+        })
       })
-    })
     })
   }
 
@@ -338,20 +341,20 @@ galleryArray = new Array()
         })
         accpt('success');
       });
-    }).catch((error)=>{
+    }).catch((error) => {
       console.log(error)
     })
   }
 
   viewComments(comment: any, commentKey: any) {
-   let tempArray  = new Array () ;
+    let tempArray = new Array();
     this.rating = 0;
     return new Promise((accpt, rejc) => {
       this.ngzone.run(() => {
         firebase.database().ref("Reviews/" + commentKey).on("value", (data: any) => {
           // this.commentArr.length = 0;
           this.commentsArray.length = 0;
-          var obj ;
+          var obj;
           let user = firebase.auth().currentUser
           let CommentDetails = data.val();
           if (data.val() != null || data.val() != undefined) {
@@ -359,35 +362,35 @@ galleryArray = new Array()
             for (var i = 0; i < keys1.length; i++) {
               let key = keys1[i];
               let chckId = CommentDetails[key].uid;
-                obj = {
+              obj = {
                 comment: CommentDetails[key].comment,
                 uid: CommentDetails[key].uid,
-                url:  CommentDetails[key].url,
+                url: CommentDetails[key].url,
                 rating: parseInt(CommentDetails[key].rate),
                 username: CommentDetails[key].username,
                 date: moment(CommentDetails[key].date, 'MMMM Do YYYY, h:mm:ss a').startOf('minutes').fromNow(),
                 key: key,
               }
-             
+
               if (user) {
                 if (user.uid == CommentDetails[key].uid) {
                   this.assignRating(CommentDetails[key].rate)
                 }
               }
               this.setComments(obj);
-                // console.log(obj)
-                // console.log("before");
-                // tempArray[i] = obj;
-          
-                // console.log(tempArray)
-                // console.log("after");
-                // console.log(tempArray)
-                accpt('');
-         
+              // console.log(obj)
+              // console.log("before");
+              // tempArray[i] = obj;
+
+              // console.log(tempArray)
+              // console.log("after");
+              // console.log(tempArray)
+              accpt('');
+
             }
           }
           else {
-           rejc('')
+            rejc('')
           }
 
         }, Error => {
@@ -398,17 +401,17 @@ galleryArray = new Array()
     })
   }
 
-commentsArray =  new Array();
-  setComments(obj){
+  commentsArray = new Array();
+  setComments(obj) {
     this.commentsArray.push(obj);
     console.log(this.commentsArray);
-    
+
   }
 
-  getAllComments(){
+  getAllComments() {
     return new Promise((accpt, rejc) => {
       console.log(this.commentsArray);
-      
+
       accpt(this.commentsArray)
     })
   }
@@ -471,7 +474,7 @@ commentsArray =  new Array();
 
                   if (values[inderKeys[i]].uid == userID.uid) {
                     console.log('in');
-                    
+
                     console.log(values[inderKeys[i]].uid)
                     console.log(userID.uid)
                     firebase.database().ref('4IR_Hubs/').on("value", (data3: any) => {
@@ -501,24 +504,25 @@ commentsArray =  new Array();
 
                             }
                             let organizationObject = {
-                              orgAdd: data4.val().additionalBenefits,
-                              orgAddress: data4.val().address,
-                              orgApp: data4.val().applicationLink,
-                              orgEli: data4.val().eligibleCreteria,
-                              orgEmail: data4.val().email,
-                              orgFace: data4.val().facebook,
-                              orgIntro: data4.val().intro,
-                              orgObj: data4.val().objectives,
-                              orgPro: data4.val().programmeService,
-                              orgTar: data4.val().targetAudience,
-                              orgTwi: data4.val().twitter,
-                              orgCat: data4.val().programCategory,
+                              additionalBenefits: data4.val().additionalBenefits,
+                              address: data4.val().address,
+                              applicationLink: data4.val().applicationLink,
+                              eligibleCreteria: data4.val().eligibleCreteria,
+                              email: data4.val().email,
+                              facebook: data4.val().facebook,
+                              intro: data4.val().intro,
+                              objectives: data4.val().objectives,
+                              programmeService: data4.val().programmeService,
+                              targetAudience: data4.val().targetAudience,
+                              twitter: data4.val().twitter,
+                              programCategory: data4.val().programCategory,
                               orgName: data4.val().prograName,
-                              orgContact: "0" + data4.val().promPhone,
-                              orgPicture: data4.val().downloadurl,
-                              orgLat: data4.val().lat,
-                              orgLong: data4.val().long,
-                              orgAbout: data4.val().fullDescription,
+                              promPhone: "0" + data4.val().promPhone,
+                              img: data4.val().downloadurl,
+                              logo: data4.val().downloadurlLogo,
+                              lat: data4.val().lat,
+                              long: data4.val().long,
+                              fullDescription: data4.val().fullDescription,
                               rating: values[inderKeys[i]].rate,
                               key: keys[x],
                               comment: values[inderKeys[i]].comment,
@@ -972,11 +976,11 @@ commentsArray =  new Array();
           console.log(address);
           console.log(results[0]);
           resolve(address)
-      }, 4000);
-     
-         })
+        }, 4000);
 
-      
+      })
+
+
     })
   }
 }

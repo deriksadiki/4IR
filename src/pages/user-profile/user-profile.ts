@@ -25,6 +25,7 @@ export class UserProfilePage {
   totrating = 0;
   ratings = new Array();
   popState = 0;
+  logInState;
   constructor(public navCtrl: NavController, public navParams: NavParams, public irhubProvider: IRhubProvider) {
   }
 
@@ -92,6 +93,25 @@ export class UserProfilePage {
     this.navCtrl.push(ViewOrganizationInforPage, { orgObject:this.ratings[ind] });
   }
 
+  viewDetails(name) {
+    console.log(this.ratings.length);
+    
+    for (var i = 0; i < this.ratings.length; i++) {
+      if (this.ratings[i].prograName == name) {
+        this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.ratings[i] })
+      
+        break;
+      }
+    }
+  }
+
+  goToViewPage(name) {
+    for (var x = 0; x < this.ratings.length; x++) {
+      if (name == this.ratings[x].orgName) {
+        this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.ratings[x], loginState:this.logInState});
+      }
+    }
+  }
   
   showPopover(){
     this.popState =1

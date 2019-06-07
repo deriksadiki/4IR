@@ -180,6 +180,19 @@ margin-top:-30%;
   color: gold;
 
 }
+
+.switchCases {
+  // background: whitesmoke;
+  height: 100%;
+
+  .custom-cards {
+    background: white;
+    margin: 5px;
+//     -webkit-box-shadow: 0px 0px 11px -4px rgba(0,0,0,0.75);
+// -moz-box-shadow: 0px 0px 11px -4px rgba(0,0,0,0.75);
+// box-shadow: 0px 0px 11px -4px rgba(0,0,0,0.75);
+  }
+}
 .ParagraphPadding{
   // padding-top:5px;
   color: grey;
@@ -190,10 +203,10 @@ margin-top:-30%;
   color: rgb(36, 36, 36);
 }
 .padding{
-  padding-bottom: 10%;
+  // padding-bottom: 10%;
   display: flex;
   flex-direction: column;
-  padding: 8px;
+  // padding: 8px;
 }
 .title{
   color: rgb(36, 36, 36);
@@ -382,4 +395,34 @@ ion-avatar {
   height: 100%;
   object-fit: cover;
 }
+
+a {
+  color: black;
+}
+
+ion-icon {
+  &[class*="appname-"] {
+      // Instead of using the font-based icons
+      // We're applying SVG masks
+      mask-size: contain;
+      mask-position: 50% 50%;
+      mask-repeat: no-repeat;
+      background: currentColor;
+      width: 1em;
+      height: 1em;
+  }
+  // custom icons
+  &[class*="appname-twitter"] {
+      mask-image: url(../assets/imgs/Defaults/twitter-logo.svg);
+      font-size: 200%;
+  }
+  &[class*="appname-facebook"] {
+      mask-image: url(../assets/imgs/Defaults/facebook.svg);
+      font-size: 200%;
+  }
+  // &[class*="appname-customicon3"] {
+  //     // mask-image: url(../assets/img/customicon3.svg);
+  // }
+}
+
 

@@ -42,7 +42,7 @@
                 <p class="fontchange">email</p>
             </div>
             <div class="icons">
-                <a href="{{i.website}}">
+                <a href="{{i.applicationLink}}">
                     <ion-icon name="paper"></ion-icon>
                 </a>
                 <p class="fontchange">apply</p>
@@ -64,22 +64,47 @@
         </div>
         <div class="switchCases">
             <div class="switch" no-padding [ngSwitch]="pet">
-                <div class="theView" id="segView" *ngSwitchCase="'programdetails'" padding>
+                <div class="theView" *ngSwitchCase="'programdetails'">
 
                     <div class="padding">
-                        <p >Objectives</p>
-                        <p class="ParagraphPadding">{{i.objectives}}</p>
+                        <div class="custom-cards">
+                            <p>Objectives</p>
+                            <p class="ParagraphPadding">{{i.objectives}}</p>
+                        </div>
                         <!-- <div class="line"></div> -->
-                        <p >Programme Benefits</p>
-                        <p class="ParagraphPadding">{{i.programBenefits}}</p>
+                        <div class="custom-cards">
+                            <p>Programme Benefits</p>
+                            <p class="ParagraphPadding">{{i.programBenefits}}</p>
+                        </div>
                         <!-- <div class="line"></div> -->
-                        <p  >Eligible Creteria</p>
-                        <p class="ParagraphPadding" >{{i.eligibleCreteria}}</p>
+                        <div class="custom-cards">
+                            <p>Eligible Creteria</p>
+                            <p class="ParagraphPadding">{{i.eligibleCreteria}}</p>
+                        </div>
                         <!-- <div class="line"></div> -->
-                        <p >Social Media</p>
+                        <div class="custom-cards">
+                            <p>Social Media</p>
+                            <table>
+                                <tr>
+                                    <td align="right">
+                                        <a href="{{i.twitter}}">
+                                            <ion-icon name="appname-facebook">
+                                                <!-- <a href="{{i.twitter}}"></a> -->
+                                            </ion-icon>
+                                        </a>
+                                    </td>
+
+                                    <td align="left" padding-left>
+                                        <a href="{{i.facebook}}">
+                                            <ion-icon name="appname-twitter"></ion-icon>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
-                 
-                    <ion-grid>
+
+                    <!-- <ion-grid>
                         <ion-row>
                             <ion-col>
                                 <div class="icons">
@@ -98,7 +123,7 @@
                                 </div>
                             </ion-col>
                         </ion-row>
-                    </ion-grid>
+                    </ion-grid> -->
 
 
                 </div>
@@ -125,66 +150,66 @@
 
                 <div class="theView" id="segView" *ngSwitchCase="'reviews'">
 
-                        <div class="theDiv" *ngFor="let p of commentArr">
-                                <div class="rev-div">
-                                    <img class="imgg" class="profilePic" [src]="p.url">
-                                    <div class="speech-bubble">
-        
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <p class="rev-name"> {{p.username}}</p>
-                                                </td>
-                                                <td align="right">
-                                                    <p class="stars">
-                                                        <ion-icon class="TheStar" name="star"></ion-icon>
-                                                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                                                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                                                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                                                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                                                    </p>
-                                                </td>
-                                            </tr>
-        
-                                            <tr>
-                                                <td colspan="2">
-                                                    <p>{{p.comment}}</p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-        
-                                </div>
-                                    <div>
-        
-                                    </div>
-                                    <ion-fab right mini  *ngIf="showFab">
-                                        <button ion-fab mini style="background: white;"  (click)="fabStar()">
-                                            <ion-icon class="TheStar1" name="star"></ion-icon>
-                                        </button>
-                                        <div  *ngIf="showandHideStars">
-                                        <ion-fab-list side="left"> 
-                                            <button ion-fab style="background: whitesmoke;"  (click)="comment('1')">
-                                                <ion-icon class="TheStar1" name="star"></ion-icon>
-                                            </button>
-                                            <button ion-fab style="background: whitesmoke;" (click)="comment('2')">
-                                                <ion-icon class="TheStar1" name="star" ></ion-icon>
-                                            </button>
-                                            <button ion-fab style="background: whitesmoke;" (click)="comment('3')">
-                                                <ion-icon class="TheStar1" name="star" ></ion-icon>
-                                            </button>
-                                            <button ion-fab style="background: whitesmoke;" (click)="comment('4')">
-                                                <ion-icon class="TheStar1" name="star" ></ion-icon>
-                                            </button>
-                                            <button ion-fab style="background: whitesmoke;" (click)="comment('5')">
-                                                <ion-icon class="TheStar1" name="star" ></ion-icon>
-                                            </button>
-                                        </ion-fab-list>
-                                    </div>
-                                    </ion-fab>
+                    <div class="theDiv" *ngFor="let p of commentArr">
+                        <div class="rev-div">
+                            <img class="imgg" class="profilePic" [src]="p.url">
+                            <div class="speech-bubble">
 
-                  
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <p class="rev-name"> {{p.username}}</p>
+                                        </td>
+                                        <td align="right">
+                                            <p class="stars">
+                                                <ion-icon class="TheStar" name="star"></ion-icon>
+                                                <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                                <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                                <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                                <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                            </p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2">
+                                            <p>{{p.comment}}</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div>
+
+                    </div>
+                    <ion-fab right mini *ngIf="showFab">
+                        <button ion-fab mini style="background: white;" (click)="fabStar()">
+                            <ion-icon class="TheStar1" name="star"></ion-icon>
+                        </button>
+                        <div *ngIf="showandHideStars">
+                            <ion-fab-list side="left">
+                                <button ion-fab style="background: whitesmoke;" (click)="comment('1')">
+                                    <ion-icon class="TheStar1" name="star"></ion-icon>
+                                </button>
+                                <button ion-fab style="background: whitesmoke;" (click)="comment('2')">
+                                    <ion-icon class="TheStar1" name="star"></ion-icon>
+                                </button>
+                                <button ion-fab style="background: whitesmoke;" (click)="comment('3')">
+                                    <ion-icon class="TheStar1" name="star"></ion-icon>
+                                </button>
+                                <button ion-fab style="background: whitesmoke;" (click)="comment('4')">
+                                    <ion-icon class="TheStar1" name="star"></ion-icon>
+                                </button>
+                                <button ion-fab style="background: whitesmoke;" (click)="comment('5')">
+                                    <ion-icon class="TheStar1" name="star"></ion-icon>
+                                </button>
+                            </ion-fab-list>
+                        </div>
+                    </ion-fab>
+
+
                 </div>
 
 

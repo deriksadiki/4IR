@@ -48,7 +48,7 @@
       <div *ngFor="let i of ratings; let ind = index" (click)="viewMore(ind)">
         <ion-slide>
           <ion-card class="list">
-            <h3 class="orgName">{{i.orgCat}}</h3>
+            <h3 class="orgName">{{i.orgName}}</h3>
             <div class="stars">
               <div *ngIf="i.rating == 0; then loggedIn0">
               </div>

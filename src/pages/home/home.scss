@@ -199,6 +199,13 @@ box-shadow: 0px -1px 7px -1px rgba(0,0,0,0.75);
   //     background: #166b85;
   //     // border: 2px solid red
   // }
+  .fixtext{
+    color: grey;
+    font-size: 12px;
+
+    margin: 0px 0px 0px 8px;;
+ 
+  }
   .more {
     transition: 700ms;
     color: rgb(17, 17, 17);
@@ -216,7 +223,7 @@ box-shadow: 0px -1px 7px -1px rgba(0,0,0,0.75);
   }
   .searchBar{
     transition: 700ms;
-    // border-radius: 550px;
+    border-radius: 550px;
     // background: white;
     padding-left: 10px;
     position: absolute;
@@ -425,3 +432,24 @@ box-shadow: 0px -1px 7px -1px rgba(0,0,0,0.75);
   }
 }
 
+
+  .searchbar-search-icon{
+    // margin-top: 10px;
+    // margin-left: 10px;
+  }
+  .button-inner{
+    background-color: transparent;
+  }
+  .searchbar-input-container{
+    background: white;
+    padding: 0px;
+    border-radius: 50px;
+  }
+
+.searchbar-input{
+  border: 1px solid rgba(0, 0, 0, 0.249);
+  box-shadow: 0 0 10px black;
+  border-radius: 50px;
+    border-radius: 50px !important;
+  box-shadow: 0 0 10px transparent !important;
+}

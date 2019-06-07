@@ -82,11 +82,12 @@ export class SignInPage {
           inputs: [
             {
               name: 'email',
+              type:'email',
               placeholder: 'Your email address'
             },
           ],
           buttons: [
-            {
+            { 
               text: 'Cancel',
               handler: data => {
                 console.log('Cancel clicked');
