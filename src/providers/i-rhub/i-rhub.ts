@@ -194,7 +194,7 @@ export class IRhubProvider {
               let orgObject = {
                orgName:details[keys[x]].prograName,
 
-               applicationLink: details[keys[x]].applicationLink,
+                 applicationLink: details[keys[x]].applicationLink,
                 city: details[keys[x]].city,
                 closeApplicationDate: details[keys[x]].closeApplicationDate,
                 eligibleCreteria: details[keys[x]].eligibleCreteria,

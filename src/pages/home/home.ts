@@ -702,6 +702,7 @@ name;
     return new Promise((resolve, reject) => {
       console.log(this.orgArray);
       for (let index = 0; index < this.orgArray.length; index++) {
+        console.log(this.orgArray[index].orgName);
         let tracker = index;
         var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
         this.showMultipleMarker = new google.maps.Marker({
@@ -1071,7 +1072,7 @@ name;
 
       for (let index = 0; index < this.orgArray.length; index++) {
 
-          if(this.category == this.orgArray[index].category){
+          if(this.category == this.orgArray[index].programCategory){
             console.log(this.orgArray[index]);
             this.showMultipleMarker = new google.maps.Marker({
               map: this.map,

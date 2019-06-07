@@ -56,11 +56,11 @@
       <ion-item class="hidden" color="seeThrough">
         <ion-label>Filter by category</ion-label>
         <ion-select [(ngModel)]="category" (ionChange)="selectcategory()" color="custom" id="drop">
-          <ion-option value="High Education Institution">High Education Institution</ion-option>
-          <ion-option value="Library">Library</ion-option>
-          <ion-option value="Learning Center">Learning Center</ion-option>
-          <ion-option value="InterCafe">InterCafe</ion-option>
-          <ion-option value="Mall">Mall</ion-option>
+          <ion-option value="Biomanufacturing industry development centre">Biomanufacturing industry development centre</ion-option>
+          <ion-option value="Biorefinery industry development Facility">Biorefinery industry development Facility</ion-option>
+          <ion-option value="Data Science for impact and decision enablement program">Data Science for impact and decision enablement program</ion-option>
+          <ion-option value="Experiential Training Programme">Experiential Training Programme</ion-option>
+          <ion-option value="Grassroots innovation Programme">Grassroots innovation Programme</ion-option>
         </ion-select>
       </ion-item>
     </div>
@@ -77,7 +77,7 @@
             <ion-card (click)="viewDetails(i.progName)">
               <div class="overlay"></div>
               <img class="theImage" src="{{i.img}}" />
-              <div class="card-title"><p>{{i}}</p></div>
+              <div class="card-title"><p>{{i.orgName}}</p></div>
        
               <div class="card-subtitle">
                 <div *ngIf="i.rating == 0; then loggedIn110">
