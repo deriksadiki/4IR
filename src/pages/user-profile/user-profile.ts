@@ -52,7 +52,7 @@ export class UserProfilePage {
         this.ratings.length =0;
       }
       this.ratings = data;
-      console.log(data)
+      console.log(this.ratings )
     })
 
 

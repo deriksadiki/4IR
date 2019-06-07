@@ -143,16 +143,16 @@ export class IRhubProvider {
   }
 
   getAllOrganizations() {
+    let loading = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'please wait...',
+    });
+    loading.present();
     return new Promise((resolve, reject) => {
       this.ngzone.run(() => {
-        let loading = this.loadingCtrl.create({
-          spinner: 'bubbles',
-          content: 'please wait...',
-        });
-        loading.present();
         var user = firebase.auth().currentUser;
         firebase.database().ref("4IR_Hubs").on("value", (data: any) => {
-          if (data.val() != null) {
+          if (data.val() != null || data.val() !=undefined)  {
             this.orgArray.length = 0;
             this.orgNames.length = 0;
             var totRating = 0;
@@ -171,7 +171,7 @@ export class IRhubProvider {
               counter = 0;
               console.log(keys[x]);
               firebase.database().ref("Reviews/" + keys[x]).on("value", (ratings: any) => {
-                if (ratings.val() != null){
+                if (ratings.val() != null || ratings.val()!=undefined){
                   console.log(ratings.val());
                   var ratns = ratings.val();
                   var rKeys = Object.keys(ratns);
@@ -193,7 +193,6 @@ export class IRhubProvider {
               // wifi = 1;
               let orgObject = {
                orgName:details[keys[x]].prograName,
-
                applicationLink: details[keys[x]].applicationLink,
                 city: details[keys[x]].city,
                 closeApplicationDate: details[keys[x]].closeApplicationDate,
@@ -223,7 +222,7 @@ export class IRhubProvider {
                 logo: details[keys[x]].downloadurlLogo,
                 rating :  totRating
               }
-              this.storeOrgNames(details[keys[x]].prograName, details[keys[x]].prograName);
+              this.storeOrgNames(details[keys[x]].prograName, details[keys[x]].programCategory);
               this.orgArray.push(orgObject)
               console.log(this.orgArray)
             })
@@ -233,6 +232,9 @@ export class IRhubProvider {
               loading.dismiss();
             }, 3000);
            
+          }
+          else{
+            this.orgNames =null
           }
         });
       })
@@ -260,9 +262,15 @@ export class IRhubProvider {
           if (user) {
             firebase.database().ref("Users/" + "/" + "App_Users/" + user.uid).on('value', (data: any) => {
               let details = data.val();
-              console.log(details)
-              accpt(details.downloadurl)
-              console.log(details.downloadurl)
+              if(data.val() !=null || data.val()!=undefined){
+                console.log(details)
+                accpt(details.downloadurl)
+              }
+              else{
+                details = null
+              }
+           
+              // console.log(details.downloadurl)
             })
           } else {
             console.log('no user');
@@ -493,13 +501,24 @@ commentsArray =  new Array();
 
                             }
                             let organizationObject = {
-                              orgCat: data4.val().category,
-                              orgName: data4.val().name,
-                              orgContact: "0" + data4.val().contact,
+                              orgAdd: data4.val().additionalBenefits,
+                              orgAddress: data4.val().address,
+                              orgApp: data4.val().applicationLink,
+                              orgEli: data4.val().eligibleCreteria,
+                              orgEmail: data4.val().email,
+                              orgFace: data4.val().facebook,
+                              orgIntro: data4.val().intro,
+                              orgObj: data4.val().objectives,
+                              orgPro: data4.val().programmeService,
+                              orgTar: data4.val().targetAudience,
+                              orgTwi: data4.val().twitter,
+                              orgCat: data4.val().programCategory,
+                              orgName: data4.val().prograName,
+                              orgContact: "0" + data4.val().promPhone,
                               orgPicture: data4.val().downloadurl,
                               orgLat: data4.val().lat,
                               orgLong: data4.val().long,
-                              orgAbout: data4.val().desc,
+                              orgAbout: data4.val().fullDescription,
                               rating: values[inderKeys[i]].rate,
                               key: keys[x],
                               comment: values[inderKeys[i]].comment,

@@ -19,7 +19,7 @@
                 <ion-icon name={{Star4}}></ion-icon>
                 <ion-icon name={{Star5}}></ion-icon>
             </div>
-            <div class="description" padding>
+            <div class="ParagraphPadding" padding>
                 {{i.intro}}
             </div>
             <br>
@@ -66,18 +66,19 @@
             <div class="switch" no-padding [ngSwitch]="pet">
                 <div class="theView" id="segView" *ngSwitchCase="'programdetails'" padding>
 
-                    
-                    <p class="title">Objectives</p>
-                    <p>{{i.objectives}}</p>
-
-
-                    <p class="title">Programme Benefits</p>
-                    <p>{{i.programBenefits}}</p>
-
-                    <p class="title">Eligible Creteria</p>
-                    <p>{{i.eligibleCreteria}}</p>
-
-                    <p class="title">Social Media</p>
+                    <div class="padding">
+                        <p >Objectives</p>
+                        <p class="ParagraphPadding">{{i.objectives}}</p>
+                        <!-- <div class="line"></div> -->
+                        <p >Programme Benefits</p>
+                        <p class="ParagraphPadding">{{i.programBenefits}}</p>
+                        <!-- <div class="line"></div> -->
+                        <p  >Eligible Creteria</p>
+                        <p class="ParagraphPadding" >{{i.eligibleCreteria}}</p>
+                        <!-- <div class="line"></div> -->
+                        <p >Social Media</p>
+                    </div>
+                 
                     <ion-grid>
                         <ion-row>
                             <ion-col>
@@ -183,18 +184,7 @@
                                     </div>
                                     </ion-fab>
 
-                    <!-- <div class="emptyCont" *ngIf="galleryArray.length == 0 || galleryArray.length == undefined">
-                        <img id="emptyIMG" src="../../assets/empty.jfif">
-                        <p id="lie">There are no uploads avaliable yet .....</p>
-                    </div>
-
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col col-4 *ngFor="let i of galleryArray">
-                                <img class="galuploaded-byOrg" src="{{i}}" alt="" imageViewer>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid> -->
+                  
                 </div>
 
 
