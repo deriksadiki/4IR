@@ -496,7 +496,7 @@ export class HomePage {
   ionViewDidLoad() {
     let loading = this.loadingCtrl.create({
       spinner: 'bubbles',
-      duration: 222000,
+      duration: 22200,
       content: 'please wait...',
     });
     loading.present();
@@ -559,7 +559,7 @@ export class HomePage {
           })
         })
       })
-      loading.dismiss();
+    
     }, 8000);
 
 
@@ -573,11 +573,12 @@ export class HomePage {
       console.log("showMap");
 
     });
+    loading.dismiss();
     // this.checkVerification()
   }
 
   ionViewDidEnter() {
-    this.all();
+    // this.all();
 
     this.IRmethods.getAllOrganizations().then((data: any) => {
       this.orgArray = data;
@@ -698,6 +699,8 @@ export class HomePage {
   markers() {
     let tracker;
     return new Promise((resolve, reject) => {
+      
+    setTimeout(() => {
       console.log(this.orgArray);
       for (let index = 0; index < this.orgArray.length; index++) {
         console.log(this.orgArray[index].orgName);
@@ -723,7 +726,7 @@ export class HomePage {
       }
 
 
-
+    },5000);
     })
 
   }
@@ -1028,16 +1031,16 @@ export class HomePage {
 
 
   all() {
+    setTimeout(() => {
 
-
-    // if (this.colorState == true) {
-    // loading.present();
     this.showNearbyList = false;
     this.showAllOrganisation = true;
 
 
     this.custom1 = "primary";
     this.custom2 = "inactive";
+
+    },3000)
     // }
     // loading.dismiss();
   }

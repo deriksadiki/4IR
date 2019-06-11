@@ -144,14 +144,13 @@ export class IRhubProvider {
 
   getAllOrganizations() {
     return new Promise((resolve, reject) => {
-   
       this.ngzone.run(() => {
-        // let loading = this.loadingCtrl.create({
-        //   spinner: 'bubbles',
-        //   duration: 222000,
-        //   content: 'please wait...',
-        // });
-        // loading.present();
+        let loading = this.loadingCtrl.create({
+          spinner: 'bubbles',
+          duration: 22200000,
+          content: 'Please wait...',
+        });
+        loading.present();
         var user = firebase.auth().currentUser;
         firebase.database().ref("4IR_Hubs").on("value", (data: any) => {
           if (data.val() != null || data.val() != undefined) {
@@ -229,11 +228,13 @@ export class IRhubProvider {
                 console.log(this.orgArray)
               })
             }
+
             resolve(this.orgArray)
-            // loading.dismiss();
-          //   setTimeout(() => {
-         
-          //   }, 3000);
+            loading.dismiss();
+      
+            // setTimeout(() => {
+           
+            // }, 3000);
 
           // }
           // else {

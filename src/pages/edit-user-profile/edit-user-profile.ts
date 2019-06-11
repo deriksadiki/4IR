@@ -47,19 +47,19 @@ export class EditUserProfilePage implements OnInit{
   }
 
   EditPrfile(){
-    // let loading = this.loadingCtrl.create({
-    //   spinner: 'bubbles',
-    //   content: 'Please wait...',
-    //   duration: 4000000
-    // });
-    // loading.present();
+    let loading = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'Please wait...',
+      duration: 4000000
+    });
+    loading.present();
     this.irhubProvider.uploadProfilePic(this.downloadurl, this.name).then(data => {
       console.log('added to db');
       this.irhubProvider.update(this.name, this.email, this.downloadurl,this.cell).then((data) => {
         this.imageArr.push(data);
       });
       console.log(this.imageArr);
-      // loading.dismiss();
+      loading.dismiss();
       const toast = this.toastCtrl.create({
         message: 'Profile successfully updated!',
         duration: 3000
@@ -69,7 +69,7 @@ export class EditUserProfilePage implements OnInit{
 
     },
       Error => {
-        // loading.dismiss();
+        loading.dismiss();
         const alert = this.alertCtrl.create({
           cssClass: "myAlert",
           subTitle: Error.message,
