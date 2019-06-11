@@ -545,7 +545,6 @@ export class HomePage {
         console.log(this.lat);
         console.log(this.lng);
         console.log(radius);
-
         this.IRmethods.getAllOrganizations().then((data: any) => {
           console.log(data);
           console.log(radius);
@@ -554,13 +553,13 @@ export class HomePage {
             this.nearby = nearbyOrgs;
 
             console.log(nearbyOrgs[0]);
-
+            loading.dismiss();
             console.log(this.nearby);
           })
         })
       })
     
-    }, 8000);
+    }, 3500);
 
 
     this.directionsService = new google.maps.DirectionsService;
@@ -573,7 +572,7 @@ export class HomePage {
       console.log("showMap");
 
     });
-    loading.dismiss();
+   
     // this.checkVerification()
   }
 
@@ -584,12 +583,10 @@ export class HomePage {
       this.orgArray = data;
       this.setBackItems();
       console.log(this.orgArray);
-      setTimeout(() => {
         var names = this.IRmethods.getOrgNames()
         console.log(names);
         this.storeOrgNames(names)
         // this.loading.dismiss()
-      }, 2500);
     })
 
 
@@ -768,6 +765,7 @@ export class HomePage {
     for (var x = 0; x < this.orgArray.length; x++) {
       if (name == this.orgArray[x].orgName) {
         this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x], loginState: this.logInState });
+        break;
       }
     }
   }
@@ -897,23 +895,23 @@ export class HomePage {
   }
 
   storeOrgNames(names) {
-    this.orgNames = names;
-    // console.log(names);
+    // this.orgNames = names;
+    console.log(names);
 
-    // this.orgNames[0] = names[0]
-    // for (var x = 1; x < names.length; x++){
-    //   var state = 0;
-    //   for (var i = 0; i < this.orgNames.length; i++){
-    //     if (this.orgNames[i] == names[x]){
-    //       state = 1;
-    //       break;
-    //     }
-    //   }
-    //   if (state == 0){
-    //     this.orgNames[x] = names[x]
-    //   }
-    // }
-    // console.log(this.orgNames);
+    this.orgNames[0] = names[0]
+    for (var x = 1; x < names.length; x++){
+      var state = 0;
+      for (var i = 0; i < this.orgNames.length; i++){
+        if (this.orgNames[i] == names[x]){
+          state = 1;
+          break;
+        }
+      }
+      if (state == 0){
+        this.orgNames[x] = names[x]
+      }
+    }
+    console.log(this.orgNames);
   }
 
   tempArray = new Array();

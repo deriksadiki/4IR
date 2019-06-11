@@ -412,7 +412,9 @@ export class ViewOrganizationInforPage implements OnInit {
 
 
   }
-
+  apply(){
+    this.irhubProvider.updateApplied(this.orgArray[0].id, this.orgArray[0].applied);
+  }
   ngOnInit() {
     // setTimeout(()=>{
     //   this.initMap();

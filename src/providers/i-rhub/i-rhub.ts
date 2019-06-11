@@ -145,15 +145,16 @@ export class IRhubProvider {
   getAllOrganizations() {
     return new Promise((resolve, reject) => {
       this.ngzone.run(() => {
-        let loading = this.loadingCtrl.create({
-          spinner: 'bubbles',
-          duration: 22200000,
-          content: 'Please wait...',
-        });
-        loading.present();
+        // let loading = this.loadingCtrl.create({
+        //   spinner: 'bubbles',
+        //   duration: 22200000,
+        //   content: 'Please wait...',
+        // });
+        // loading.present();
         var user = firebase.auth().currentUser;
         firebase.database().ref("4IR_Hubs").on("value", (data: any) => {
           if (data.val() != null || data.val() != undefined) {
+         
             this.orgArray.length = 0;
             this.orgNames.length = 0;
             var totRating = 0;
@@ -171,28 +172,11 @@ export class IRhubProvider {
               totRating = 0;
               counter = 0;
               console.log(keys[x]);
-              firebase.database().ref("Reviews/" + keys[x]).on("value", (ratings: any) => {
-                if (ratings.val() != null || ratings.val() != undefined) {
-                  console.log(ratings.val());
-                  var ratns = ratings.val();
-                  var rKeys = Object.keys(ratns);
-                  for (var p = 0; p < rKeys.length; p++) {
-                    var rk = rKeys[p];
-                    totRating = totRating + ratns[rk].rate
-                    counter++;
-                  }
-                }
-                if (totRating != 0) {
-                  totRating = totRating / counter;
-                  totRating = Math.round(totRating)
-                }
-
-
-                // if (details[keys[x]].freeWifi == "Yes")
-                // pay = 1;
-                // if (details[keys[x]].wifi == "Yes")
-                // wifi = 1;
+              this.ratin = 0;
+              this.ratings(keys[x])
+           
                 let orgObject = {
+                  applied : details[keys[x]].applied ,
                   orgName: details[keys[x]].prograName,
                   applicationLink: details[keys[x]].applicationLink,
                   city: details[keys[x]].city,
@@ -206,7 +190,6 @@ export class IRhubProvider {
                   long: details[keys[x]].long,
                   id: keys[x],
                   objectives: details[keys[x]].objectives,
-                  // wifi:wifi,
                   openApplicationDate: details[keys[x]].openApplicationDate,
                   additionalBenefits: details[keys[x]].additionalBenefits,
                   programBenefits: details[keys[x]].programBenefits,
@@ -221,24 +204,14 @@ export class IRhubProvider {
                   img: details[keys[x]].downloadurl,
                   address: details[keys[x]].address,
                   logo: details[keys[x]].downloadurlLogo,
-                  rating: totRating
+                  rating: this.getRate()
                 }
                 this.storeOrgNames(details[keys[x]].prograName, details[keys[x]].programCategory);
                 this.orgArray.push(orgObject)
                 console.log(this.orgArray)
-              })
             }
 
             resolve(this.orgArray)
-            loading.dismiss();
-      
-            // setTimeout(() => {
-           
-            // }, 3000);
-
-          // }
-          // else {
-          //   this.orgNames = null
           }
         });
       })
@@ -246,6 +219,45 @@ export class IRhubProvider {
   }
 
 
+  ratings(key){
+    var totRating = 0;
+    var counter = 0
+    firebase.database().ref("Reviews/" + key).on("value", (ratings: any) => {
+      if (ratings.val() != null || ratings.val() != undefined) {
+        console.log(ratings.val());
+        var ratns = ratings.val();
+        var rKeys = Object.keys(ratns);
+        for (var p = 0; p < rKeys.length; p++) {
+          var rk = rKeys[p];
+          totRating = totRating + ratns[rk].rate
+          counter++;
+        }
+      }
+      if (totRating != 0) {
+        totRating = totRating / counter;
+        totRating = Math.round(totRating)
+        console.log('1111111111111111111111111111111111111111'); 
+        this.assignRatings(totRating);
+      }
+    })
+  }
+
+  ratin = 0;
+  assignRatings(r){
+    console.log('222222222222222222222222222222222222222222222');
+    console.log(r);
+    this.ratin = r;
+  }
+
+  getRate(){
+    console.log('3333333333333333333333333333333333333333333');
+    return  this.ratin;
+  }
+
+updateApplied(key, num){
+  num++;
+  return firebase.database().ref("4IR_Hubs/"+ key).update({applied: num})
+}
 
   storeOrgNames(name, cat) {
     this.orgNames.push(name);
