@@ -4,53 +4,22 @@
       <img id="theLogo" src="../../assets/imgs/4IR logo.png" alt="" />
     </div>
     <div class="bottomHalf" padding>
-      <p>Fill in the form to get signed up.</p>
+      <!-- <p>Fill in the form to get signed up.</p> -->
       <div class="theCard">
-          <ion-input placeholder="Name" type="text" #username class="user-input" id="anim1"></ion-input>
-          <ion-input placeholder="Email" type="email" #email class="user-input" id="anim2"></ion-input>
-          <ion-input placeholder="Password" type="password" class="user-input" #password id="anim4"></ion-input>
+          <ion-input placeholder="Name" type="text" name="username" #username="ngModel" class="user-input" id="anim1" ngModel required></ion-input>
+          <span class="help-block" style="color: red" *ngIf="!username.valid && username.touched" >Please enter your username</span>
+
+          <ion-input placeholder="Email" type="email" name="email" #email="ngModel" class="user-input" id="anim2" ngModel required></ion-input>
+          <span class="help-block" style="color: red" *ngIf="!email.valid && email.touched" >Please enter your email</span>
+
+          <ion-input placeholder="Password" type="password" class="user-input"name="password" #password="ngModel" id="anim4" ngModel required></ion-input>
+          <span  class="help-block" style="color: red" *ngIf="!password.valid && password.touched">Please enter your password</span>
+
           <button ion-button block class="btnActions" id="anim5" (click)="SignUp(username.value,email.value,password.value)">SIGN UP</button>
     
       </div>
     </div>
-    <!-- <div class="top">
-          <div class="appName">4IR HUB</div>
-          <div id="circle"></div>
-        </div>
-        <div class="userContent" padding>
-          <div class="logo">
-            <img src="../../assets/imgs/4IR logo.png" alt="" />
-          </div>
-          <div class="inputs" padding>
-            <p>CREATE ACCOUNT</p>
-            <ion-list>
-              <ion-item>
-                <ion-label floating>Username</ion-label>
-                <ion-input type="text"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label floating>Password</ion-label>
-                <ion-input type="password"></ion-input>
-              </ion-item>
-              <button id="forgotPassword" ion-button clear>Forgot Password</button>
-              <button class="btnActions" ion-button>Sign Up</button>
-            </ion-list>
-          </div>
-        </div> -->
+
   </div>
-  <!-- <ion-list>
-    <ion-item>
-      <ion-label>Username</ion-label>
-      <ion-input type="text" #username></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Email</ion-label>
-      <ion-input type="email"  #email></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Password</ion-label>
-      <ion-input type="password"  #password></ion-input>
-    </ion-item>
-  </ion-list>
-  <button ion-button (click)="SignUp(username.value,email.value,password.value)">SignUp</button> -->
+
 </ion-content>

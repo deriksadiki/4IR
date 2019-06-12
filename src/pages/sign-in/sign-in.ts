@@ -34,42 +34,44 @@ export class SignInPage {
     this.navCtrl.push(HomePage)
   }
   SignIn(email: string, password: string) {
-    console.log(email, password)
-    let loading = this.loadingCtrl.create({
-      spinner: 'bubbles',
-      content: 'Signing in...',
-      duration: 40000
-    });
-    loading.present();
-    this.irhubProvider.SignIn(email, password).then((user: any) => {
-      // console.log(user);
-      this.irhubProvider.checkVerification().then((data: any) => {
-        if (data == 0) {
-          const alert = this.alertCtrl.create({
-            cssClass: "myAlert",
-            // title: "No Password",
-            subTitle: "We have sent you a verification mail, Please activate your account with the link in the mail",
-            buttons: ['OK'],
-          });
-          loading.dismiss()
-          alert.present();
-        }
-        else if (data == 1) {
-          loading.dismiss()
-          this.navCtrl.setRoot(HomePage);
-        }
-      })
-    }).catch((error) => {
-      const alert = this.alertCtrl.create({
-        cssClass: "myAlert",
-        // title: "No Password",
-        subTitle: error.message,
-        buttons: ['OK'],
-        // cssClass: 'myAlert',
+    if(email == "" || password== "" || email == null || password == null  ){
+      console.log('error')
+    }
+    else{
+      console.log(email, password)
+      let loading = this.loadingCtrl.create({
+        spinner: 'bubbles',
+        content: 'Signing in...',
+        duration: 40000
       });
-      loading.dismiss()
-      alert.present();
-    })
+      loading.present();
+      this.irhubProvider.SignIn(email, password).then((user: any) => {
+        this.irhubProvider.checkVerification().then((data: any) => {
+          if (data == 0) {
+            const alert = this.alertCtrl.create({
+              cssClass: "myAlert",
+              subTitle: "We have sent you a verification mail, Please activate your account with the link in the mail",
+              buttons: ['OK'],
+            });
+            loading.dismiss()
+            alert.present();
+          }
+          else if (data == 1) {
+            loading.dismiss()
+            this.navCtrl.setRoot(HomePage);
+          }
+        })
+      }).catch((error) => {
+        const alert = this.alertCtrl.create({
+          cssClass: "myAlert",
+          subTitle: error.message,
+          buttons: ['OK'],
+        });
+        loading.dismiss()
+        alert.present();
+      })
+    }
+
   }
 
   forgotpassword(PlaceObject: object) {

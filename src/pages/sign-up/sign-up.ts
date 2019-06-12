@@ -29,6 +29,10 @@ export class SignUpPage {
   }
 
   SignUp(username,email,password) {
+    if(email == "" || password== "" || email == null || password == null  || username == "" || username == null){
+      console.log('error')
+    }
+    else{
       this.irhubProvider.Signup(email,password,username).then(() => {
         const alert = this.alertCtrl.create({
           cssClass: "myAlert",
@@ -53,6 +57,8 @@ export class SignUpPage {
         this.password="";
         this.username="";
       })
+    }
+
     
   }
 
