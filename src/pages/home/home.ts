@@ -18,7 +18,7 @@ declare var google;
 export class HomePage {
 
   @ViewChild('map') mapRef: ElementRef;
-  @ViewChild('mapBig') mapRef2: ElementRef; 
+  @ViewChild('mapBig') mapRef2: ElementRef;
   orgArray = new Array();
   viewDetailsArray = new Array();
   logInState;
@@ -724,7 +724,7 @@ export class HomePage {
   getItems(ev) {
     var header = document.getElementById("theHead")
     var listContent = document.getElementById("list")
-    var listBig  = document.getElementById("listBig")
+    var listBig = document.getElementById("listBig")
     // Reset items back to all of the items
     this.items = [];
     this.tempArray = [];
@@ -1242,5 +1242,19 @@ export class HomePage {
       ]
     }
   ]
-  goToViewPageBig(){}
+
+  nm = 0;
+  goToViewPageBig() {
+    var flipCard = document.getElementById("flip-card-inner").style.transform = "rotateY(0deg)";
+
+    for (var x = 0; x < this.orgArray.length; x++) {
+      if (name == this.orgArray[x].orgName) {
+        this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x], loginState: this.logInState });
+        break;
+      }
+    }
+  }
+  backToMapView() {
+    var flipCard = document.getElementById("flip-card-inner").style.transform = "rotateY(180deg)";
+  }
 }
