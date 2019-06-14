@@ -1,6 +1,5 @@
 
 
-
 import { NavController, Loading, AlertController, LoadingController } from 'ionic-angular';
 import { IRhubProvider } from '../../providers/i-rhub/i-rhub';
 import { SignInPage } from '../sign-in/sign-in';
@@ -19,6 +18,7 @@ declare var google;
 export class HomePage {
 
   @ViewChild('map') mapRef: ElementRef;
+  @ViewChild('mapBig') mapRef2: ElementRef; 
   orgArray = new Array();
   viewDetailsArray = new Array();
   logInState;
@@ -34,6 +34,7 @@ export class HomePage {
   items = new Array()
   orgNames = new Array()
   map;
+  mapBig;
   lat;
   lng;
   marker;
@@ -277,6 +278,10 @@ export class HomePage {
       console.log("showMap");
 
     });
+    this.initMapBig().then(() => {
+      console.log("showMap");
+
+    });
 
     // this.checkVerification()
   }
@@ -353,6 +358,72 @@ export class HomePage {
             zoom: 10,
             icon: this.locIcon,
             position: this.map.getCenter()
+            //animation: google.maps.Animation.DROP,
+          });
+
+
+          setTimeout(() => {
+            this.markers().then(() => {
+              console.log("show Marker");
+              // this.loading.dismiss()
+
+            });
+          }, 8000)
+
+
+          var infowindow = new google.maps.InfoWindow();
+          this.marker.addListener('click', function () {
+            console.log("clicked Marker");
+            console.log()
+
+          });
+          resolve();
+
+        })
+
+      }, 5000);
+
+
+    })
+
+  }
+  initMapBig() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        this.IRmethods.getUserLocation().then((data: any) => {
+          if (data == undefined || data == null) {
+            this.lat = -25.7479;
+            this.lng = 28.2293
+          }
+          else {
+            console.log(data);
+            console.log(data.coords.latitude);
+            console.log(data.coords.longitude);
+
+            this.lat = data.coords.latitude;
+            this.lng = data.coords.longitude
+            console.log(this.lat);
+            console.log(this.lng);
+
+          }
+
+
+          const options = {
+            center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
+            zoom: 8,
+            disableDefaultUI: true,
+            styles: this.mapStyles,
+            icon: this.icon,
+
+          }
+          this.map = new google.maps.Map(this.mapRef2.nativeElement, options);
+
+          // adding user marker to the map 
+          this.marker = new google.maps.Marker({
+            map: this.mapBig,
+            zoom: 10,
+            icon: this.locIcon,
+            position: this.mapBig.getCenter()
             //animation: google.maps.Animation.DROP,
           });
 
@@ -481,6 +552,7 @@ export class HomePage {
     var theTitle = document.getElementsByClassName("theTitle") as HTMLCollectionOf<HTMLElement>
     var nav = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
     var theSplit = document.getElementsByClassName("split") as HTMLCollectionOf<HTMLElement>;
+    var theSplit2 = document.getElementsByClassName("split2") as HTMLCollectionOf<HTMLElement>;
     var searchBtn = document.getElementsByClassName("more") as HTMLCollectionOf<HTMLElement>;
     var prof = document.getElementsByClassName("profile") as HTMLCollectionOf<HTMLElement>;
     var restOf = document.getElementsByClassName("restOfBody") as HTMLCollectionOf<HTMLElement>;
@@ -499,6 +571,7 @@ export class HomePage {
 
       nav[0].style.height = "120px";
       theSplit[0].style.height = "190px";
+      theSplit2[0].style.height = "185px";
 
       searchBtn[0].style.top = "20px";
 
@@ -519,7 +592,7 @@ export class HomePage {
     else if (this.searchDismissState == "search") {
       this.searchDismissState = "close";
       // console.log(this.state);
-      searcher[0].style.width = "72vw";
+      searcher[0].style.width = "72%";
       searcher[0].style.left = "15%";
       searcher[0].style.top = "5px"
       theTitle[0].style.opacity = "0";
@@ -530,6 +603,8 @@ export class HomePage {
 
       nav[0].style.height = "50px";
       theSplit[0].style.height = "40px";
+      theSplit2[0].style.height = "40px";
+
 
       searchBtn[0].style.top = "0";
       prof[0].style.top = "8px";
@@ -545,7 +620,7 @@ export class HomePage {
 
   }
 
-  n = 1 
+  n = 1
   toggleMap() {
     // console.log("clicked");
     this.IRmethods.checkAuthState().then(data => {
@@ -649,6 +724,7 @@ export class HomePage {
   getItems(ev) {
     var header = document.getElementById("theHead")
     var listContent = document.getElementById("list")
+    var listBig  = document.getElementById("listBig")
     // Reset items back to all of the items
     this.items = [];
     this.tempArray = [];
@@ -660,12 +736,15 @@ export class HomePage {
 
     // if the value is an empty string don't filter the items
     if (this.searchItem && this.searchItem.trim() != '') {
+
+      listBig.style.display = "none"
       this.items = this.items.filter((item) => {
         console.log(this.searchItem);
         return (item.toLowerCase().indexOf(this.searchItem.toLowerCase()) > -1);
       })
     }
     else if (this.searchItem == "" || this.searchItem == null) {
+      alert("empty")
       this.items = [];
       this.searchItem = ""
     }
@@ -1163,5 +1242,5 @@ export class HomePage {
       ]
     }
   ]
-
+  goToViewPageBig(){}
 }
