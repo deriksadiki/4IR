@@ -15,7 +15,7 @@ declare var google;
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage {
+export class HomePage implements OnInit{
 
   @ViewChild('map') mapRef: ElementRef;
   @ViewChild('mapBig') mapRef2: ElementRef;
@@ -106,6 +106,12 @@ export class HomePage {
     });
 
   }
+
+  
+  ngOnInit(){
+    this.initMapBig();
+    }
+
 
   checkVerification() {
     this.IRmethods.checkVerification().then((data: any) => {
@@ -416,7 +422,7 @@ export class HomePage {
             icon: this.icon,
 
           }
-          this.map = new google.maps.Map(this.mapRef2.nativeElement, options);
+          this.mapBig = new google.maps.Map(this.mapRef2.nativeElement, options);
 
           // adding user marker to the map 
           this.marker = new google.maps.Marker({
@@ -429,7 +435,7 @@ export class HomePage {
 
 
           setTimeout(() => {
-            this.markers().then(() => {
+            this.markersBig().then(() => {
               console.log("show Marker");
               // this.loading.dismiss()
 
@@ -480,17 +486,17 @@ export class HomePage {
           let tracker = index;
           var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
           this.showMultipleMarker = new google.maps.Marker({
-            map: this.map,
+            map: this.mapBig,
             icon: this.icon,
             position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
             label: name,
             zoom: 8,
           });
 
-          console.log(this.orgArray[index]);
+          console.log(this.orgArray[index].lat);
           this.showMultipleMarker.addListener('click', () => {
 
-            console.log(this.orgArray[index]);
+            console.log(this.orgArray[index].long);
             console.log(index);
             this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
           });
@@ -503,6 +509,45 @@ export class HomePage {
     })
 
   }
+
+
+  markersBig() {
+    let tracker;
+    return new Promise((resolve, reject) => {
+
+      setTimeout(() => {
+        console.log(this.orgArray);
+        for (let index = 0; index < this.orgArray.length; index++) {
+          console.log(this.orgArray[index].orgName);
+          let tracker = index;
+          var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
+          this.showMultipleMarker = new google.maps.Marker({
+            map: this.map,
+            icon: this.icon,
+            position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
+            label: name,
+            zoom: 8,
+          });
+
+          console.log(this.orgArray[index].lat);
+          this.showMultipleMarker.addListener('click', () => {
+
+            console.log(this.orgArray[index].long);
+            console.log(index);
+            this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
+          });
+
+          resolve();
+        }
+
+
+      }, 5000);
+    })
+
+  }
+
+
+
   Userprofile() {
     this.IRmethods.checkAuthState().then(data => {
       if (data == false) {
@@ -1244,13 +1289,13 @@ export class HomePage {
   ]
 
   nm = 0;
-  goToViewPageBig() {
+  goToViewPageBig(name) {
     var closeBtn = document.getElementById("close-view-button").style.display = "block";
     var flipCard = document.getElementById("flip-card-inner").style.transform = "rotateY(0deg)";
 
     for (var x = 0; x < this.orgArray.length; x++) {
       if (name == this.orgArray[x].orgName) {
-        this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x], loginState: this.logInState });
+        this.navCtrl.push("flip-card-inner", { orgObject: this.orgArray[x], loginState: this.logInState });
         break;
       }
     }
