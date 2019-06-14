@@ -335,8 +335,8 @@ updateApplied(key, num){
             accpt(false)
           }
         });
-      })
-    })
+      });
+    });
   }
 
   comments(comment: any, commentKey: any, rating, url, username) {
