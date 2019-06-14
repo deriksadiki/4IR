@@ -1245,6 +1245,7 @@ export class HomePage {
 
   nm = 0;
   goToViewPageBig() {
+    var closeBtn = document.getElementById("close-view-button").style.display = "block";
     var flipCard = document.getElementById("flip-card-inner").style.transform = "rotateY(0deg)";
 
     for (var x = 0; x < this.orgArray.length; x++) {
@@ -1255,6 +1256,7 @@ export class HomePage {
     }
   }
   backToMapView() {
+    var closeBtn = document.getElementById("close-view-button").style.display = "none";
     var flipCard = document.getElementById("flip-card-inner").style.transform = "rotateY(180deg)";
   }
 }

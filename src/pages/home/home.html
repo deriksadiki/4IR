@@ -634,6 +634,11 @@
     <div class="mapBig">
       <div id="flip-card-inner">
         <div id="viewOrg">
+          <ion-fab top left id="close-view-button">
+            <button ion-fab mini (click)="backToMapView()">
+              <ion-icon name="close"></ion-icon>
+            </button>
+          </ion-fab>
             <div id="orgView" *ngFor="let i of orgArray">
                 <div class="cover">
                     <img id="myLogo" src="{{i.logo}}" alt="" imageViewer>
