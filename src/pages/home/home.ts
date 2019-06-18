@@ -1,6 +1,6 @@
 
 
-import { NavController, Loading, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams,Loading, AlertController, LoadingController } from 'ionic-angular';
 import { IRhubProvider } from '../../providers/i-rhub/i-rhub';
 import { SignInPage } from '../sign-in/sign-in';
 import { UserProfilePage } from '../user-profile/user-profile';
@@ -41,6 +41,7 @@ export class HomePage implements OnInit{
   showMultipleMarker;
   searchDismissState = "search";
   textField;
+  loginState = this.navParams.get('loginState')
   img = "assets/imgs/defaultImage.png";
   toggleState = "map";
   showNearbyList: boolean = false;
@@ -69,7 +70,17 @@ export class HomePage implements OnInit{
   userLocation = "Searching for location...";
   name;
 
-  constructor(public navCtrl: NavController, public IRmethods: IRhubProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public IRmethods: IRhubProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+
+  
+    // this.orgArray.push(this.navParams.get('orgObject'));
+    // console.log(this.orgArray);
+
+
+
+
+
+
 
     setTimeout(() => {
       this.IRmethods.getAllOrganizations().then((data: any) => {
@@ -394,6 +405,7 @@ export class HomePage implements OnInit{
 
   }
   initMapBig() {
+
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         this.IRmethods.getUserLocation().then((data: any) => {
@@ -423,16 +435,17 @@ export class HomePage implements OnInit{
 
           }
           this.mapBig = new google.maps.Map(this.mapRef2.nativeElement, options);
-
+          
           // adding user marker to the map 
           this.marker = new google.maps.Marker({
             map: this.mapBig,
             zoom: 10,
             icon: this.locIcon,
+            title: 'Your Location',
             position: this.mapBig.getCenter()
             //animation: google.maps.Animation.DROP,
           });
-
+        
 
           setTimeout(() => {
             this.markersBig().then(() => {
@@ -583,6 +596,7 @@ export class HomePage implements OnInit{
 
 
   goToViewPage(name) {
+    console.log(this.orgArray)
     for (var x = 0; x < this.orgArray.length; x++) {
       if (name == this.orgArray[x].orgName) {
         this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x], loginState: this.logInState });
@@ -1290,17 +1304,18 @@ export class HomePage implements OnInit{
 
   nm = 0;
   goToViewPageBig(name) {
-
-    console.log(this.orgArray)
+var tem =[];
     var closeBtn = document.getElementById("close-view-button").style.display = "block";
     var flipCard = document.getElementById("flip-card-inner").style.transform = "rotateY(0deg)";
 
-    // for (var x = 0; x < this.orgArray.length; x++) {
-    //   if (name == this.orgArray[x].orgName) {
-    //     this.navCtrl.push("flip-card-inner", { orgObject: this.orgArray[x] });
-    //     break;
-    //   }
-    // }
+    for (var x = 0; x < this.orgArray.length; x++) {
+      console.log(this.orgArray[x].orgName)
+      if (name == this.orgArray[x].orgName) {
+        this.navCtrl.push(this.orgArray[x].orgName)
+    
+        break;
+      }
+    }
   }
   backToMapView() {
     var closeBtn = document.getElementById("close-view-button").style.display = "none";
