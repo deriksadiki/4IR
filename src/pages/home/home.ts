@@ -1,6 +1,6 @@
 
 
-import { NavController, NavParams,Loading, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, Loading, AlertController, LoadingController } from 'ionic-angular';
 import { IRhubProvider } from '../../providers/i-rhub/i-rhub';
 import { SignInPage } from '../sign-in/sign-in';
 import { UserProfilePage } from '../user-profile/user-profile';
@@ -8,25 +8,33 @@ import { ViewOrganizationInforPage } from '../view-organization-infor/view-organ
 import { Component, ViewChild, ElementRef, style } from '@angular/core'
 import { Geolocation } from '@ionic-native/geolocation';
 import { StartPage } from '../start/start';
-
+import { GetDirectionModalPage } from '../get-direction-modal/get-direction-modal';
+import { ModalController } from 'ionic-angular';
 
 declare var google;
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit {
 
   @ViewChild('map') mapRef: ElementRef;
   @ViewChild('mapBig') mapRef2: ElementRef;
+  @ViewChild('destmap') mapRef3: ElementRef;
   orgArray = new Array();
   viewDetailsArray = new Array();
+  tem = new Array();
   logInState;
   category;
   locationState;
   colorState = false;
   searchItem: string;
-
+  currentLocState = false;
+  currentUserlat;
+  currentUserlng;
+  destlat;
+  address;
+  destlong;
   //variables
   loading;
   nearby = new Array();
@@ -70,12 +78,11 @@ export class HomePage implements OnInit{
   userLocation = "Searching for location...";
   name;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public IRmethods: IRhubProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public IRmethods: IRhubProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
 
-  
-    // this.orgArray.push(this.navParams.get('orgObject'));
-    // console.log(this.orgArray);
 
+
+    this.destinationMap();
 
 
 
@@ -86,11 +93,8 @@ export class HomePage implements OnInit{
       this.IRmethods.getAllOrganizations().then((data: any) => {
         console.log(data);
         this.orgArray = data
-        // console.log(data.programCategory);
-
-        console.log(this.orgArray);
-
-
+       console.log(data)
+       console.log(this.orgArray)
       })
 
     }, 8000)
@@ -118,11 +122,28 @@ export class HomePage implements OnInit{
 
   }
 
-  
-  ngOnInit(){
-    this.initMapBig();
-    }
 
+  ngOnInit() {
+    this.initMapBig();
+  }
+  ionViewWillEnter() {
+    this.directionsService = new google.maps.DirectionsService;
+    this.directionsDisplay = new google.maps.DirectionsService;
+    this.directionsDisplay = new google.maps.DirectionsRenderer;
+    this.service = new google.maps.DistanceMatrixService();
+    this.geocoder = new google.maps.Geocoder;
+
+    this.IRmethods.getUserLocation().then((data: any) => {
+      if (data != null) {
+        this.currentLocState = true;
+        console.log(data);
+        console.log(data.coords.latitude);
+        console.log(data.coords.longitude);
+        this.currentUserlat = data.coords.latitude;
+        this.currentUserlng = data.coords.longitude;
+      }
+    })
+  }
 
   checkVerification() {
     this.IRmethods.checkVerification().then((data: any) => {
@@ -306,8 +327,14 @@ export class HomePage implements OnInit{
   ionViewDidEnter() {
     // this.all();
 
+
+
+
     this.IRmethods.getAllOrganizations().then((data: any) => {
       this.orgArray = data;
+
+
+    
       this.setBackItems();
       console.log(this.orgArray);
       var names = this.IRmethods.getOrgNames()
@@ -357,8 +384,6 @@ export class HomePage implements OnInit{
             console.log(this.lng);
 
           }
-
-
           const options = {
             center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
             zoom: 8,
@@ -368,7 +393,6 @@ export class HomePage implements OnInit{
 
           }
           this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-
           // adding user marker to the map 
           this.marker = new google.maps.Marker({
             map: this.map,
@@ -377,8 +401,6 @@ export class HomePage implements OnInit{
             position: this.map.getCenter()
             //animation: google.maps.Animation.DROP,
           });
-
-
           setTimeout(() => {
             this.markers().then(() => {
               console.log("show Marker");
@@ -386,7 +408,6 @@ export class HomePage implements OnInit{
 
             });
           }, 8000)
-
 
           var infowindow = new google.maps.InfoWindow();
           this.marker.addListener('click', function () {
@@ -399,10 +420,49 @@ export class HomePage implements OnInit{
         })
 
       }, 5000);
-
-
     })
 
+  }
+  map2;
+  destinationMap() {
+
+    for (var x = 0; x < this.orgArray.length; x++) {
+      console.log(this.orgArray[x].orgName)
+      if (name == this.orgArray[x].orgName) {
+        this.tem.push(this.orgArray[x])
+
+        console.log(this.tem)
+        break;
+      }
+    
+  
+    // const loader = this.loadingCtrl.create({
+    //   content: "Please wait...",
+    //   duration: 3000
+    // });
+    // loader.present();
+
+    setTimeout(() => {
+      console.log(this.tem);
+      this.destlat = this.items[x].lat
+      console.log(this.destlat)
+      const options = {
+        center: { lat: parseFloat(this.destlat), lng: parseFloat(this.destlong) },
+        zoom: 10,
+        disableDefaultUI: true,
+        styles: this.mapStyles,
+        icon: this.icon
+      }
+      this.map2 = new google.maps.Map(this.mapRef3.nativeElement, options);
+      this.marker = new google.maps.Marker({
+        map: this.map2,
+        zoom: 6,
+        icon: this.icon,
+        position: this.map2.getCenter()
+      });
+    }, 6000);
+  }
+    console.log("show-map");
   }
   initMapBig() {
 
@@ -435,7 +495,7 @@ export class HomePage implements OnInit{
 
           }
           this.mapBig = new google.maps.Map(this.mapRef2.nativeElement, options);
-          
+
           // adding user marker to the map 
           this.marker = new google.maps.Marker({
             map: this.mapBig,
@@ -445,7 +505,7 @@ export class HomePage implements OnInit{
             position: this.mapBig.getCenter()
             //animation: google.maps.Animation.DROP,
           });
-        
+
 
           setTimeout(() => {
             this.markersBig().then(() => {
@@ -558,7 +618,21 @@ export class HomePage implements OnInit{
     })
 
   }
+  getDirection() {
 
+    let obj = {
+      lat: this.destlat,
+      long: this.destlong,
+      address: this.address
+    }
+
+    coordinateArray.push(obj)
+
+    const modal = this.modalCtrl.create(GetDirectionModalPage);
+    modal.present();
+
+    console.log("clicked");
+  }
 
 
   Userprofile() {
@@ -1304,15 +1378,16 @@ export class HomePage implements OnInit{
 
   nm = 0;
   goToViewPageBig(name) {
-var tem =[];
+    this.tem.length = 0;
     var closeBtn = document.getElementById("close-view-button").style.display = "block";
     var flipCard = document.getElementById("flip-card-inner").style.transform = "rotateY(0deg)";
 
     for (var x = 0; x < this.orgArray.length; x++) {
       console.log(this.orgArray[x].orgName)
       if (name == this.orgArray[x].orgName) {
-        this.navCtrl.push(this.orgArray[x].orgName)
-    
+        this.tem.push(this.orgArray[x])
+
+        console.log(this.tem)
         break;
       }
     }
@@ -1322,3 +1397,7 @@ var tem =[];
     var flipCard = document.getElementById("flip-card-inner").style.transform = "rotateY(180deg)";
   }
 }
+
+var coordinateArray = new Array();
+
+export default coordinateArray;

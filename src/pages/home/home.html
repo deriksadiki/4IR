@@ -637,7 +637,7 @@
               <ion-icon name="close"></ion-icon>
             </button>
           </ion-fab>
-            <div id="orgView" *ngFor="let i of orgArray">
+            <div id="orgView" *ngFor="let i of tem">
                 <div class="cover">
                     <img id="myLogo" src="{{i.logo}}" alt="" imageViewer>
                     <img id="myCover" src="{{i.img}}" alt="">
@@ -665,7 +665,7 @@
             <div #destmap id="destmap" (click)="getDirection()">
             </div>
             <br>
-            <div id="orgView" *ngFor="let i of orgArray">
+            <div id="orgView" *ngFor="let i of tem">
                 <div class="actions">
                     <!-- <div class="icons" (click)="getDirection()">
                         <ion-icon name="navigate"></ion-icon>
