@@ -1290,15 +1290,17 @@ export class HomePage implements OnInit{
 
   nm = 0;
   goToViewPageBig(name) {
+
+    console.log(this.orgArray)
     var closeBtn = document.getElementById("close-view-button").style.display = "block";
     var flipCard = document.getElementById("flip-card-inner").style.transform = "rotateY(0deg)";
 
-    for (var x = 0; x < this.orgArray.length; x++) {
-      if (name == this.orgArray[x].orgName) {
-        this.navCtrl.push("flip-card-inner", { orgObject: this.orgArray[x], loginState: this.logInState });
-        break;
-      }
-    }
+    // for (var x = 0; x < this.orgArray.length; x++) {
+    //   if (name == this.orgArray[x].orgName) {
+    //     this.navCtrl.push("flip-card-inner", { orgObject: this.orgArray[x] });
+    //     break;
+    //   }
+    // }
   }
   backToMapView() {
     var closeBtn = document.getElementById("close-view-button").style.display = "none";
