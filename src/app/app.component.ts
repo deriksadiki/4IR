@@ -11,6 +11,7 @@ import { ViewOrganizationInforPage } from '../pages/view-organization-infor/view
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { StartPage } from '../pages/start/start';
 import { timer } from 'rxjs/observable/timer';
+import { OnboundingPage } from '../pages/onbounding/onbounding';
 
 @Component({
   templateUrl: 'app.html'
@@ -29,7 +30,7 @@ export class MyApp {
           this.rootPage = HomePage
         }
         else {
-          this.rootPage = StartPage
+          this.rootPage = OnboundingPage
         }
       })
 

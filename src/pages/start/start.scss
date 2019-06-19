@@ -29,6 +29,7 @@ page-start {
       left: 0;
       right: 0;
       bottom: 0;
+;
       height: 50%;
       display: flex;
       flex-direction: column;
@@ -55,7 +56,7 @@ page-start {
         animation: fadeIn 1s;
         width: 60%;
         // margin: 50px auto;
-        background: linear-gradient(grey, rgba(128, 128, 128, 0.171));
+        background: linear-gradient(#04592a, #04592a);
         animation: 1s bounceInUp;
         border-bottom: 0px;
       }
@@ -97,7 +98,7 @@ page-start {
     animation: 700ms fadeIn;
     height: 100%;
     width: 100%;
-    // background: url("../../assets/imgs/Defaults/parl.jpg");
+   
     // background-size: cover;
     position: absolute;
     // top: 0;
@@ -178,10 +179,7 @@ page-start {
   #logo {
     height: 150px;
     width: 100px;
-    // position: absolute;
-    // top: 10%;
-    // left: 50%;
-    // transform: translateX(-50%);
+    margin-top:100px;
     z-index: 10000000;
     animation: start 700ms;
   }
@@ -211,7 +209,7 @@ page-start {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.712)), url("../../assets/imgs/Defaults/parl.jpg");
+    // background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.284)), url("../../assets/imgs/Defaults/parl.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     filter: blur(2px);
@@ -220,7 +218,7 @@ page-start {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: radial-gradient(rgba(255, 255, 255, 0.1), white);
+    background: radial-gradient(rgba(255, 255, 255, 0.1), rgb(255, 255, 255));
   }
   ion-slides {
     z-index: 1;

@@ -20,6 +20,7 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { StartPage } from '../pages/start/start';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { GetDirectionModalPage } from '../pages/get-direction-modal/get-direction-modal';
+import { OnboundingPage } from '../pages/onbounding/onbounding';
 
 
 
@@ -35,6 +36,7 @@ import { GetDirectionModalPage } from '../pages/get-direction-modal/get-directio
     EditUserProfilePage,
     StartPage,
     GetDirectionModalPage,
+    OnboundingPage
 
   
   ],
@@ -54,7 +56,8 @@ import { GetDirectionModalPage } from '../pages/get-direction-modal/get-directio
     ViewOrganizationInforPage,
     EditUserProfilePage,
     StartPage,
-    GetDirectionModalPage
+    GetDirectionModalPage,
+    OnboundingPage
   ],
   providers: [
     StatusBar,

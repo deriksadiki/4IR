@@ -10,8 +10,7 @@
       </button>
       <!-- <ion-input maxLength="44" class="searchBar" type="text" placeholder="Search by city (e.g johannesburg)" [(ngModel)]="searchTerm" (ionInput)="getItems($event)"></ion-input> -->
 
-      <ion-searchbar class="searchBar" [(ngModel)]="searchItem" placeholder="Search by name"
-        (ionInput)="getItems($event)">
+      <ion-searchbar class="searchBar" [(ngModel)]="searchItem" placeholder="Search by name" (ionInput)="getItems($event)">
       </ion-searchbar>
 
 
@@ -59,12 +58,11 @@
         <ion-item class="hidden" color="seeThrough">
           <ion-label>Filter by category</ion-label>
           <ion-select [(ngModel)]="category" (ionChange)="selectcategory()" color="custom" id="drop">
-            <ion-option value="Biomanufacturing industry development centre">Biomanufacturing industry development
-              centre</ion-option>
+            <ion-option value="Biomanufacturing industry development centre">Biomanufacturing industry development centre
+            </ion-option>
             <ion-option value="Biorefinery industry development Facility">Biorefinery industry development Facility
             </ion-option>
-            <ion-option value="Data Science for impact and decision enablement program">Data Science for impact and
-              decision enablement program</ion-option>
+            <ion-option value="Data Science for impact and decision enablement program">Data Science for impact and decision enablement program</ion-option>
             <ion-option value="Experiential Training Programme">Experiential Training Programme</ion-option>
             <ion-option value="Grassroots innovation Programme">Grassroots innovation Programme</ion-option>
           </ion-select>
@@ -80,7 +78,17 @@
 
         <div class="theDiv" *ngFor="let i of orgArray">
           <ion-slide class="card-background-page">
-            <ion-card (click)="goToViewPage(i.orgName)">
+            <div class="row">
+              <div class="column-left2">
+                <div class="row">
+                 <div class="column-left-2">
+                        <img class="org-img2" width="100%" height="100%" src="{{i.img}}" />
+                      </div> 
+                      
+                </div>
+              </div>
+            </div>
+            <!-- <ion-card (click)="goToViewPage(i.orgName)">
               <div class="overlay"></div>
               <img class="theImage" src="{{i.img}}" />
               <div class="card-title">
@@ -154,7 +162,7 @@
                   </i>
                 </ng-template>
               </div>
-            </ion-card>
+            </ion-card> -->
           </ion-slide>
         </div>
       </ion-slides>
@@ -637,111 +645,111 @@
               <ion-icon name="close"></ion-icon>
             </button>
           </ion-fab>
-            <div id="orgView" *ngFor="let i of tem">
-                <div class="cover">
-                    <img id="myLogo" src="{{i.logo}}" alt="" imageViewer>
-                    <img id="myCover" src="{{i.img}}" alt="">
-                </div>
-                <div class="details">
-                    <div class="orgName">
-                        {{i.orgName}}
-                    </div>
-                    <div class="category">
-                        {{i.programCategory}}
-                    </div>
-                    <div class="TheStar">
-                        <ion-icon name={{Star1}}></ion-icon>
-                        <ion-icon name={{Star2}}></ion-icon>
-                        <ion-icon name={{Star3}}></ion-icon>
-                        <ion-icon name={{Star4}}></ion-icon>S
-                        <ion-icon name={{Star5}}></ion-icon>
-                    </div>
-                    <div class="ParagraphPadding" padding>
-                        {{i.intro}}
-                    </div>
-                    <br>
-                </div>
+          <div id="orgView" *ngFor="let i of tem">
+            <div class="cover">
+              <img id="myLogo" src="{{i.logo}}" alt="" imageViewer>
+              <img id="myCover" src="{{i.img}}" alt="">
             </div>
-            <div #destmap id="destmap" (click)="getDirection()">
+            <div class="details">
+              <div class="orgName">
+                {{i.orgName}}
+              </div>
+              <div class="category">
+                {{i.programCategory}}
+              </div>
+              <div class="TheStar">
+                <ion-icon name={{Star1}}></ion-icon>
+                <ion-icon name={{Star2}}></ion-icon>
+                <ion-icon name={{Star3}}></ion-icon>
+                <ion-icon name={{Star4}}></ion-icon>S
+                <ion-icon name={{Star5}}></ion-icon>
+              </div>
+              <div class="ParagraphPadding" padding>
+                {{i.intro}}
+              </div>
+              <br>
             </div>
-            <br>
-            <div id="orgView" *ngFor="let i of tem">
-                <div class="actions">
-                    <!-- <div class="icons" (click)="getDirection()">
+          </div>
+          <div #destmap id="destmap" (click)="getDirection()">
+          </div>
+          <br>
+          <div id="orgView" *ngFor="let i of tem">
+            <div class="actions">
+              <!-- <div class="icons" (click)="getDirection()">
                         <ion-icon name="navigate"></ion-icon>
                     </div> -->
-                    <div class="icons">
-                        <ion-icon name="call" (click)="call(i.cell)"></ion-icon>
-                        <p class="fontchange">call</p>
+              <div class="icons">
+                <ion-icon name="call" (click)="call(i.cell)"></ion-icon>
+                <p class="fontchange">call</p>
+              </div>
+              <div class="icons">
+                <ion-icon name="mail" (click)="email(i.email)"></ion-icon>
+                <p class="fontchange">email</p>
+              </div>
+              <div class="icons" (click)="apply()">
+                <a href="{{i.applicationLink}}">
+                  <ion-icon name="paper"></ion-icon>
+                </a>
+                <p class="fontchange">apply</p>
+              </div>
+
+            </div>
+            <div class="ourSegment">
+              <ion-segment color="bg" [(ngModel)]="pet">
+                <ion-segment-button value="programdetails">
+                  Programme
+                </ion-segment-button>
+                <ion-segment-button value="services">
+                  Services
+                </ion-segment-button>
+                <ion-segment-button value="reviews">
+                  Reviews
+                </ion-segment-button>
+              </ion-segment>
+            </div>
+            <div class="switchCases">
+              <div class="switch" no-padding [ngSwitch]="pet">
+                <div class="theView" *ngSwitchCase="'programdetails'">
+
+                  <div class="padding">
+                    <div class="custom-cards">
+                      <p>Objectives</p>
+                      <p class="ParagraphPadding">{{i.objectives}}</p>
                     </div>
-                    <div class="icons">
-                        <ion-icon name="mail" (click)="email(i.email)"></ion-icon>
-                        <p class="fontchange">email</p>
+                    <!-- <div class="line"></div> -->
+                    <div class="custom-cards">
+                      <p>Programme Benefits</p>
+                      <p class="ParagraphPadding">{{i.programBenefits}}</p>
                     </div>
-                    <div class="icons" (click)="apply()">
-                        <a href="{{i.applicationLink}}">
-                            <ion-icon name="paper"></ion-icon>
-                        </a>
-                        <p class="fontchange">apply</p>
+                    <!-- <div class="line"></div> -->
+                    <div class="custom-cards">
+                      <p>Eligible Creteria</p>
+                      <p class="ParagraphPadding">{{i.eligibleCreteria}}</p>
                     </div>
-        
-                </div>
-                <div class="ourSegment">
-                    <ion-segment color="bg" [(ngModel)]="pet">
-                        <ion-segment-button value="programdetails">
-                            Programme
-                        </ion-segment-button>
-                        <ion-segment-button value="services">
-                            Services
-                        </ion-segment-button>
-                        <ion-segment-button value="reviews">
-                            Reviews
-                        </ion-segment-button>
-                    </ion-segment>
-                </div>
-                <div class="switchCases">
-                    <div class="switch" no-padding [ngSwitch]="pet">
-                        <div class="theView" *ngSwitchCase="'programdetails'">
-        
-                            <div class="padding">
-                                <div class="custom-cards">
-                                    <p>Objectives</p>
-                                    <p class="ParagraphPadding">{{i.objectives}}</p>
-                                </div>
-                                <!-- <div class="line"></div> -->
-                                <div class="custom-cards">
-                                    <p>Programme Benefits</p>
-                                    <p class="ParagraphPadding">{{i.programBenefits}}</p>
-                                </div>
-                                <!-- <div class="line"></div> -->
-                                <div class="custom-cards">
-                                    <p>Eligible Creteria</p>
-                                    <p class="ParagraphPadding">{{i.eligibleCreteria}}</p>
-                                </div>
-                                <!-- <div class="line"></div> -->
-                                <div class="custom-cards">
-                                    <p>Social Media</p>
-                                    <table>
-                                        <tr>
-                                            <td align="right">
-                                                <a href="{{i.twitter}}">
-                                                    <ion-icon name="appname-facebook">
-                                                        <!-- <a href="{{i.twitter}}"></a> -->
-                                                    </ion-icon>
-                                                </a>
-                                            </td>
-        
-                                            <td align="left" padding-left>
-                                                <a href="{{i.facebook}}">
-                                                    <ion-icon name="appname-twitter"></ion-icon>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-        
-                            <!-- <ion-grid>
+                    <!-- <div class="line"></div> -->
+                    <div class="custom-cards">
+                      <p>Social Media</p>
+                      <table>
+                        <tr>
+                          <td align="right">
+                            <a href="{{i.twitter}}">
+                              <ion-icon name="appname-facebook">
+                                <!-- <a href="{{i.twitter}}"></a> -->
+                              </ion-icon>
+                            </a>
+                          </td>
+
+                          <td align="left" padding-left>
+                            <a href="{{i.facebook}}">
+                              <ion-icon name="appname-twitter"></ion-icon>
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+
+                  <!-- <ion-grid>
                                 <ion-row>
                                     <ion-col>
                                         <div class="icons">
@@ -761,107 +769,107 @@
                                     </ion-col>
                                 </ion-row>
                             </ion-grid> -->
-        
-        
-                        </div>
-        
-                        <ion-list class="theView" *ngSwitchCase="'services'">
-        
-                            <div *ngFor="let a of services">
-        
-                                <div id="serv-list">
-        
-                                    <p class="NamePadding">{{a.title}}
-                                    </p>
-        
-                                    <p class="ParagraphPadding">
-                                        {{a.description}}
-                                    </p>
-                                    <div class="line"></div>
-                                </div>
-        
-                            </div>
-        
-                        </ion-list>
-        
-        
-                        <div class="theView" id="segView" *ngSwitchCase="'reviews'">
-        
-                            <div class="theDiv" *ngFor="let p of commentArr">
-                                <div class="rev-div">
-                                    <img class="imgg" class="profilePic" [src]="p.url">
-                                    <div class="speech-bubble">
-        
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <p class="rev-name"> {{p.username}}</p>
-                                                </td>
-                                                <td align="right">
-                                                    <p class="stars">
-                                                        <ion-icon class="TheStar" name="star"></ion-icon>
-                                                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                                                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                                                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                                                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                                                    </p>
-                                                </td>
-                                            </tr>
-        
-                                            <tr>
-                                                <td colspan="2">
-                                                    <p>{{p.comment}}</p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-        
-                            </div>
-                            <div>
-        
-                            </div>
-                            <ion-fab right mini *ngIf="showFab">
-                                <button ion-fab mini style="background: white;" (click)="fabStar()">
-                                    <ion-icon class="TheStar1" name="star"></ion-icon>
-                                </button>
-                                <div *ngIf="showandHideStars">
-                                    <ion-fab-list side="left">
-                                        <button ion-fab style="background: whitesmoke;" (click)="comment('1')">
-                                            <ion-icon class="TheStar1" name="star"></ion-icon>
-                                        </button>
-                                        <button ion-fab style="background: whitesmoke;" (click)="comment('2')">
-                                            <ion-icon class="TheStar1" name="star"></ion-icon>
-                                        </button>
-                                        <button ion-fab style="background: whitesmoke;" (click)="comment('3')">
-                                            <ion-icon class="TheStar1" name="star"></ion-icon>
-                                        </button>
-                                        <button ion-fab style="background: whitesmoke;" (click)="comment('4')">
-                                            <ion-icon class="TheStar1" name="star"></ion-icon>
-                                        </button>
-                                        <button ion-fab style="background: whitesmoke;" (click)="comment('5')">
-                                            <ion-icon class="TheStar1" name="star"></ion-icon>
-                                        </button>
-                                    </ion-fab-list>
-                                </div>
-                            </ion-fab>
-        
-        
-                        </div>
-        
-        
-        
-        
-        
-                    </div>
-        
+
+
                 </div>
+
+                <ion-list class="theView" *ngSwitchCase="'services'">
+
+                  <div *ngFor="let a of services">
+
+                    <div id="serv-list">
+
+                      <p class="NamePadding">{{a.title}}
+                      </p>
+
+                      <p class="ParagraphPadding">
+                        {{a.description}}
+                      </p>
+                      <div class="line"></div>
+                    </div>
+
+                  </div>
+
+                </ion-list>
+
+
+                <div class="theView" id="segView" *ngSwitchCase="'reviews'">
+
+                  <div class="theDiv" *ngFor="let p of commentArr">
+                    <div class="rev-div">
+                      <img class="imgg" class="profilePic" [src]="p.url">
+                      <div class="speech-bubble">
+
+                        <table>
+                          <tr>
+                            <td>
+                              <p class="rev-name"> {{p.username}}</p>
+                            </td>
+                            <td align="right">
+                              <p class="stars">
+                                <ion-icon class="TheStar" name="star"></ion-icon>
+                                <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                                <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                              </p>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td colspan="2">
+                              <p>{{p.comment}}</p>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div>
+
+                  </div>
+                  <ion-fab right mini *ngIf="showFab">
+                    <button ion-fab mini style="background: white;" (click)="fabStar()">
+                      <ion-icon class="TheStar1" name="star"></ion-icon>
+                    </button>
+                    <div *ngIf="showandHideStars">
+                      <ion-fab-list side="left">
+                        <button ion-fab style="background: whitesmoke;" (click)="comment('1')">
+                          <ion-icon class="TheStar1" name="star"></ion-icon>
+                        </button>
+                        <button ion-fab style="background: whitesmoke;" (click)="comment('2')">
+                          <ion-icon class="TheStar1" name="star"></ion-icon>
+                        </button>
+                        <button ion-fab style="background: whitesmoke;" (click)="comment('3')">
+                          <ion-icon class="TheStar1" name="star"></ion-icon>
+                        </button>
+                        <button ion-fab style="background: whitesmoke;" (click)="comment('4')">
+                          <ion-icon class="TheStar1" name="star"></ion-icon>
+                        </button>
+                        <button ion-fab style="background: whitesmoke;" (click)="comment('5')">
+                          <ion-icon class="TheStar1" name="star"></ion-icon>
+                        </button>
+                      </ion-fab-list>
+                    </div>
+                  </ion-fab>
+
+
+                </div>
+
+
+
+
+
+              </div>
+
             </div>
+          </div>
         </div>
         <div #mapBig id="mapBig" style="width: 100%; height: 100%">
           <!-- <h1>Loading Map</h1> -->
         </div>
-        
+
       </div>
     </div>
   </div>

@@ -14,9 +14,12 @@
 
           <ion-input placeholder="Password" type="password" class="user-input"name="password" #password="ngModel" id="anim4" ngModel required></ion-input>
           <span  class="help-block" style="color: red" *ngIf="!password.valid && password.touched">Please enter your password</span>
+         
+    
+      </div>
+      <div class="btnmove">
 
           <button ion-button block class="btnActions" id="anim5" (click)="SignUp(username.value,email.value,password.value)">SIGN UP</button>
-    
       </div>
     </div>
 
