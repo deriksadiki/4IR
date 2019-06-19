@@ -84,7 +84,8 @@ page-sign-in {
     width: 230px;
     border-radius: 50px;
     margin: 0 auto;
-    background: radial-gradient(color($colors, primary))
+    background: radial-gradient(color($colors, primary));
+    margin-top:30px;
   }
   #Explorer {
     position: absolute;

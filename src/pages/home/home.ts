@@ -16,7 +16,7 @@ declare var google;
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage implements OnInit {
+export class HomePage{
 
   @ViewChild('map') mapRef: ElementRef;
   @ViewChild('mapBig') mapRef2: ElementRef;
@@ -81,20 +81,12 @@ export class HomePage implements OnInit {
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public IRmethods: IRhubProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
 
 
-
-    this.destinationMap();
-
-
-
-
-
-
     setTimeout(() => {
       this.IRmethods.getAllOrganizations().then((data: any) => {
         console.log(data);
         this.orgArray = data
-       console.log(data)
-       console.log(this.orgArray)
+        console.log(data)
+        console.log(this.orgArray)
       })
 
     }, 8000)
@@ -124,6 +116,17 @@ export class HomePage implements OnInit {
 
 
   ngOnInit() {
+
+    setTimeout(() => {
+      this.IRmethods.getAllOrganizations().then((data: any) => {
+        console.log(data)
+      })
+
+    }, 8000)
+
+
+
+
     this.initMapBig();
   }
   ionViewWillEnter() {
@@ -334,7 +337,7 @@ export class HomePage implements OnInit {
       this.orgArray = data;
 
 
-    
+
       this.setBackItems();
       console.log(this.orgArray);
       var names = this.IRmethods.getOrgNames()
@@ -425,27 +428,13 @@ export class HomePage implements OnInit {
   }
   map2;
   destinationMap() {
-
-    for (var x = 0; x < this.orgArray.length; x++) {
-      console.log(this.orgArray[x].orgName)
-      if (name == this.orgArray[x].orgName) {
-        this.tem.push(this.orgArray[x])
-
-        console.log(this.tem)
-        break;
-      }
-    
-  
-    // const loader = this.loadingCtrl.create({
-    //   content: "Please wait...",
-    //   duration: 3000
-    // });
-    // loader.present();
+    this.destlat = this.tem[0].lat
+    this.destlong = this.tem[0].long
+    console.log(this.destlat, this.destlong)
+    console.log(this.tem)
 
     setTimeout(() => {
-      console.log(this.tem);
-      this.destlat = this.items[x].lat
-      console.log(this.destlat)
+      console.log(this.tem)
       const options = {
         center: { lat: parseFloat(this.destlat), lng: parseFloat(this.destlong) },
         zoom: 10,
@@ -461,7 +450,7 @@ export class HomePage implements OnInit {
         position: this.map2.getCenter()
       });
     }, 6000);
-  }
+
     console.log("show-map");
   }
   initMapBig() {
@@ -620,6 +609,12 @@ export class HomePage implements OnInit {
   }
   getDirection() {
 
+    this.destlat = this.tem[0].lat
+    this.destlong = this.tem[0].long
+    this.address = this.tem[0].address
+    console.log(this.destlat, this.destlong)
+    console.log(this.tem)
+
     let obj = {
       lat: this.destlat,
       long: this.destlong,
@@ -627,6 +622,7 @@ export class HomePage implements OnInit {
     }
 
     coordinateArray.push(obj)
+    console.log(coordinateArray)
 
     const modal = this.modalCtrl.create(GetDirectionModalPage);
     modal.present();
@@ -1391,6 +1387,8 @@ export class HomePage implements OnInit {
         break;
       }
     }
+    this.destinationMap();
+   
   }
   backToMapView() {
     var closeBtn = document.getElementById("close-view-button").style.display = "none";

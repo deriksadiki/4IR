@@ -26,8 +26,9 @@ declare var firebase
   templateUrl: 'get-direction-modal.html',
 })
 export class GetDirectionModalPage {
-
+  
   @ViewChild('map') mapRef: ElementRef;
+  @ViewChild('desmap') mapRef2: ElementRef;
   //@ViewChild('destmap') mapRef2: ElementRef;
   destCoords = coordinateArray;
   orgArray = new Array();
@@ -324,6 +325,7 @@ export class GetDirectionModalPage {
     })
 
     this.initMap()
+    this.initdscMap();
   }
 
 
@@ -365,6 +367,40 @@ export class GetDirectionModalPage {
           styles: this.mapStyles
         }
         this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+        this.marker = new google.maps.Marker({
+          map: this.map,
+          zoom: 10,
+          styles: this.mapStyles,
+          icon: this.locIcon,
+          position: this.map.getCenter()
+        });
+        loader.dismiss();
+      }, 7000);
+      console.log("show-map");
+
+
+      resolve()
+    })
+
+
+  }
+  
+
+  initdscMap() {
+    return new Promise((resolve, reject) => {
+      const loader = this.loadingCtrl.create({
+        content: "Please wait...",
+      });
+      loader.present();
+
+      setTimeout(() => {
+        const options = {
+          center: { lat: parseFloat(this.currentUserlat), lng: parseFloat(this.currentUserlng) },
+          zoom: 8,
+          disableDefaultUI: true,
+          styles: this.mapStyles
+        }
+        this.map = new google.maps.Map(this.mapRef2.nativeElement, options);
         this.marker = new google.maps.Marker({
           map: this.map,
           zoom: 10,
