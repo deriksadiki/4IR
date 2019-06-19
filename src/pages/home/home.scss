@@ -20,6 +20,8 @@ page-home {
     color: black;
   }
 
+
+
   .slides {
     position: absolute;
     bottom: 0;
@@ -36,11 +38,11 @@ page-home {
       position: relative;
       text-align: left;
       box-shadow: 0 5px 15px black;
-      height: 145px;
-      width: 120px;
+      height: 110px;
+      margin-bottom: 40px;
+      width: 210px;
       // margin-top: -15px;
       border-radius: 7px;
-
       p {
         color: white;
         font-size: 90%;
@@ -81,10 +83,19 @@ page-home {
     }
   }
 
+  #footerText{
+    text-align: center;
+    font-size: 15px;
+   
+  }
   .mapBig {
     // flip-card
     display: block;
     perspective: 1000px;
+  }
+
+  #footer{
+    display: none;
   }
 
   .overlay {
@@ -127,24 +138,6 @@ page-home {
       width: 100%;
       box-shadow: 0 0 0.1px grey;
     }
-  }
-  .org-name2{
-    font-size:1em;
-  }
-  #table-id2{
-    width: 100%;
-    height: 80px;
-    .org-img2{
-      height: 90px;
-      width: 100%;
-      display: block;
-      border-top-left-radius: 8px;
-      border-bottom-left-radius: 8px;
-      // border-radius: 8px;
-      display: block;
-      object-fit: cover;
-    }
-  
   }
   .everythingSmall #map {
     width: 100vw;
@@ -484,7 +477,6 @@ page-home {
   float: left;
   width: 93%;
   padding: 5px;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -497,42 +489,27 @@ page-home {
   box-shadow: 0px 1px 5px -1px rgba(0, 0, 0, 0.366);
   background: white;
 }
-.column-left2{
+
+.column1 {
   float: left;
-  width: 93%;
+  width: 150%;
+  height: 70px;
   padding: 5px;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: 4px;
+  margin-bottom: 35px;
   // background: grey;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
   -webkit-box-shadow: 0px 1px 5px -1px rgba(0, 0, 0, 0.411);
   -moz-box-shadow: 0px 1px 5px -1px rgba(0, 0, 0, 0.283);
   box-shadow: 0px 1px 5px -1px rgba(0, 0, 0, 0.366);
-  background: white;
+  background: rgb(225, 215, 215);
+  font-size: 10px;
 }
 
-.column-left-2 {
-  float: left;
-  width: 25%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
-  .org-img2 {
-    height: 75px;
-    width: 80px;
-    display: block;
-    // border-top-left-radius: 8px;
-    // border-bottom-left-radius: 8px;
-    border-radius: 8px;
-    display: block;
-    object-fit: cover;
-  }
-}
 .column-right {
   float: left;
   width: 7%;
@@ -587,7 +564,35 @@ page-home {
   }
 }
 
+.column-left-2 {
+  float: left;
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .org-img {
+    height: 66px;
+    width: 80px;
+    display: block;
+    // border-top-left-radius: 8px;
+    // border-bottom-left-radius: 8px;
+    border-radius: 8px;
+    display: block;
+    object-fit: cover;
+  }
+}
+
 .column-right-1 {
+  float: left;
+  width: 75%;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  // align-items: center;
+  flex-direction: column;
+}
+.column-right-2{
   float: left;
   width: 75%;
   height: 80px;

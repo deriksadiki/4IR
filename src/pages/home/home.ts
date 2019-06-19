@@ -1,5 +1,3 @@
-
-
 import { NavController, NavParams, Loading, AlertController, LoadingController } from 'ionic-angular';
 import { IRhubProvider } from '../../providers/i-rhub/i-rhub';
 import { SignInPage } from '../sign-in/sign-in';
@@ -10,6 +8,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { StartPage } from '../start/start';
 import { GetDirectionModalPage } from '../get-direction-modal/get-direction-modal';
 import { ModalController } from 'ionic-angular';
+import { Slides } from 'ionic-angular';
 
 declare var google;
 @Component({
@@ -21,6 +20,7 @@ export class HomePage{
   @ViewChild('map') mapRef: ElementRef;
   @ViewChild('mapBig') mapRef2: ElementRef;
   @ViewChild('destmap') mapRef3: ElementRef;
+  @ViewChild(Slides) slides: Slides;
   orgArray = new Array();
   viewDetailsArray = new Array();
   tem = new Array();
@@ -36,6 +36,9 @@ export class HomePage{
   address;
   destlong;
   //variables
+  showtime;
+  showDistance;
+  destMaker;
   loading;
   nearby = new Array();
   //variables
@@ -78,6 +81,8 @@ export class HomePage{
   userLocation = "Searching for location...";
   name;
 
+
+  CurrentName
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public IRmethods: IRhubProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
 
 
@@ -95,8 +100,6 @@ export class HomePage{
 
 
 
-
-
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
         this.logInState = true;
@@ -104,7 +107,8 @@ export class HomePage{
           console.log(data);
 
           console.log(this.logInState);
-          this.img = data;
+          this.img = data.downloadurl;
+          this.CurrentName = data.name;
         })
       }
       else if (data == false) {
@@ -356,6 +360,7 @@ export class HomePage{
 
           console.log(this.logInState);
           this.img = data;
+          // this.name = data2.name;
         })
       }
       else if (data == false) {
@@ -412,12 +417,26 @@ export class HomePage{
             });
           }, 8000)
 
-          var infowindow = new google.maps.InfoWindow();
-          this.marker.addListener('click', function () {
-            console.log("clicked Marker");
-            console.log()
+       let infowindow = new google.maps.InfoWindow({
+        content:
+          '<div style="width: 400px; transition: 300ms;"><b>' +
+          this.name  +
+          '</b><div style="display: flex; padding-top: 10px;">' +
+          '<img style="height: 20px; width: 20px; object-fit: cober; border-radius: 50px;" src=' +
+          this.img +
+          ">" +
+          '<div style="padding-left: 10px;padding-right: 10px">' +
+          // this.orgArray[index].intro +
+          "</div><br>" +
 
-          });
+          "</div>"
+      });
+      this.marker .addListener('click', () => {
+        this.map.setZoom(14);
+        this.map.setCenter(this.marker.getPosition());
+        infowindow.open(   this.marker .get(this.map),    this.marker );
+
+      });
           resolve();
 
         })
@@ -565,8 +584,6 @@ export class HomePage{
 
           resolve();
         }
-
-
       }, 5000);
     })
 
@@ -1393,6 +1410,81 @@ export class HomePage{
   backToMapView() {
     var closeBtn = document.getElementById("close-view-button").style.display = "none";
     var flipCard = document.getElementById("flip-card-inner").style.transform = "rotateY(180deg)";
+  }
+  navigate(orgObject) {
+    if (this.directionsDisplay != null) {
+      this.directionsDisplay.setMap(null);
+
+      console.log("directionDisplay has something");
+      this.getDistance(orgObject.lat , orgObject.long)
+
+    } else {
+      console.log("directionDisplay has nothing");
+    }
+    setTimeout(() => {
+      let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
+      let destination = new google.maps.LatLng(orgObject.lat , orgObject.long);
+      this.directionsDisplay.setMap(this.map);
+      console.log(this.directionsDisplay);
+
+      this.IRmethods.calculateAndDisplayRoute(userCurrentLocation, destination, this.directionsDisplay, this.directionsService);
+      // this.destinationMarker()
+      var footer = document.getElementById("footer").style.display = "block";
+    }, 1000);
+  }
+Destaddress;
+  touchstart(orgObjetc){
+    this.navigate(orgObjetc)
+    this.Destaddress =  orgObjetc.address;
+  }
+
+  getDistance(lat,long) {
+    let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
+    let destination = new google.maps.LatLng(lat, long);
+    this.service.getDistanceMatrix(
+      {
+        origins: [userCurrentLocation],
+        destinations: [destination],
+        travelMode: 'DRIVING'
+      }, (response, status) => {
+        if (status == 'OK') {
+          var origins = response.originAddresses;
+          var destinations = response.destinationAddresses;
+          for (var i = 0; i < origins.length; i++) {
+            var results = response.rows[i].elements;
+            for (var j = 0; j < results.length; j++) {
+              var element = results[j];
+              console.log(element);
+
+              this.showtime = element.duration.text;
+              this.showDistance = element.distance.text;
+
+              console.log(this.showtime);
+              console.log(this.showDistance);
+            }
+          }
+
+          this.destinationMarker(lat,long);
+        }
+      });
+
+  }
+
+  destinationMarker(lat, long) {
+    this.destMaker = new google.maps.Marker({
+      map: this.map,
+      icon: this.icon,
+      position: { lat: parseFloat(lat), lng: parseFloat(long) },
+      label: name,
+      zoom: 8,
+  
+    });
+  }
+
+  slideChanged() {
+  let currentIndex = this.slides.getActiveIndex();
+  console.log(this.orgArray[currentIndex]);
+  this.touchstart(this.orgArray[currentIndex])
   }
 }
 
