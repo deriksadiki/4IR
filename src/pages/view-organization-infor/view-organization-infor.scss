@@ -140,7 +140,7 @@
   margin-right:-60%;
 }
 .theView{
-  max-height: 90%;
+  max-height: 94vh;
   overflow-y: scroll 
 }
 .details{
@@ -195,12 +195,37 @@ margin-top:-30%;
 }
 .ParagraphPadding{
   // padding-top:5px;
+  // border: 2px solid red;
   color: grey;
-  font-size: 90%;
+  font-size: 12px;
+  // max-height: 50px;
+  overflow: hidden;
+  transition: 700ms;
+  position: relative;
+}
+.ParagraphPadding-1{
+  // padding-top:5px;
+  // border: 2px solid red;
+  color: grey;
+  font-size: 12px;
+  max-height: 50px;
+  overflow: hidden;
+  transition: 700ms;
+  position: relative;
 }
 .NamePadding{
   // padding-top:10%;
   color: rgb(36, 36, 36);
+  padding: 0;
+}
+#readMore{
+  margin-top:10px;
+  transition: 300ms;
+}
+#read-more-less{
+  text-transform: lowercase;
+  font-size: 12px;
+  float: right;
 }
 .padding{
   // padding-bottom: 10%;
@@ -217,11 +242,9 @@ margin-top:-30%;
   // border-bottom: 1px solid rgba(128, 128, 128, 0.103);
 }
 #serv-list {
-  // height: 50px;
-  // background: red;
   display: flex;
   flex-direction: column;
-  padding: 8px;
+  padding: 0px;
 }
 #destmap{
   height: 30%;
@@ -264,8 +287,8 @@ h3{
   width: 100%;
   text-align: center;
   // border-bottom: 1px solid grey;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 0px;
+  padding-bottom: 18px;
   // border-top: 1px solid grey;
   // border-bottom: 1px solid grey;
   width: 90%;
@@ -318,7 +341,8 @@ ion-card-header{
   font-weight: bold;
 }
 .line{
-  border-bottom: 1px solid rgba(128, 128, 128, 0.249);
+  border-top: 1px solid rgba(128, 128, 128, 0.249);
+  height: 10px;
   // width: 30%;
   // position: absolute;
   // right: 0;
