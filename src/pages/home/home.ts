@@ -250,7 +250,7 @@ export class HomePage{
       duration: 22200,
       content: 'please wait...',
     });
-    // loading.present();
+    loading.present();
     setTimeout(() => {
       document.getElementById("icon").style.color = "#f4f4f4";
       this.IRmethods.getCurrentLocations().then((data: any) => {
@@ -1413,6 +1413,7 @@ export class HomePage{
     var closeBtn = document.getElementById("close-view-button").style.display = "none";
     var flipCard = document.getElementById("flip-card-inner").style.transform = "rotateY(180deg)";
   }
+ 
   navigate(orgObject) {
     if (this.directionsDisplay != null) {
       this.directionsDisplay.setMap(null);
@@ -1527,11 +1528,14 @@ Destaddress;
           "<br>"+"</b></p></div></div>" +
           "<br><div id='moreInforMap'><p>" +
           obj.city + "</p>" + "<p>" + obj.email + "</p>" +
+          "<p><b>Opening date:</b> " + obj.openApplicationDate + "</p>" +
+          "<p><b>closing date:</b> " + obj.closeApplicationDate + "</p>" +
           "</div>"
     });
     this.infowindow.open(this.map, destMaker);
   }
-
+ 
+ 
   slideChanged() {
     console.log('category');
     for (var i = 0; i < this.markers2.length; i++) {
@@ -1541,6 +1545,11 @@ Destaddress;
   // console.log(this.orgArray[currentIndex]);
   this.touchstart(this.orgArray[currentIndex])
   }
+
+
+
+
+
 }
 
 var coordinateArray = new Array();

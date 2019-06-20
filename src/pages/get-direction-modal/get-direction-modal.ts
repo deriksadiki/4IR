@@ -28,7 +28,7 @@ declare var firebase
 export class GetDirectionModalPage {
   
   @ViewChild('map') mapRef: ElementRef;
-  @ViewChild('desmap') mapRef2: ElementRef;
+  // @ViewChild('desmap') mapRef2: ElementRef;
   //@ViewChild('destmap') mapRef2: ElementRef;
   destCoords = coordinateArray;
   orgArray = new Array();
@@ -76,226 +76,9 @@ export class GetDirectionModalPage {
   address;
   loginState = this.navParams.get('loginState')
   currentLocState = false;
-  icon = 'assets/imgs/wifi2.svg'
+  icon = 'assets/imgs/loaction3.png'
   locIcon = 'assets/imgs/loc-user.svg'
-  mapStyles = [
-    {
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#ebe3cd"
-        }
-      ]
-    },
-    {
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#523735"
-        }
-      ]
-    },
-    {
-      "elementType": "labels.text.stroke",
-      "stylers": [
-        {
-          "color": "#f5f1e6"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative",
-      "elementType": "geometry.stroke",
-      "stylers": [
-        {
-          "color": "#c9b2a6"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative.land_parcel",
-      "elementType": "geometry.stroke",
-      "stylers": [
-        {
-          "color": "#dcd2be"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative.land_parcel",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#ae9e90"
-        }
-      ]
-    },
-    {
-      "featureType": "landscape.natural",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#dfd2ae"
-        }
-      ]
-    },
-    {
-      "featureType": "poi",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#dfd2ae"
-        }
-      ]
-    },
-    {
-      "featureType": "poi",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#93817c"
-        }
-      ]
-    },
-    {
-      "featureType": "poi.park",
-      "elementType": "geometry.fill",
-      "stylers": [
-        {
-          "color": "#a5b076"
-        }
-      ]
-    },
-    {
-      "featureType": "poi.park",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#447530"
-        }
-      ]
-    },
-    {
-      "featureType": "road",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#f5f1e6"
-        }
-      ]
-    },
-    {
-      "featureType": "road.arterial",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#fdfcf8"
-        }
-      ]
-    },
-    {
-      "featureType": "road.highway",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#f8c967"
-        }
-      ]
-    },
-    {
-      "featureType": "road.highway",
-      "elementType": "geometry.stroke",
-      "stylers": [
-        {
-          "color": "#e9bc62"
-        }
-      ]
-    },
-    {
-      "featureType": "road.highway.controlled_access",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#e98d58"
-        }
-      ]
-    },
-    {
-      "featureType": "road.highway.controlled_access",
-      "elementType": "geometry.stroke",
-      "stylers": [
-        {
-          "color": "#db8555"
-        }
-      ]
-    },
-    {
-      "featureType": "road.local",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#806b63"
-        }
-      ]
-    },
-    {
-      "featureType": "transit.line",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#dfd2ae"
-        }
-      ]
-    },
-    {
-      "featureType": "transit.line",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#8f7d77"
-        }
-      ]
-    },
-    {
-      "featureType": "transit.line",
-      "elementType": "labels.text.stroke",
-      "stylers": [
-        {
-          "color": "#ebe3cd"
-        }
-      ]
-    },
-    {
-      "featureType": "transit.station",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#dfd2ae"
-        }
-      ]
-    },
-    {
-      "featureType": "water",
-      "elementType": "geometry.fill",
-      "stylers": [
-        {
-          "color": "#b9d3c2"
-        }
-      ]
-    },
-    {
-      "featureType": "water",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#92998d"
-        }
-      ]
-    }
-  ]
-
-
-
+  infowindow;
   theTabs = "services";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, public modalCtrl: ModalController) {
@@ -325,7 +108,7 @@ export class GetDirectionModalPage {
     })
 
     this.initMap()
-    this.initdscMap();
+    // this.initdscMap();
   }
 
 
@@ -355,28 +138,28 @@ export class GetDirectionModalPage {
   initMap() {
     return new Promise((resolve, reject) => {
       const loader = this.loadingCtrl.create({
-        content: "Please wait...",
+        content: "Loading Map...",
       });
       loader.present();
 
       setTimeout(() => {
         const options = {
           center: { lat: parseFloat(this.currentUserlat), lng: parseFloat(this.currentUserlng) },
-          zoom: 8,
+          zoom: 12,
           disableDefaultUI: true,
           styles: this.mapStyles
         }
         this.map = new google.maps.Map(this.mapRef.nativeElement, options);
         this.marker = new google.maps.Marker({
           map: this.map,
-          zoom: 10,
+          zoom: 15,
           styles: this.mapStyles,
           icon: this.locIcon,
           position: this.map.getCenter()
         });
         loader.dismiss();
       }, 7000);
-      console.log("show-map");
+      // console.log("show-map");
 
 
       resolve()
@@ -386,38 +169,38 @@ export class GetDirectionModalPage {
   }
   
 
-  initdscMap() {
-    return new Promise((resolve, reject) => {
-      const loader = this.loadingCtrl.create({
-        content: "Please wait...",
-      });
-      loader.present();
+  // initdscMap() {
+  //   return new Promise((resolve, reject) => {
+  //     const loader = this.loadingCtrl.create({
+  //       content: "Loading Map...",
+  //     });
+  //     loader.present();
 
-      setTimeout(() => {
-        const options = {
-          center: { lat: parseFloat(this.currentUserlat), lng: parseFloat(this.currentUserlng) },
-          zoom: 8,
-          disableDefaultUI: true,
-          styles: this.mapStyles
-        }
-        this.map = new google.maps.Map(this.mapRef2.nativeElement, options);
-        this.marker = new google.maps.Marker({
-          map: this.map,
-          zoom: 10,
-          styles: this.mapStyles,
-          icon: this.locIcon,
-          position: this.map.getCenter()
-        });
-        loader.dismiss();
-      }, 7000);
-      console.log("show-map");
-
-
-      resolve()
-    })
+  //     setTimeout(() => {
+  //       const options = {
+  //         center: { lat: parseFloat(this.currentUserlat), lng: parseFloat(this.currentUserlng) },
+  //         zoom: 14,
+  //         disableDefaultUI: true,
+  //         styles: this.mapStyles
+  //       }
+  //       this.map = new google.maps.Map(this.mapRef2.nativeElement, options);
+  //       this.marker = new google.maps.Marker({
+  //         map: this.map,
+  //         zoom: 14,
+  //         styles: this.mapStyles,
+  //         icon: this.locIcon,
+  //         position: this.map.getCenter()
+  //       });
+  //       loader.dismiss();
+  //     }, 7000);
+  //     console.log("show-map");
 
 
-  }
+  //     resolve()
+  //   })
+
+
+  // }
 
   getDistance() {
     let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
@@ -426,7 +209,7 @@ export class GetDirectionModalPage {
       {
         origins: [userCurrentLocation],
         destinations: [destination],
-        travelMode: 'WALKING'
+        travelMode: 'DRIVING'
       }, (response, status) => {
         if (status == 'OK') {
           var origins = response.originAddresses;
@@ -457,11 +240,22 @@ export class GetDirectionModalPage {
       icon: this.icon,
       position: { lat: parseFloat(this.destCoords[0].lat), lng: parseFloat(this.destCoords[0].long) },
       label: name,
-      zoom: 8,
-  
+      zoom: 20,
     });
 
-
+    this.infowindow = new google.maps.InfoWindow({
+      content:
+          '<div style="float: left; width: 150%; transition: 300ms;"><b>' +
+          '<p style="font-size:10px;">'   + '</p>' +
+          '<img style="height: 66px;  width: 80px; display: block;  border-radius: 8px;  object-fit: cover;" src=' +
+          ">" +
+           
+          '<div style="padding-left: 10px;padding-right: 10px">' +
+          // this.orgArray[index].intro +
+          "</div><br>" +
+          "</div>"
+    });
+    this.infowindow.open(this.map, this.destMaker);
   }
 
   navigate() {
@@ -494,5 +288,169 @@ export class GetDirectionModalPage {
         error => console.log('Error launching navigator', error)
       );
   }
+
+
+  mapStyles = [
+    {
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#f5f5f5"
+        }
+      ]
+    },
+    {
+      "elementType": "labels.icon",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#616161"
+        }
+      ]
+    },
+    {
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#f5f5f5"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative.land_parcel",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#bdbdbd"
+        }
+      ]
+    },
+    {
+      "featureType": "poi",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#eeeeee"
+        }
+      ]
+    },
+    {
+      "featureType": "poi",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#757575"
+        }
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#e5e5e5"
+        }
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#9e9e9e"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#ffffff"
+        }
+      ]
+    },
+    {
+      "featureType": "road.arterial",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#757575"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#dadada"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#616161"
+        }
+      ]
+    },
+    {
+      "featureType": "road.local",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#9e9e9e"
+        }
+      ]
+    },
+    {
+      "featureType": "transit.line",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#e5e5e5"
+        }
+      ]
+    },
+    {
+      "featureType": "transit.station",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#eeeeee"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#c9c9c9"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#9e9e9e"
+        }
+      ]
+    }
+  ]
+
+
 
 }
