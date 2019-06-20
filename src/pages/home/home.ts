@@ -58,7 +58,7 @@ export class HomePage{
   showNearbyList: boolean = false;
   showAllOrganisation: boolean = true;
 
-  icon = 'assets/imgs/wifi2.svg'
+  icon = 'assets/imgs/loaction3.png'
   locIcon = 'assets/imgs/loc-user.svg'
 
   state = ["star-outline", "star-outline", "star-outline", "star-outline", "star-outline"]
@@ -1435,6 +1435,13 @@ Destaddress;
   }
 
   slideChanged() {
+
+
+
+    // var selectedSlide = document.getElementById("toGrow");
+
+    // selectedSlide.style.boxShadow = "0 0 10px black";
+    // selectedSlide.style.height = "80px"    
   let currentIndex = this.slides.getActiveIndex();
   // console.log(this.orgArray[currentIndex]);
   this.touchstart(this.orgArray[currentIndex])

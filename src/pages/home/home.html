@@ -70,18 +70,22 @@
       </div>
 
       <img [src]="img" class="displayPic" id="imgOnMap" alt="" (click)="Userprofile()" />
+      <!-- <div class="coverImage">
+
+        </div> -->
       <div class="slideShow">
 
       </div>
       <!-- SLIDE -->
       <ion-slides class="slides" (ionSlideDidChange)="slideChanged()" slidesPerView="1.7" spaceBetween="7" loop="false">
+      
         <div class="theDiv" *ngFor="let i of orgArray">
           <ion-slide class="card-background-page" >
             <div class="row" id="rowSlide" >
               <div class="column1" id="toGrow">
                 <div class="row">
                   <div class="column-left-2">
-                    <img class="org-img" src="{{i.img}}" />
+                    <img class="org-img-2" src="{{i.img}}" />
                   </div>
                   <div class="column-right-2">
                     <p class="org-name-2">{{ i.programCategory }}</p>
