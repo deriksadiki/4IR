@@ -58,7 +58,7 @@ export class HomePage{
   showNearbyList: boolean = false;
   showAllOrganisation: boolean = true;
 
-  icon = 'assets/imgs/wifi2.svg'
+  icon = 'assets/imgs/loaction3.png'
   locIcon = 'assets/imgs/loc-user.svg'
 
   state = ["star-outline", "star-outline", "star-outline", "star-outline", "star-outline"]
@@ -88,10 +88,10 @@ export class HomePage{
 
     setTimeout(() => {
       this.IRmethods.getAllOrganizations().then((data: any) => {
-        console.log(data);
+        // console.log(data);
         this.orgArray = data
-        console.log(data)
-        console.log(this.orgArray)
+        // console.log(data)
+        // console.log(this.orgArray)
       })
 
     }, 8000)
@@ -104,9 +104,9 @@ export class HomePage{
       if (data == true) {
         this.logInState = true;
         this.IRmethods.getProfile().then((data: any) => {
-          console.log(data);
+          // console.log(data);
 
-          console.log(this.logInState);
+          // console.log(this.logInState);
           this.img = data.downloadurl;
           this.CurrentName = data.name;
         })
@@ -123,7 +123,7 @@ export class HomePage{
 
     setTimeout(() => {
       this.IRmethods.getAllOrganizations().then((data: any) => {
-        console.log(data)
+        // console.log(data)
       })
 
     }, 8000)
@@ -143,9 +143,9 @@ export class HomePage{
     this.IRmethods.getUserLocation().then((data: any) => {
       if (data != null) {
         this.currentLocState = true;
-        console.log(data);
-        console.log(data.coords.latitude);
-        console.log(data.coords.longitude);
+        // console.log(data);
+        // console.log(data.coords.latitude);
+        // console.log(data.coords.longitude);
         this.currentUserlat = data.coords.latitude;
         this.currentUserlng = data.coords.longitude;
       }
@@ -250,19 +250,19 @@ export class HomePage{
       duration: 22200,
       content: 'please wait...',
     });
-    loading.present();
+    // loading.present();
     setTimeout(() => {
       document.getElementById("icon").style.color = "#ff6337";
       this.IRmethods.getCurrentLocations().then((data: any) => {
-        console.log(data);
-        console.log(data.coords.latitude);
-        console.log(data.coords.longitude);
+        // console.log(data);
+        // console.log(data.coords.latitude);
+        // console.log(data.coords.longitude);
         this.lat = data.coords.latitude;
         this.lng = data.coords.longitude
-        console.log(this.lat);
+        // console.log(this.lat);
         this.locationState = true;
         this.IRmethods.getLocation(this.lat, this.lng).then((data: any) => {
-          console.log(data);
+          // console.log(data);
           this.userLocation = data
         })
         document.getElementById("icon").style.color = "#04592a"
@@ -270,8 +270,8 @@ export class HomePage{
 
       }, Error => {
         this.locationState = false;
-        console.log(Error.message);
-        console.log("show-map-error");
+        // console.log(Error.message);
+        // console.log("show-map-error");
         this.lat = -25.7479;
         this.lng = 28.2293
         const options = {
@@ -293,19 +293,19 @@ export class HomePage{
     setTimeout(() => {
       this.IRmethods.getCurrentLocation(this.lat, this.lng).then((radius: any) => {
 
-        console.log(this.lat);
-        console.log(this.lng);
-        console.log(radius);
+        // console.log(this.lat);
+        // console.log(this.lng);
+        // console.log(radius);
         this.IRmethods.getAllOrganizations().then((data: any) => {
-          console.log(data);
-          console.log(radius);
+          // console.log(data);
+          // console.log(radius);
           this.IRmethods.getNearByOrganizations(radius, data).then((nearbyOrgs: any) => {
-            console.log(nearbyOrgs);
-            this.nearby = nearbyOrgs;
+            // console.log(nearbyOrgs);
+            // this.nearby = nearbyOrgs;
 
-            console.log(nearbyOrgs[0]);
+            // console.log(nearbyOrgs[0]);
             loading.dismiss();
-            console.log(this.nearby);
+            // console.log(this.nearby);
           })
         })
       })
@@ -320,11 +320,11 @@ export class HomePage{
     this.geocoder = new google.maps.Geocoder;
 
     this.initMap().then(() => {
-      console.log("showMap");
+      // console.log("showMap");
 
     });
     this.initMapBig().then(() => {
-      console.log("showMap");
+      // console.log("showMap");
 
     });
 
@@ -343,9 +343,9 @@ export class HomePage{
 
 
       this.setBackItems();
-      console.log(this.orgArray);
+      // console.log(this.orgArray);
       var names = this.IRmethods.getOrgNames()
-      console.log(names);
+      // console.log(names);
       this.storeOrgNames(names)
       // this.loading.dismiss()
     })
@@ -356,9 +356,9 @@ export class HomePage{
       if (data == true) {
         this.logInState = true;
         this.IRmethods.getProfile().then((data: any) => {
-          console.log(data);
+          // console.log(data);
 
-          console.log(this.logInState);
+          // console.log(this.logInState);
           this.img = data;
           // this.name = data2.name;
         })
@@ -382,19 +382,19 @@ export class HomePage{
             this.lng = 28.2293
           }
           else {
-            console.log(data);
-            console.log(data.coords.latitude);
-            console.log(data.coords.longitude);
+            // console.log(data);
+            // console.log(data.coords.latitude);
+            // console.log(data.coords.longitude);
 
             this.lat = data.coords.latitude;
             this.lng = data.coords.longitude
-            console.log(this.lat);
-            console.log(this.lng);
+            // console.log(this.lat);
+            // console.log(this.lng);
 
           }
           const options = {
             center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
-            zoom: 8,
+            zoom: 9,
             disableDefaultUI: true,
             styles: this.mapStyles,
             icon: this.icon,
@@ -411,7 +411,7 @@ export class HomePage{
           });
           setTimeout(() => {
             this.markers().then(() => {
-              console.log("show Marker");
+              // console.log("show Marker");
               // this.loading.dismiss()
 
             });
@@ -449,16 +449,16 @@ export class HomePage{
   destinationMap() {
     this.destlat = this.tem[0].lat
     this.destlong = this.tem[0].long
-    console.log(this.destlat, this.destlong)
-    console.log(this.tem)
+    // console.log(this.destlat, this.destlong)
+    // console.log(this.tem)
 
     setTimeout(() => {
-      console.log(this.tem)
+      // console.log(this.tem)
       const options = {
         center: { lat: parseFloat(this.destlat), lng: parseFloat(this.destlong) },
         zoom: 10,
         disableDefaultUI: true,
-        styles: this.mapStyles,
+        // styles: this.mapStyles,
         icon: this.icon
       }
       this.map2 = new google.maps.Map(this.mapRef3.nativeElement, options);
@@ -470,7 +470,7 @@ export class HomePage{
       });
     }, 6000);
 
-    console.log("show-map");
+    // console.log("show-map");
   }
   initMapBig() {
 
@@ -482,14 +482,14 @@ export class HomePage{
             this.lng = 28.2293
           }
           else {
-            console.log(data);
-            console.log(data.coords.latitude);
-            console.log(data.coords.longitude);
+            // console.log(data);
+            // console.log(data.coords.latitude);
+            // console.log(data.coords.longitude);
 
             this.lat = data.coords.latitude;
             this.lng = data.coords.longitude
-            console.log(this.lat);
-            console.log(this.lng);
+            // console.log(this.lat);
+            // console.log(this.lng);
 
           }
 
@@ -498,7 +498,7 @@ export class HomePage{
             center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
             zoom: 8,
             disableDefaultUI: true,
-            styles: this.mapStyles,
+            // styles: this.mapStyles,
             icon: this.icon,
 
           }
@@ -517,7 +517,7 @@ export class HomePage{
 
           setTimeout(() => {
             this.markersBig().then(() => {
-              console.log("show Marker");
+              // console.log("show Marker");
               // this.loading.dismiss()
 
             });
@@ -526,8 +526,8 @@ export class HomePage{
 
           var infowindow = new google.maps.InfoWindow();
           this.marker.addListener('click', function () {
-            console.log("clicked Marker");
-            console.log()
+            // console.log("clicked Marker");
+            // console.log()
 
           });
           resolve();
@@ -543,7 +543,7 @@ export class HomePage{
 
 
   viewDetails(name) {
-    console.log(this.orgArray.length);
+    // console.log(this.orgArray.length);
 
     for (var i = 0; i < this.orgArray.length; i++) {
       if (this.orgArray[i].prograName == name) {
@@ -561,9 +561,9 @@ export class HomePage{
     return new Promise((resolve, reject) => {
 
       setTimeout(() => {
-        console.log(this.orgArray);
+        // console.log(this.orgArray);
         for (let index = 0; index < this.orgArray.length; index++) {
-          console.log(this.orgArray[index].orgName);
+          // console.log(this.orgArray[index].orgName);
           let tracker = index;
           var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
           this.showMultipleMarker = new google.maps.Marker({
@@ -574,11 +574,11 @@ export class HomePage{
             zoom: 8,
           });
 
-          console.log(this.orgArray[index].lat);
+          // console.log(this.orgArray[index].lat);
           this.showMultipleMarker.addListener('click', () => {
 
-            console.log(this.orgArray[index].long);
-            console.log(index);
+            // console.log(this.orgArray[index].long);
+            // console.log(index);
             this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
           });
 
@@ -595,9 +595,9 @@ export class HomePage{
     return new Promise((resolve, reject) => {
 
       setTimeout(() => {
-        console.log(this.orgArray);
+        // console.log(this.orgArray);
         for (let index = 0; index < this.orgArray.length; index++) {
-          console.log(this.orgArray[index].orgName);
+          // console.log(this.orgArray[index].orgName);
           let tracker = index;
           var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
           this.showMultipleMarker = new google.maps.Marker({
@@ -608,11 +608,11 @@ export class HomePage{
             zoom: 8,
           });
 
-          console.log(this.orgArray[index].lat);
+          // console.log(this.orgArray[index].lat);
           this.showMultipleMarker.addListener('click', () => {
 
-            console.log(this.orgArray[index].long);
-            console.log(index);
+            // console.log(this.orgArray[index].long);
+            // console.log(index);
             this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
           });
 
@@ -629,8 +629,8 @@ export class HomePage{
     this.destlat = this.tem[0].lat
     this.destlong = this.tem[0].long
     this.address = this.tem[0].address
-    console.log(this.destlat, this.destlong)
-    console.log(this.tem)
+    // console.log(this.destlat, this.destlong)
+    // console.log(this.tem)
 
     let obj = {
       lat: this.destlat,
@@ -639,12 +639,12 @@ export class HomePage{
     }
 
     coordinateArray.push(obj)
-    console.log(coordinateArray)
-
+    // console.log(coordinateArray)
+// 
     const modal = this.modalCtrl.create(GetDirectionModalPage);
     modal.present();
 
-    console.log("clicked");
+    // console.log("clicked");
   }
 
 
@@ -683,7 +683,7 @@ export class HomePage{
 
 
   goToViewPage(name) {
-    console.log(this.orgArray)
+    // console.log(this.orgArray)
     for (var x = 0; x < this.orgArray.length; x++) {
       if (name == this.orgArray[x].orgName) {
         this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[x], loginState: this.logInState });
@@ -761,7 +761,7 @@ export class HomePage{
 
 
     }
-    console.log(this.textField);
+    // console.log(this.textField);
     // this.searchTerm = "";
 
   }
@@ -794,7 +794,7 @@ export class HomePage{
         });
         alert.present();
       } else {
-
+        var ionScrll = document.getElementsByClassName("scroll-content") as HTMLCollectionOf <HTMLElement>;
         var theHeader = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
         var theMap = document.getElementById("mapView");
         var theList = document.getElementById("list");
@@ -803,12 +803,14 @@ export class HomePage{
           this.n = 0;
           this.toggleState = "list"
           theMap.style.display = "block"
+          ionScrll[0].style.overflowY = "hidden"
           theList.style.display = "none";
           theHeader[0].style.display = "none";
         }
         else {
 
           this.n = 1;
+          ionScrll[0].style.overflowY = "scroll"
           this.toggleState = "map"
           theMap.style.display = "none"
           theList.style.display = "block";
@@ -820,10 +822,16 @@ export class HomePage{
 
 
   }
+  // growSlide(){
+  //   var selectedSlide = document.getElementById("toGrow");
+
+  //   selectedSlide.style.boxShadow = "0 0 10px black";
+  //   selectedSlide.style.height = "80px"
+  // }
 
   storeOrgNames(names) {
     // this.orgNames = names;
-    console.log(names);
+    // console.log(names);
 
     this.orgNames[0] = names[0]
     for (var x = 1; x < names.length; x++) {
@@ -838,21 +846,21 @@ export class HomePage{
         this.orgNames[x] = names[x]
       }
     }
-    console.log(this.orgNames);
+    // console.log(this.orgNames);
   }
 
   tempArray = new Array();
   initializeItems() {
     this.items = this.orgNames
 
-    console.log(this.items);
+    // console.log(this.items);
 
   }
 
   filterItems(val) {
     if (val && val.trim() != '') {
       this.items = this.items.filter((item) => {
-        console.log(val);
+        // console.log(val);
 
         return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
@@ -885,7 +893,7 @@ export class HomePage{
 
       listBig.style.display = "none"
       this.items = this.items.filter((item) => {
-        console.log(this.searchItem);
+        // console.log(this.searchItem);
         return (item.toLowerCase().indexOf(this.searchItem.toLowerCase()) > -1);
       })
     }
@@ -894,7 +902,7 @@ export class HomePage{
       this.items = [];
       this.searchItem = ""
     }
-    console.log(this.items);
+    // console.log(this.items);
     // this.tempArray = [];
     //   for (var x = 0; x < this.items.length; x++){
     //     if (this.orgArray[x].orgName == this.items[x]){
@@ -936,8 +944,8 @@ export class HomePage{
 
 
 
-        console.log("clicked");
-        console.log(this.nearby);
+        // console.log("clicked");
+        // console.log(this.nearby);
 
         this.showNearbyList = true;
         this.showAllOrganisation = false;
@@ -976,9 +984,9 @@ export class HomePage{
 
   convertinCoordinate() {
 
-    console.log(this.lat);
+    // console.log(this.lat);
     this.IRmethods.getLocation(this.lat, this.lng).then((data: any) => {
-      console.log(data);
+      // console.log(data);
       this.userLocation = "Soweto"
     })
 
@@ -992,7 +1000,7 @@ export class HomePage{
         center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
         zoom: 8,
         disableDefaultUI: true,
-        styles: this.mapStyles,
+        // styles: this.mapStyles,
         icon: this.icon
       }
       this.map = new google.maps.Map(this.mapRef.nativeElement, options);
@@ -1009,7 +1017,7 @@ export class HomePage{
       for (let index = 0; index < this.orgArray.length; index++) {
 
         if (this.category == this.orgArray[index].programCategory) {
-          console.log(this.orgArray[index]);
+          // console.log(this.orgArray[index]);
           this.showMultipleMarker = new google.maps.Marker({
             map: this.map,
             icon: this.icon,
@@ -1022,7 +1030,7 @@ export class HomePage{
           this.showMultipleMarker.addListener('click', () => {
 
             // console.log(this.orgArray[index]);
-            console.log(index);
+            // console.log(index);
             this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
           });
 
@@ -1044,7 +1052,7 @@ export class HomePage{
     var barTitle = document.getElementsByClassName("theTitle") as HTMLCollectionOf<HTMLElement>;
     var searchTxt = document.getElementsByClassName("searchBar") as HTMLCollectionOf<HTMLElement>;
     var splitter = document.getElementsByClassName("split") as HTMLCollectionOf<HTMLElement>;
-    console.log(event.directionY);
+    // console.log(event.directionY);
     if (event.directionY == "down" && event.scrollTop > 90) {
 
       // if (event.scrollTop > 250) {
@@ -1087,7 +1095,7 @@ export class HomePage{
       // splitter[0].style.height = "190px";
 
     }
-    console.log(event.scrollTop);
+    // console.log(event.scrollTop);
 
   }
 
@@ -1173,12 +1181,20 @@ export class HomePage{
     }
   ]
 
-  mapStyles = [
+  mapStyles =[
     {
       "elementType": "geometry",
       "stylers": [
         {
-          "color": "#ebe3cd"
+          "color": "#f5f5f5"
+        }
+      ]
+    },
+    {
+      "elementType": "labels.icon",
+      "stylers": [
+        {
+          "visibility": "off"
         }
       ]
     },
@@ -1186,7 +1202,7 @@ export class HomePage{
       "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#523735"
+          "color": "#616161"
         }
       ]
     },
@@ -1194,25 +1210,7 @@ export class HomePage{
       "elementType": "labels.text.stroke",
       "stylers": [
         {
-          "color": "#f5f1e6"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative",
-      "elementType": "geometry.stroke",
-      "stylers": [
-        {
-          "color": "#c9b2a6"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative.land_parcel",
-      "elementType": "geometry.stroke",
-      "stylers": [
-        {
-          "color": "#dcd2be"
+          "color": "#f5f5f5"
         }
       ]
     },
@@ -1221,16 +1219,7 @@ export class HomePage{
       "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#ae9e90"
-        }
-      ]
-    },
-    {
-      "featureType": "landscape.natural",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#dfd2ae"
+          "color": "#bdbdbd"
         }
       ]
     },
@@ -1239,7 +1228,7 @@ export class HomePage{
       "elementType": "geometry",
       "stylers": [
         {
-          "color": "#dfd2ae"
+          "color": "#eeeeee"
         }
       ]
     },
@@ -1248,16 +1237,16 @@ export class HomePage{
       "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#93817c"
+          "color": "#757575"
         }
       ]
     },
     {
       "featureType": "poi.park",
-      "elementType": "geometry.fill",
+      "elementType": "geometry",
       "stylers": [
         {
-          "color": "#a5b076"
+          "color": "#e5e5e5"
         }
       ]
     },
@@ -1266,7 +1255,7 @@ export class HomePage{
       "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#447530"
+          "color": "#9e9e9e"
         }
       ]
     },
@@ -1275,16 +1264,16 @@ export class HomePage{
       "elementType": "geometry",
       "stylers": [
         {
-          "color": "#f5f1e6"
+          "color": "#ffffff"
         }
       ]
     },
     {
       "featureType": "road.arterial",
-      "elementType": "geometry",
+      "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#fdfcf8"
+          "color": "#757575"
         }
       ]
     },
@@ -1293,34 +1282,16 @@ export class HomePage{
       "elementType": "geometry",
       "stylers": [
         {
-          "color": "#f8c967"
+          "color": "#dadada"
         }
       ]
     },
     {
       "featureType": "road.highway",
-      "elementType": "geometry.stroke",
+      "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#e9bc62"
-        }
-      ]
-    },
-    {
-      "featureType": "road.highway.controlled_access",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#e98d58"
-        }
-      ]
-    },
-    {
-      "featureType": "road.highway.controlled_access",
-      "elementType": "geometry.stroke",
-      "stylers": [
-        {
-          "color": "#db8555"
+          "color": "#616161"
         }
       ]
     },
@@ -1329,7 +1300,7 @@ export class HomePage{
       "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#806b63"
+          "color": "#9e9e9e"
         }
       ]
     },
@@ -1338,25 +1309,7 @@ export class HomePage{
       "elementType": "geometry",
       "stylers": [
         {
-          "color": "#dfd2ae"
-        }
-      ]
-    },
-    {
-      "featureType": "transit.line",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#8f7d77"
-        }
-      ]
-    },
-    {
-      "featureType": "transit.line",
-      "elementType": "labels.text.stroke",
-      "stylers": [
-        {
-          "color": "#ebe3cd"
+          "color": "#e5e5e5"
         }
       ]
     },
@@ -1365,16 +1318,16 @@ export class HomePage{
       "elementType": "geometry",
       "stylers": [
         {
-          "color": "#dfd2ae"
+          "color": "#eeeeee"
         }
       ]
     },
     {
       "featureType": "water",
-      "elementType": "geometry.fill",
+      "elementType": "geometry",
       "stylers": [
         {
-          "color": "#b9d3c2"
+          "color": "#c9c9c9"
         }
       ]
     },
@@ -1383,7 +1336,7 @@ export class HomePage{
       "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#92998d"
+          "color": "#9e9e9e"
         }
       ]
     }
@@ -1396,11 +1349,11 @@ export class HomePage{
     var flipCard = document.getElementById("flip-card-inner").style.transform = "rotateY(0deg)";
 
     for (var x = 0; x < this.orgArray.length; x++) {
-      console.log(this.orgArray[x].orgName)
+      // console.log(this.orgArray[x].orgName)
       if (name == this.orgArray[x].orgName) {
         this.tem.push(this.orgArray[x])
 
-        console.log(this.tem)
+        // console.log(this.tem)
         break;
       }
     }
@@ -1415,17 +1368,17 @@ export class HomePage{
     if (this.directionsDisplay != null) {
       this.directionsDisplay.setMap(null);
 
-      console.log("directionDisplay has something");
+      // console.log("directionDisplay has something");
       this.getDistance(orgObject.lat , orgObject.long)
 
     } else {
-      console.log("directionDisplay has nothing");
+      // console.log("directionDisplay has nothing");
     }
     setTimeout(() => {
       let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
       let destination = new google.maps.LatLng(orgObject.lat , orgObject.long);
       this.directionsDisplay.setMap(this.map);
-      console.log(this.directionsDisplay);
+      // console.log(this.directionsDisplay);
 
       this.IRmethods.calculateAndDisplayRoute(userCurrentLocation, destination, this.directionsDisplay, this.directionsService);
       // this.destinationMarker()
@@ -1454,13 +1407,13 @@ Destaddress;
             var results = response.rows[i].elements;
             for (var j = 0; j < results.length; j++) {
               var element = results[j];
-              console.log(element);
+              // console.log(element);
 
               this.showtime = element.duration.text;
               this.showDistance = element.distance.text;
 
-              console.log(this.showtime);
-              console.log(this.showDistance);
+              // console.log(this.showtime);
+              // console.log(this.showDistance);
             }
           }
 
@@ -1482,8 +1435,15 @@ Destaddress;
   }
 
   slideChanged() {
+
+
+
+    // var selectedSlide = document.getElementById("toGrow");
+
+    // selectedSlide.style.boxShadow = "0 0 10px black";
+    // selectedSlide.style.height = "80px"    
   let currentIndex = this.slides.getActiveIndex();
-  console.log(this.orgArray[currentIndex]);
+  // console.log(this.orgArray[currentIndex]);
   this.touchstart(this.orgArray[currentIndex])
   }
 }

@@ -108,13 +108,13 @@ export class IRhubProvider {
               {
                 text: 'ok',
                 handler: data => {
-                  console.log('Cancel clicked');
+                  // console.log('Cancel clicked');
                 }
               }
             ]
           });
           alert.present();
-          console.log(error);
+          // console.log(error);
         })
       })
     })
@@ -122,7 +122,7 @@ export class IRhubProvider {
   checkVerification() {
     return new Promise((resolve, reject) => {
       firebase.auth().onAuthStateChanged((user) => {
-        console.log(user);
+        // console.log(user);
         if (user.emailVerified == false) {
           this.logout();
           resolve(0)
@@ -163,15 +163,15 @@ export class IRhubProvider {
             var wifi = 0;
             let details = data.val();
             let keys = Object.keys(details);
-            console.log(details);
-            console.log(keys);
+            // console.log(details);
+            // console.log(keys);
 
             for (var x = 0; x < keys.length; x++) {
               pay = 0;
               wifi = 0;
               totRating = 0;
               counter = 0;
-              console.log(keys[x]);
+              // console.log(keys[x]);
               this.ratin = 0;
               this.ratings(keys[x])
            
@@ -208,7 +208,7 @@ export class IRhubProvider {
                 }
                 this.storeOrgNames(details[keys[x]].prograName, details[keys[x]].programCategory);
                 this.orgArray.push(orgObject)
-                console.log(this.orgArray)
+                // console.log(this.orgArray)
             }
 
             resolve(this.orgArray)
@@ -224,7 +224,7 @@ export class IRhubProvider {
     var counter = 0
     firebase.database().ref("Reviews/" + key).on("value", (ratings: any) => {
       if (ratings.val() != null || ratings.val() != undefined) {
-        console.log(ratings.val());
+        // console.log(ratings.val());
         var ratns = ratings.val();
         var rKeys = Object.keys(ratns);
         for (var p = 0; p < rKeys.length; p++) {
@@ -236,7 +236,7 @@ export class IRhubProvider {
       if (totRating != 0) {
         totRating = totRating / counter;
         totRating = Math.round(totRating)
-        console.log('1111111111111111111111111111111111111111'); 
+        // console.log('1111111111111111111111111111111111111111'); 
         this.assignRatings(totRating);
       }
     })
@@ -244,13 +244,13 @@ export class IRhubProvider {
 
   ratin = 0;
   assignRatings(r){
-    console.log('222222222222222222222222222222222222222222222');
-    console.log(r);
+    // console.log('222222222222222222222222222222222222222222222');
+    // console.log(r);
     this.ratin = r;
   }
 
   getRate(){
-    console.log('3333333333333333333333333333333333333333333');
+    // console.log('3333333333333333333333333333333333333333333');
     return  this.ratin;
   }
 
@@ -267,7 +267,7 @@ updateApplied(key, num){
   }
 
   getOrgNames() {
-    console.log('get names');
+    // console.log('get names');
     return this.orgNames
   }
 
@@ -279,7 +279,7 @@ updateApplied(key, num){
             firebase.database().ref("Users/" + "/" + "App_Users/" + user.uid).on('value', (data: any) => {
               let details = data.val();
               if (data.val() != null || data.val() != undefined) {
-                console.log(details)
+                // console.log(details)
                 accpt(details.downloadurl)
               }
               else {
@@ -289,7 +289,7 @@ updateApplied(key, num){
               // console.log(details.downloadurl)
             })
           } else {
-            console.log('no user');
+            // console.log('no user');
           }
         });
       })
@@ -311,7 +311,7 @@ updateApplied(key, num){
             accpt(this.galleryArray)
           }
           else {
-            console.log('no user');
+            // console.log('no user');
           }
         })
       })
@@ -355,7 +355,7 @@ updateApplied(key, num){
         accpt('success');
       });
     }).catch((error) => {
-      console.log(error)
+      // console.log(error)
     })
   }
 
@@ -417,13 +417,13 @@ updateApplied(key, num){
   commentsArray = new Array();
   setComments(obj) {
     this.commentsArray.push(obj);
-    console.log(this.commentsArray);
+    // console.log(this.commentsArray);
 
   }
 
   getAllComments() {
     return new Promise((accpt, rejc) => {
-      console.log(this.commentsArray);
+      // console.log(this.commentsArray);
 
       accpt(this.commentsArray)
     })
@@ -458,7 +458,7 @@ updateApplied(key, num){
   }
   assignTotRating(num) {
     this.totRating = num;
-    console.log(num)
+    // console.log(num)
   }
 
   getTotalRatings() {
@@ -471,37 +471,37 @@ updateApplied(key, num){
           this.ratedOrgs = [];
           if (data.val() != null || data.val() != undefined) {
             let details = data.val();
-            console.log(details)
-            console.log(data)
+            // console.log(details)
+            // console.log(data)
             let keys = Object.keys(data.val());
             for (var x = 0; x < keys.length; x++) {
               firebase.database().ref("Reviews/" + keys[x]).on("value", (data2: any) => {
-                console.log(keys[x])
+                // console.log(keys[x])
                 this.ratedOrgs = [];
                 var values = data2.val();
-                console.log(values)
+                // console.log(values)
 
                 let inderKeys = Object.keys(values);
-                console.log(inderKeys)
+                // console.log(inderKeys)
                 for (var i = 0; i < inderKeys.length; i++) {
 
                   if (values[inderKeys[i]].uid == userID.uid) {
-                    console.log('in');
+                    // console.log('in');
 
-                    console.log(values[inderKeys[i]].uid)
-                    console.log(userID.uid)
+                    // console.log(values[inderKeys[i]].uid)
+                    // console.log(userID.uid)
                     firebase.database().ref('4IR_Hubs/').on("value", (data3: any) => {
                       let deatils2 = data3.val();
-                      console.log(deatils2)
+                      // console.log(deatils2)
                       var xx = Object.keys(data3.val())
                       for (var p = 0; p < xx.length; p++) {
                         firebase.database().ref('4IR_Hubs/' + xx[p]).on("value", (data4: any) => {
                           // this.ratedOrgs = [];
                           if (data4.val() != undefined || data4.val() != null) {
-                            console.log(data4.val());
+                            // console.log(data4.val());
                             if (data3.val() != null || data3.val() != undefined) {
                               var orgs = data3.val();
-                              console.log(data3.val());
+                              // console.log(data3.val());
                               var gal1;
                               var gal2;
                               var gal3;
@@ -543,10 +543,10 @@ updateApplied(key, num){
                               orgId: xx[p],
                               city: data4.val().region,
                             }
-                            console.log(organizationObject);
+                            // console.log(organizationObject);
 
                             this.ratedOrgs.push(organizationObject)
-                            console.log(this.ratedOrgs)
+                            // console.log(this.ratedOrgs)
                           }
                         })
                       }
@@ -561,7 +561,7 @@ updateApplied(key, num){
           }
 
           this.assignTotRating(numRating);
-          console.log(this.ratedOrgs)
+          // console.log(this.ratedOrgs)
           accpt(this.ratedOrgs);
 
         })
@@ -575,7 +575,7 @@ updateApplied(key, num){
       this.ngzone.run(() => {
         firebase.storage().ref(name).putString(pic, 'data_url').then(() => {
           accpt(name);
-          console.log(name);
+          // console.log(name);
         }, Error => {
           rejc(Error.message)
         })
@@ -589,7 +589,7 @@ updateApplied(key, num){
         this.ProfileArr.length = 0;
         var storageRef = firebase.storage().ref(name);
         storageRef.getDownloadURL().then(url => {
-          console.log(url)
+          // console.log(url)
           var userID = firebase.auth().currentUser;
           var link = url;
           firebase.database().ref("Users/" + "/" + "App_Users/" + userID.uid).update({
@@ -598,7 +598,7 @@ updateApplied(key, num){
           accpt('success');
         }, Error => {
           rejc(Error.message);
-          console.log(Error.message);
+          // console.log(Error.message);
         });
       })
     })
@@ -612,7 +612,7 @@ updateApplied(key, num){
           var profileDetails = data.val();
           if (profileDetails !== null) {
           }
-          console.log(profileDetails);
+          // console.log(profileDetails);
           accpt(userID.uid);
         }, Error => {
           rejc(Error.message)
@@ -649,7 +649,7 @@ updateApplied(key, num){
           }
           for (var i = 0; i < keys.length; i++) {
             this.storeImgur(DisplayData[keys[i]].downloadurl);
-            console.log(DisplayData[keys[i]].downloadurl)
+            // console.log(DisplayData[keys[i]].downloadurl)
           }
           accpt(DisplayData);
         }, Error => {
@@ -661,7 +661,7 @@ updateApplied(key, num){
 
   storeImgur(url) {
     this.url = url;
-    console.log(this.url)
+    // console.log(this.url)
   }
 
 
@@ -679,7 +679,7 @@ updateApplied(key, num){
         resolve(resp)
       }).catch((error) => {
         resolve(null)
-        console.log('Error getting location', error);
+        // console.log('Error getting location', error);
       });
     })
   }
@@ -688,9 +688,9 @@ updateApplied(key, num){
 
   calculateAndDisplayRoute(location, destination, directionsDisplay, directionsService) {
 
-    console.log(location);
+    // console.log(location);
 
-    console.log(destination);
+    // console.log(destination);
 
     directionsService.route({
       origin: location,
@@ -699,13 +699,13 @@ updateApplied(key, num){
     }, function (response, status) {
       if (status === 'OK') {
         directionsDisplay.setDirections(response);
-        console.log("routing OK");
-
+        // console.log("routing OK");
+// 
         directionsDisplay.setOptions({ suppressMarkers: true });
 
       } else {
-        console.log(status);
-        console.log("not working");
+        // console.log(status);
+        // console.log("not working");
 
 
       }
@@ -854,7 +854,7 @@ updateApplied(key, num){
 
     return new Promise((accpt, rej) => {
 
-      console.log("provider outside getCurPos");
+      // console.log("provider outside getCurPos");
       this.createPositionRadius(lat, lng).then((data: any) => {
         accpt(data);
       })
@@ -867,11 +867,11 @@ updateApplied(key, num){
     return new Promise((accpt, rej) => {
 
       this.geo.getCurrentPosition().then((resp) => {
-        console.log(resp);
+        // console.log(resp);
         accpt(resp);
       }).catch((error) => {
         rej('')
-        console.log('Error getting location', error.message);
+        // console.log('Error getting location', error.message);
 
       });
     })
@@ -884,14 +884,14 @@ updateApplied(key, num){
 
       this.nearByOrg = []
       this.getCurrentLocations().then((resp: any) => {
-        console.log(resp);
+        // console.log(resp);
 
         var lat = new String(resp.coords.latitude).substr(0, 6);
-        console.log(lat);
-        console.log(resp.coords.latitude)
+        // console.log(lat);
+        // console.log(resp.coords.latitude)
         var long = new String(resp.coords.longitude).substr(0, 5);
-        console.log(long);
-        console.log(resp.coords.longitude);
+        // console.log(long);
+        // console.log(resp.coords.longitude);
         for (var x = 0; x < org.length; x++) {
           var orglat = new String(org[x].lat).substr(0, 6);
           var orgLong = new String(org[x].long).substr(0, 5);
@@ -900,14 +900,14 @@ updateApplied(key, num){
 
 
           if ((orgLong <= long && orgLong >= radius.left || orgLong >= long && orgLong <= radius.right) && (orglat >= lat && orglat <= radius.down || orglat <= lat && orglat >= radius.up)) {
-            console.log("In nearby");
+            // console.log("In nearby");
 
             this.nearByOrg.push(org[x]);
-            console.log(this.nearByOrg);
+            // console.log(this.nearByOrg);
             accpt(this.nearByOrg)
 
           } else {
-            console.log("kb");
+            // console.log("kb");
 
           }
         }
@@ -970,7 +970,7 @@ updateApplied(key, num){
                 })
               })
             }
-            console.log(this.categoryArr)
+            // console.log(this.categoryArr)
             accpt(this.categoryArr);
           })
         }
@@ -986,8 +986,8 @@ updateApplied(key, num){
         var latlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
         geocoder.geocode({ 'location': latlng }, function (results, status) {
           var address = results[0].address_components[3].short_name;
-          console.log(address);
-          console.log(results[0]);
+          // console.log(address);
+          // console.log(results[0]);
           resolve(address)
         }, 4000);
 
