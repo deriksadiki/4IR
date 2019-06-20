@@ -42,7 +42,7 @@ export class ViewOrganizationInforPage implements OnInit {
   Star3 = "star-outline";
   Star4 = "star-outline";
   Star5 = "star-outline";
-  icon = 'assets/imgs/wifi2.svg'
+  icon = 'assets/imgs/loaction3.png'
   locIcon = 'assets/imgs/loc-user.svg'
 
 
@@ -77,7 +77,7 @@ export class ViewOrganizationInforPage implements OnInit {
   hideMe;
   theTabs = "services";
   galleryArray = new Array();
-
+  category;
   showandHideStars :boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, public modalCtrl: ModalController) {
@@ -113,13 +113,12 @@ export class ViewOrganizationInforPage implements OnInit {
 
 
     console.log(this.orgArray[0].lat);
-
+    this.category = this.orgArray[0].programCategory
     this.destlat = this.orgArray[0].lat
     this.destlong = this.orgArray[0].long
 
     this.destinationMap()
     //this.initMap()
-
     if (this.loginState) {
       let userID = firebase.auth().currentUser;
 
@@ -445,7 +444,7 @@ export class ViewOrganizationInforPage implements OnInit {
     setTimeout(() => {
       const options = {
         center: { lat: parseFloat(this.destlat), lng: parseFloat(this.destlong) },
-        zoom: 8,
+        zoom: 15,
         disableDefaultUI: true,
         styles: this.mapStyles,
         icon: this.icon
@@ -453,7 +452,7 @@ export class ViewOrganizationInforPage implements OnInit {
       this.map2 = new google.maps.Map(this.mapRef2.nativeElement, options);
       this.marker = new google.maps.Marker({
         map: this.map2,
-        zoom: 10,
+        zoom: 15,
         icon: this.icon,
         position: this.map2.getCenter()
       });
@@ -473,7 +472,7 @@ export class ViewOrganizationInforPage implements OnInit {
       setTimeout(() => {
         const options = {
           center: { lat: parseFloat(this.currentUserlat), lng: parseFloat(this.currentUserlng) },
-          zoom: 8,
+          zoom: 10,
           disableDefaultUI: true,
         }
         this.map = new google.maps.Map(this.mapRef.nativeElement, options);
@@ -514,7 +513,9 @@ export class ViewOrganizationInforPage implements OnInit {
     let obj = {
       lat: this.destlat,
       long: this.destlong,
-      address: this.address
+      address: this.address,
+      img:  this.image
+
     }
 
     coordinateArray.push(obj)
@@ -540,13 +541,21 @@ export class ViewOrganizationInforPage implements OnInit {
 
 
 
-
-  mapStyles = [
+ 
+  mapStyles =[
     {
       "elementType": "geometry",
       "stylers": [
         {
-          "color": "#ebe3cd"
+          "color": "#f5f5f5"
+        }
+      ]
+    },
+    {
+      "elementType": "labels.icon",
+      "stylers": [
+        {
+          "visibility": "off"
         }
       ]
     },
@@ -554,7 +563,7 @@ export class ViewOrganizationInforPage implements OnInit {
       "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#523735"
+          "color": "#616161"
         }
       ]
     },
@@ -562,25 +571,7 @@ export class ViewOrganizationInforPage implements OnInit {
       "elementType": "labels.text.stroke",
       "stylers": [
         {
-          "color": "#f5f1e6"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative",
-      "elementType": "geometry.stroke",
-      "stylers": [
-        {
-          "color": "#c9b2a6"
-        }
-      ]
-    },
-    {
-      "featureType": "administrative.land_parcel",
-      "elementType": "geometry.stroke",
-      "stylers": [
-        {
-          "color": "#dcd2be"
+          "color": "#f5f5f5"
         }
       ]
     },
@@ -589,16 +580,7 @@ export class ViewOrganizationInforPage implements OnInit {
       "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#ae9e90"
-        }
-      ]
-    },
-    {
-      "featureType": "landscape.natural",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#dfd2ae"
+          "color": "#bdbdbd"
         }
       ]
     },
@@ -607,7 +589,7 @@ export class ViewOrganizationInforPage implements OnInit {
       "elementType": "geometry",
       "stylers": [
         {
-          "color": "#dfd2ae"
+          "color": "#eeeeee"
         }
       ]
     },
@@ -616,16 +598,16 @@ export class ViewOrganizationInforPage implements OnInit {
       "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#93817c"
+          "color": "#757575"
         }
       ]
     },
     {
       "featureType": "poi.park",
-      "elementType": "geometry.fill",
+      "elementType": "geometry",
       "stylers": [
         {
-          "color": "#a5b076"
+          "color": "#e5e5e5"
         }
       ]
     },
@@ -634,7 +616,7 @@ export class ViewOrganizationInforPage implements OnInit {
       "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#447530"
+          "color": "#9e9e9e"
         }
       ]
     },
@@ -643,16 +625,16 @@ export class ViewOrganizationInforPage implements OnInit {
       "elementType": "geometry",
       "stylers": [
         {
-          "color": "#f5f1e6"
+          "color": "#ffffff"
         }
       ]
     },
     {
       "featureType": "road.arterial",
-      "elementType": "geometry",
+      "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#fdfcf8"
+          "color": "#757575"
         }
       ]
     },
@@ -661,34 +643,16 @@ export class ViewOrganizationInforPage implements OnInit {
       "elementType": "geometry",
       "stylers": [
         {
-          "color": "#f8c967"
+          "color": "#dadada"
         }
       ]
     },
     {
       "featureType": "road.highway",
-      "elementType": "geometry.stroke",
+      "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#e9bc62"
-        }
-      ]
-    },
-    {
-      "featureType": "road.highway.controlled_access",
-      "elementType": "geometry",
-      "stylers": [
-        {
-          "color": "#e98d58"
-        }
-      ]
-    },
-    {
-      "featureType": "road.highway.controlled_access",
-      "elementType": "geometry.stroke",
-      "stylers": [
-        {
-          "color": "#db8555"
+          "color": "#616161"
         }
       ]
     },
@@ -697,7 +661,7 @@ export class ViewOrganizationInforPage implements OnInit {
       "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#806b63"
+          "color": "#9e9e9e"
         }
       ]
     },
@@ -706,25 +670,7 @@ export class ViewOrganizationInforPage implements OnInit {
       "elementType": "geometry",
       "stylers": [
         {
-          "color": "#dfd2ae"
-        }
-      ]
-    },
-    {
-      "featureType": "transit.line",
-      "elementType": "labels.text.fill",
-      "stylers": [
-        {
-          "color": "#8f7d77"
-        }
-      ]
-    },
-    {
-      "featureType": "transit.line",
-      "elementType": "labels.text.stroke",
-      "stylers": [
-        {
-          "color": "#ebe3cd"
+          "color": "#e5e5e5"
         }
       ]
     },
@@ -733,16 +679,16 @@ export class ViewOrganizationInforPage implements OnInit {
       "elementType": "geometry",
       "stylers": [
         {
-          "color": "#dfd2ae"
+          "color": "#eeeeee"
         }
       ]
     },
     {
       "featureType": "water",
-      "elementType": "geometry.fill",
+      "elementType": "geometry",
       "stylers": [
         {
-          "color": "#b9d3c2"
+          "color": "#c9c9c9"
         }
       ]
     },
@@ -751,7 +697,7 @@ export class ViewOrganizationInforPage implements OnInit {
       "elementType": "labels.text.fill",
       "stylers": [
         {
-          "color": "#92998d"
+          "color": "#9e9e9e"
         }
       ]
     }

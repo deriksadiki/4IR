@@ -250,7 +250,7 @@ export class HomePage{
       duration: 22200,
       content: 'please wait...',
     });
-    // loading.present();
+    loading.present();
     setTimeout(() => {
       document.getElementById("icon").style.color = "#ff6337";
       this.IRmethods.getCurrentLocations().then((data: any) => {
@@ -1364,12 +1364,13 @@ export class HomePage{
     var closeBtn = document.getElementById("close-view-button").style.display = "none";
     var flipCard = document.getElementById("flip-card-inner").style.transform = "rotateY(180deg)";
   }
+ 
   navigate(orgObject) {
     if (this.directionsDisplay != null) {
       this.directionsDisplay.setMap(null);
 
       // console.log("directionDisplay has something");
-      this.getDistance(orgObject.lat , orgObject.long)
+      this.getDistance(orgObject.lat , orgObject.long,  orgObject)
 
     } else {
       // console.log("directionDisplay has nothing");
@@ -1391,7 +1392,7 @@ Destaddress;
     this.Destaddress =  orgObjetc.address;
   }
 
-  getDistance(lat,long) {
+  getDistance(lat,long, obj) {
     let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
     let destination = new google.maps.LatLng(lat, long);
     this.service.getDistanceMatrix(
@@ -1417,23 +1418,65 @@ Destaddress;
             }
           }
 
-          this.destinationMarker(lat,long);
+          this.destinationMarker(lat,long, obj);
         }
       });
 
   }
-
-  destinationMarker(lat, long) {
-    this.destMaker = new google.maps.Marker({
+  infowindow;
+  destinationMarker(lat, long, obj) {
+    if (this.infowindow)
+    {
+      this.infowindow.close();
+    }
+    let destMaker = new google.maps.Marker({
       map: this.map,
       icon: this.icon,
       position: { lat: parseFloat(lat), lng: parseFloat(long) },
       label: name,
       zoom: 8,
-  
     });
+    var stars = null;
+    var key = obj.rating
+         var start = 0;
+         var end = 0;
+    if (key == 0){
+      stars = '<span style="font-size:15px; color: #dcc050;margin-left: 8px;">&#9734;</span>'
+      start = 0;
+      end = 4
+    }
+    for (var x = 1; x <= key; x++){
+      if (stars ==  null)
+      stars =  '<span style="font-size:15px; color: #dcc050;margin-left: 8px;">&#9733;</span>'
+      else
+      stars = stars +  '<span style="font-size:15px; color: #dcc050;margin-left: 8px;">&#9733;</span>'
+      start = x;
+      end = 5
+    }
+    start++;
+    for (var i = start; i <= end; i++){
+      if (stars ==  null)
+      stars =  '<span style="font-size:15px; color: #dcc050;margin-left: 8px;">&#9734;</span>'
+      else
+      stars = stars +  '<span style="font-size:15px; color: #dcc050;margin-left: 8px;">&#9734;</span>'
+    }
+   // }
+    console.log(obj);
+    this.infowindow = new google.maps.InfoWindow({
+      content:
+          '<div style="float: left; width: 150%; transition: 300ms;"><b>' +
+          '<p style="font-size:10px;">' +  obj.programCategory  + '</p>' +
+          '<br>' +   '<p style="font-size:10px;">Applied ' +  obj.applied  + '</p>' +
+          '</b><div style="display: flex; padding-top: 10px;">' + '<p>' + stars + '</p>' +
+          '<img style="height: 66px;  width: 80px; display: block;  border-radius: 8px;  object-fit: cover;" src=' +
+          obj.img +
+          ">" +
+          "</div>"
+    });
+    this.infowindow.open(this.map, destMaker);
   }
-
+ 
+ 
   slideChanged() {
 
 
@@ -1446,6 +1489,11 @@ Destaddress;
   // console.log(this.orgArray[currentIndex]);
   this.touchstart(this.orgArray[currentIndex])
   }
+
+
+
+
+
 }
 
 var coordinateArray = new Array();
