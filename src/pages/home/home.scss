@@ -1,4 +1,56 @@
 page-home {
+
+  #scrllContent {
+        background: linear-gradient(to bottom, #04592abf, #04592aa3), url("../../assets/imgs/Defaults/parl.jpg");
+        background-size: cover;
+  }
+  
+
+  #top-part {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 25%;
+    // background-image: url("../../assets/imgs/Defaults/parl.jpg");
+    
+
+    
+  }
+  #top-part-1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 25%;
+    width: 100%;
+    height: 100%;
+    // background: linear-gradient(#04592a63, #04592a);
+    // z-index: 0;
+
+    
+  }
+
+  #bottom-part {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    height: 75%;
+    margin-left: 8px;
+    border-top-left-radius: 10%;
+    overflow-y: scroll;
+
+    #list-encamp {
+      padding: 8px;
+      padding-top:30px;
+      background: white;
+    }
+
+  }
+
+
   .coverImage{
     background-color: white;
     border:2px solid red;
@@ -32,6 +84,10 @@ page-home {
     // margin: 0px 0px 0px 8px;
     // font-weight: bold;
     color: black;
+    // background: green;
+    margin-left: 8px;
+    margin-bottom: 0px;
+
   }
   .org-name-2 {
 
@@ -187,7 +243,8 @@ page-home {
 
   .theHead {
     transition: 500ms;
-    height: 120px;
+    height: 180px;
+    border-radius: -100px;
     background:whitesmoke;
     position: relative;
     box-shadow: 0 0 5px #fff;
@@ -246,8 +303,9 @@ page-home {
   .fixtext {
     color: grey;
     font-size: 12px;
-
-    margin: 0px 0px 0px 8px;
+    // margin: 0px 0px 0px 8px;
+    margin-bottom: 5px;
+    margin-left: 8px;
   }
   .more {
     transition: 700ms;
@@ -264,18 +322,33 @@ page-home {
     border-radius: 50px;
     // text-align: right;
   }
+  .line{
+  //   border-bottom: 1px solid rgba(128, 128, 128, 0.249);
+  //   width: 10%;
+  //  justify-content: center
+    // position: absolute;
+    // right: 0;
+    // margin-right: 20px;
+    
+    // margin: 0 auto;
+    // width: 95%;
+    // border-bottom-color: #aaaaaa;
+    // border-bottom-style: solid;
+    // border-bottom-width: 1px;
+  }
   .searchBar {
+    // border:2px solid red;
     transition: 700ms;
     border-radius: 550px;
     // background: white;
     padding-left: 10px;
     position: absolute;
-    top: 18px;
+    top: 50px;
     width: 0;
     margin-right: 20px;
     left: -40%;
     height: 40px;
-    // transform: rotateY(180DEG)
+    transform: rotateY(180DEG)
   }
   .profile {
     transition: 700ms;
@@ -312,6 +385,7 @@ page-home {
   #searchlist {
     position: relative;
     top: 70px;
+
   }
   #searched-items {
     padding-top: 0;
@@ -339,17 +413,19 @@ page-home {
     padding-left: 10px;
     padding-top: 10px;
     padding-right: 10px;
+    z-index: 0;
   }
   #statement {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bolder;
-    margin-top: 10px;
+    margin-top: 60px;
     color: orange;
+    // z-index: -100;
     // text-shadow: 0 0 5px greenyellow
   }
   .finePrint {
-    font-size: 14px;
-    color: grey;
+    font-size: 10px;
+    color: white;
   }
   .myFlexBox {
     position: absolute;
@@ -385,9 +461,14 @@ page-home {
     width: 60%;
   }
   #list {
-    display: block;
+    // display: block;
     animation: fadeIn 1s;
+    // border-top-left-radius: 200px;
+    // border: 1px solid red; 
+    // background: blue;
+    // padding: 10px;
   }
+
   #cash {
     width: 15px;
     position: absolute;
@@ -563,7 +644,8 @@ page-home {
 }
 
 #list-holder {
-  // margin-top: 16px;
+  margin: 16px;
+  // background: red;
 }
 
 .column-left-1 {
@@ -610,6 +692,7 @@ page-home {
   width: 75%;
   height: 80px;
   display: flex;
+  // padding-left: 16px;
   // justify-content: center;
   // align-items: center;
   flex-direction: column;

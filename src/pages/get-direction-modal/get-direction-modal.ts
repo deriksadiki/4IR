@@ -90,6 +90,8 @@ export class GetDirectionModalPage {
 
     console.log(this.destCoords);
 
+
+
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsRenderer;
@@ -246,10 +248,9 @@ export class GetDirectionModalPage {
     this.infowindow = new google.maps.InfoWindow({
       content:
           '<div style="float: left; width: 150%; transition: 300ms;"><b>' +
-          '<p style="font-size:10px;">'   + '</p>' +
+          '<p style="font-size:10px;">' + this.destCoords[0].img  + '</p>' +
           '<img style="height: 66px;  width: 80px; display: block;  border-radius: 8px;  object-fit: cover;" src=' +
           ">" +
-           
           '<div style="padding-left: 10px;padding-right: 10px">' +
           // this.orgArray[index].intro +
           "</div><br>" +

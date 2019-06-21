@@ -78,7 +78,7 @@ export class ViewOrganizationInforPage implements OnInit {
   theTabs = "services";
   galleryArray = new Array();
   category;
-  showandHideStars :boolean;
+  showandHideStars: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, public modalCtrl: ModalController) {
 
@@ -107,7 +107,7 @@ export class ViewOrganizationInforPage implements OnInit {
     this.services = this.orgArray[0].programmeService
     console.log(this.services)
 
-   console.log(this.services)
+    console.log(this.services)
     // console.log(this.imageKey);
     console.log(this.orgArray);
 
@@ -195,7 +195,7 @@ export class ViewOrganizationInforPage implements OnInit {
 
 
   }
-  apply(){
+  apply() {
     this.irhubProvider.updateApplied(this.orgArray[0].id, this.orgArray[0].applied);
   }
   ngOnInit() {
@@ -209,42 +209,42 @@ export class ViewOrganizationInforPage implements OnInit {
 
 
   }
-  showFab:boolean;
+  showFab: boolean;
   retrieveComments() {
     this.commentArr = [];
     this.irhubProvider.viewComments(this.comments, this.imageKey).then((data: any) => {
       this.commentArr.length = 0;
-      this.irhubProvider.getAllComments().then((data2:any) =>{
-       this.commentArr = data2;
+      this.irhubProvider.getAllComments().then((data2: any) => {
+        this.commentArr = data2;
         console.log(this.commentArr)
-        this.commentArr.reverse(); 
+        this.commentArr.reverse();
         let rating = this.irhubProvider.getRating();
         console.log(rating);
-        
+
         if (rating > 0) {
           this.rate(rating);
           this.rateState = true;
           this.showFab = false
           console.log(this.showFab);
           console.log(this.rateState);
-          
-          
+
+
         }
         else if (rating == undefined || rating == 0) {
           this.rateState = false
           this.showFab = true;
         }
-     
-      })
-       
 
-    }, Error=>{
+      })
+
+
+    }, Error => {
       this.showFab = true;
       console.log(this.showFab);
     })
-  
+
   }
-  
+
   comment(num) {
     this.commentArr = [];
     this.irhubProvider.checkAuthState().then(data => {
@@ -284,7 +284,7 @@ export class ViewOrganizationInforPage implements OnInit {
                       this.retrieveComments();
                       this.rate(num);
                       this.rateState = true;
-                      this.showandHideStars =false ;
+                      this.showandHideStars = false;
                       this.showFab = false;
                     })
                   })
@@ -514,12 +514,13 @@ export class ViewOrganizationInforPage implements OnInit {
       lat: this.destlat,
       long: this.destlong,
       address: this.address,
-      img:  this.image
+      img: this.image,
+      programCategory: this.category
 
     }
 
     coordinateArray.push(obj)
-
+    console.log(coordinateArray)
     const modal = this.modalCtrl.create(GetDirectionModalPage);
     modal.present();
 
@@ -530,19 +531,19 @@ export class ViewOrganizationInforPage implements OnInit {
 
 
 
-  fabStar(){
-    if (this.showandHideStars == undefined){
+  fabStar() {
+    if (this.showandHideStars == undefined) {
       this.showandHideStars = true;
     }
-    else if (this.showandHideStars == true){
+    else if (this.showandHideStars == true) {
       this.showandHideStars = true
     }
   }
 
 
 
- 
-  mapStyles =[
+
+  mapStyles = [
     {
       "elementType": "geometry",
       "stylers": [

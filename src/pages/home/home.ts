@@ -265,8 +265,8 @@ export class HomePage{
           // console.log(data);
           this.userLocation = data
         })
-        document.getElementById("icon").style.color = "#04592a"
-        document.getElementById("statement").style.color = "#04592a"
+        document.getElementById("icon").style.color = "#f4f4f4"
+        document.getElementById("statement").style.color = "#f4f4f4"
 
       }, Error => {
         this.locationState = false;
@@ -969,21 +969,15 @@ export class HomePage{
 
   all() {
     setTimeout(() => {
-
       this.showNearbyList = false;
       this.showAllOrganisation = true;
-
-
       this.custom1 = "primary";
       this.custom2 = "inactive";
 
     }, 3000)
-    // }
-    // loading.dismiss();
+
   }
-
   convertinCoordinate() {
-
     // console.log(this.lat);
     this.IRmethods.getLocation(this.lat, this.lng).then((data: any) => {
       // console.log(data);
