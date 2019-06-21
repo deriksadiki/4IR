@@ -20,7 +20,7 @@ export class HomePage{
   @ViewChild('map') mapRef: ElementRef;
   @ViewChild('mapBig') mapRef2: ElementRef;
   @ViewChild('destmap') mapRef3: ElementRef;
-  @ViewChild(Slides) slides: Slides;
+  @ViewChild('Slides') slides: Slides;
   orgArray = new Array();
   viewDetailsArray = new Array();
   tem = new Array();
@@ -75,7 +75,7 @@ export class HomePage{
   directionsDisplay;
   service;
   geocoder;
-  custom1 = "primary";
+  custom1 = "btn";
   custom2 = "inactive";
   pic
   userLocation = "Searching for location...";
@@ -252,7 +252,7 @@ export class HomePage{
     });
     loading.present();
     setTimeout(() => {
-      document.getElementById("icon").style.color = "#ff6337";
+      document.getElementById("icon").style.color = "#f4f4f4";
       this.IRmethods.getCurrentLocations().then((data: any) => {
         // console.log(data);
         // console.log(data.coords.latitude);
@@ -327,7 +327,7 @@ export class HomePage{
       // console.log("showMap");
 
     });
-
+// loading.dismiss();
     // this.checkVerification()
   }
 
@@ -519,7 +519,6 @@ export class HomePage{
             this.markersBig().then(() => {
               // console.log("show Marker");
               // this.loading.dismiss()
-
             });
           }, 8000)
 
@@ -589,41 +588,94 @@ export class HomePage{
 
   }
 
-
+  markers2 = new Array();
   markersBig() {
     let tracker;
     return new Promise((resolve, reject) => {
-
       setTimeout(() => {
+   
         // console.log(this.orgArray);
         for (let index = 0; index < this.orgArray.length; index++) {
           // console.log(this.orgArray[index].orgName);
           let tracker = index;
           var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
-          this.showMultipleMarker = new google.maps.Marker({
+          var showMultipleMarker = new google.maps.Marker({
             map: this.map,
             icon: this.icon,
             position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
             label: name,
             zoom: 8,
           });
-
+          this.markers2.push(showMultipleMarker);
           // console.log(this.orgArray[index].lat);
-          this.showMultipleMarker.addListener('click', () => {
-
-            // console.log(this.orgArray[index].long);
-            // console.log(index);
-            this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
+          showMultipleMarker.addListener('click', () => {
+            console.log(this.orgArray[index]);
+            console.log(index);
+            for (var i = 0; i < this.markers2.length; i++) {
+              this.markers2[i].setMap(null);
+          }
+          this.slides.slideTo(11)
+          this.createSelectedMarker(this.orgArray[index])
+     
+            // this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
           });
-
           resolve();
         }
-
-
-      }, 5000);
+      }, 2000);
     })
-
   }
+
+  createSelectedMarker(obj){
+    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
+    var showMultipleMarker = new google.maps.Marker({
+      map: this.map,
+      icon: this.icon,
+      position: { lat: parseFloat(obj.lat), lng: parseFloat(obj.long) },
+      label: name,
+      zoom: 8,
+    });
+    this.markers2.push(showMultipleMarker);
+    // console.log(this.orgArray[index].lat);
+    showMultipleMarker.addListener('click', () => {
+
+    })
+      // this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] })
+  }
+
+  showAllMarkers(){
+    for (var i = 0; i < this.markers2.length; i++) {
+      this.markers2[i].setMap(null);
+  }
+   this.showAllMarkersRemoved();
+  }
+
+  showAllMarkersRemoved(){
+    for (let index = 0; index < this.orgArray.length; index++) {
+      // console.log(this.orgArray[index].orgName);
+      let tracker = index;
+      var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
+      var showMultipleMarker = new google.maps.Marker({
+        map: this.map,
+        icon: this.icon,
+        position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
+        label: name,
+        zoom: 8,
+      });
+      this.markers2.push(showMultipleMarker);
+      // console.log(this.orgArray[index].lat);
+      showMultipleMarker.addListener('click', () => {
+        this.slides.slideTo(index)
+        console.log(this.orgArray[index]);
+        console.log(index);
+        for (var i = 0; i < this.markers2.length; i++) {
+          this.markers2[i].setMap(null);
+      }
+      this.createSelectedMarker(this.orgArray[index])
+        // this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
+      });
+  }
+}
+
   getDirection() {
 
     this.destlat = this.tem[0].lat
@@ -693,11 +745,11 @@ export class HomePage{
   }
 
   showButton() {
-    var theCard = document.getElementsByClassName("options") as HTMLCollectionOf<HTMLElement>;
+    // var theCard = document.getElementsByClassName("options") as HTMLCollectionOf<HTMLElement>;
     let searcher = document.getElementsByClassName('searchBar') as HTMLCollectionOf<HTMLElement>;
-    var theTitle = document.getElementsByClassName("theTitle") as HTMLCollectionOf<HTMLElement>
-    var nav = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
-    var theSplit = document.getElementsByClassName("split") as HTMLCollectionOf<HTMLElement>;
+    // var theTitle = document.getElementsByClassName("theTitle") as HTMLCollectionOf<HTMLElement>
+    // var nav = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
+    // var theSplit = document.getElementsByClassName("split") as HTMLCollectionOf<HTMLElement>;
     var theSplit2 = document.getElementsByClassName("split2") as HTMLCollectionOf<HTMLElement>;
     var searchBtn = document.getElementsByClassName("more") as HTMLCollectionOf<HTMLElement>;
     var prof = document.getElementsByClassName("profile") as HTMLCollectionOf<HTMLElement>;
@@ -709,14 +761,14 @@ export class HomePage{
       searcher[0].style.width = "0";
       searcher[0].style.left = "-35%";
       searcher[0].style.top = "18px";
-      theTitle[0].style.opacity = "1";
+      // theTitle[0].style.opacity = "1";
 
-      theCard[0].style.height = "130px";
-      theCard[0].style.top = "60px";
-      theCard[0].style.opacity = "1";
+      // theCard[0].style.height = "130px";
+      // theCard[0].style.top = "60px";
+      // theCard[0].style.opacity = "1";
 
-      nav[0].style.height = "120px";
-      theSplit[0].style.height = "190px";
+      // nav[0].style.height = "120px";
+      // theSplit[0].style.height = "190px";
       theSplit2[0].style.height = "185px";
 
       searchBtn[0].style.top = "20px";
@@ -727,7 +779,7 @@ export class HomePage{
       // this.initializeItems();
       // this.setArrayBack(this.tempArray)
       this.items = [];
-      this.searchItem = "";
+      this.searchItem =                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 "";
       this.getItems(event);
       // this.filterItems('');
       this.setBackItems();
@@ -741,14 +793,14 @@ export class HomePage{
       searcher[0].style.width = "72%";
       searcher[0].style.left = "15%";
       searcher[0].style.top = "5px"
-      theTitle[0].style.opacity = "0";
+      // theTitle[0].style.opacity = "0";
 
-      theCard[0].style.height = "50px";
-      theCard[0].style.top = "-65px";
-      theCard[0].style.opacity = "0.5";
+      // theCard[0].style.height = "50px";
+      // theCard[0].style.top = "-65px";
+      // theCard[0].style.opacity = "0.5";
 
-      nav[0].style.height = "50px";
-      theSplit[0].style.height = "40px";
+      // nav[0].style.height = "50px";
+      // theSplit[0].style.height = "40px";
       theSplit2[0].style.height = "40px";
 
 
@@ -795,17 +847,17 @@ export class HomePage{
         alert.present();
       } else {
         var ionScrll = document.getElementsByClassName("scroll-content") as HTMLCollectionOf <HTMLElement>;
-        var theHeader = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
+        // var theHeader = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
         var theMap = document.getElementById("mapView");
-        var theList = document.getElementById("list");
+        // var theList = document.getElementById("list");
 
         if (this.n == 1) {
           this.n = 0;
           this.toggleState = "list"
           theMap.style.display = "block"
           ionScrll[0].style.overflowY = "hidden"
-          theList.style.display = "none";
-          theHeader[0].style.display = "none";
+          // theList.style.display = "none";
+          // theHeader[0].style.display = "none";
         }
         else {
 
@@ -813,8 +865,8 @@ export class HomePage{
           ionScrll[0].style.overflowY = "scroll"
           this.toggleState = "map"
           theMap.style.display = "none"
-          theList.style.display = "block";
-          theHeader[0].style.display = "block";
+          // theList.style.display = "block";
+          // theHeader[0].style.display = "block";
         }
       }
     })
@@ -877,8 +929,8 @@ export class HomePage{
 
   getItems(ev) {
     var header = document.getElementById("theHead")
-    var listContent = document.getElementById("list")
-    var listBig = document.getElementById("listBig")
+    // var listContent = document.getElementById("list")
+    // var listBig = document.getElementById("listBig")
     // Reset items back to all of the items
     this.items = [];
     this.tempArray = [];
@@ -891,14 +943,13 @@ export class HomePage{
     // if the value is an empty string don't filter the items
     if (this.searchItem && this.searchItem.trim() != '') {
 
-      listBig.style.display = "none"
+      // listBig.style.display = "none"
       this.items = this.items.filter((item) => {
         // console.log(this.searchItem);
         return (item.toLowerCase().indexOf(this.searchItem.toLowerCase()) > -1);
       })
     }
     else if (this.searchItem == "" || this.searchItem == null) {
-      alert("empty")
       this.items = [];
       this.searchItem = ""
     }
@@ -910,15 +961,13 @@ export class HomePage{
     //     }
     //   }
     if (this.searchItem == "" || this.searchItem == " " || this.searchItem == null) {
-      listContent.style.display = "block"
+      // listContent.style.display = "block"
     }
     else {
-      listContent.style.display = "none"
+      // listContent.style.display = "none"
     }
     //header.style.display = "none"
   }
-
-
   near() {
 
 
@@ -926,7 +975,7 @@ export class HomePage{
       if (this.nearby.length == 0) {
         const alert = this.alertCtrl.create({
           // title: "No Password",
-          subTitle: "We don't have organisations near by currently",
+          subTitle: "We currently don't have organisations near you",
           buttons: ['OK'],
           cssClass: 'myAlert',
         });
@@ -1377,7 +1426,6 @@ export class HomePage{
 
       this.IRmethods.calculateAndDisplayRoute(userCurrentLocation, destination, this.directionsDisplay, this.directionsService);
       // this.destinationMarker()
-      var footer = document.getElementById("footer").style.display = "block";
     }, 1000);
   }
 Destaddress;
@@ -1418,6 +1466,7 @@ Destaddress;
 
   }
   infowindow;
+ 
   destinationMarker(lat, long, obj) {
     if (this.infowindow)
     {
@@ -1430,6 +1479,7 @@ Destaddress;
       label: name,
       zoom: 8,
     });
+    this.markers2.push(destMaker)
     var stars = null;
     var key = obj.rating
          var start = 0;
@@ -1458,13 +1508,22 @@ Destaddress;
     console.log(obj);
     this.infowindow = new google.maps.InfoWindow({
       content:
-          '<div style="float: left; width: 150%; transition: 300ms;"><b>' +
-          '<p style="font-size:10px;">' +  obj.programCategory  + '</p>' +
-          '<br>' +   '<p style="font-size:10px;">Applied ' +  obj.applied  + '</p>' +
-          '</b><div style="display: flex; padding-top: 10px;">' + '<p>' + stars + '</p>' +
-          '<img style="height: 66px;  width: 80px; display: block;  border-radius: 8px;  object-fit: cover;" src=' +
-          obj.img +
-          ">" +
+          // '<div style="width: 100%; transition: 300ms;"><b>' +
+          // '<p style="font-size:10px;">' +  obj.programCategory  + '</p>' +
+          // '<br>' + '<p style="font-size:10px;">Applied ' +  obj.applied  + '</p>' +
+          // '</b><div style="display: flex; padding-top: 10px;">' + '<p>' + stars + '</p>' +
+          // '<img style="height: 66px;  width: 80px; display: block;  border-radius: 8px;  object-fit: cover;" src=' +
+          // obj.img + ">" + "</div>"
+
+          "<div id='tests'>" +
+          "<div id='mapIMG'>" +
+          "<img id='theImg-inMap' src='" + obj.img + "'></div>" +
+          "<div id='textAreas'><p id='catMap'><b>"+ obj.programCategory +
+          "<br>"+"</b></p></div></div>" +
+          "<br><div id='moreInforMap'><p>" +
+          obj.city + "</p>" + "<p>" + obj.email + "</p>" +
+          "<p><b>Opening date:</b> " + obj.openApplicationDate + "</p>" +
+          "<p><b>closing date:</b> " + obj.closeApplicationDate + "</p>" +
           "</div>"
     });
     this.infowindow.open(this.map, destMaker);
@@ -1472,13 +1531,10 @@ Destaddress;
  
  
   slideChanged() {
-
-
-
-    // var selectedSlide = document.getElementById("toGrow");
-
-    // selectedSlide.style.boxShadow = "0 0 10px black";
-    // selectedSlide.style.height = "80px"    
+    console.log('category');
+    for (var i = 0; i < this.markers2.length; i++) {
+      this.markers2[i].setMap(null);
+  }
   let currentIndex = this.slides.getActiveIndex();
   // console.log(this.orgArray[currentIndex]);
   this.touchstart(this.orgArray[currentIndex])

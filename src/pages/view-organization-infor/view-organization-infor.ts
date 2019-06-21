@@ -45,9 +45,6 @@ export class ViewOrganizationInforPage implements OnInit {
   icon = 'assets/imgs/loaction3.png'
   locIcon = 'assets/imgs/loc-user.svg'
 
-
-
-
   rateState: boolean;
   destlat;
   destlong;
@@ -77,13 +74,14 @@ export class ViewOrganizationInforPage implements OnInit {
   hideMe;
   theTabs = "services";
   galleryArray = new Array();
-  category;
   showandHideStars: boolean;
-
+  theReader = "read more...";
+  pet="programdetails";
+  category;
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, public modalCtrl: ModalController) {
 
     // 
-
+    // this.pet = "programdetails"
     this.orgArray.push(this.navParams.get('orgObject'));
     console.log(this.orgArray);
     this.irhubProvider.getGallery(this.orgArray[0].id).then((data: any) => {
@@ -528,8 +526,23 @@ export class ViewOrganizationInforPage implements OnInit {
   }
 
 
-
-
+  nnn = 0;
+  showMore() {
+    var btnMore = document.getElementById("readMore");
+    var readMore = document.getElementsByClassName("ParagraphPadding-1") as HTMLCollectionOf<HTMLElement>;
+    if (this.nnn == 0) {
+      this.nnn = 1;
+      this.theReader = "read less";
+      btnMore.style.marginTop = "-10px";
+      readMore[0].style.maxHeight = "500px";
+    }
+    else {
+      this.nnn = 0;
+      this.theReader = "read more";
+      btnMore.style.marginTop = "10px";
+      readMore[0].style.maxHeight = "50px";
+    }
+  }
 
   fabStar() {
     if (this.showandHideStars == undefined) {
