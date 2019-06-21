@@ -15,7 +15,7 @@ declare var google;
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage{
+export class HomePage {
 
   @ViewChild('map') mapRef: ElementRef;
   @ViewChild('mapBig') mapRef2: ElementRef;
@@ -26,6 +26,7 @@ export class HomePage{
   tem = new Array();
   logInState;
   category;
+  orgname;
   locationState;
   colorState = false;
   searchItem: string;
@@ -86,11 +87,12 @@ export class HomePage{
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public IRmethods: IRhubProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
 
 
+
     setTimeout(() => {
       this.IRmethods.getAllOrganizations().then((data: any) => {
         // console.log(data);
         this.orgArray = data
-        // console.log(data)
+
         // console.log(this.orgArray)
       })
 
@@ -247,7 +249,7 @@ export class HomePage{
   ionViewDidLoad() {
     let loading = this.loadingCtrl.create({
       spinner: 'bubbles',
-      duration: 22200,
+      duration: 22400,
       content: 'please wait...',
     });
     loading.present();
@@ -278,6 +280,7 @@ export class HomePage{
           center: { lat: -25.7479, lng: 28.2293 },
           zoom: 8,
           disableDefaultUI: true,
+          styles:this.mapStyles
         }
         this.userLocation = "Disabled"
         document.getElementById("icon").style.color = "#ff0000";
@@ -302,13 +305,14 @@ export class HomePage{
           this.IRmethods.getNearByOrganizations(radius, data).then((nearbyOrgs: any) => {
             // console.log(nearbyOrgs);
             // this.nearby = nearbyOrgs;
-
+            // loading.dismiss();
             // console.log(nearbyOrgs[0]);
-            loading.dismiss();
+         
             // console.log(this.nearby);
           })
         })
       })
+
 
     }, 3500);
 
@@ -327,13 +331,12 @@ export class HomePage{
       // console.log("showMap");
 
     });
-// loading.dismiss();
+    // loading.dismiss();
     // this.checkVerification()
   }
 
   ionViewDidEnter() {
     // this.all();
-
 
 
 
@@ -360,6 +363,7 @@ export class HomePage{
 
           // console.log(this.logInState);
           this.img = data;
+
           // this.name = data2.name;
         })
       }
@@ -368,12 +372,19 @@ export class HomePage{
       }
     });
 
-
+    setTimeout(() => {
+      this.IRmethods.getname().then((data:any) => {
+        console.log(data.name)
+        this.orgname =data.name
+        console.log(this.orgname)
+      })
+    }, 8000)
 
   }
 
 
   initMap() {
+    console.log(this.orgname)
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         this.IRmethods.getUserLocation().then((data: any) => {
@@ -417,26 +428,25 @@ export class HomePage{
             });
           }, 8000)
 
-       let infowindow = new google.maps.InfoWindow({
-        content:
-          '<div style="width: 400px; transition: 300ms;"><b>' +
-          this.name  +
-          '</b><div style="display: flex; padding-top: 10px;">' +
-          '<img style="height: 20px; width: 20px; object-fit: cober; border-radius: 50px;" src=' +
-          this.img +
-          ">" +
-          '<div style="padding-left: 10px;padding-right: 10px">' +
-          // this.orgArray[index].intro +
-          "</div><br>" +
+          let infowindow = new google.maps.InfoWindow({
+            content:
+              '<div style="width: 400px; transition: 300ms;"><b>' +
+              this.orgname  +
+              '</b><div style="display: flex; padding-top: 10px;">' +
+              '<img style="height: 20px; width: 20px; object-fit: cober; border-radius: 50px;" src=' +
+              this.img +
+              ">" +
+              '<div style="padding-left: 10px;padding-right: 10px">' +
+              // this.orgArray[index].intro +
+              "</div><br>" +
 
-          "</div>"
-      });
-      this.marker .addListener('click', () => {
-        this.map.setZoom(14);
-        this.map.setCenter(this.marker.getPosition());
-        infowindow.open(   this.marker .get(this.map),    this.marker );
-
-      });
+              "</div>"
+          });
+          this.marker.addListener('click', () => {
+            this.map.setZoom(14);
+            this.map.setCenter(this.marker.getPosition());
+            infowindow.open(this.marker.get(this.map), this.marker);
+          });
           resolve();
 
         })
@@ -458,7 +468,7 @@ export class HomePage{
         center: { lat: parseFloat(this.destlat), lng: parseFloat(this.destlong) },
         zoom: 10,
         disableDefaultUI: true,
-        // styles: this.mapStyles,
+        styles: this.mapStyles,
         icon: this.icon
       }
       this.map2 = new google.maps.Map(this.mapRef3.nativeElement, options);
@@ -498,7 +508,7 @@ export class HomePage{
             center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
             zoom: 8,
             disableDefaultUI: true,
-            // styles: this.mapStyles,
+            styles: this.mapStyles,
             icon: this.icon,
 
           }
@@ -542,7 +552,7 @@ export class HomePage{
 
 
   viewDetails(name) {
-    // console.log(this.orgArray.length);
+
 
     for (var i = 0; i < this.orgArray.length; i++) {
       if (this.orgArray[i].prograName == name) {
@@ -573,11 +583,11 @@ export class HomePage{
             zoom: 8,
           });
 
-          // console.log(this.orgArray[index].lat);
+          console.log(this.orgArray[index].lat);
           this.showMultipleMarker.addListener('click', () => {
 
-            // console.log(this.orgArray[index].long);
-            // console.log(index);
+            console.log(this.orgArray[index].long);
+            console.log(index);
             this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
           });
 
@@ -593,7 +603,7 @@ export class HomePage{
     let tracker;
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-   
+
         // console.log(this.orgArray);
         for (let index = 0; index < this.orgArray.length; index++) {
           // console.log(this.orgArray[index].orgName);
@@ -602,6 +612,7 @@ export class HomePage{
           var showMultipleMarker = new google.maps.Marker({
             map: this.map,
             icon: this.icon,
+            styles: this.mapStyles,
             position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
             label: name,
             zoom: 8,
@@ -613,10 +624,10 @@ export class HomePage{
             console.log(index);
             for (var i = 0; i < this.markers2.length; i++) {
               this.markers2[i].setMap(null);
-          }
-          this.slides.slideTo(11)
-          this.createSelectedMarker(this.orgArray[index])
-     
+            }
+            this.slides.slideTo(11)
+            this.createSelectedMarker(this.orgArray[index])
+
             // this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
           });
           resolve();
@@ -625,11 +636,12 @@ export class HomePage{
     })
   }
 
-  createSelectedMarker(obj){
+  createSelectedMarker(obj) {
     var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
     var showMultipleMarker = new google.maps.Marker({
       map: this.map,
       icon: this.icon,
+      styles: this.mapStyles,
       position: { lat: parseFloat(obj.lat), lng: parseFloat(obj.long) },
       label: name,
       zoom: 8,
@@ -639,17 +651,17 @@ export class HomePage{
     showMultipleMarker.addListener('click', () => {
 
     })
-      // this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] })
+    // this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] })
   }
 
-  showAllMarkers(){
+  showAllMarkers() {
     for (var i = 0; i < this.markers2.length; i++) {
       this.markers2[i].setMap(null);
-  }
-   this.showAllMarkersRemoved();
+    }
+    this.showAllMarkersRemoved();
   }
 
-  showAllMarkersRemoved(){
+  showAllMarkersRemoved() {
     for (let index = 0; index < this.orgArray.length; index++) {
       // console.log(this.orgArray[index].orgName);
       let tracker = index;
@@ -669,12 +681,12 @@ export class HomePage{
         console.log(index);
         for (var i = 0; i < this.markers2.length; i++) {
           this.markers2[i].setMap(null);
-      }
-      this.createSelectedMarker(this.orgArray[index])
+        }
+        this.createSelectedMarker(this.orgArray[index])
         // this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
       });
+    }
   }
-}
 
   getDirection() {
 
@@ -692,7 +704,7 @@ export class HomePage{
 
     coordinateArray.push(obj)
     // console.log(coordinateArray)
-// 
+    // 
     const modal = this.modalCtrl.create(GetDirectionModalPage);
     modal.present();
 
@@ -779,7 +791,7 @@ export class HomePage{
       // this.initializeItems();
       // this.setArrayBack(this.tempArray)
       this.items = [];
-      this.searchItem =                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 "";
+      this.searchItem = "";
       this.getItems(event);
       // this.filterItems('');
       this.setBackItems();
@@ -846,7 +858,7 @@ export class HomePage{
         });
         alert.present();
       } else {
-        var ionScrll = document.getElementsByClassName("scroll-content") as HTMLCollectionOf <HTMLElement>;
+        var ionScrll = document.getElementsByClassName("scroll-content") as HTMLCollectionOf<HTMLElement>;
         // var theHeader = document.getElementsByClassName("theHead") as HTMLCollectionOf<HTMLElement>;
         var theMap = document.getElementById("mapView");
         // var theList = document.getElementById("list");
@@ -1050,17 +1062,15 @@ export class HomePage{
       // adding user marker to the map 
       this.marker = new google.maps.Marker({
         map: this.map,
+        styles: this.mapStyles,
         zoom: 10,
         icon: this.locIcon,
         position: this.map.getCenter()
         //animation: google.maps.Animation.DROP,
       });
-
-
       for (let index = 0; index < this.orgArray.length; index++) {
-
         if (this.category == this.orgArray[index].programCategory) {
-          // console.log(this.orgArray[index]);
+
           this.showMultipleMarker = new google.maps.Marker({
             map: this.map,
             icon: this.icon,
@@ -1068,12 +1078,7 @@ export class HomePage{
             label: name,
             zoom: 8,
           });
-
-          // console.log(this.orgArray[index]);
           this.showMultipleMarker.addListener('click', () => {
-
-            // console.log(this.orgArray[index]);
-            // console.log(index);
             this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
           });
 
@@ -1144,87 +1149,168 @@ export class HomePage{
 
 
   styles: [
-    { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
-    { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
-    { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
     {
-      featureType: 'administrative.locality',
-      elementType: 'labels.text.fill',
-      stylers: [{ color: '#d59563' }]
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#f5f5f5"
+        }
+      ]
     },
     {
-      featureType: 'poi',
-      elementType: 'labels.text.fill',
-      stylers: [{ color: '#d59563' }]
+      "elementType": "labels.icon",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
     },
     {
-      featureType: 'poi.park',
-      elementType: 'geometry',
-      stylers: [{ color: '#263c3f' }]
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#616161"
+        }
+      ]
     },
     {
-      featureType: 'poi.park',
-      elementType: 'labels.text.fill',
-      stylers: [{ color: '#6b9a76' }]
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#f5f5f5"
+        }
+      ]
     },
     {
-      featureType: 'road',
-      elementType: 'geometry',
-      stylers: [{ color: '#38414e' }]
+      "featureType": "administrative.land_parcel",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#bdbdbd"
+        }
+      ]
     },
     {
-      featureType: 'road',
-      elementType: 'geometry.stroke',
-      stylers: [{ color: '#212a37' }]
+      "featureType": "poi",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#eeeeee"
+        }
+      ]
     },
     {
-      featureType: 'road',
-      elementType: 'labels.text.fill',
-      stylers: [{ color: '#9ca5b3' }]
+      "featureType": "poi",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#757575"
+        }
+      ]
     },
     {
-      featureType: 'road.highway',
-      elementType: 'geometry',
-      stylers: [{ color: '#746855' }]
+      "featureType": "poi.park",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#e5e5e5"
+        }
+      ]
     },
     {
-      featureType: 'road.highway',
-      elementType: 'geometry.stroke',
-      stylers: [{ color: '#1f2835' }]
+      "featureType": "poi.park",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#9e9e9e"
+        }
+      ]
     },
     {
-      featureType: 'road.highway',
-      elementType: 'labels.text.fill',
-      stylers: [{ color: '#f3d19c' }]
+      "featureType": "road",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#ffffff"
+        }
+      ]
     },
     {
-      featureType: 'transit',
-      elementType: 'geometry',
-      stylers: [{ color: '#2f3948' }]
+      "featureType": "road.arterial",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#757575"
+        }
+      ]
     },
     {
-      featureType: 'transit.station',
-      elementType: 'labels.text.fill',
-      stylers: [{ color: '#d59563' }]
+      "featureType": "road.highway",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#dadada"
+        }
+      ]
     },
     {
-      featureType: 'water',
-      elementType: 'geometry',
-      stylers: [{ color: '#17263c' }]
+      "featureType": "road.highway",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#616161"
+        }
+      ]
     },
     {
-      featureType: 'water',
-      elementType: 'labels.text.fill',
-      stylers: [{ color: '#515c6d' }]
+      "featureType": "road.local",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#9e9e9e"
+        }
+      ]
     },
     {
-      featureType: 'water',
-      elementType: 'labels.text.stroke',
-      stylers: [{ color: '#17263c' }]
+      "featureType": "transit.line",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#e5e5e5"
+        }
+      ]
+    },
+    {
+      "featureType": "transit.station",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#eeeeee"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#c9c9c9"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#9e9e9e"
+        }
+      ]
     }
   ]
 
-  mapStyles =[
+
+  mapStyles = [
     {
       "elementType": "geometry",
       "stylers": [
@@ -1401,26 +1487,26 @@ export class HomePage{
       }
     }
     this.destinationMap();
-   
+
   }
   backToMapView() {
     var closeBtn = document.getElementById("close-view-button").style.display = "none";
     var flipCard = document.getElementById("flip-card-inner").style.transform = "rotateY(180deg)";
   }
- 
+
   navigate(orgObject) {
     if (this.directionsDisplay != null) {
       this.directionsDisplay.setMap(null);
 
       // console.log("directionDisplay has something");
-      this.getDistance(orgObject.lat , orgObject.long,  orgObject)
+      this.getDistance(orgObject.lat, orgObject.long, orgObject)
 
     } else {
       // console.log("directionDisplay has nothing");
     }
     setTimeout(() => {
       let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
-      let destination = new google.maps.LatLng(orgObject.lat , orgObject.long);
+      let destination = new google.maps.LatLng(orgObject.lat, orgObject.long);
       this.directionsDisplay.setMap(this.map);
       // console.log(this.directionsDisplay);
 
@@ -1428,13 +1514,13 @@ export class HomePage{
       // this.destinationMarker()
     }, 1000);
   }
-Destaddress;
-  touchstart(orgObjetc){
+  Destaddress;
+  touchstart(orgObjetc) {
     this.navigate(orgObjetc)
-    this.Destaddress =  orgObjetc.address;
+    this.Destaddress = orgObjetc.address;
   }
 
-  getDistance(lat,long, obj) {
+  getDistance(lat, long, obj) {
     let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
     let destination = new google.maps.LatLng(lat, long);
     this.service.getDistanceMatrix(
@@ -1460,16 +1546,15 @@ Destaddress;
             }
           }
 
-          this.destinationMarker(lat,long, obj);
+          this.destinationMarker(lat, long, obj);
         }
       });
 
   }
   infowindow;
- 
+
   destinationMarker(lat, long, obj) {
-    if (this.infowindow)
-    {
+    if (this.infowindow) {
       this.infowindow.close();
     }
     let destMaker = new google.maps.Marker({
@@ -1482,62 +1567,57 @@ Destaddress;
     this.markers2.push(destMaker)
     var stars = null;
     var key = obj.rating
-         var start = 0;
-         var end = 0;
-    if (key == 0){
+    var start = 0;
+    var end = 0;
+    if (key == 0) {
       stars = '<span style="font-size:15px; color: #dcc050;margin-left: 8px;">&#9734;</span>'
       start = 0;
       end = 4
     }
-    for (var x = 1; x <= key; x++){
-      if (stars ==  null)
-      stars =  '<span style="font-size:15px; color: #dcc050;margin-left: 8px;">&#9733;</span>'
+    for (var x = 1; x <= key; x++) {
+      if (stars == null)
+        stars = '<span style="font-size:15px; color: #dcc050;margin-left: 8px;">&#9733;</span>'
       else
-      stars = stars +  '<span style="font-size:15px; color: #dcc050;margin-left: 8px;">&#9733;</span>'
+        stars = stars + '<span style="font-size:15px; color: #dcc050;margin-left: 8px;">&#9733;</span>'
       start = x;
       end = 5
     }
     start++;
-    for (var i = start; i <= end; i++){
-      if (stars ==  null)
-      stars =  '<span style="font-size:15px; color: #dcc050;margin-left: 8px;">&#9734;</span>'
+    for (var i = start; i <= end; i++) {
+      if (stars == null)
+        stars = '<span style="font-size:15px; color: #dcc050;margin-left: 8px;">&#9734;</span>'
       else
-      stars = stars +  '<span style="font-size:15px; color: #dcc050;margin-left: 8px;">&#9734;</span>'
+        stars = stars + '<span style="font-size:15px; color: #dcc050;margin-left: 8px;">&#9734;</span>'
     }
-   // }
+    // }
     console.log(obj);
     this.infowindow = new google.maps.InfoWindow({
       content:
-          // '<div style="width: 100%; transition: 300ms;"><b>' +
-          // '<p style="font-size:10px;">' +  obj.programCategory  + '</p>' +
-          // '<br>' + '<p style="font-size:10px;">Applied ' +  obj.applied  + '</p>' +
-          // '</b><div style="display: flex; padding-top: 10px;">' + '<p>' + stars + '</p>' +
-          // '<img style="height: 66px;  width: 80px; display: block;  border-radius: 8px;  object-fit: cover;" src=' +
-          // obj.img + ">" + "</div>"
-
-          "<div id='tests'>" +
-          "<div id='mapIMG'>" +
-          "<img id='theImg-inMap' src='" + obj.img + "'></div>" +
-          "<div id='textAreas'><p id='catMap'><b>"+ obj.programCategory +
-          "<br>"+"</b></p></div></div>" +
-          "<br><div id='moreInforMap'><p>" +
-          obj.city + "</p>" + "<p>" + obj.email + "</p>" +
-          "<p><b>Opening date:</b> " + obj.openApplicationDate + "</p>" +
-          "<p><b>closing date:</b> " + obj.closeApplicationDate + "</p>" +
-          "</div>"
+        "<div id='tests'>" +
+        "<div id='mapIMG'>" +
+        "<img id='theImg-inMap' src='" + obj.img + "'></div>" +
+        "<div id='textAreas'><p id='catMap'><b>" + obj.programCategory +
+        "<br>" + "</b></p></div></div>" +
+        "<br><div id='moreInforMap'><p>" +
+        obj.city + "</p>" + "<p>" + obj.email + "</p>" +
+        "<p><b>Opening date:</b> " + obj.openApplicationDate + "</p>" +
+        "<p><b>closing date:</b> " + obj.closeApplicationDate + "</p>" +
+        "</div>"
     });
     this.infowindow.open(this.map, destMaker);
+ 
+    
   }
- 
- 
+
+
   slideChanged() {
     console.log('category');
     for (var i = 0; i < this.markers2.length; i++) {
       this.markers2[i].setMap(null);
-  }
-  let currentIndex = this.slides.getActiveIndex();
-  // console.log(this.orgArray[currentIndex]);
-  this.touchstart(this.orgArray[currentIndex])
+    }
+    let currentIndex = this.slides.getActiveIndex();
+    // console.log(this.orgArray[currentIndex]);
+    this.touchstart(this.orgArray[currentIndex])
   }
 
 

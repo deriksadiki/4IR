@@ -295,6 +295,20 @@ updateApplied(key, num){
       })
     })
   }
+
+
+  getname(){
+    return new Promise((accpt, rej) => {
+    let user = firebase.auth().currentUser;
+    firebase.database().ref("Users/" + "/" + "App_Users/" + user.uid).on('value', (data) => {
+      var profileName = data.val();
+      console.log(profileName)
+      accpt(profileName)
+    })
+
+  })
+  
+  }
   galleryArray = new Array()
   getGallery(key) {
     return new Promise((accpt, rej) => {

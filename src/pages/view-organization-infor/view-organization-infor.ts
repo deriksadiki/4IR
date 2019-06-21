@@ -115,7 +115,7 @@ export class ViewOrganizationInforPage implements OnInit {
     this.destlat = this.orgArray[0].lat
     this.destlong = this.orgArray[0].long
 
-    this.destinationMap()
+    // this.destinationMap()
     //this.initMap()
     if (this.loginState) {
       let userID = firebase.auth().currentUser;
@@ -197,13 +197,10 @@ export class ViewOrganizationInforPage implements OnInit {
     this.irhubProvider.updateApplied(this.orgArray[0].id, this.orgArray[0].applied);
   }
   ngOnInit() {
-    // setTimeout(()=>{
-    //   this.initMap();
-    // }, 4000)
 
+  
     console.log("testmap");
 
-    // this.retrieveComments();
 
 
   }

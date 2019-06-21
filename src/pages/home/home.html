@@ -1,46 +1,3 @@
-<!-- <ion-header class="ionHeader">
-  <div class="theHead" padding>
-    <ion-title class="theTitle">
-      <b>4IR HUB</b>
-    </ion-title>
-
-    <div class="top">
-      <button ion-button icon-only clear class="more" (click)="showButton(textField)">
-        <ion-icon name="{{ searchDismissState }}"></ion-icon>
-      </button>
-      <ion-input maxLength="44" class="searchBar" type="text" placeholder="Search by city (e.g johannesburg)" [(ngModel)]="searchTerm" (ionInput)="getItems($event)"></ion-input> -->
-
-      <!-- <ion-searchbar class="searchBar" [(ngModel)]="searchItem" placeholder="Search by name" (ionInput)="getItems($event)">
-      </ion-searchbar>
-
-
-      <div class="profile">
-        <img [src]="img" class="displayPic" alt="" (click)="Userprofile()" /> -->
-        <!-- <ion-icon ios="ios-contact" class="displayPic" md="md-contact-outline" (click)="profile()"></ion-icon> -->
-      <!-- </div>
-      <ion-card class="options">
-        <div class="intro">
-          <p id="statement">
-            <ion-icon name="pin" id="icon"></ion-icon>
-            <span [innerHTML]=userLocation.substr(0,34)></span>
-          </p>
-          <i class="finePrint">
-            4IR Hub uses your location to provide you with places near you.</i>
-        </div>
-        <div class="myFlexBox">
-          <div class="theLabel">
-          </div>
-          <button class="selects" ion-button color="{{ custom1 }}" (click)="all()">
-            All
-          </button>
-          <button class="selects" ion-button color="{{ custom2 }}" (click)="near()">
-            Near Me
-          </button>
-        </div>
-      </ion-card>
-    </div>
-  </div>
-</ion-header>  -->
 
 <ion-content id="scrllContent" (ionScroll)="scroll($event)">
   <ion-fab id="toggleFab" bottom right>
@@ -54,8 +11,6 @@
       <button ion-button icon-only clear class="more" (click)="showButton(textField)">
         <ion-icon name="{{ searchDismissState }}"></ion-icon>
       </button> 
-      <!-- <ion-input maxLength="44" class="searchBar" type="text" placeholder="Search by city (e.g johannesburg)" [(ngModel)]="searchTerm"
-        (ionInput)="getItems($event)"></ion-input> -->
       <ion-searchbar class="searchBar" [(ngModel)]="searchItem" placeholder="Search by name" (ionInput)="getItems($event)">
       </ion-searchbar>
     </div>
@@ -86,8 +41,14 @@
   </div>
   
      <div id="bottom-part">
-    <div id="list-encamp">
        
+    <div id="list-encamp">
+      <div class="positionTitle">
+          <p class="proFont">
+              Programme List
+             </p>
+      </div>
+  <!-- <div class="line"></div> -->
     <ion-list id="searchlist">
       <ion-item id="searched-items" *ngFor="let item of items" (click)="goToViewPage(item)">
         {{item}}
@@ -287,6 +248,8 @@
   </div>
 
 
+  <!-- MAP Page -->
+
   <div class="everythingSmall">
     <div id="mapView">
       <div class="btnsContainer">
@@ -322,16 +285,16 @@
       </div>
       <ion-slides #Slides class="slides" (ionSlideDidChange)="slideChanged()" slidesPerView="1.125" spaceBetween="5" loop="false">
       
-          <ion-slide class="card-background-page" *ngFor="let i of orgArray">
+          <ion-slide class="card-background-page" *ngFor="let i of orgArray" >
             <div class="row" id="rowSlide" >
-              <div class="column1" id="toGrow">
+              <div class="column1" id="toGrow" (click)="goToViewPage(i.orgName)">
                 <div class="row">
                   <div class="column-left-2">
                     <img class="org-img-2" src="{{i.img}}" />
                   </div>
                   <div class="column-right-2">
                     <p class="org-name-2">{{ i.programCategory }}</p>
-                    <p class="fixtext">{{i.applied}} Applied</p>
+                    <p class="fixtext-1">{{i.applied}} Applied</p>
                     <div *ngIf="i.rating == 0; then loggedIn110">
                     </div>
                     <div *ngIf="i.rating == 1; then loggedIn1">
@@ -347,38 +310,38 @@
 
                     <ng-template #loggedIn110>
                     <p>
-                      <ion-icon class="" name="star-outline"></ion-icon>
-                      <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                      <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                      <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                      <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                      <ion-icon class="TheStar-1" name="star-outline"></ion-icon>
+                      <ion-icon class="TheStar-1" name="star-outline"></ion-icon>
+                      <ion-icon class="TheStar-1" name="star-outline"></ion-icon>
+                      <ion-icon class="TheStar-1" name="star-outline"></ion-icon>
+                      <ion-icon class="TheStar-1" name="star-outline"></ion-icon>
                     </p>
                     </ng-template>
                     <ng-template #loggedIn1>
                       <p>
-                        <ion-icon class="TheStar" name="star"></ion-icon>
-                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                        <ion-icon class="TheStar-1" name="star"></ion-icon>
+                        <ion-icon class="TheStar-1" name="star-outline"></ion-icon>
+                        <ion-icon class="TheStar-1" name="star-outline"></ion-icon>
+                        <ion-icon class="TheStar-1" name="star-outline"></ion-icon>
+                        <ion-icon class="TheStar-1" name="star-outline"></ion-icon>
                       </p>
                     </ng-template>
                     <ng-template #loggedIn2>
                       <p>
-                        <ion-icon class="TheStar" name="star"></ion-icon>
-                        <ion-icon class="TheStar" name="star"></ion-icon>
-                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                        <ion-icon class="TheStar-1" name="star"></ion-icon>
+                        <ion-icon class="TheStar-1" name="star"></ion-icon>
+                        <ion-icon class="TheStar-1" name="star-outline"></ion-icon>
+                        <ion-icon class="TheStar-1" name="star-outline"></ion-icon>
+                        <ion-icon class="TheStar-1" name="star-outline"></ion-icon>
                       </p>
                     </ng-template>
                     <ng-template #loggedIn3>
                       <p>
-                        <ion-icon class="TheStar" name="star"></ion-icon>
-                        <ion-icon class="TheStar" name="star"></ion-icon>
-                        <ion-icon class="TheStar" name="star"></ion-icon>
-                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
-                        <ion-icon class="TheStar" name="star-outline"></ion-icon>
+                        <ion-icon class="TheStar-1" name="star"></ion-icon>
+                        <ion-icon class="TheStar-1" name="star"></ion-icon>
+                        <ion-icon class="TheStar-1" name="star"></ion-icon>
+                        <ion-icon class="TheStar-1" name="star-outline"></ion-icon>
+                        <ion-icon class="TheStar-1" name="star-outline"></ion-icon>
                       </p>
                     </ng-template>
                     <ng-template #loggedIn4>
