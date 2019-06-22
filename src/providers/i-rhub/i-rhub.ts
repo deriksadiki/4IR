@@ -701,11 +701,6 @@ updateApplied(key, num){
   //show direction on the map 
 
   calculateAndDisplayRoute(location, destination, directionsDisplay, directionsService) {
-
-    // console.log(location);
-
-    // console.log(destination);
-
     directionsService.route({
       origin: location,
       destination: destination,
@@ -713,15 +708,9 @@ updateApplied(key, num){
     }, function (response, status) {
       if (status === 'OK') {
         directionsDisplay.setDirections(response);
-        // console.log("routing OK");
-// 
         directionsDisplay.setOptions({ suppressMarkers: true });
 
       } else {
-        // console.log(status);
-        // console.log("not working");
-
-
       }
     });
   }
