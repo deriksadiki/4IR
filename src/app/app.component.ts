@@ -12,6 +12,7 @@ import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { StartPage } from '../pages/start/start';
 import { timer } from 'rxjs/observable/timer';
 import { OnboundingPage } from '../pages/onbounding/onbounding';
+import { SqlProvider } from '../providers/sql/sql';
 
 @Component({
   templateUrl: 'app.html'
@@ -21,7 +22,7 @@ export class MyApp {
 
   showSplash = true; 
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public IRhubProvider:IRhubProvider) {
+  constructor(public sql: SqlProvider,  platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public IRhubProvider:IRhubProvider) {
     platform.ready().then(() => {
 
       
@@ -30,7 +31,16 @@ export class MyApp {
           this.rootPage = HomePage
         }
         else {
-          this.rootPage = OnboundingPage
+          this.sql.GetAllFavourite().then((data:any) =>{
+              if (data != "true"){
+                this.rootPage = OnboundingPage
+                this.sql.storefavourite("true")
+              }
+              else{
+                this.rootPage = StartPage
+              }
+          })
+        
         }
       })
 

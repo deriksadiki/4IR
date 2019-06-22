@@ -145,12 +145,6 @@ export class IRhubProvider {
   getAllOrganizations() {
     return new Promise((resolve, reject) => {
       this.ngzone.run(() => {
-        // let loading = this.loadingCtrl.create({
-        //   spinner: 'bubbles',
-        //   duration: 22200000,
-        //   content: 'Please wait...',
-        // });
-        // loading.present();
         var user = firebase.auth().currentUser;
         firebase.database().ref("4IR_Hubs").on("value", (data: any) => {
           if (data.val() != null || data.val() != undefined) {
@@ -163,18 +157,13 @@ export class IRhubProvider {
             var wifi = 0;
             let details = data.val();
             let keys = Object.keys(details);
-            // console.log(details);
-            // console.log(keys);
-
             for (var x = 0; x < keys.length; x++) {
               pay = 0;
               wifi = 0;
               totRating = 0;
               counter = 0;
-              // console.log(keys[x]);
               this.ratin = 0;
               this.ratings(keys[x])
-           
                 let orgObject = {
                   applied : details[keys[x]].applied ,
                   orgName: details[keys[x]].prograName,
@@ -207,10 +196,9 @@ export class IRhubProvider {
                   rating: this.getRate()
                 }
                 this.storeOrgNames(details[keys[x]].prograName, details[keys[x]].programCategory);
-                this.orgArray.push(orgObject)
-                // console.log(this.orgArray)
+                this.orgArray.push(orgObject)      
             }
-
+          
             resolve(this.orgArray)
           }
         });
@@ -709,8 +697,8 @@ updateApplied(key, num){
     directionsService.route({
       origin: location,
       destination: destination,
-      travelMode: 'DRIVING'
-    }, function (response, status) {
+      travelMode: 'DRIVING',
+        }, function (response, status) {
       if (status === 'OK') {
         directionsDisplay.setDirections(response);
         // console.log("routing OK");
@@ -720,8 +708,6 @@ updateApplied(key, num){
       } else {
         // console.log(status);
         // console.log("not working");
-
-
       }
     });
   }

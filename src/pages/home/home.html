@@ -283,7 +283,7 @@
         <!-- <p>{{Destaddress}}</p> -->
         <p><b>{{showtime}} - {{showDistance}}</b></p>
       </div>
-      <ion-slides #Slides class="slides" (ionSlideDidChange)="slideChanged()" slidesPerView="1.125" spaceBetween="5" loop="false">
+      <ion-slides #Slides class="slides" (ionSlideWillChange)="slideChanged()" slidesPerView="1.125" spaceBetween="5" loop="false">
       
           <ion-slide class="card-background-page" *ngFor="let i of orgArray" >
             <div class="row" id="rowSlide" >

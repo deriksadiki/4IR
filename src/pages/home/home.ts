@@ -85,24 +85,6 @@ export class HomePage {
 
   CurrentName
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public IRmethods: IRhubProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
-
-
-
-    setTimeout(() => {
-      this.IRmethods.getAllOrganizations().then((data: any) => {
-        // console.log(data);
-        this.orgArray = data
-        
-
-        // console.log(this.orgArray)
-      })
-
-    }, 8000)
-
-
-
-
-
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
         this.logInState = true;
@@ -124,18 +106,9 @@ export class HomePage {
 
   ngOnInit() {
 
-    setTimeout(() => {
-      this.IRmethods.getAllOrganizations().then((data: any) => {
-        // console.log(data)
-      })
-
-    }, 8000)
-
-
-
-
-    this.initMapBig();
+  
   }
+
   ionViewWillEnter() {
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsService;
@@ -146,9 +119,6 @@ export class HomePage {
     this.IRmethods.getUserLocation().then((data: any) => {
       if (data != null) {
         this.currentLocState = true;
-        // console.log(data);
-        // console.log(data.coords.latitude);
-        // console.log(data.coords.longitude);
         this.currentUserlat = data.coords.latitude;
         this.currentUserlng = data.coords.longitude;
       }
@@ -248,13 +218,6 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    let loading = this.loadingCtrl.create({
-      spinner: 'bubbles',
-      duration: 22400,
-      content: 'please wait...',
-    });
-    loading.present();
-    setTimeout(() => {
       document.getElementById("icon").style.color = "#f4f4f4";
       this.IRmethods.getCurrentLocations().then((data: any) => {
         // console.log(data);
@@ -289,83 +252,46 @@ export class HomePage {
 
         this.map = new google.maps.Map(this.mapRef.nativeElement, options);
       })
-
-    }, 5000);
-
-
-
-    setTimeout(() => {
+       
       this.IRmethods.getCurrentLocation(this.lat, this.lng).then((radius: any) => {
-
-        // console.log(this.lat);
-        // console.log(this.lng);
-        // console.log(radius);
-        this.IRmethods.getAllOrganizations().then((data: any) => {
-          // console.log(data);
-          // console.log(radius);
-          this.IRmethods.getNearByOrganizations(radius, data).then((nearbyOrgs: any) => {
-            // console.log(nearbyOrgs);
-            // this.nearby = nearbyOrgs;
-            // loading.dismiss();
-            // console.log(nearbyOrgs[0]);
-         
-            // console.log(this.nearby);
-          })
+          this.IRmethods.getNearByOrganizations(radius,this.orgArray).then((nearbyOrgs: any) => {
         })
       })
 
 
-    }, 3500);
 
 
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsRenderer;
     this.service = new google.maps.DistanceMatrixService();
-    this.geocoder = new google.maps.Geocoder;
-
-    this.initMap().then(() => {
-      // console.log("showMap");
-
-    });
-    this.initMapBig().then(() => {
-      // console.log("showMap");
-
-    });
-    // loading.dismiss();
+    this.geocoder = new google.maps.Geocoder;  
     // this.checkVerification()
   }
 
   ionViewDidEnter() {
-    // this.all();
-
-
-
+    let loading = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'please wait...',
+    });
+    loading.present();
     this.IRmethods.getAllOrganizations().then((data: any) => {
       this.orgArray = data;
-
-
-
+      this.initMapBig();
+      this.initMap();
+      console.log(data);
       this.setBackItems();
-      // console.log(this.orgArray);
       var names = this.IRmethods.getOrgNames()
-      // console.log(names);
       this.storeOrgNames(names)
-      // this.loading.dismiss()
+      setTimeout(() => {
+        loading.dismiss();
+      }, 3000);
     })
-
-
-
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
         this.logInState = true;
         this.IRmethods.getProfile().then((data: any) => {
-          // console.log(data);
-
-          // console.log(this.logInState);
           this.img = data;
-
-          // this.name = data2.name;
         })
       }
       else if (data == false) {
@@ -375,11 +301,11 @@ export class HomePage {
 
     setTimeout(() => {
       this.IRmethods.getname().then((data:any) => {
-        console.log(data.name)
-        this.orgname =data.name
-        console.log(this.orgname)
+        console.log(data)
+        // this.orgname =data.name
+        // console.log(this.orgname)
       })
-    }, 8000)
+    }, 4000)
 
   }
 
@@ -387,7 +313,6 @@ export class HomePage {
   initMap() {
     console.log(this.orgname)
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
         this.IRmethods.getUserLocation().then((data: any) => {
           if (data == undefined || data == null) {
             this.lat = -25.7479;
@@ -406,29 +331,22 @@ export class HomePage {
           }
           const options = {
             center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
-            zoom: 9,
+            zoom: 9.5,
             disableDefaultUI: true,
             styles: this.mapStyles,
             icon: this.icon,
+        
 
           }
           this.map = new google.maps.Map(this.mapRef.nativeElement, options);
           // adding user marker to the map 
           this.marker = new google.maps.Marker({
             map: this.map,
-            zoom: 10,
+            zoom: 9.5,
             icon: this.locIcon,
             position: this.map.getCenter()
             //animation: google.maps.Animation.DROP,
           });
-          setTimeout(() => {
-            this.markers().then(() => {
-              // console.log("show Marker");
-              // this.loading.dismiss()
-
-            });
-          }, 8000)
-
           let infowindow = new google.maps.InfoWindow({
             content:
               '<div style="width: 400px; transition: 300ms;"><b>' +
@@ -448,11 +366,12 @@ export class HomePage {
             this.map.setCenter(this.marker.getPosition());
             infowindow.open(this.marker.get(this.map), this.marker);
           });
+          this.markers().then(() => {
+          });
+
           resolve();
 
         })
-
-      }, 5000);
     })
 
   }
@@ -460,14 +379,9 @@ export class HomePage {
   destinationMap() {
     this.destlat = this.tem[0].lat
     this.destlong = this.tem[0].long
-    // console.log(this.destlat, this.destlong)
-    // console.log(this.tem)
-
-    setTimeout(() => {
-      // console.log(this.tem)
       const options = {
         center: { lat: parseFloat(this.destlat), lng: parseFloat(this.destlong) },
-        zoom: 10,
+        zoom: 11,
         disableDefaultUI: true,
         styles: this.mapStyles,
         icon: this.icon
@@ -475,42 +389,37 @@ export class HomePage {
       this.map2 = new google.maps.Map(this.mapRef3.nativeElement, options);
       this.marker = new google.maps.Marker({
         map: this.map2,
-        zoom: 6,
+        zoom: 11,
         icon: this.icon,
         position: this.map2.getCenter()
       });
-    }, 6000);
-
-    // console.log("show-map");
   }
+
   initMapBig() {
 
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
         this.IRmethods.getUserLocation().then((data: any) => {
           if (data == undefined || data == null) {
             this.lat = -25.7479;
             this.lng = 28.2293
           }
           else {
-            // console.log(data);
-            // console.log(data.coords.latitude);
-            // console.log(data.coords.longitude);
+    
 
             this.lat = data.coords.latitude;
             this.lng = data.coords.longitude
-            // console.log(this.lat);
-            // console.log(this.lng);
+
 
           }
 
 
           const options = {
             center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
-            zoom: 8,
+            zoom: 11,
             disableDefaultUI: true,
             styles: this.mapStyles,
             icon: this.icon,
+          
 
           }
           this.mapBig = new google.maps.Map(this.mapRef2.nativeElement, options);
@@ -518,22 +427,13 @@ export class HomePage {
           // adding user marker to the map 
           this.marker = new google.maps.Marker({
             map: this.mapBig,
-            zoom: 10,
+            zoom: 11,
             icon: this.locIcon,
             title: 'Your Location',
             position: this.mapBig.getCenter()
             //animation: google.maps.Animation.DROP,
           });
-
-
-          setTimeout(() => {
-            this.markersBig().then(() => {
-              // console.log("show Marker");
-              // this.loading.dismiss()
-            });
-          }, 8000)
-
-
+     
           var infowindow = new google.maps.InfoWindow();
           this.marker.addListener('click', function () {
             // console.log("clicked Marker");
@@ -541,12 +441,11 @@ export class HomePage {
 
           });
           resolve();
-
+          this.markersBig().then(() => {
+            // console.log("show Marker");
+            // this.loading.dismiss()
+          });
         })
-
-      }, 5000);
-
-
     })
 
   }
@@ -569,32 +468,30 @@ export class HomePage {
   markers() {
     let tracker;
     return new Promise((resolve, reject) => {
-
-      setTimeout(() => {
         // console.log(this.orgArray);
+        console.log('markers 111111');
+        
         for (let index = 0; index < this.orgArray.length; index++) {
-          // console.log(this.orgArray[index].orgName);
+          console.log(this.orgArray[index].orgName);
           let tracker = index;
           var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
-          this.showMultipleMarker = new google.maps.Marker({
-            map: this.mapBig,
+          var showMultipleMarker = new google.maps.Marker({
+            map: this.map,
             icon: this.icon,
             position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
             label: name,
             zoom: 8,
           });
-
-          console.log(this.orgArray[index].lat);
-          this.showMultipleMarker.addListener('click', () => {
-
-            console.log(this.orgArray[index].long);
+          this.markers2.push(showMultipleMarker);
+          showMultipleMarker.addListener('click', () => {
+            console.log(this.orgArray[index]);
             console.log(index);
-            this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
+            for (var i = 0; i < this.markers2.length; i++) {
+              this.markers2[i].setMap(null);
+            }
           });
-
           resolve();
         }
-      }, 5000);
     })
 
   }
@@ -603,37 +500,29 @@ export class HomePage {
   markersBig() {
     let tracker;
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-
         // console.log(this.orgArray);
+        console.log('markers 22222');
         for (let index = 0; index < this.orgArray.length; index++) {
-          // console.log(this.orgArray[index].orgName);
+          console.log(this.orgArray[index].orgName);
           let tracker = index;
           var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/'
           var showMultipleMarker = new google.maps.Marker({
-            map: this.map,
+            map: this.mapBig,
             icon: this.icon,
             styles: this.mapStyles,
             position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
             label: name,
             zoom: 8,
           });
-          this.markers2.push(showMultipleMarker);
+     
           // console.log(this.orgArray[index].lat);
           showMultipleMarker.addListener('click', () => {
-            console.log(this.orgArray[index]);
-            console.log(index);
-            for (var i = 0; i < this.markers2.length; i++) {
-              this.markers2[i].setMap(null);
-            }
-            this.slides.slideTo(11)
+            
             this.createSelectedMarker(this.orgArray[index])
-
-            // this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
+            this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
           });
           resolve();
         }
-      }, 2000);
     })
   }
 
@@ -663,6 +552,10 @@ export class HomePage {
   }
 
   showAllMarkersRemoved() {
+    if (this.directionsDisplay != null) {
+      this.showtime = ""
+      this.showDistance = "";
+      this.directionsDisplay.setMap(null);}
     for (let index = 0; index < this.orgArray.length; index++) {
       // console.log(this.orgArray[index].orgName);
       let tracker = index;
@@ -938,7 +831,6 @@ export class HomePage {
 
   setBackItems() {
     this.tempArray = this.orgArray
-    this.tempArray.length =0;
   }
 
   getItems(ev) {
@@ -1031,14 +923,10 @@ export class HomePage {
 
 
   all() {
-    setTimeout(() => {
       this.showNearbyList = false;
       this.showAllOrganisation = true;
       this.custom1 = "primary";
       this.custom2 = "inactive";
-
-    }, 3000)
-
   }
   convertinCoordinate() {
     // console.log(this.lat);
@@ -1507,15 +1395,20 @@ export class HomePage {
     } else {
       // console.log("directionDisplay has nothing");
     }
-    setTimeout(() => {
+
       let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
       let destination = new google.maps.LatLng(orgObject.lat, orgObject.long);
-      this.directionsDisplay.setMap(this.map);
+      var bounds = new google.maps.LatLngBounds();
+      this.directionsDisplay.setMap(this.map);;
+      this.map.fitBounds(bounds);
+      // this.map.getCenter();
+      // this.map.setZoom(18)
+  
       // console.log(this.directionsDisplay);
 
       this.IRmethods.calculateAndDisplayRoute(userCurrentLocation, destination, this.directionsDisplay, this.directionsService);
+      // this.mapBig.setZoom(70);
       // this.destinationMarker()
-    }, 1000);
   }
   Destaddress;
   touchstart(orgObjetc) {
@@ -1543,7 +1436,6 @@ export class HomePage {
 
               this.showtime = element.duration.text;
               this.showDistance = element.distance.text;
-
               // console.log(this.showtime);
               // console.log(this.showDistance);
             }
@@ -1565,8 +1457,9 @@ export class HomePage {
       icon: this.icon,
       position: { lat: parseFloat(lat), lng: parseFloat(long) },
       label: name,
-      zoom: 8,
     });
+    this.mapBig.setCenter();
+    this.mapBig.setZoom(12)
     this.markers2.push(destMaker)
     var stars = null;
     var key = obj.rating
@@ -1592,6 +1485,7 @@ export class HomePage {
       else
         stars = stars + '<span style="font-size:15px; color: #dcc050;margin-left: 8px;">&#9734;</span>'
     }
+
     // }
     console.log(obj);
     this.infowindow = new google.maps.InfoWindow({
@@ -1615,10 +1509,11 @@ export class HomePage {
 
   slideChanged() {
     console.log('category');
+    let currentIndex = null
     for (var i = 0; i < this.markers2.length; i++) {
       this.markers2[i].setMap(null);
     }
-    let currentIndex = this.slides.getActiveIndex();
+     currentIndex = this.slides.getActiveIndex();
     // console.log(this.orgArray[currentIndex]);
     this.touchstart(this.orgArray[currentIndex])
   }

@@ -21,6 +21,8 @@ import { StartPage } from '../pages/start/start';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { GetDirectionModalPage } from '../pages/get-direction-modal/get-direction-modal';
 import { OnboundingPage } from '../pages/onbounding/onbounding';
+import { SqlProvider } from '../providers/sql/sql';
+import { SQLite } from '@ionic-native/sqlite';
 
 
 
@@ -65,7 +67,9 @@ import { OnboundingPage } from '../pages/onbounding/onbounding';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     IRhubProvider,Geolocation ,
     EmailComposer,
-    CallNumber , LaunchNavigator
+    CallNumber , LaunchNavigator,
+    SqlProvider,
+    SQLite
   ]
 })
 export class AppModule {}
