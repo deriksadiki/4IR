@@ -689,11 +689,6 @@ updateApplied(key, num){
   //show direction on the map 
 
   calculateAndDisplayRoute(location, destination, directionsDisplay, directionsService) {
-
-    // console.log(location);
-
-    // console.log(destination);
-
     directionsService.route({
       origin: location,
       destination: destination,
@@ -701,13 +696,14 @@ updateApplied(key, num){
         }, function (response, status) {
       if (status === 'OK') {
         directionsDisplay.setDirections(response);
-        // console.log("routing OK");
-// 
         directionsDisplay.setOptions({ suppressMarkers: true });
 
       } else {
+<<<<<<< HEAD
         // console.log(status);
         // console.log("not working");
+=======
+>>>>>>> 2fc67748cac4dd5192cd2f1fbe3e7ccb98e73ef1
       }
     });
   }
