@@ -240,6 +240,8 @@ page-home {
    text-align: center;
    font-weight:bold;
    padding:0px;
+   font-size: 150%;
+   font-family: 'Quicksand', sans-serif;
 
   }
   .positionTitle{
@@ -365,11 +367,11 @@ page-home {
     padding-left: 10px;
     position: absolute;
     top: 50px;
-    width: 30%;
+    width: 0;
     margin-right: 20px;
     left: -40%;
     height: 40px;
-    transform: rotatey(40deg);
+    transform: rotatey(0deg);
 
   }
   .profile {

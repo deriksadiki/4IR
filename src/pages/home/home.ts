@@ -92,6 +92,7 @@ export class HomePage {
       this.IRmethods.getAllOrganizations().then((data: any) => {
         // console.log(data);
         this.orgArray = data
+        
 
         // console.log(this.orgArray)
       })
@@ -837,7 +838,7 @@ export class HomePage {
       if (data == false) {
         let alert = this.alertCtrl.create({
           cssClass: "myAlert",
-          subTitle: 'You have to sign in before you can view your profile, would you like to signin now?',
+          subTitle: 'You have to sign in before you can view the map, would you like to signin now?',
           // cssClass: 'myAlert',
           buttons: [
             {
@@ -937,6 +938,7 @@ export class HomePage {
 
   setBackItems() {
     this.tempArray = this.orgArray
+    this.tempArray.length =0;
   }
 
   getItems(ev) {
@@ -1053,9 +1055,9 @@ export class HomePage {
 
       const options = {
         center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
-        zoom: 8,
+        zoom: 15,
         disableDefaultUI: true,
-        // styles: this.mapStyles,
+        styles: this.mapStyles,
         icon: this.icon
       }
       this.map = new google.maps.Map(this.mapRef.nativeElement, options);
@@ -1063,7 +1065,7 @@ export class HomePage {
       this.marker = new google.maps.Marker({
         map: this.map,
         styles: this.mapStyles,
-        zoom: 10,
+        zoom: 15,
         icon: this.locIcon,
         position: this.map.getCenter()
         //animation: google.maps.Animation.DROP,
@@ -1073,6 +1075,7 @@ export class HomePage {
 
           this.showMultipleMarker = new google.maps.Marker({
             map: this.map,
+            styles: this.mapStyles,
             icon: this.icon,
             position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
             label: name,
