@@ -20,7 +20,7 @@ export class SqlProvider {
   ) {
     if (!this.isOpen) {
       this.storage = new SQLite();
-      this.storage.create({ name: "data.db", location: "default" }).then((db: SQLiteObject) => {
+      this.storage.create({ name: "data22.db", location: "default" }).then((db: SQLiteObject) => {
         this.db = db;
         db.executeSql("CREATE TABLE IF NOT EXISTS favourites (id INTEGER PRIMARY KEY AUTOINCREMENT, state TEXT) ", []);
         this.isOpen = true;
@@ -59,9 +59,9 @@ export class SqlProvider {
             });       
           }          
         }   
-        resolve(arrayUsers[0].state);
+        resolve(arrayUsers);
       }, (error) => {
-        resolve(0);
+        reject(0);
       })
     })
   }

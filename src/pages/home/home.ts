@@ -85,26 +85,6 @@ export class HomePage {
 
   CurrentName
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public IRmethods: IRhubProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
-<<<<<<< HEAD
-=======
-
-
-
-    setTimeout(() => {
-      this.IRmethods.getAllOrganizations().then((data: any) => {
-        // console.log(data);
-        this.orgArray = data
-
-        // console.log(this.orgArray)
-      })
-
-    }, 8000)
-
-
-
-
-
->>>>>>> 2fc67748cac4dd5192cd2f1fbe3e7ccb98e73ef1
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
         this.logInState = true;
@@ -382,7 +362,6 @@ export class HomePage {
               "</div>"
           });
           this.marker.addListener('click', () => {
-            this.map.setZoom(14);
             this.map.setCenter(this.marker.getPosition());
             infowindow.open(this.marker.get(this.map), this.marker);
           });
@@ -1406,9 +1385,7 @@ export class HomePage {
 
       let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
       let destination = new google.maps.LatLng(orgObject.lat, orgObject.long);
-      var bounds = new google.maps.LatLngBounds();
       this.directionsDisplay.setMap(this.map);;
-      this.map.fitBounds(bounds);
       // this.map.getCenter();
       // this.map.setZoom(18)
   
@@ -1466,8 +1443,9 @@ export class HomePage {
       position: { lat: parseFloat(lat), lng: parseFloat(long) },
       label: name,
     });
+    this.map.setZoom(16);
     this.mapBig.setCenter();
-    this.mapBig.setZoom(12)
+    this.mapBig.setZoom(16)
     this.markers2.push(destMaker)
     var stars = null;
     var key = obj.rating
