@@ -37,8 +37,8 @@ export class SqlProvider {
       this.db.executeSql(sql, [title ]).then((data) =>{
         resolve(data);
         const toast = this.toastCtrl.create({
-          message: 'Story added to Favourites',
-          duration: 1000
+          message: 'adding state',
+          duration: 5000
         });
         toast.present();
       }, (error) => {
@@ -58,7 +58,7 @@ export class SqlProvider {
               state: data.rows.item(i).state,
             });       
           }          
-        }   
+        }    
         resolve(arrayUsers);
       }, (error) => {
         reject(0);

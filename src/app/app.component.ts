@@ -34,14 +34,14 @@ export class MyApp {
         else {
           // this.rootPage = StartPage
           this.sql.GetAllFavourite().then((data:any) =>{
-            console.log(data);
-              if (data.lengh >= 1){
-                this.rootPage = StartPage
+            console.log(data.length);
+                
+            if (data.length >= 1){
+              this.rootPage = StartPage
+            }
+             else{
                 this.sql.storefavourite("true")
-              }
-              else{
                 this.rootPage = OnboundingPage
-        
               }
           }, Error =>{
             this.rootPage = OnboundingPage
