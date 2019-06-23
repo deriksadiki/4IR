@@ -29,13 +29,15 @@ page-onbounding {
     text-align: center;
     color:#04592a;
     text-transform: capitalize;
-    margin-top:95px;
+    margin-top:25px;
     font-weight: bolder;
     font-size: 1.2em;
 }
 .sizeforimage2{
-    // margin-top:30PX;
+    margin-top:30PX;
     width:80%;
+    // border: 1px solid red;
+    width: 100%;
 }
 .img2{
     height:150px;
@@ -59,8 +61,13 @@ page-onbounding {
 
 }
 .btn{
+    // border: 2px solid red;  
     text-align: center;
+    width: 100%;
+    height: 0px;
     margin-top:30px;
+    position: absolute;
+    left: 0;
 }
 .button{
     width: 80%;

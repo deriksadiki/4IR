@@ -699,11 +699,8 @@ updateApplied(key, num){
         directionsDisplay.setOptions({ suppressMarkers: true });
 
       } else {
-<<<<<<< HEAD
         // console.log(status);
         // console.log("not working");
-=======
->>>>>>> 2fc67748cac4dd5192cd2f1fbe3e7ccb98e73ef1
       }
     });
   }

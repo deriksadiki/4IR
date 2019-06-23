@@ -78,6 +78,7 @@ export class ViewOrganizationInforPage implements OnInit {
   theReader = "read more...";
   pet="programdetails";
   category;
+  cell;
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, private callNumber: CallNumber, public irhubProvider: IRhubProvider, public alertCtrl: AlertController, private launchNavigator: LaunchNavigator, public loadingCtrl: LoadingController, public modalCtrl: ModalController) {
 
     // 
@@ -102,8 +103,10 @@ export class ViewOrganizationInforPage implements OnInit {
     // console.log(this.image)
 
     // console.log(this.image)
+
+    this.cell = this.orgArray[0].promPhone
     this.services = this.orgArray[0].programmeService
-    console.log(this.services)
+    console.log(this.cell)
 
     console.log(this.services)
     // console.log(this.imageKey);
@@ -191,7 +194,7 @@ export class ViewOrganizationInforPage implements OnInit {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ViewOrganizationInforPage');
 
-
+    this.retrieveComments()
   }
   apply() {
     this.irhubProvider.updateApplied(this.orgArray[0].id, this.orgArray[0].applied);

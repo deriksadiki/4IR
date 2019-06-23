@@ -31,6 +31,7 @@ export class MyApp {
           this.rootPage = HomePage
         }
         else {
+          // this.rootPage = StartPage
           this.sql.GetAllFavourite().then((data:any) =>{
               if (data != "true"){
                 this.rootPage = OnboundingPage

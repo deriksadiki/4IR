@@ -36,7 +36,7 @@
     <div id="orgView" *ngFor="let i of orgArray">
         <div class="actions">
             <div class="icons">
-                <ion-icon name="call" (click)="call(i.cell)"></ion-icon>
+                <ion-icon name="call" (click)="call(i.promPhone)"></ion-icon>
                 <p class="fontchange">call</p>
             </div>
             <div class="icons">
@@ -89,7 +89,7 @@
                             <table>
                                 <tr>
                                     <td align="right">
-                                        <a href="{{i.twitter}}">
+                                        <a href="{{i.facebook}}">
                                             <ion-icon name="appname-facebook">
                                                 <!-- <a href="{{i.twitter}}"></a> -->
                                             </ion-icon>
@@ -97,7 +97,7 @@
                                     </td>
 
                                     <td align="left" padding-left>
-                                        <a href="{{i.facebook}}">
+                                        <a href="{{i.twitter}}">
                                             <ion-icon name="appname-twitter"></ion-icon>
                                         </a>
                                     </td>

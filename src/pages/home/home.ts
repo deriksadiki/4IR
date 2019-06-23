@@ -59,8 +59,8 @@ export class HomePage {
   showNearbyList: boolean = false;
   showAllOrganisation: boolean = true;
 
-  icon = 'assets/imgs/loaction3.png'
-  locIcon = 'assets/imgs/loc-user.svg'
+  icon = 'assets/imgs/PIN.png'
+  locIcon = 'assets/imgs/here.png'
 
   state = ["star-outline", "star-outline", "star-outline", "star-outline", "star-outline"]
   Star1 = "star-outline";
@@ -85,33 +85,17 @@ export class HomePage {
 
   CurrentName
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public IRmethods: IRhubProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
-<<<<<<< HEAD
-=======
-
-
-
     setTimeout(() => {
       this.IRmethods.getAllOrganizations().then((data: any) => {
-        // console.log(data);
         this.orgArray = data
-
-        // console.log(this.orgArray)
       })
 
     }, 8000)
 
-
-
-
-
->>>>>>> 2fc67748cac4dd5192cd2f1fbe3e7ccb98e73ef1
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
         this.logInState = true;
         this.IRmethods.getProfile().then((data: any) => {
-          // console.log(data);
-
-          // console.log(this.logInState);
           this.img = data.downloadurl;
           this.CurrentName = data.name;
         })
@@ -752,7 +736,7 @@ export class HomePage {
       if (data == false) {
         let alert = this.alertCtrl.create({
           cssClass: "myAlert",
-          subTitle: 'You have to sign in before you can view your profile, would you like to signin now?',
+          subTitle: 'You have to sign in before you can view the map, would you like to signin now?',
           // cssClass: 'myAlert',
           buttons: [
             {
@@ -952,9 +936,9 @@ export class HomePage {
 
       const options = {
         center: { lat: parseFloat(this.lat), lng: parseFloat(this.lng) },
-        zoom: 8,
+        zoom: 12,
         disableDefaultUI: true,
-        // styles: this.mapStyles,
+        styles: this.mapStyles,
         icon: this.icon
       }
       this.map = new google.maps.Map(this.mapRef.nativeElement, options);
@@ -962,7 +946,7 @@ export class HomePage {
       this.marker = new google.maps.Marker({
         map: this.map,
         styles: this.mapStyles,
-        zoom: 10,
+        zoom: 12,
         icon: this.locIcon,
         position: this.map.getCenter()
         //animation: google.maps.Animation.DROP,
@@ -975,7 +959,7 @@ export class HomePage {
             icon: this.icon,
             position: { lat: parseFloat(this.orgArray[index].lat), lng: parseFloat(this.orgArray[index].long) },
             label: name,
-            zoom: 8,
+            zoom: 12,
           });
           this.showMultipleMarker.addListener('click', () => {
             this.navCtrl.push(ViewOrganizationInforPage, { orgObject: this.orgArray[index] });
