@@ -59,8 +59,8 @@ export class HomePage {
   showNearbyList: boolean = false;
   showAllOrganisation: boolean = true;
 
-  icon = 'assets/imgs/PIN.png'
-  locIcon = 'assets/imgs/here.png'
+  icon = 'assets/imgs/wifi2.svg'
+  locIcon = 'assets/imgs/loc-user.svg'
 
   state = ["star-outline", "star-outline", "star-outline", "star-outline", "star-outline"]
   Star1 = "star-outline";
@@ -85,13 +85,6 @@ export class HomePage {
 
   CurrentName
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public IRmethods: IRhubProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
-    setTimeout(() => {
-      this.IRmethods.getAllOrganizations().then((data: any) => {
-        this.orgArray = data
-      })
-
-    }, 8000)
-
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
         this.logInState = true;
@@ -273,12 +266,7 @@ export class HomePage {
     // this.checkVerification()
   }
 
-  ionViewDidEnter() {
-    let loading = this.loadingCtrl.create({
-      spinner: 'bubbles',
-      content: 'please wait...',
-    });
-    loading.present();
+  ionViewDidEnter() { 
     this.IRmethods.getAllOrganizations().then((data: any) => {
       this.orgArray = data;
       this.initMapBig();
@@ -287,9 +275,6 @@ export class HomePage {
       this.setBackItems();
       var names = this.IRmethods.getOrgNames()
       this.storeOrgNames(names)
-      setTimeout(() => {
-        loading.dismiss();
-      }, 3000);
     })
     this.IRmethods.checkAuthState().then(data => {
       if (data == true) {
@@ -366,7 +351,6 @@ export class HomePage {
               "</div>"
           });
           this.marker.addListener('click', () => {
-            this.map.setZoom(14);
             this.map.setCenter(this.marker.getPosition());
             infowindow.open(this.marker.get(this.map), this.marker);
           });
@@ -1390,9 +1374,7 @@ export class HomePage {
 
       let userCurrentLocation = new google.maps.LatLng(this.currentUserlat, this.currentUserlng);
       let destination = new google.maps.LatLng(orgObject.lat, orgObject.long);
-      var bounds = new google.maps.LatLngBounds();
       this.directionsDisplay.setMap(this.map);;
-      this.map.fitBounds(bounds);
       // this.map.getCenter();
       // this.map.setZoom(18)
   
@@ -1450,8 +1432,9 @@ export class HomePage {
       position: { lat: parseFloat(lat), lng: parseFloat(long) },
       label: name,
     });
+    this.map.setZoom(16);
     this.mapBig.setCenter();
-    this.mapBig.setZoom(12)
+    this.mapBig.setZoom(16)
     this.markers2.push(destMaker)
     var stars = null;
     var key = obj.rating

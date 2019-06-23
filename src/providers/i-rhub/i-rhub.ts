@@ -143,6 +143,11 @@ export class IRhubProvider {
   }
 
   getAllOrganizations() {
+    let loading = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'please wait...',
+    });
+    loading.present();
     return new Promise((resolve, reject) => {
       this.ngzone.run(() => {
         var user = firebase.auth().currentUser;
@@ -200,6 +205,7 @@ export class IRhubProvider {
             }
           
             resolve(this.orgArray)
+            loading.dismiss();
           }
         });
       })

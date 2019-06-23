@@ -13,6 +13,7 @@ import { StartPage } from '../pages/start/start';
 import { timer } from 'rxjs/observable/timer';
 import { OnboundingPage } from '../pages/onbounding/onbounding';
 import { SqlProvider } from '../providers/sql/sql';
+import { error } from 'util';
 
 @Component({
   templateUrl: 'app.html'
@@ -33,13 +34,17 @@ export class MyApp {
         else {
           // this.rootPage = StartPage
           this.sql.GetAllFavourite().then((data:any) =>{
-              if (data != "true"){
-                this.rootPage = OnboundingPage
+            console.log(data);
+              if (data.lengh >= 1){
+                this.rootPage = StartPage
                 this.sql.storefavourite("true")
               }
               else{
-                this.rootPage = StartPage
+                this.rootPage = OnboundingPage
+        
               }
+          }, Error =>{
+            this.rootPage = OnboundingPage
           })
         
         }

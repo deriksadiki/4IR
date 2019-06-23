@@ -459,7 +459,7 @@ page-home {
   .finePrint {
     font-size: 10px;
     color: white;
-    margin-top:-5%;
+    // margin-top:5%;
   }
   .myFlexBox {
     position: absolute;
@@ -467,6 +467,7 @@ page-home {
     padding-left: 10px;
     display: flex;
     width: 100%;
+    // border: 2px solid red;
   }
   .selects {
     border-radius: 10px;
